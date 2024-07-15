@@ -1,0 +1,134 @@
+[versions]
+# configuration
+compileSdk = "34"
+minSdk = "28"
+targetSdk = "34"
+appVersion = "1.0.0"
+versionCode = "1"
+versionName = "1.0.0"
+
+# kotlin
+kotlin = "2.0.0"
+kotlin-jvm = "1.9.23"
+kotlinx-coroutines = "1.8.0"
+kotlinx-collections-immutable = "0.3.7"
+kotlinx-serialization-plugin = "2.0.0"
+kotlinx-serialization = "1.7.0"
+
+# javax
+javax-inject = "1"
+
+# build
+agp = "8.3.2"
+ksp = "2.0.0-1.0.22"
+
+# androidx
+androidx-lifecycle = "2.8.3"
+
+# compose
+androidx-activity-compose = "1.9.0"
+androidx-compose-bom = "2024.06.00"
+
+# jetpack
+androidx-room = "2.6.1"
+androidx-datastore = "1.1.1"
+
+# dagger hilt
+dagger-hilt = "2.51.1"
+dagger-hilt-navigation-compose = "1.2.0"
+
+# google
+google-protobuf = "3.25.2"
+google-protobuf-plugin = "0.9.4"
+
+# network
+retrofit = "2.11.0"
+okHttp = "4.12.0"
+
+# coil
+coil-compose = "2.6.0"
+
+# lottie
+airbnb-lottie = "6.4.0"
+
+# test
+junit = "4.13.2"
+androidx-junit-version = "1.2.1"
+androidx-test = "1.6.1"
+androidx-test-core = "1.6.1"
+
+[libraries]
+# kotlin
+kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+
+# javax
+javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject" }
+
+# gradle
+agp = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+kotlin-gradleplugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# compose
+androidx-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
+androidx-compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+
+# jetpack
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "dagger-hilt-navigation-compose" }
+androidx-room-core = {group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
+androidx-room-compiler = {group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidx-datastore" }
+
+# dagger hilt
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger-hilt" }
+
+# google
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "google-protobuf" }
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "google-protobuf" }
+
+# coil
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
+
+# lottie
+airbnb-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "airbnb-lottie" }
+
+# network
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okHttp" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
+
+# androidx test
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidx-test-core" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidx-test" }
+
+# junit
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit-version" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidx-junit-version" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-jvm" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization-plugin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
+protobuf = { id = "com.google.protobuf", version.ref = "google-protobuf-plugin" }
