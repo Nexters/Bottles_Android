@@ -26,4 +26,5 @@ include(":app")
 include(":core:design-system")
 include(":core:data")
 include(":core:domain")
+include(":core:network")
  
