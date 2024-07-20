@@ -44,6 +44,7 @@ google-protobuf-plugin = "0.9.4"
 # network
 retrofit = "2.11.0"
 okHttp = "4.12.0"
+kotlinx-serialization-converter = "1.0.0"
 
 # coil
 coil-compose = "2.6.0"
@@ -108,6 +109,7 @@ airbnb-lottie = { group = "com.airbnb.android", name = "lottie-compose", version
 
 # network
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinx-serialization-converter" }
 okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okHttp" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
