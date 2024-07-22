@@ -68,12 +68,13 @@ data class BottlesTypography(
     val body: TextStyle,
     val caption: TextStyle,
     val kakaoLogin: TextStyle,
+    val branding: TextStyle,
 ) {
     companion object {
         fun defaultTypography(): BottlesTypography = BottlesTypography(
             title1 =
             TextStyle(
-                fontFamily = laundryGothic,
+                fontFamily = wantedSansStd,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
                 letterSpacing = 0.sp,
@@ -161,6 +162,19 @@ data class BottlesTypography(
                     trim = LineHeightStyle.Trim.None
                 )
             ),
+            branding =
+            TextStyle(
+                fontFamily = laundryGothic,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                letterSpacing = 0.sp,
+                lineHeight = 24.sp * 1.3f,
+                lineHeightStyle =
+                LineHeightStyle(
+                    alignment = LineHeightStyle.Alignment.Proportional,
+                    trim = LineHeightStyle.Trim.None
+                )
+            )
         )
     }
 }
@@ -174,6 +188,13 @@ private fun Preview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterVertically)
         ) {
+            Text(
+                modifier = Modifier.border(1.dp, Color.Blue),
+                text = "진심을 담은 보틀로\n서로를 밀도있게 알아가요",
+                style = BottlesTheme.typography.branding,
+                color = Color.Black,
+                textAlign = TextAlign.Center
+            )
             Text(
                 modifier = Modifier.border(1.dp, Color.Blue),
                 text = "Title1",
