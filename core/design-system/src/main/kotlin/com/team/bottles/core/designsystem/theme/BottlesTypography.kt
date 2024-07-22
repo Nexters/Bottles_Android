@@ -181,7 +181,7 @@ data class BottlesTypography(
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview() {
+private fun TypographyPreview() {
     BottlesTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
