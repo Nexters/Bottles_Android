@@ -9,13 +9,19 @@ val LocalTypography = compositionLocalOf<BottlesTypography> {
     error("No typography provided! Make sure to wrap all usages of Bottles components in BottlesTheme.")
 }
 
+val LocalBottlesShape = compositionLocalOf<BottlesShape> {
+    error("No shape provided! Make sure to wrap all usages of Bottles components in BottlesTheme.")
+}
+
 @Composable
 fun BottlesTheme(
+    shape: BottlesShape = BottlesShape.defaultRadius(),
     typography: BottlesTypography = BottlesTypography.defaultTypography(),
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
         LocalTypography provides typography
+        LocalBottlesShape provides shape,
     ) {
         content.invoke()
     }
@@ -26,4 +32,9 @@ object BottlesTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalTypography.current
+
+    val shape: BottlesShape
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalBottlesShape.current
 }
