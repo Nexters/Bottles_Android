@@ -5,7 +5,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
 
-val LocalTypography = compositionLocalOf<BottlesTypography> {
 val LocalBottlesTypography = compositionLocalOf<BottlesTypography> {
     error("No typography provided! Make sure to wrap all usages of Bottles components in BottlesTheme.")
 }
@@ -26,7 +25,7 @@ fun BottlesTheme(
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(
-        LocalTypography provides typography
+        LocalBottlesTypography provides typography,
         LocalBottlesShape provides shape,
         LocalBottlesPadding provides padding
     ) {
@@ -38,7 +37,7 @@ object BottlesTheme {
     val typography: BottlesTypography
         @Composable
         @ReadOnlyComposable
-        get() = LocalTypography.current
+        get() = LocalBottlesTypography.current
 
     val shape: BottlesShape
         @Composable
