@@ -19,56 +19,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-private object BottlesPaddingDefaults {
-    val ExtraSmall = PaddingValues(4.dp)
-    val Small = PaddingValues(8.dp)
-    val Medium = PaddingValues(16.dp)
-    val Large = PaddingValues(24.dp)
-}
+import com.team.bottles.core.designsystem.foundation.BottlesPaddingDefaults
 
 @Immutable
 data class BottlesPadding(
-    val extraSmall: PaddingValues,
-    val small: PaddingValues,
-    val medium: PaddingValues,
-    val extraLarge: PaddingValues,
+    val padding4: PaddingValues,
+    val padding8: PaddingValues,
+    val padding16: PaddingValues,
+    val padding24: PaddingValues,
 ) {
     companion object {
         fun defaultPadding(): BottlesPadding = BottlesPadding(
-            extraSmall = BottlesPaddingDefaults.ExtraSmall,
-            small = BottlesPaddingDefaults.Small,
-            medium = BottlesPaddingDefaults.Medium,
-            extraLarge = BottlesPaddingDefaults.Large
+            padding4 = BottlesPaddingDefaults.PADDING_XS.paddingValues,
+            padding8 = BottlesPaddingDefaults.PADDING_S.paddingValues,
+            padding16 = BottlesPaddingDefaults.PADDING_M.paddingValues,
+            padding24 = BottlesPaddingDefaults.PADDING_XL.paddingValues
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun ShapePreview() {
+private fun PaddingPreview() {
     BottlesTheme {
-        val boxModifier = Modifier
-            .size(size = 100.dp)
-            .border(width = 1.dp, color = Color.Black, shape = BottlesTheme.shape.small)
-
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterVertically)
         ) {
-            Box(modifier = boxModifier.padding(BottlesTheme.padding.extraSmall),
-                contentAlignment = Alignment.Center
-            ) { Spacer(modifier = Modifier.fillMaxWidth().height(5.dp).background(Color.Blue))}
-            Box(modifier = boxModifier.padding(BottlesTheme.padding.small),
-                contentAlignment = Alignment.Center
-            ) { Spacer(modifier = Modifier.fillMaxWidth().height(5.dp).background(Color.Blue))}
-            Box(modifier = boxModifier.padding(BottlesTheme.padding.medium),
-                contentAlignment = Alignment.Center
-            ) { Spacer(modifier = Modifier.fillMaxWidth().height(5.dp).background(Color.Blue))}
-            Box(modifier = boxModifier.padding(BottlesTheme.padding.extraLarge),
-                contentAlignment = Alignment.Center
-            ) { Spacer(modifier = Modifier.fillMaxWidth().height(5.dp).background(Color.Blue))}
+            BottlesPaddingDefaults.entries.forEach { entry ->
+                Box(modifier = Modifier
+                    .size(size = 100.dp)
+                    .border(width = 1.dp, color = Color.Black, shape = BottlesTheme.shape.radius8)
+                    .padding(paddingValues = entry.paddingValues),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Spacer(modifier = Modifier.fillMaxWidth().height(5.dp).background(Color.Blue))
+                }
+            }
         }
     }
 }

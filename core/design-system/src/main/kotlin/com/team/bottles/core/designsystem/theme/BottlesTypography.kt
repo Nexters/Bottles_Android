@@ -11,53 +11,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.team.bottles.core.designsystem.R
-
-private val wantedSansStd =
-    FontFamily(
-        Font(
-            R.font.wanted_sans_std_bold,
-            FontWeight.Bold,
-            FontStyle.Normal
-        ),
-        Font(
-            R.font.wanted_sans_std_medium,
-            FontWeight.Medium,
-            FontStyle.Normal
-        ),
-        Font(
-            R.font.wanted_sans_std_semi_bold,
-            FontWeight.SemiBold,
-            FontStyle.Normal
-        )
-    )
-
-private val roboto =
-    FontFamily(
-        Font(
-            R.font.roboto_medium,
-            FontWeight.Medium,
-            FontStyle.Normal
-        )
-    )
-
-private val laundryGothic =
-    FontFamily(
-        Font(
-            R.font.laundry_gothic_bold,
-            FontWeight.Bold,
-            FontStyle.Normal
-        )
-    )
+import com.team.bottles.core.designsystem.foundation.laundryGothic
+import com.team.bottles.core.designsystem.foundation.roboto
+import com.team.bottles.core.designsystem.foundation.wantedSansStd
 
 @Immutable
 data class BottlesTypography(
