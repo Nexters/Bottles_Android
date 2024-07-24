@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option java_package = "com.team.bottles.core.datastore";
+option java_multiple_files = true;
+
+message UserPreferences {
+    string kakao_token = 1;
+    string user_name = 2;
+    int32 age = 3;
+    repeated Introduction introductions = 4;
+    ProfileSelect profile_select = 5;
+}
+
+message Introduction {
+    string question = 1;
+    string answer = 2;
+}
+
+message ProfileSelect {
+    string mbti = 1;
+    repeated string keyword = 2;
+    Interest interest = 3;
+    string job = 4;
+    string smoking = 5;
+    string alcohol = 6;
+    string religion = 7;
+    Region region = 8;
+}
+
+message Interest {
+    repeated string culture = 1;
+    repeated string sports = 2;
+    repeated string entertainment = 3;
+    repeated string etc = 4;
+}
+
+message Region {
+    string city = 1;
+    string state = 2;
+}
