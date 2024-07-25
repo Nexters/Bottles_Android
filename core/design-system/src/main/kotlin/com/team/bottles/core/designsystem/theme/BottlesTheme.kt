@@ -21,8 +21,13 @@ val LocalBottlesColor = compositionLocalOf<BottlesColors> {
     error("No color provided! Make sure to wrap all usages of Bottles components in BottlesTheme.")
 }
 
+val LocalBottlesSpacing = compositionLocalOf<BottlesSpacing> {
+    error("No spacing provided! Make sure to wrap all usages of Bottles components in BottlesTheme.")
+}
+
 @Composable
 fun BottlesTheme(
+    spacing: BottlesSpacing = BottlesSpacing.defaultSpacing(),
     color: BottlesColors = BottlesColors.defaultColor(),
     padding: BottlesPadding = BottlesPadding.defaultPadding(),
     shape: BottlesShape = BottlesShape.defaultRadius(),
@@ -33,7 +38,8 @@ fun BottlesTheme(
         LocalBottlesTypography provides typography,
         LocalBottlesShape provides shape,
         LocalBottlesPadding provides padding,
-        LocalBottlesColor provides color
+        LocalBottlesColor provides color,
+        LocalBottlesSpacing provides spacing,
     ) {
         content.invoke()
     }
@@ -59,4 +65,9 @@ object BottlesTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalBottlesColor.current
+
+    val spacing: BottlesSpacing
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalBottlesSpacing.current
 }
