@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.team.bottles.designsystem"
+    namespace = "com.team.bottles.core.designsystem"
 }
 
 dependencies {
