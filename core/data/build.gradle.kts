@@ -4,10 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.team.bottles.data"
+    namespace = "com.team.bottles.core.data"
 }
 
 dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.network)
+    implementation(projects.core.datastore)
 }
