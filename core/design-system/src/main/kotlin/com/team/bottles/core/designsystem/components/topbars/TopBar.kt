@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.foundation.BackgroundColors
+import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
 fun TopBar(
@@ -54,7 +55,11 @@ fun TopBar(
         }
 
         if (text != null) {
-            Text(text = text)
+            Text(
+                text = text,
+                style = BottlesTheme.typography.body,
+                color = BottlesTheme.color.text.secondary,
+            )
         }
     }
 }
