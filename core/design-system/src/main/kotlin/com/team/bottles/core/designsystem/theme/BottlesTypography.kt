@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,10 +40,6 @@ data class BottlesTypography(
                 fontSize = 24.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 24.sp * 1.3f,
-                lineHeightStyle = LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             ),
             title2 =
             TextStyle(
@@ -53,11 +48,6 @@ data class BottlesTypography(
                 fontSize = 20.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 20.sp * 1.3f,
-                lineHeightStyle =
-                LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             ),
             subTitle1 =
             TextStyle(
@@ -66,11 +56,6 @@ data class BottlesTypography(
                 fontSize = 16.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 16.sp * 1.3f,
-                lineHeightStyle =
-                LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             ),
             subTitle2 =
             TextStyle(
@@ -79,11 +64,6 @@ data class BottlesTypography(
                 fontSize = 14.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 14.sp * 1.3f,
-                lineHeightStyle =
-                LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             ),
             body =
             TextStyle(
@@ -92,11 +72,6 @@ data class BottlesTypography(
                 fontSize = 14.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 14.sp * 1.5f,
-                lineHeightStyle =
-                LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             ),
             caption =
             TextStyle(
@@ -105,11 +80,6 @@ data class BottlesTypography(
                 fontSize = 12.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 12.sp * 1.5f,
-                lineHeightStyle =
-                LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             ),
             kakaoLogin =
             TextStyle(
@@ -118,11 +88,6 @@ data class BottlesTypography(
                 fontSize = 14.sp,
                 letterSpacing = 0.15.sp,
                 lineHeight = 14.sp * 1.4f,
-                lineHeightStyle =
-                LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             ),
             branding =
             TextStyle(
@@ -131,11 +96,6 @@ data class BottlesTypography(
                 fontSize = 24.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 24.sp * 1.3f,
-                lineHeightStyle =
-                LineHeightStyle(
-                    alignment = LineHeightStyle.Alignment.Proportional,
-                    trim = LineHeightStyle.Trim.None
-                )
             )
         )
     }

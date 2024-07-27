@@ -57,6 +57,7 @@ data class Container(
     val enabledPrimary: Color = ContainerColors.containerEnabledPrimary,
     val enabledSecondary: Color = ContainerColors.containerEnabledSecondary,
     val disabledPrimary: Color = ContainerColors.containerDisabledPrimary,
+    val disabledSecondary: Color = ContainerColors.containerDisabledSecondary,
     val pressed: Color = ContainerColors.containerPressed,
     val selected: Color = ContainerColors.containerSelected,
     val focusedPrimary: Color = ContainerColors.containerFocusedPrimary,
