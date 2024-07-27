@@ -48,8 +48,9 @@ internal object ContainerColors {
     internal val containerSecondary = PrimaryPurple100
     internal val containerTertiary = Neutral600
     internal val containerEnabledPrimary = White100
-    internal val containerEnabledSecondary = White100
+    internal val containerEnabledSecondary = PrimaryPurple400
     internal val containerDisabledPrimary = White100
+    internal val containerDisabledSecondary = Neutral400
     internal val containerPressed = PrimaryPurple500
     internal val containerSelected = PrimaryPurple100
     internal val containerFocusedPrimary = Neutral100
