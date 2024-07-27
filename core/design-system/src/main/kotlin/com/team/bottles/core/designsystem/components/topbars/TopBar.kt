@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -31,34 +29,32 @@ fun TopBar(
     modifier: Modifier = Modifier,
     backgroundColor: Color = BackgroundColors.bgPrimary,
     leadingIcon: (@Composable () -> Unit)? = null,
-    text: (@Composable () -> Unit)? = null,
+    text: String? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(backgroundColor)
-            .padding(vertical = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    Box(
+        modifier = Modifier.padding(16.dp),
+        contentAlignment = Alignment.Center,
     ) {
-        if (leadingIcon != null) {
-            leadingIcon()
-        }
-
-
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(48.dp)
+                .background(backgroundColor),
+            horizontalArrangement = if (leadingIcon == null) Arrangement.End else Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            if (text != null) {
-                text()
+            if (leadingIcon != null) {
+                leadingIcon()
+            }
+
+            if (trailingIcon != null) {
+                trailingIcon()
             }
         }
 
-        if (trailingIcon != null) {
-            trailingIcon()
+        if (text != null) {
+            Text(text = text)
         }
     }
 }
@@ -101,12 +97,7 @@ fun PreviewTopBar() {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
             },
-            text = {
-                Text(
-                    text = "Title",
-                    style = MaterialTheme.typography.titleLarge.copy(color = Color.Black)
-                )
-            }
+            text = "Title"
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -118,12 +109,7 @@ fun PreviewTopBar() {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
             },
-            text = {
-                Text(
-                    text = "Title",
-                    style = MaterialTheme.typography.titleLarge.copy(color = Color.Black)
-                )
-            },
+            text = "Title",
             trailingIcon = {
                 IconButton(onClick = { /* Handle click */ }) {
                     Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = "Forward")
