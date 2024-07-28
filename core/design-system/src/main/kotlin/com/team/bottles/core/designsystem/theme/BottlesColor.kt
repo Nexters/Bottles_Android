@@ -112,7 +112,8 @@ data class Border(
     val enabled: Color = BorderColors.borderEnabled,
     val disabled: Color = BorderColors.borderDisabled,
     val selected: Color = BorderColors.borderSelected,
-    val focused: Color = BorderColors.borderFocused,
+    val focusedPrimary: Color = BorderColors.borderFocusedPrimary,
+    val focusedSecondary: Color = BorderColors.borderFocusedSecondary,
     val active: Color = BorderColors.borderActive,
     val error: Color = BorderColors.borderError
 )

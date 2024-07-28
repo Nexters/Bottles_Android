@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.modifier.clickableSingle
@@ -26,6 +27,7 @@ fun SolidButton(
     text: String,
     onClick: () -> Unit,
     enabled: Boolean = true,
+    shape: Shape = BottlesTheme.shape.radius12
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -42,11 +44,11 @@ fun SolidButton(
 
     Box(
         modifier = modifier
-            .clip(shape = BottlesTheme.shape.radius12)
             .background(
                 color = backgroundColor,
-                shape = BottlesTheme.shape.radius12
+                shape = shape
             )
+            .clip(shape = shape)
             .clickableSingle(
                 enabled = enabled,
                 onClick = onClick,

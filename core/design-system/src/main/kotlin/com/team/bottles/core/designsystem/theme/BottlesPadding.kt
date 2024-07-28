@@ -23,15 +23,15 @@ import com.team.bottles.core.designsystem.foundation.BottlesPaddingDefaults
 
 @Immutable
 data class BottlesPadding(
-    val padding4: PaddingValues,
     val padding8: PaddingValues,
+    val padding12: PaddingValues,
     val padding16: PaddingValues,
     val padding24: PaddingValues,
 ) {
     companion object {
         fun defaultPadding(): BottlesPadding = BottlesPadding(
-            padding4 = BottlesPaddingDefaults.PADDING_XS.paddingValues,
-            padding8 = BottlesPaddingDefaults.PADDING_S.paddingValues,
+            padding8 = BottlesPaddingDefaults.PADDING_XS.paddingValues,
+            padding12 = BottlesPaddingDefaults.PADDING_S.paddingValues,
             padding16 = BottlesPaddingDefaults.PADDING_M.paddingValues,
             padding24 = BottlesPaddingDefaults.PADDING_XL.paddingValues
         )

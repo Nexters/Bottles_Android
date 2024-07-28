@@ -102,7 +102,8 @@ internal object BorderColors {
     internal val borderEnabled = Neutral300
     internal val borderDisabled = Neutral300
     internal val borderSelected = PrimaryPurple500
-    internal val borderFocused = Neutral300
+    internal val borderFocusedPrimary = Neutral300
+    internal val borderFocusedSecondary = Neutral500
     internal val borderActive = Neutral300
     internal val borderError = Red
 }
