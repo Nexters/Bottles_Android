@@ -227,17 +227,6 @@ fun BottlesLineTextFieldWithTrailingButton(
     }
 }
 
-@Composable
-fun BottlesTextFieldErrorCaption(
-    text: String
-) {
-    Text(
-        text = text,
-        style = BottlesTheme.typography.caption,
-        color = BottlesTheme.color.text.errorPrimary
-    )
-}
-
 /*==============Preview==============*/
 
 private data class TextFieldUiState(
