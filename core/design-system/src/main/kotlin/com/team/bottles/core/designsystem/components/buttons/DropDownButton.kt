@@ -1,6 +1,8 @@
 package com.team.bottles.core.designsystem.components.buttons
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -66,11 +68,16 @@ fun BottlesDefaultDropDownButton(
         modifier = modifier
             .fillMaxWidth()
             .height(56.dp)
+            .background(
+                color = containerColor,
+                shape = BottlesTheme.shape.radius12
+            )
             .border(
                 width = 1.dp,
                 color = borderColor,
                 shape = BottlesTheme.shape.radius12
             )
+            .clickable(onClick = onClickButton)
             .padding(BottlesTheme.padding.padding16),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
