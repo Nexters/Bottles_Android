@@ -20,48 +20,40 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
 fun ProgressButton(
-    number1: String,
-    number2: String,
+    firstNumber: String,
+    secondNUmber: String,
     separator: String = "/",
     modifier: Modifier = Modifier,
     backgroundColor: Color = BottlesTheme.color.container.secondary,
-    number1Color: Color = BottlesTheme.color.text.quinary,
-    number2Color: Color = BottlesTheme.color.text.senary,
+    firstColor: Color = BottlesTheme.color.text.quinary,
+    secondColor: Color = BottlesTheme.color.text.senary,
     separatorColor: Color = BottlesTheme.color.text.senary,
 ) {
-    Box(
-        contentAlignment = Alignment.Center
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
+        modifier = modifier
+            .background(
+                color = backgroundColor,
+                shape = BottlesTheme.shape.radius8,
+            )
+            .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = modifier
-                .background(
-                    color = backgroundColor,
-                    shape = BottlesTheme.shape.radius8,
-                )
-                .width(48.44.dp)
-                .height(32.dp)
-                .padding(horizontal = 4.dp)
-        ) {
-            Text(
-                text = number1,
-                color = number1Color,
-                style = BottlesTheme.typography.subTitle2,
-            )
-            Spacer(modifier = Modifier.width(2.dp))
-            Text(
-                text = " $separator",
-                color = separatorColor,
-                style = BottlesTheme.typography.subTitle2,
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                text = number2,
-                color = number2Color,
-                style = BottlesTheme.typography.subTitle2,
-            )
-        }
+        Text(
+            text = firstNumber,
+            color = firstColor,
+            style = BottlesTheme.typography.subTitle2,
+        )
+        Text(
+            text = "$separator",
+            color = separatorColor,
+            style = BottlesTheme.typography.subTitle2,
+        )
+        Text(
+            text = secondNUmber,
+            color = secondColor,
+            style = BottlesTheme.typography.subTitle2,
+        )
     }
 }
 
@@ -70,8 +62,8 @@ fun ProgressButton(
 fun ProgressButtonPreview() {
     BottlesTheme {
         ProgressButton(
-            number1 = "0",
-            number2 = "0",
+            firstNumber = "0",
+            secondNUmber = "0",
         )
     }
 }

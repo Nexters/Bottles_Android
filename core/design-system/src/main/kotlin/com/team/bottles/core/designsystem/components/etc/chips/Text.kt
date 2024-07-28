@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,22 +21,16 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 @Composable
 fun EtcText(
     text: String,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Row(
         modifier = modifier
             .background(
                 color = BottlesTheme.color.container.secondary,
                 shape = BottlesTheme.shape.radius8,
             )
-            .clickable(onClick = onClick)
-            .padding(8.dp)
-            .height(29.dp)
-            .width(42.dp),
-        contentAlignment = Alignment.Center,
+            .padding(8.dp),
     ) {
-        
         Text(
             text = text,
             color = BottlesTheme.color.text.quinary,
@@ -55,7 +50,6 @@ fun EtcTextPreview() {
         ) {
             EtcText(
                 text = "text",
-                onClick = { /* Handle click */ }
             )
         }
     }
