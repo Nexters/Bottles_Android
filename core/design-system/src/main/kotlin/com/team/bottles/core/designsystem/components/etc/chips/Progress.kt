@@ -20,10 +20,10 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
 fun ProgressButton(
+    modifier: Modifier = Modifier,
     firstNumber: Int,
     secondNUmber: Int,
     separator: String = "/",
-    modifier: Modifier = Modifier,
     backgroundColor: Color = BottlesTheme.color.container.secondary,
     firstColor: Color = BottlesTheme.color.text.quinary,
     secondColor: Color = BottlesTheme.color.text.senary,
@@ -45,7 +45,7 @@ fun ProgressButton(
             style = BottlesTheme.typography.subTitle2,
         )
         Text(
-            text = "$separator",
+            text = separator,
             color = separatorColor,
             style = BottlesTheme.typography.subTitle2,
         )
@@ -62,8 +62,8 @@ fun ProgressButton(
 fun ProgressButtonPreview() {
     BottlesTheme {
         ProgressButton(
-            firstNumber = "0",
-            secondNUmber = "0",
+            firstNumber = 0,
+            secondNUmber = 0,
         )
     }
 }
