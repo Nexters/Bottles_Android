@@ -3,7 +3,6 @@ package com.team.bottles.core.designsystem.components.textfield
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,19 +39,40 @@ import com.team.bottles.core.designsystem.foundation.wantedSansStd
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
-fun TextFieldWithTrailingIcon(
+fun BottlesLineTextFieldWithTrailingIcon(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     hint: String,
     trailingIcon: @Composable () -> Unit,
+    state: BottlesTextFieldState,
     enabled: Boolean = true,
-    isError: Boolean = false,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    isFocused: Boolean = interactionSource.collectIsFocusedAsState().value,
+    interactionSource: MutableInteractionSource,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
+    val containerColor = when (state) {
+        is BottlesTextFieldState.Enabled -> BottlesTheme.color.container.enabledPrimary
+        is BottlesTextFieldState.Active -> BottlesTheme.color.container.active
+        is BottlesTextFieldState.Focused -> BottlesTheme.color.container.focusedPrimary
+        is BottlesTextFieldState.Error -> BottlesTheme.color.container.errorPrimary
+        is BottlesTextFieldState.Disabled -> BottlesTheme.color.container.disabledPrimary
+    }
+    val borderColor = when (state) {
+        is BottlesTextFieldState.Enabled -> BottlesTheme.color.border.enabled
+        is BottlesTextFieldState.Active -> BottlesTheme.color.border.active
+        is BottlesTextFieldState.Focused -> BottlesTheme.color.border.focusedPrimary
+        is BottlesTextFieldState.Error -> BottlesTheme.color.border.error
+        is BottlesTextFieldState.Disabled -> BottlesTheme.color.border.disabled
+    }
+    val textColor = when (state) {
+        is BottlesTextFieldState.Enabled -> BottlesTheme.color.text.enabledTertiary
+        is BottlesTextFieldState.Active -> BottlesTheme.color.text.activePrimary
+        is BottlesTextFieldState.Focused -> BottlesTheme.color.text.focusedPrimary
+        is BottlesTextFieldState.Error -> BottlesTheme.color.text.errorSecondary
+        is BottlesTextFieldState.Disabled -> BottlesTheme.color.text.disabledSecondary
+    }
+
     BasicTextField(
         modifier = modifier,
         value = value,
@@ -64,7 +84,7 @@ fun TextFieldWithTrailingIcon(
             fontSize = 14.sp,
             letterSpacing = 0.sp,
             lineHeight = 14.sp * 1.5f,
-            color = BottlesTheme.color.text.activePrimary
+            color = textColor
         ),
         cursorBrush = SolidColor(
             value = BottlesTheme.color.border.focusedSecondary
@@ -79,14 +99,12 @@ fun TextFieldWithTrailingIcon(
                 .fillMaxWidth()
                 .height(56.dp)
                 .background(
-                    color = if (isFocused || isError) BottlesTheme.color.container.focusedPrimary
-                    else BottlesTheme.color.container.enabledPrimary,
+                    color = containerColor,
                     shape = BottlesTheme.shape.radius12
                 )
                 .border(
                     width = 1.dp,
-                    color = if (!isError) BottlesTheme.color.border.enabled
-                    else BottlesTheme.color.border.error,
+                    color = borderColor,
                     shape = BottlesTheme.shape.radius12
                 )
                 .padding(horizontal = 16.dp),
@@ -94,10 +112,10 @@ fun TextFieldWithTrailingIcon(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Box(modifier = Modifier.weight(1f)) {
-                if (!isFocused && value.isEmpty()) {
+                if (state is BottlesTextFieldState.Enabled || state is BottlesTextFieldState.Disabled) {
                     Text(
                         text = hint,
-                        color = BottlesTheme.color.text.enabledTertiary,
+                        color = textColor,
                         style = BottlesTheme.typography.body
                     )
                 }
@@ -105,7 +123,7 @@ fun TextFieldWithTrailingIcon(
                 innerTextField.invoke()
             }
 
-            if (isFocused || isError) {
+            if (state is BottlesTextFieldState.Focused || state is BottlesTextFieldState.Error) {
                 Spacer(
                     modifier = Modifier.width(
                         width = BottlesTheme.spacing.spacing12
@@ -118,19 +136,40 @@ fun TextFieldWithTrailingIcon(
 }
 
 @Composable
-fun TextFieldWithTrailingButton(
+fun BottlesLineTextFieldWithTrailingButton(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     hint: String,
+    state: BottlesTextFieldState,
     trailingButton: @Composable () -> Unit,
     enabled: Boolean = true,
-    isError: Boolean = false,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    isFocused: Boolean = interactionSource.collectIsFocusedAsState().value,
+    interactionSource: MutableInteractionSource,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
+    val containerColor = when (state) {
+        is BottlesTextFieldState.Enabled -> BottlesTheme.color.container.enabledPrimary
+        is BottlesTextFieldState.Active -> BottlesTheme.color.container.active
+        is BottlesTextFieldState.Focused -> BottlesTheme.color.container.focusedPrimary
+        is BottlesTextFieldState.Error -> BottlesTheme.color.container.errorPrimary
+        is BottlesTextFieldState.Disabled -> BottlesTheme.color.container.disabledPrimary
+    }
+    val borderColor = when (state) {
+        is BottlesTextFieldState.Enabled -> BottlesTheme.color.border.enabled
+        is BottlesTextFieldState.Active -> BottlesTheme.color.border.active
+        is BottlesTextFieldState.Focused -> BottlesTheme.color.border.focusedPrimary
+        is BottlesTextFieldState.Error -> BottlesTheme.color.border.error
+        is BottlesTextFieldState.Disabled -> BottlesTheme.color.border.disabled
+    }
+    val textColor = when (state) {
+        is BottlesTextFieldState.Enabled -> BottlesTheme.color.text.enabledTertiary
+        is BottlesTextFieldState.Active -> BottlesTheme.color.text.activePrimary
+        is BottlesTextFieldState.Focused -> BottlesTheme.color.text.focusedPrimary
+        is BottlesTextFieldState.Error -> BottlesTheme.color.text.errorSecondary
+        is BottlesTextFieldState.Disabled -> BottlesTheme.color.text.disabledSecondary
+    }
+
     BasicTextField(
         modifier = modifier,
         value = value,
@@ -142,7 +181,7 @@ fun TextFieldWithTrailingButton(
             fontSize = 14.sp,
             letterSpacing = 0.sp,
             lineHeight = 14.sp * 1.5f,
-            color = BottlesTheme.color.text.activePrimary
+            color = textColor
         ),
         cursorBrush = SolidColor(
             value = BottlesTheme.color.border.focusedSecondary
@@ -157,14 +196,12 @@ fun TextFieldWithTrailingButton(
                 .fillMaxWidth()
                 .height(56.dp)
                 .background(
-                    color = if (!isFocused) BottlesTheme.color.container.enabledPrimary
-                    else BottlesTheme.color.container.focusedPrimary,
+                    color = containerColor,
                     shape = BottlesTheme.shape.radius12
                 )
                 .border(
                     width = 1.dp,
-                    color = if (!isError) BottlesTheme.color.border.enabled
-                    else BottlesTheme.color.border.error,
+                    color = borderColor,
                     shape = BottlesTheme.shape.radius12
                 )
                 .padding(horizontal = 16.dp),
@@ -172,10 +209,10 @@ fun TextFieldWithTrailingButton(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Box(modifier = Modifier.weight(1f)) {
-                if (!isFocused && value.isEmpty()) {
+                if (state is BottlesTextFieldState.Enabled) {
                     Text(
                         text = hint,
-                        color = BottlesTheme.color.text.enabledTertiary,
+                        color = textColor,
                         style = BottlesTheme.typography.body
                     )
                 }
@@ -191,7 +228,7 @@ fun TextFieldWithTrailingButton(
 }
 
 @Composable
-fun TextFieldErrorCaption(
+fun BottlesTextFieldErrorCaption(
     text: String
 ) {
     Text(
@@ -203,31 +240,23 @@ fun TextFieldErrorCaption(
 
 /*==============Preview==============*/
 
+private data class TextFieldUiState(
+    val firstTextFieldState: BottlesTextFieldState = BottlesTextFieldState.Enabled
+)
+
 @Preview(showBackground = true)
 @Composable
-private fun TextFieldWithTrailingPreview() {
+private fun LineTextFieldWithTrailingIconPreview() {
     BottlesTheme {
         var value by remember { mutableStateOf("Bottles") }
         var value2 by remember { mutableStateOf("") }
-        val isErrorTextField by remember { mutableStateOf(true) }
+        val interactionSource = remember { MutableInteractionSource() }
 
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(3.dp)
         ) {
-            TextFieldWithTrailingIcon( // 1. active
-                value = value,
-                onValueChange = { value = it },
-                hint = "placeholder",
-                trailingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_delete_24),
-                        contentDescription = null,
-                        tint = Color.Unspecified
-                    )
-                }
-            )
-            TextFieldWithTrailingIcon( // 2. enabled
+            BottlesLineTextFieldWithTrailingIcon( // 1. enabled
                 value = value2,
                 onValueChange = { value2 = it },
                 hint = "placeholder",
@@ -237,52 +266,65 @@ private fun TextFieldWithTrailingPreview() {
                         contentDescription = null,
                         tint = Color.Unspecified
                     )
-                }
+                },
+                state = BottlesTextFieldState.Enabled,
+                interactionSource = interactionSource
             )
-            TextFieldWithTrailingIcon( // 3. focused
+            BottlesLineTextFieldWithTrailingIcon( // 2. active
                 value = value,
                 onValueChange = { value = it },
                 hint = "placeholder",
-                isFocused = true,
                 trailingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_delete_24),
                         contentDescription = null,
                         tint = Color.Unspecified
                     )
-                }
+                },
+                state = BottlesTextFieldState.Active,
+                interactionSource = interactionSource
             )
-            Column {
-                TextFieldWithTrailingIcon( // 4. error
-                    value = value,
-                    onValueChange = { value = it },
-                    hint = "placeholder",
-                    isError = isErrorTextField,
-                    trailingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_delete_24),
-                            contentDescription = null,
-                            tint = Color.Unspecified
-                        )
-                    }
-                )
-                if (isErrorTextField) {
-                    Spacer(modifier = Modifier.height(BottlesTheme.spacing.spacing4))
-                    TextFieldErrorCaption("error_text")
-                }
-            }
-            TextFieldWithTrailingIcon( // 5. disabled
+            BottlesLineTextFieldWithTrailingIcon( // 3. focused
+                value = value,
+                onValueChange = { value = it },
+                hint = "placeholder",
+                trailingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_delete_24),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                },
+                state = BottlesTextFieldState.Focused,
+                interactionSource = interactionSource
+            )
+            BottlesLineTextFieldWithTrailingIcon( // 4. error
+                value = value,
+                onValueChange = { value = it },
+                hint = "placeholder",
+                trailingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_delete_24),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                },
+                state = BottlesTextFieldState.Error("Error Message"),
+                interactionSource = interactionSource
+            )
+            BottlesLineTextFieldWithTrailingIcon( // 5. disabled
                 value = value2,
                 onValueChange = { value2 = it },
-                hint = "Disabled",
-                enabled = false,
+                hint = "placeholder",
                 trailingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_delete_24),
                         contentDescription = null,
                         tint = Color.Unspecified
                     )
-                }
+                },
+                state = BottlesTextFieldState.Disabled,
+                interactionSource = interactionSource
             )
         }
     }
@@ -290,34 +332,22 @@ private fun TextFieldWithTrailingPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun TextFieldWithTrailingButtonPreview() {
+private fun LineTextFieldWithTrailingButtonPreview() {
     BottlesTheme {
         var value by remember { mutableStateOf("Bottles") }
         var value2 by remember { mutableStateOf("") }
+        val interactionSource = remember { MutableInteractionSource() }
 
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(3.dp)
         ) {
-            TextFieldWithTrailingButton( // 1. active
-                value = value,
-                onValueChange = { value = it },
-                hint = "placeholder",
-                trailingButton = {
-                    SolidButton(
-                        modifier = Modifier
-                            .width(53.dp)
-                            .height(36.dp),
-                        text = "Text",
-                        enabled = value.isNotEmpty(),
-                        onClick = {}
-                    )
-                }
-            )
-            TextFieldWithTrailingButton( // 2. enabled
+            BottlesLineTextFieldWithTrailingButton( // 1. enabled
                 value = value2,
                 onValueChange = { value2 = it },
                 hint = "placeholder",
+                state = BottlesTextFieldState.Enabled,
+                interactionSource = interactionSource,
                 trailingButton = {
                     SolidButton(
                         modifier = Modifier
@@ -329,11 +359,12 @@ private fun TextFieldWithTrailingButtonPreview() {
                     )
                 }
             )
-            TextFieldWithTrailingButton( // 3. focused
+            BottlesLineTextFieldWithTrailingButton( // 2. active
                 value = value,
                 onValueChange = { value = it },
                 hint = "placeholder",
-                isFocused = true,
+                state = BottlesTextFieldState.Active,
+                interactionSource = interactionSource,
                 trailingButton = {
                     SolidButton(
                         modifier = Modifier
@@ -345,6 +376,25 @@ private fun TextFieldWithTrailingButtonPreview() {
                     )
                 }
             )
+            BottlesLineTextFieldWithTrailingButton( // 1. focused
+                value = value,
+                onValueChange = { value = it },
+                hint = "placeholder",
+                state = BottlesTextFieldState.Focused,
+                interactionSource = interactionSource,
+                trailingButton = {
+                    SolidButton(
+                        modifier = Modifier
+                            .width(53.dp)
+                            .height(36.dp),
+                        text = "Text",
+                        enabled = value.isNotEmpty(),
+                        onClick = {}
+                    )
+                }
+            )
+
+
         }
     }
 }
