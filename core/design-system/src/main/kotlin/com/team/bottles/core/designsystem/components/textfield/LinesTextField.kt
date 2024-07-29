@@ -23,19 +23,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.team.bottles.core.designsystem.components.buttons.SolidButton
-import com.team.bottles.core.designsystem.foundation.wantedSansStd
+import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
+import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 /**
  * @GunHyung : 디자인 시스템에 정의 되어 있지 않은 색상은 Color.Transparent 로 정의
-  */
+ */
 
 @Composable
 fun BottlesLinesMaxLengthTextField(
@@ -90,12 +87,7 @@ fun BottlesLinesMaxLengthTextField(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
-        textStyle = TextStyle(
-            fontFamily = wantedSansStd,
-            fontWeight = FontWeight.Medium,
-            fontSize = 14.sp,
-            letterSpacing = 0.sp,
-            lineHeight = 14.sp * 1.5f,
+        textStyle = BottlesTheme.typography.body.copy(
             color = textColor
         ),
         cursorBrush = SolidColor(
@@ -163,6 +155,7 @@ fun BottlesLinesTextFieldWithButton(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
+    onClickButton: () -> Unit,
     hint: String,
     state: BottlesTextFieldState,
     buttonText: String,
@@ -211,12 +204,7 @@ fun BottlesLinesTextFieldWithButton(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
-        textStyle = TextStyle(
-            fontFamily = wantedSansStd,
-            fontWeight = FontWeight.Medium,
-            fontSize = 14.sp,
-            letterSpacing = 0.sp,
-            lineHeight = 14.sp * 1.5f,
+        textStyle = BottlesTheme.typography.body.copy(
             color = textColor
         ),
         cursorBrush = SolidColor(
@@ -278,13 +266,12 @@ fun BottlesLinesTextFieldWithButton(
 
             Spacer(Modifier.height(height = BottlesTheme.spacing.spacing12))
 
-            SolidButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
+            BottlesSolidButton(
+                modifier = Modifier.fillMaxWidth(),
+                buttonType = SolidButtonType.MD,
                 text = buttonText,
                 enabled = state != BottlesTextFieldState.Enabled,
-                onClick = { /*TODO*/ }
+                onClick = onClickButton,
             )
         }
     }
@@ -356,17 +343,20 @@ private fun BottlesLinesTextFieldWithButtonPreview() {
                 .padding(horizontal = 12.dp),
             verticalArrangement = Arrangement.spacedBy(3.dp)
         ) {
-            BottlesLinesTextFieldWithButton( // 1. enabled
+            BottlesLinesTextFieldWithButton(
+                // 1. enabled
                 value = value,
                 onValueChange = { value = it },
+                onClickButton = {},
                 hint = "placeHolder",
                 state = BottlesTextFieldState.Enabled,
                 interactionSource = interaction,
-                buttonText = "Text"
+                buttonText = "Text",
             )
             BottlesLinesTextFieldWithButton( // 2. active
                 value = value2,
                 onValueChange = { value2 = it },
+                onClickButton = {},
                 hint = "placeHolder",
                 state = BottlesTextFieldState.Active,
                 interactionSource = interaction,
@@ -375,6 +365,7 @@ private fun BottlesLinesTextFieldWithButtonPreview() {
             BottlesLinesTextFieldWithButton( // 3. focused
                 value = value2,
                 onValueChange = { value2 = it },
+                onClickButton = {},
                 hint = "placeHolder",
                 state = BottlesTextFieldState.Focused,
                 interactionSource = interaction,
