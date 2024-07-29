@@ -190,21 +190,18 @@ private fun OutlinedButtonPreview() {
                     onClick = {},
                     state = OutlinedButtonState.ENABLED,
                     image = null,
-                    placeholder = painterResource(id = R.drawable.sample_image)
                 )
                 OutlinedButtonWithImage(
                     text = "Text",
                     onClick = {},
                     state = OutlinedButtonState.SELECTED,
                     image = null,
-                    placeholder = painterResource(id = R.drawable.sample_image)
                 )
                 OutlinedButtonWithImage(
                     text = "Text",
                     onClick = {},
                     state = OutlinedButtonState.DISABLED,
                     image = null,
-                    placeholder = painterResource(id = R.drawable.sample_image)
                 )
             }
             OutlinedButton(

@@ -17,8 +17,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.coil.CoilImage
+import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.modifier.clickableSingleNoRipple
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
@@ -135,8 +138,6 @@ fun OutlinedButtonWithImage(
     onClick: () -> Unit,
     shape: Shape = BottlesTheme.shape.radius12,
     state: OutlinedButtonState = OutlinedButtonState.ENABLED,
-    contentDescription: String? = null,
-    placeholder: Painter? = null
 ) {
     val isEnabled: Boolean = state != OutlinedButtonState.DISABLED
     val backgroundColor = when (state) {
@@ -176,12 +177,13 @@ fun OutlinedButtonWithImage(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        AsyncImage(
+        CoilImage(
             modifier = Modifier.size(100.dp),
-            model = image,
-            contentDescription = contentDescription,
-            placeholder = placeholder,
-            contentScale = ContentScale.Crop
+            imageModel = { image },
+            previewPlaceholder = painterResource(id = R.drawable.sample_image),
+            imageOptions = ImageOptions(
+                contentScale = ContentScale.Crop
+            )
         )
         Text(
             text = text,

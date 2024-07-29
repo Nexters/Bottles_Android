@@ -17,5 +17,5 @@ dependencies {
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.lifecycle)
 
-    api(libs.coil.compose)
+    api(libs.landscapist.coil.compose)
 }

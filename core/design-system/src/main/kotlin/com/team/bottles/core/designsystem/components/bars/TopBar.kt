@@ -1,4 +1,4 @@
-package com.team.bottles.core.designsystem.components.topbars
+package com.team.bottles.core.designsystem.components.bars
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -23,13 +23,16 @@ fun EtcText(
     text: String,
     modifier: Modifier = Modifier,
 ) {
-    Row(
+    Box(
         modifier = modifier
             .background(
                 color = BottlesTheme.color.container.secondary,
                 shape = BottlesTheme.shape.radius8,
             )
-            .padding(8.dp),
+            .padding(
+                horizontal = 8.dp,
+                vertical = 4.dp
+            ),
     ) {
         Text(
             text = text,

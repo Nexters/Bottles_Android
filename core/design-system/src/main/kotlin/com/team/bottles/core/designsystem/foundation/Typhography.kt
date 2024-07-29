@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.team.bottles.core.designsystem.R
 
-internal val wantedSansStd =
+val wantedSansStd =
     FontFamily(
         Font(
             R.font.wanted_sans_std_bold,
@@ -25,7 +25,7 @@ internal val wantedSansStd =
         )
     )
 
-internal val roboto =
+val roboto =
     FontFamily(
         Font(
             R.font.roboto_medium,
@@ -34,7 +34,7 @@ internal val roboto =
         )
     )
 
-internal val laundryGothic =
+val laundryGothic =
     FontFamily(
         Font(
             R.font.laundry_gothic_bold,
