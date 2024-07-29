@@ -15,7 +15,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:design-system"))
                 add("implementation", project(":core:ui"))
                 add("implementation", project(":core:domain"))
-                add("implementation", libs.findLibrary("kotlin.coroutines.android").get())
+                add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
             }
         }
     }
