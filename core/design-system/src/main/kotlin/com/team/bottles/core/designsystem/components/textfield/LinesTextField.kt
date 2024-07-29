@@ -33,7 +33,10 @@ import com.team.bottles.core.designsystem.components.buttons.SolidButton
 import com.team.bottles.core.designsystem.foundation.wantedSansStd
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
-// @GunHyung : 디자인 시스템에 정의 되어 있지 않은 색상은 Color.Transparent 로 정의
+/**
+ * @GunHyung : 디자인 시스템에 정의 되어 있지 않은 색상은 Color.Transparent 로 정의
+  */
+
 @Composable
 fun BottlesLinesMaxLengthTextField(
     modifier: Modifier = Modifier,
