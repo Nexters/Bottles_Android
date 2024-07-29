@@ -11,4 +11,5 @@ object BottlesIcons {
     val ic_group_14 = R.drawable.ic_group_14
     val ic_right_16 = R.drawable.ic_right_16
     val ic_delete_24 = R.drawable.ic_delete_24
+    val ic_balloon_vertex_10_6 = R.drawable.ic_balloon_vertex_10_6
 }
