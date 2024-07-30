@@ -32,6 +32,13 @@ dependencies {
     implementation(projects.core.datastore)
     implementation(projects.core.ui)
 
+    implementation(projects.feat.bottle)
+    implementation(projects.feat.sandbeach)
+    implementation(projects.feat.login)
+    implementation(projects.feat.mypage)
+    implementation(projects.feat.onboarding)
+    implementation(projects.feat.profile)
+
     // Compose
     implementation(libs.androidx.compose.activity)
 
