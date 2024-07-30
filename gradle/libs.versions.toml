@@ -10,7 +10,7 @@ versionName = "1.0.0"
 # kotlin
 kotlin = "2.0.0"
 kotlin-jvm = "1.9.23"
-kotlinx-coroutines = "1.8.0"
+kotlinx-coroutines = "1.8.1"
 kotlinx-collections-immutable = "0.3.7"
 kotlinx-serialization-plugin = "2.0.0"
 kotlinx-serialization = "1.7.0"
@@ -23,10 +23,10 @@ agp = "8.3.2"
 ksp = "2.0.0-1.0.22"
 
 # androidx
-androidx-lifecycle = "2.8.3"
+androidx-lifecycle = "2.8.4"
 
 # compose
-androidx-activity-compose = "1.9.0"
+androidx-activity-compose = "1.9.1"
 androidx-compose-bom = "2024.06.00"
 
 # jetpack
