@@ -32,6 +32,7 @@ dependencies {
     implementation(projects.core.datastore)
     implementation(projects.core.ui)
     implementation(projects.core.navigator)
+    implementation(projects.core.common)
 
     implementation(projects.feat.bottle)
     implementation(projects.feat.sandbeach)
@@ -44,6 +45,7 @@ dependencies {
     implementation(libs.androidx.compose.activity)
 
     implementation(libs.androidx.navigation.compose)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
