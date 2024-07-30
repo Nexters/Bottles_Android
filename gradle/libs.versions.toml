@@ -32,6 +32,7 @@ androidx-compose-bom = "2024.06.00"
 # jetpack
 androidx-room = "2.6.1"
 androidx-datastore = "1.1.1"
+androidx-navigation-compose = "2.8.0-beta06"
 
 # dagger hilt
 dagger-hilt = "2.51.1"
@@ -92,6 +93,7 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 androidx-room-core = {group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = {group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidx-datastore" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation-compose"}
 
 # dagger hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt" }
