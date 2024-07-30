@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Bottles</string>
+    <string name="sand_beach">모래사장</string>
+    <string name="bottle_box">보틀 보관함</string>
+    <string name="my_page">마이페이지</string>
 </resources>
