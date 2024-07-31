@@ -5,7 +5,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.team.bottles.core.domain.auth.KakaoClinetResult
+import com.team.bottles.core.domain.auth.KakaoClientResult
 import com.team.bottles.core.domain.auth.KakaoClient
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -17,7 +17,7 @@ class KakaoClientImpl @Inject constructor(
     @ActivityContext private val activityContext: Context,
 ) : KakaoClient {
 
-    override suspend fun login(): KakaoClinetResult {
+    override suspend fun login(): KakaoClientResult {
         val isKakaoTalkInstalled = UserApiClient.instance.isKakaoTalkLoginAvailable(activityContext)
         return if (isKakaoTalkInstalled) {
             loginWithKakaoTalk()
@@ -73,4 +73,4 @@ class KakaoClientImpl @Inject constructor(
     }
 }
 
-private fun OAuthToken.toThirdPartyAccessToken() = KakaoClinetResult(accessToken = accessToken)
+private fun OAuthToken.toThirdPartyAccessToken() = KakaoClientResult(accessToken = accessToken)

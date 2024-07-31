@@ -1,5 +1,5 @@
 package com.team.bottles.core.domain.auth
 
-data class KakaoClinetResult(
+data class KakaoClientResult(
     val accessToken: String
 )

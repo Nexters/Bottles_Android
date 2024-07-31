@@ -2,6 +2,6 @@ package com.team.bottles.core.domain.auth
 
 interface KakaoClient {
 
-    suspend fun login(): KakaoClinetResult
+    suspend fun login(): KakaoClientResult
 
 }

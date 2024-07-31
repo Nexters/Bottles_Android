@@ -1,10 +1,12 @@
 package com.team.bottles.feat.login.mvi
 
 import com.team.bottles.core.common.UiIntent
-import com.team.bottles.core.domain.auth.KakaoClinetResult
+import com.team.bottles.core.domain.auth.KakaoClientResult
 
-sealed class LoginIntent : UiIntent {
+sealed interface LoginIntent : UiIntent {
 
-    data class ClickKakaoLoginButton(val accessToken: KakaoClinetResult) : LoginIntent()
+    data object ClickKakaoLoginButton : LoginIntent
+
+    data class KakaoLogin(val kakaoClientResult: KakaoClientResult): LoginIntent
 
 }
