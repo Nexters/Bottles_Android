@@ -1,7 +1,7 @@
 package com.team.bottles.di.usecase
 
-import com.team.bottles.core.domain.login.kakao.usecase.LoginWithKakaoUseCase
-import com.team.bottles.core.domain.login.kakao.usecase.LoginWithKakaoUseCaseImpl
+import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCase
+import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
 package com.team.bottles.di.client
 
 import com.team.bottles.client.KakaoClientImpl
-import com.team.bottles.core.domain.login.kakao.KakaoClient
+import com.team.bottles.core.domain.auth.KakaoClient
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
