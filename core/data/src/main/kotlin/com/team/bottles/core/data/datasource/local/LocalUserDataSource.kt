@@ -5,11 +5,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalUserDataSource {
 
-    fun loadKakaoToken(): Flow<String>
+    fun fetchAccessToken(): Flow<String>
 
-    suspend fun updateKakaoToken(token: String)
+    suspend fun updateAccessToken(accessToken: String)
 
-    fun loadLocalUserData(): Flow<LocalUserData>
+    fun fetchRefreshToken(): Flow<String>
+
+    suspend fun updateRefreshToken(refreshToken: String)
+
+    fun fetchLocalUserData(): Flow<LocalUserData>
 
     suspend fun updateLocalUserData(data: LocalUserData)
 

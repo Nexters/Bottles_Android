@@ -7,16 +7,23 @@ import javax.inject.Inject
 
 class LocalUserDataSourceImpl @Inject constructor(
     private val userDataStoreManager: UserDataStoreManager
-): LocalUserDataSource {
+) : LocalUserDataSource {
 
-    override fun loadKakaoToken(): Flow<String> =
-        userDataStoreManager.getKakaoToken()
+    override fun fetchAccessToken(): Flow<String> =
+        userDataStoreManager.getAccessToken()
 
-    override suspend fun updateKakaoToken(token: String) {
-        userDataStoreManager.setKakaoToken(token = token)
+    override suspend fun updateAccessToken(accessToken: String) {
+        userDataStoreManager.setAccessToken(accessToken = accessToken)
     }
 
-    override fun loadLocalUserData(): Flow<LocalUserData> =
+    override fun fetchRefreshToken(): Flow<String> =
+        userDataStoreManager.getRefreshToken()
+
+    override suspend fun updateRefreshToken(refreshToken: String) {
+        userDataStoreManager.setRefreshToken(refreshToken = refreshToken)
+    }
+
+    override fun fetchLocalUserData(): Flow<LocalUserData> =
         userDataStoreManager.getLocalUserData()
 
     override suspend fun updateLocalUserData(data: LocalUserData) {

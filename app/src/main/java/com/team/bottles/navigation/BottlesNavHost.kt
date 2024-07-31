@@ -28,7 +28,10 @@ fun BottlesNavHost(
         startDestination = LoginNavigator
     ) {
         with(navHostController) {
-            loginScreen(navigateToOnboarding = ::navigateToOnboarding)
+            loginScreen(
+                navigateToOnboarding = ::navigateToOnboarding,
+                navigateToSandBeach = ::navigateToSandBeach
+            )
             onboardingScreen(navigateToCreateProfile = ::navigateToCreateProfile)
             createProfileScreen(navigateToSandBeach = ::navigateToSandBeach)
             sandBeachScreen(

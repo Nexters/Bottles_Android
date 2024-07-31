@@ -2,6 +2,8 @@ package com.team.bottles.feat.login
 
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
+import com.team.bottles.core.domain.auth.KakaoClientResult
+import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCase
 import com.team.bottles.feat.login.mvi.LoginIntent
 import com.team.bottles.feat.login.mvi.LoginSideEffect
 import com.team.bottles.feat.login.mvi.LoginUiState
@@ -10,16 +12,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val loginWithKakaoUseCase: LoginWithKakaoUseCase,
     savedStateHandle: SavedStateHandle
-
-): BaseViewModel<LoginUiState, LoginSideEffect, LoginIntent>(savedStateHandle) {
+) : BaseViewModel<LoginUiState, LoginSideEffect, LoginIntent>(savedStateHandle) {
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): LoginUiState =
-        LoginUiState()
+        LoginUiState
 
     override suspend fun handleIntent(intent: LoginIntent) {
-        when(intent) {
-            is LoginIntent.ClickLoginButton -> navigateToOnboarding()
+        when (intent) {
+            is LoginIntent.ClickKakaoLoginButton -> postSideEffect(LoginSideEffect.StartKakaoClient)
+            is LoginIntent.KakaoLogin -> kakaoLoin(kakaoClientResult = intent.kakaoClientResult)
         }
     }
 
@@ -27,8 +30,17 @@ class LoginViewModel @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    private fun navigateToOnboarding() {
-        postSideEffect(LoginSideEffect.NavigateToOnboarding)
+    private fun kakaoLoin(kakaoClientResult: KakaoClientResult) {
+        launch {
+            val isSignUp =
+                loginWithKakaoUseCase(accessToken = kakaoClientResult.accessToken).isSignUp
+
+            if (isSignUp) {
+                postSideEffect(LoginSideEffect.NavigateToSandBeach)
+            } else {
+                postSideEffect(LoginSideEffect.NavigateToOnboarding)
+            }
+        }
     }
 
 }

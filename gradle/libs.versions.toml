@@ -53,6 +53,9 @@ landscapist-coil-compose = "2.3.6"
 # lottie
 airbnb-lottie = "6.4.0"
 
+# kakao
+kakao-login = "2.14.0"
+
 # test
 junit = "4.13.2"
 androidx-junit-version = "1.2.1"
@@ -117,6 +120,9 @@ retrofit-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kot
 okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okHttp" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
+
+# kakao
+kakao-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao-login" }
 
 # androidx test
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }

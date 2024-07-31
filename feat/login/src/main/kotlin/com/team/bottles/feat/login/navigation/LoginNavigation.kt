@@ -6,9 +6,13 @@ import LoginNavigator
 import com.team.bottles.feat.login.LoginRoute
 
 fun NavGraphBuilder.loginScreen(
-    navigateToOnboarding: () -> Unit
+    navigateToOnboarding: () -> Unit,
+    navigateToSandBeach: () -> Unit
 ) {
     composable<LoginNavigator> {
-        LoginRoute(navigateToOnboarding = navigateToOnboarding)
+        LoginRoute(
+            navigateToOnboarding = navigateToOnboarding,
+            navigateToSandBeach = navigateToSandBeach
+        )
     }
 }

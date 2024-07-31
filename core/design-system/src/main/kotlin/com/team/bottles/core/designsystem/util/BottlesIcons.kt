@@ -12,4 +12,5 @@ object BottlesIcons {
     val ic_right_16 = R.drawable.ic_right_16
     val ic_delete_24 = R.drawable.ic_delete_24
     val ic_balloon_vertex_10_6 = R.drawable.ic_balloon_vertex_10_6
+    val ic_kakao_logo_24 = R.drawable.ic_kakao_logo_24
 }

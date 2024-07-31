@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("team.bottles.android.application")
     id("team.bottles.android.application.compose")
@@ -13,6 +15,11 @@ android {
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val kakaoNativeAppKey = gradleLocalProperties(rootDir, providers).getProperty("KAKAO_NATIVE_APP_KEY")
+        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", kakaoNativeAppKey)
+
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = kakaoNativeAppKey.replace("\"","")
     }
 
     buildFeatures {
@@ -43,8 +50,10 @@ dependencies {
 
     // Compose
     implementation(libs.androidx.compose.activity)
-
     implementation(libs.androidx.navigation.compose)
+
+    // Kakao
+    implementation(libs.kakao.login)
 
     // Test
     testImplementation(libs.junit)
