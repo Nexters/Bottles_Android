@@ -6,4 +6,6 @@ sealed class LoginSideEffect: UiSideEffect {
 
     data object NavigateToOnboarding: LoginSideEffect()
 
+    data object NavigateToSandBeach: LoginSideEffect()
+
 }

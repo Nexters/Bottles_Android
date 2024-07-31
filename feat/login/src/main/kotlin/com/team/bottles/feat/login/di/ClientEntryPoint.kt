@@ -1,7 +1,7 @@
 package com.team.bottles.feat.login.di
 
 import android.app.Activity
-import com.team.bottles.core.domain.login.kakao.KakaoClient
+import com.team.bottles.core.domain.auth.KakaoClient
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors

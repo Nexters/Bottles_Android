@@ -1,15 +1,13 @@
 package com.team.bottles.feat.login
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import com.team.bottles.core.common.BaseViewModel
-import com.team.bottles.core.domain.login.ThirdPartyAccessToken
-import com.team.bottles.core.domain.login.kakao.usecase.LoginWithKakaoUseCase
+import com.team.bottles.core.domain.auth.KakaoClinetResult
+import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCase
 import com.team.bottles.feat.login.mvi.LoginIntent
 import com.team.bottles.feat.login.mvi.LoginSideEffect
 import com.team.bottles.feat.login.mvi.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,10 +29,15 @@ class LoginViewModel @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    private fun kakaoLoin(thirdPartyAccessToken: ThirdPartyAccessToken) {
-        viewModelScope.launch {
-            loginWithKakaoUseCase(accessToken = thirdPartyAccessToken)
-            postSideEffect(LoginSideEffect.NavigateToOnboarding)
+    private fun kakaoLoin(thirdPartyAccessToken: KakaoClinetResult) {
+        launch {
+            val isSignUp = loginWithKakaoUseCase(accessToken = thirdPartyAccessToken.accessToken).isSignUp
+
+            if (isSignUp) {
+                postSideEffect(LoginSideEffect.NavigateToSandBeach)
+            } else {
+                postSideEffect(LoginSideEffect.NavigateToOnboarding)
+            }
         }
     }
 

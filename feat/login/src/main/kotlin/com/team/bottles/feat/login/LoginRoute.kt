@@ -10,7 +10,8 @@ import com.team.bottles.feat.login.mvi.LoginSideEffect
 @Composable
 fun LoginRoute(
     viewModel: LoginViewModel = hiltViewModel(),
-    navigateToOnboarding: () -> Unit
+    navigateToOnboarding: () -> Unit,
+    navigateToSandBeach: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -18,6 +19,7 @@ fun LoginRoute(
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
+                is LoginSideEffect.NavigateToSandBeach -> navigateToSandBeach()
             }
         }
     }
