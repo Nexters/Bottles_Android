@@ -16,7 +16,7 @@ fun LoginRoute(
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
-            when(sideEffect) {
+            when (sideEffect) {
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
             }
         }
@@ -24,6 +24,6 @@ fun LoginRoute(
 
     LoginScreen(
         uiState = uiState,
-        onIntent = { intent -> viewModel.intent(intent) }
+        onIntent = { intent -> viewModel.intent(intent) },
     )
 }
