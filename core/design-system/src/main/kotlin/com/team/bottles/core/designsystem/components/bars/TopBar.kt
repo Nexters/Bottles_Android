@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
-fun TopBar(
+fun BottlesTopBar(
     modifier: Modifier = Modifier,
     backgroundColor: Color = BottlesTheme.color.background.primary,
     leadingIcon: (@Composable () -> Unit)? = null,
@@ -67,7 +67,7 @@ fun TopBar(
 fun PreviewTopBar() {
     Column {
         // Preview 1: Leading Icon만 있는 경우
-        TopBar(
+        BottlesTopBar(
             leadingIcon = {
                 IconButton(onClick = { /* Handle click */ }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -78,7 +78,7 @@ fun PreviewTopBar() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Preview 2: Leading Icon과 Trailing Icon만 있는 경우
-        TopBar(
+        BottlesTopBar(
             leadingIcon = {
                 IconButton(onClick = { /* Handle click */ }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -94,7 +94,7 @@ fun PreviewTopBar() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Preview 3: Leading Icon과 Text가 있는 경우
-        TopBar(
+        BottlesTopBar(
             leadingIcon = {
                 IconButton(onClick = { /* Handle click */ }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -106,7 +106,7 @@ fun PreviewTopBar() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Preview 4: Leading Icon, Text, Trailing Icon 모두 있는 경우
-        TopBar(
+        BottlesTopBar(
             leadingIcon = {
                 IconButton(onClick = { /* Handle click */ }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -121,6 +121,6 @@ fun PreviewTopBar() {
         )
 
         // Preview 5: 아무것도 없는 경우
-        TopBar()
+        BottlesTopBar()
     }
 }

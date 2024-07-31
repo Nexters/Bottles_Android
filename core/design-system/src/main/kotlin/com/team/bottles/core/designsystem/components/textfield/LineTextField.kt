@@ -34,7 +34,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
 import com.team.bottles.core.designsystem.components.buttons.SolidButton
+import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
 import com.team.bottles.core.designsystem.foundation.wantedSansStd
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
@@ -338,10 +340,8 @@ private fun LineTextFieldWithTrailingButtonPreview() {
                 state = BottlesTextFieldState.Enabled,
                 interactionSource = interactionSource,
                 trailingButton = {
-                    SolidButton(
-                        modifier = Modifier
-                            .width(53.dp)
-                            .height(36.dp),
+                    BottlesSolidButton(
+                        buttonType = SolidButtonType.MD,
                         text = "Text",
                         enabled = value2.isNotEmpty(),
                         onClick = {}
@@ -355,10 +355,8 @@ private fun LineTextFieldWithTrailingButtonPreview() {
                 state = BottlesTextFieldState.Active,
                 interactionSource = interactionSource,
                 trailingButton = {
-                    SolidButton(
-                        modifier = Modifier
-                            .width(53.dp)
-                            .height(36.dp),
+                    BottlesSolidButton(
+                        buttonType = SolidButtonType.MD,
                         text = "Text",
                         enabled = value.isNotEmpty(),
                         onClick = {}
@@ -372,10 +370,8 @@ private fun LineTextFieldWithTrailingButtonPreview() {
                 state = BottlesTextFieldState.Focused,
                 interactionSource = interactionSource,
                 trailingButton = {
-                    SolidButton(
-                        modifier = Modifier
-                            .width(53.dp)
-                            .height(36.dp),
+                    BottlesSolidButton(
+                        buttonType = SolidButtonType.MD,
                         text = "Text",
                         enabled = value.isNotEmpty(),
                         onClick = {}
