@@ -1,6 +1,5 @@
 package com.team.bottles.core.datastore.manager
 
-import android.util.Log
 import androidx.datastore.core.DataStore
 import com.team.bottles.core.datastore.UserPreferences
 import com.team.bottles.core.datastore.model.LocalUserData
@@ -14,20 +13,30 @@ class UserDataStoreManagerImpl @Inject constructor(
     private val userPreferences: DataStore<UserPreferences>
 ) : UserDataStoreManager {
 
-    override suspend fun setKakaoToken(token: String): String {
-        val updatedPreferences = userPreferences.updateData { preferences ->
+    override suspend fun setAccessToken(accessToken: String) {
+        userPreferences.updateData { preferences ->
             preferences.toBuilder()
-                .setKakaoToken(token)
+                .setAccessToken(accessToken)
                 .build()
         }
-        Log.d("매니저", updatedPreferences.toString())
-
-        return updatedPreferences.kakaoToken
     }
 
-    override fun getKakaoToken(): Flow<String> =
+    override fun getAccessToken(): Flow<String> =
         userPreferences.data.map { preferences ->
-            preferences.kakaoToken
+            preferences.accessToken
+        }
+
+    override suspend fun setRefreshToken(refreshToken: String) {
+        userPreferences.updateData { preferences ->
+            preferences.toBuilder()
+                .setRefreshToken(refreshToken)
+                .build()
+        }
+    }
+
+    override fun getRefreshToken(): Flow<String> =
+        userPreferences.data.map { preferences ->
+            preferences.refreshToken
         }
 
     override fun getLocalUserData(): Flow<LocalUserData> =
@@ -41,7 +50,7 @@ class UserDataStoreManagerImpl @Inject constructor(
         }
 
     override suspend fun setLocalUserData(localUserData: LocalUserData) {
-        userPreferences.updateData { preferences->
+        userPreferences.updateData { preferences ->
             preferences.toBuilder()
                 .setUserName(localUserData.name)
                 .setAge(localUserData.age)

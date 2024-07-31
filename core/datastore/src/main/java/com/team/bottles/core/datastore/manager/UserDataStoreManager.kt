@@ -5,12 +5,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserDataStoreManager {
 
-    suspend fun setKakaoToken(token: String): String
+    suspend fun setAccessToken(accessToken: String)
 
-    fun getKakaoToken(): Flow<String>
+    fun getAccessToken(): Flow<String>
 
-    fun getLocalUserData(): Flow<LocalUserData>
+    suspend fun setRefreshToken(refreshToken: String)
+
+    fun getRefreshToken(): Flow<String>
 
     suspend fun setLocalUserData(localUserData: LocalUserData)
+
+    fun getLocalUserData(): Flow<LocalUserData>
 
 }
