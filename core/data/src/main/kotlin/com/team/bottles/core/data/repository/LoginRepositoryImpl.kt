@@ -18,6 +18,7 @@ class LoginRepositoryImpl @Inject constructor(
             request = KakaoSignInUpRequest(code = accessToken)
         ).also { response ->
             tokenDataSource.setAccessToken(response.accessToken)
+            tokenDataSource.setRefreshToken(response.refreshToken)
         }.toAuthResult()
 
 }
