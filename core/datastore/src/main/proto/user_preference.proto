@@ -4,12 +4,10 @@ option java_package = "com.team.bottles.core.datastore";
 option java_multiple_files = true;
 
 message UserPreferences {
-    string access_token = 1;
-    string refresh_token = 2;
-    string user_name = 3;
-    int32 age = 4;
-    repeated Introduction introductions = 5;
-    ProfileSelect profile_select = 6;
+    string user_name = 1;
+    int32 age = 2;
+    repeated Introduction introductions = 3;
+    ProfileSelect profile_select = 4;
 }
 
 message Introduction {

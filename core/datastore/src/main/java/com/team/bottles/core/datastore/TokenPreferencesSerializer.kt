@@ -6,18 +6,18 @@ import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
 
-object UserPreferenceSerializer : Serializer<UserPreferences> {
+object TokenPreferencesSerializer : Serializer<TokenPreferences> {
 
-    override val defaultValue: UserPreferences = UserPreferences.getDefaultInstance()
+    override val defaultValue: TokenPreferences = TokenPreferences.getDefaultInstance()
 
-    override suspend fun readFrom(input: InputStream): UserPreferences =
+    override suspend fun readFrom(input: InputStream): TokenPreferences =
         try {
-            UserPreferences.parseFrom(input)
+            TokenPreferences.parseFrom(input)
         } catch (exception: InvalidProtocolBufferException) {
             throw CorruptionException("Cannot read proto.", exception)
         }
 
-    override suspend fun writeTo(t: UserPreferences, output: OutputStream) =
+    override suspend fun writeTo(t: TokenPreferences, output: OutputStream) =
         t.writeTo(output)
 
 }
