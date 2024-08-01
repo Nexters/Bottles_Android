@@ -1,10 +1,10 @@
 package com.team.bottles.core.data.repository
 
-import com.team.bottles.core.data.datasource.remote.AuthDataSource
 import com.team.bottles.core.data.model.toAuthResult
 import com.team.bottles.core.datastore.datasource.TokenDataSource
 import com.team.bottles.core.domain.auth.model.AuthResult
 import com.team.bottles.core.domain.auth.repository.AuthRepository
+import com.team.bottles.network.datasource.AuthDataSource
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
 import javax.inject.Inject
 

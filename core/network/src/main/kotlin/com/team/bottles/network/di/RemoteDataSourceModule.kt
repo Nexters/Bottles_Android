@@ -1,7 +1,7 @@
-package com.team.bottles.di.datasource
+package com.team.bottles.network.di
 
-import com.team.bottles.core.data.datasource.remote.AuthDataSource
-import com.team.bottles.core.data.datasource.remote.AuthDataSourceImpl
+import com.team.bottles.network.datasource.AuthDataSource
+import com.team.bottles.network.datasource.AuthDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
