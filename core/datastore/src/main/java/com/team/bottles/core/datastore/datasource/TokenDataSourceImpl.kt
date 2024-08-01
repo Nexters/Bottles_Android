@@ -37,7 +37,11 @@ class TokenDataSourceImpl @Inject constructor(
         }.first()
 
     override suspend fun clear() {
-        TODO()
+        tokenPreferences.updateData { preferences ->
+            preferences.toBuilder()
+                .clear()
+                .build()
+        }
     }
 
 }
