@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.domain)
+    implementation(projects.core.datastore)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)
