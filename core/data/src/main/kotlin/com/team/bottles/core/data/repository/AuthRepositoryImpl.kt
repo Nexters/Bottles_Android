@@ -8,7 +8,7 @@ import com.team.bottles.network.datasource.AuthDataSource
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(
+class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource,
     private val tokenDataSource: TokenDataSource
 ) : AuthRepository {
@@ -20,5 +20,10 @@ class LoginRepositoryImpl @Inject constructor(
             tokenDataSource.setAccessToken(response.accessToken)
             tokenDataSource.setRefreshToken(response.refreshToken)
         }.toAuthResult()
+
+    override suspend fun logout() {
+        val accessToken = tokenDataSource.getAccessToken()
+        authDataSource.logout(accessToken = accessToken)
+    }
 
 }

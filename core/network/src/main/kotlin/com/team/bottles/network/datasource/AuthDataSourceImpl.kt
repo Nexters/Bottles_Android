@@ -17,7 +17,7 @@ class AuthDataSourceImpl @Inject constructor(
         authService.loginWithKakao(kakaoSignInUpRequest = request)
 
     override suspend fun refreshAccessToken(refreshToken: String): Result<TokensResponse> =
-        runCatching { authService.refresh(refreshToken = refreshToken) }
+        runCatching { authService.refresh(refreshToken = "$TOKEN_TYPE $refreshToken") }
 
     override suspend fun signup(request: SignUpRequest): TokensResponse =
         authService.signup(singUpRequest = request)
@@ -26,11 +26,11 @@ class AuthDataSourceImpl @Inject constructor(
         authService.loginWithSms(smsSignInRequest = request)
 
     override suspend fun logout(accessToken: String) {
-        authService.logout(accessToken = accessToken)
+        authService.logout(accessToken = "$TOKEN_TYPE $accessToken")
     }
 
     override suspend fun deleteUser(accessToken: String) {
-        authService.deleteUser(accessToken = accessToken)
+        authService.deleteUser(accessToken = "$TOKEN_TYPE $accessToken")
     }
 
     override suspend fun getSmsCode(request: AuthSmsRequest) {
@@ -39,6 +39,10 @@ class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun checkSendSms(request: AuthSmsRequest) {
         authService.checkSendSms(authSmsRequest = request)
+    }
+
+    companion object {
+        private const val TOKEN_TYPE = "Bearer"
     }
 
 }
