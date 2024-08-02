@@ -1,18 +1,35 @@
 package com.team.bottles.feat.login.navigation
 
+import LoginNavigator
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import LoginNavigator
 import com.team.bottles.feat.login.LoginRoute
+import com.team.bottles.feat.login.smslogin.SmsLoginRoute
 
 fun NavGraphBuilder.loginScreen(
     navigateToOnboarding: () -> Unit,
-    navigateToSandBeach: () -> Unit
+    navigateToSandBeach: () -> Unit,
+    navigateToSignup: () -> Unit,
+    navigateToSmsLogin: () -> Unit
 ) {
-    composable<LoginNavigator> {
+    composable<LoginNavigator.Endpoint> {
         LoginRoute(
             navigateToOnboarding = navigateToOnboarding,
-            navigateToSandBeach = navigateToSandBeach
+            navigateToSandBeach = navigateToSandBeach,
+            navigateToSignup = navigateToSignup,
+            navigateToSmsLogin = navigateToSmsLogin
+        )
+    }
+}
+
+fun NavGraphBuilder.smsLoginScreen(
+    navigateToLogin: () -> Unit,
+    navigateToSandBeach: () -> Unit,
+) {
+    composable<LoginNavigator.SmsLogin> {
+        SmsLoginRoute(
+            navigateToLogin = navigateToLogin,
+            navigateToSandBeach = navigateToSandBeach,
         )
     }
 }

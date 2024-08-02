@@ -16,7 +16,9 @@ import com.team.bottles.feat.login.mvi.LoginSideEffect
 fun LoginRoute(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToOnboarding: () -> Unit,
-    navigateToSandBeach: () -> Unit
+    navigateToSandBeach: () -> Unit,
+    navigateToSignup: () -> Unit,
+    navigateToSmsLogin: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val activity = LocalContext.current as Activity
@@ -27,8 +29,8 @@ fun LoginRoute(
             when (sideEffect) {
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
                 is LoginSideEffect.NavigateToSandBeach -> navigateToSandBeach()
-                is LoginSideEffect.NavigateToSignup -> {}
-                is LoginSideEffect.NavigateToSmsLogin -> {}
+                is LoginSideEffect.NavigateToSignup -> navigateToSignup()
+                is LoginSideEffect.NavigateToSmsLogin -> navigateToSmsLogin()
                 is LoginSideEffect.StartKakaoClient -> {
                     val kakaoClientResult = kakaoClient.login()
                     viewModel.intent(LoginIntent.KakaoLogin(kakaoClientResult = kakaoClientResult))
