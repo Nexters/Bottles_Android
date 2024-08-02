@@ -31,7 +31,6 @@ abstract class BaseViewModel<S : UiState, SE : UiSideEffect, I : UiIntent>(
     private val _sideEffect: MutableSharedFlow<SE> = MutableSharedFlow()
     val sideEffect = _sideEffect.asSharedFlow()
 
-    // Get current state
     protected val currentState: S
         get() = _state.value
 

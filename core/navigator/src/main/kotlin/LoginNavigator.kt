@@ -1,4 +1,11 @@
 import kotlinx.serialization.Serializable
 
-@Serializable
-data object LoginNavigator
+sealed interface LoginNavigator {
+
+    @Serializable
+    data object SmsLogin: LoginNavigator
+
+    @Serializable
+    data object Endpoint: LoginNavigator
+
+}
