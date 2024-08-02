@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
-import com.team.bottles.core.designsystem.modifier.clickableSingle
+import com.team.bottles.core.designsystem.modifier.debounceClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
@@ -42,11 +42,9 @@ fun BottlesBottomNavItem(
     Column(
         modifier = Modifier
             .width(width = 84.dp)
-            .clickableSingle(
+            .debounceClickable(
                 enabled = !isSelected,
                 onClick = onClick,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(

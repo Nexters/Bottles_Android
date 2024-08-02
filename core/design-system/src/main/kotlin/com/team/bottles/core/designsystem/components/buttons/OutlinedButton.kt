@@ -15,14 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
-import com.team.bottles.core.designsystem.modifier.clickableSingleNoRipple
+import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
@@ -62,7 +61,7 @@ fun OutlinedButton(
                 color = borderColor,
                 shape = shape
             )
-            .clickableSingleNoRipple(
+            .debounceNoRippleClickable(
                 enabled = isEnabled,
                 onClick = onClick
             ),
@@ -114,7 +113,7 @@ fun OutlinedButtonWithIcon(
                 color = borderColor,
                 shape = shape
             )
-            .clickableSingleNoRipple(
+            .debounceNoRippleClickable(
                 enabled = isEnabled,
                 onClick = onClick
             ),
@@ -170,7 +169,7 @@ fun OutlinedButtonWithImage(
                 color = borderColor,
                 shape = shape
             )
-            .clickableSingleNoRipple(
+            .debounceNoRippleClickable(
                 enabled = isEnabled,
                 onClick = onClick
             ),
