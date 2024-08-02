@@ -27,6 +27,8 @@ fun LoginRoute(
             when (sideEffect) {
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
                 is LoginSideEffect.NavigateToSandBeach -> navigateToSandBeach()
+                is LoginSideEffect.NavigateToSignup -> {}
+                is LoginSideEffect.NavigateToSmsLogin -> {}
                 is LoginSideEffect.StartKakaoClient -> {
                     val kakaoClientResult = kakaoClient.login()
                     viewModel.intent(LoginIntent.KakaoLogin(kakaoClientResult = kakaoClientResult))

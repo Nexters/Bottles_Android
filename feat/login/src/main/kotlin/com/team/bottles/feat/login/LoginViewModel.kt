@@ -21,8 +21,10 @@ class LoginViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: LoginIntent) {
         when (intent) {
-            is LoginIntent.ClickKakaoLoginButton -> postSideEffect(LoginSideEffect.StartKakaoClient)
+            is LoginIntent.ClickKakaoLoginButton -> startKakaoClient()
             is LoginIntent.KakaoLogin -> kakaoLoin(kakaoClientResult = intent.kakaoClientResult)
+            is LoginIntent.ClickSmsLoginButton -> navigateToSmsLogin()
+            is LoginIntent.ClickSignupButton -> navigateToSignup()
         }
     }
 
@@ -41,6 +43,18 @@ class LoginViewModel @Inject constructor(
                 postSideEffect(LoginSideEffect.NavigateToOnboarding)
             }
         }
+    }
+
+    private fun startKakaoClient() {
+        postSideEffect(LoginSideEffect.StartKakaoClient)
+    }
+
+    private fun navigateToSmsLogin() {
+        postSideEffect(LoginSideEffect.NavigateToSmsLogin)
+    }
+
+    private fun navigateToSignup() {
+        postSideEffect(LoginSideEffect.NavigateToSignup)
     }
 
 }
