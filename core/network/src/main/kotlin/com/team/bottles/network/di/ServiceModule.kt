@@ -7,14 +7,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.create
-import javax.inject.Singleton
+import javax.inject.Named
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ServiceModule {
 
     @Provides
-    @Singleton
-    fun providesAuthService(retrofit: Retrofit): AuthService = retrofit.create()
+    fun providesDefaultAuthService(@Named("Default") retrofit: Retrofit): AuthService = retrofit.create()
 
 }

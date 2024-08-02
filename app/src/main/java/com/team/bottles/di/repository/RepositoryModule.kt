@@ -1,6 +1,6 @@
 package com.team.bottles.di.repository
 
-import com.team.bottles.core.data.repository.LoginRepositoryImpl
+import com.team.bottles.core.data.repository.AuthRepositoryImpl
 import com.team.bottles.core.domain.auth.repository.AuthRepository
 import dagger.Binds
 import dagger.Module
@@ -14,6 +14,6 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindsLoginRepository(repoImpl: LoginRepositoryImpl): AuthRepository
+    abstract fun bindsLoginRepository(repoImpl: AuthRepositoryImpl): AuthRepository
 
 }

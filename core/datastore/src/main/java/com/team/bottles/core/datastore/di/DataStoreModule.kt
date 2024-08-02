@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
-import com.team.bottles.core.datastore.UserPreferenceSerializer
+import com.team.bottles.core.datastore.TokenPreferences
+import com.team.bottles.core.datastore.TokenPreferencesSerializer
 import com.team.bottles.core.datastore.UserPreferences
+import com.team.bottles.core.datastore.UserPreferencesSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,23 +21,37 @@ class DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideUserPreferenceProtoDataStore(
+    fun provideUserPreferencesProtoDataStore(
         @ApplicationContext context: Context,
-        userPreferenceSerializer: UserPreferenceSerializer
-    ) : DataStore<UserPreferences> =
+        userPreferencesSerializer: UserPreferencesSerializer
+    ): DataStore<UserPreferences> =
         DataStoreFactory.create(
-            serializer = userPreferenceSerializer,
-            produceFile = {
-                context.dataStoreFile(USER_PREFERENCE_FILE)
-            }
+            serializer = userPreferencesSerializer,
+            produceFile = { context.dataStoreFile(USER_PREFERENCES_FILE) }
         )
 
     @Provides
     @Singleton
-    fun provideUserPreferenceSerializer(): UserPreferenceSerializer = UserPreferenceSerializer
+    fun provideTokenPreferencesProtoDataStore(
+        @ApplicationContext context: Context,
+        tokenPreferencesSerializer: TokenPreferencesSerializer
+    ): DataStore<TokenPreferences> =
+        DataStoreFactory.create(
+            serializer = tokenPreferencesSerializer,
+            produceFile = { context.dataStoreFile(TOKEN_PREFERENCES_FILE) }
+        )
+
+    @Provides
+    @Singleton
+    fun provideUserPreferencesSerializer(): UserPreferencesSerializer = UserPreferencesSerializer
+
+    @Provides
+    @Singleton
+    fun provideTokenPreferencesSerializer(): TokenPreferencesSerializer = TokenPreferencesSerializer
 
     companion object {
-        private const val USER_PREFERENCE_FILE = "user_preference.json"
+        private const val USER_PREFERENCES_FILE = "user_preferences.json"
+        private const val TOKEN_PREFERENCES_FILE = "token_preferences.json"
     }
 
 }
