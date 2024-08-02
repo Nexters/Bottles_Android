@@ -14,9 +14,8 @@ class SignupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<SignupUiState, SignupSideEffect, SignupIntent>(savedStateHandle) {
 
-    override fun createInitialState(savedStateHandle: SavedStateHandle): SignupUiState {
-        TODO("Not yet implemented")
-    }
+    override fun createInitialState(savedStateHandle: SavedStateHandle): SignupUiState =
+        SignupUiState
 
     override fun handleClientException(throwable: Throwable) {
         TODO("Not yet implemented")
