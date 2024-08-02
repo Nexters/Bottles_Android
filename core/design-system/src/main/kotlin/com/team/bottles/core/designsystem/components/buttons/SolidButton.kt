@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.team.bottles.core.designsystem.modifier.debounceClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 enum class SolidButtonType(val contentVerticalPadding: Dp) {
@@ -38,41 +39,64 @@ fun BottlesSolidButton(
     onClick: () -> Unit,
     enabled: Boolean = true,
     contentHorizontalPadding: Dp = 0.dp,
+    isDebounce: Boolean = false
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
+    val shape = when(buttonType) {
+        SolidButtonType.XS -> BottlesTheme.shape.radius8
+        else -> BottlesTheme.shape.radius12
+    }
+
     SolidButton(
         modifier = modifier,
-        text = text,
         onClick = onClick,
         enabled = enabled,
-        shape = if (buttonType == SolidButtonType.XS) BottlesTheme.shape.radius8
-        else BottlesTheme.shape.radius12,
+        shape = shape,
+        isDebounce = isDebounce,
+        interactionSource = interactionSource,
+        isPressed = isPressed,
         contentPadding = PaddingValues(
             horizontal = contentHorizontalPadding,
             vertical = buttonType.contentVerticalPadding
+        ),
+    ) {
+        val textColor = when {
+            !enabled -> BottlesTheme.color.text.disabledPrimary
+            isPressed -> BottlesTheme.color.text.pressed
+            else -> BottlesTheme.color.text.enabledPrimary
+        }
+
+        val textStyle = when(buttonType) {
+            SolidButtonType.XS -> BottlesTheme.typography.body
+            else -> BottlesTheme.typography.subTitle1
+        }
+
+        Text(
+            text = text,
+            color = textColor,
+            style = textStyle
         )
-    )
+    }
 }
 
 @Composable
 fun SolidButton(
     modifier: Modifier = Modifier,
-    text: String,
     onClick: () -> Unit,
     enabled: Boolean,
     shape: Shape,
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
+    isDebounce: Boolean,
+    interactionSource: MutableInteractionSource,
+    isPressed: Boolean,
+    content: @Composable () -> Unit,
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
     val backgroundColor = when {
         !enabled -> BottlesTheme.color.container.disabledSecondary
         isPressed -> BottlesTheme.color.container.pressed
         else -> BottlesTheme.color.container.enabledSecondary
-    }
-    val textColor = when {
-        !enabled -> BottlesTheme.color.text.disabledPrimary
-        isPressed -> BottlesTheme.color.text.pressed
-        else -> BottlesTheme.color.text.enabledPrimary
     }
 
     Box(
@@ -82,20 +106,27 @@ fun SolidButton(
                 shape = shape
             )
             .clip(shape = shape)
-            .clickable(
-                enabled = enabled,
-                onClick = onClick,
-                interactionSource = interactionSource,
-                indication = null
-            )
-            .padding(contentPadding),
+            .padding(contentPadding)
+            .then(
+                if (isDebounce) {
+                    Modifier.debounceClickable(
+                        enabled = enabled,
+                        onClick = onClick,
+                        interactionSource = interactionSource,
+                        indication = null
+                    )
+                } else {
+                    Modifier.clickable(
+                        enabled = enabled,
+                        onClick = onClick,
+                        interactionSource = interactionSource,
+                        indication = null
+                    )
+                }
+            ),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = text,
-            style = BottlesTheme.typography.body,
-            color = textColor
-        )
+        content.invoke()
     }
 }
 
