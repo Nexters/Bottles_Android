@@ -1,12 +1,14 @@
 package com.team.bottles.feat.signup.mvi
 
 import com.team.bottles.core.common.UiIntent
-import com.team.bottles.core.domain.auth.KakaoClientResult
+import com.team.bottles.core.domain.auth.model.Token
 
 sealed interface SignupIntent : UiIntent {
 
-    data object ClickWebBackButton: SignupIntent // webview에서 뒤로가기 버튼 클릭
+    data object ClickWebCloseButton : SignupIntent
 
-    data object ClickWebCompleteButton: SignupIntent // webview에서 확인 버튼 클릭
+    data class ClickSignupButton(val token: Token) : SignupIntent
+
+    data class LoadWebPage(val canGoBack: Boolean) : SignupIntent
 
 }

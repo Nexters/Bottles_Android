@@ -6,12 +6,12 @@ import androidx.navigation.compose.composable
 import com.team.bottles.feat.signup.SignupRoute
 
 fun NavGraphBuilder.signupScreen(
-    navigateToLogin: () -> Unit,
+    navigateToLoginEndpoint: () -> Unit,
     navigateToSandBeach: () -> Unit
 ) {
     composable<SignupNavigator> {
         SignupRoute(
-            navigateToLogin = navigateToLogin,
+            navigateToLoginEndpoint = navigateToLoginEndpoint,
             navigateToSandBeach = navigateToSandBeach
         )
     }

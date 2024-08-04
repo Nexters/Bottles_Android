@@ -5,28 +5,23 @@ import com.team.bottles.core.common.base.BaseBridgeListener
 import com.team.bottles.core.domain.auth.model.Token
 import kotlinx.serialization.json.Json
 
-internal class SignupBridge(private val onEvent: (SignupWebEvent) -> Unit) :
+internal class SignupBridge(private val onAction: (SignupWebAction) -> Unit) :
     SignupBridgeListener() {
 
     @JavascriptInterface
     override fun onSignup(json: String) {
         val token = Json.decodeFromString<Token>(json)
-        onEvent(
-            SignupWebEvent.OnSignup(
-                accessToken = token.accessToken,
-                refreshToken = token.refreshToken
-            )
-        )
+        onAction(SignupWebAction.OnSignup(token =token))
     }
 
     @JavascriptInterface
     override fun onWebViewClose() {
-        onEvent(SignupWebEvent.OnWebViewClose)
+        onAction(SignupWebAction.OnWebViewClose)
     }
 
     @JavascriptInterface
     override fun onToastOpen(message: String) {
-        onEvent(SignupWebEvent.OnToastOpen(message = message))
+        onAction(SignupWebAction.OnToastOpen(message = message))
     }
 
     companion object {
@@ -35,13 +30,13 @@ internal class SignupBridge(private val onEvent: (SignupWebEvent) -> Unit) :
 
 }
 
-sealed interface SignupWebEvent {
+sealed interface SignupWebAction {
 
-    data class OnSignup(val accessToken: String, val refreshToken: String) : SignupWebEvent
+    data class OnSignup(val token: Token) : SignupWebAction
 
-    data object OnWebViewClose : SignupWebEvent
+    data object OnWebViewClose : SignupWebAction
 
-    data class OnToastOpen(val message: String) : SignupWebEvent
+    data class OnToastOpen(val message: String) : SignupWebAction
 
 }
 
