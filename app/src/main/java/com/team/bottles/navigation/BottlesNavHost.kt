@@ -47,14 +47,14 @@ fun BottlesNavHost(
             bottleBoxScreen(navigateToBottle = ::navigateToBottle)
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
             bottleScreen(navigateToBottleBox = ::navigateToBottleBox)
-            myPageScreen(navigateToLogin = ::navigateToLogin)
+            myPageScreen(navigateToLogin = ::navigateToLoginEndpoint)
             signupScreen(
                 navigateToSandBeach = ::navigateToSandBeach,
-                navigateToLogin = ::navigateToLogin
+                navigateToLoginEndpoint = ::navigateToLoginEndpoint
             )
             smsLoginScreen(
                 navigateToSandBeach = ::navigateToSandBeach,
-                navigateToLogin = ::navigateToLogin
+                navigateToLogin = ::navigateToLoginEndpoint
             )
         }
     }
@@ -87,7 +87,7 @@ fun NavController.navigateToBottleBox() =
         popUpTo(graph.id)
     }
 
-fun NavController.navigateToLogin() =
+fun NavController.navigateToLoginEndpoint() =
     navigate(LoginNavigator.Endpoint) {
         popUpTo(graph.id)
     }
