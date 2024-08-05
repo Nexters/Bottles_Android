@@ -300,7 +300,7 @@ private fun LineTextFieldWithTrailingIconPreview() {
                         tint = Color.Unspecified
                     )
                 },
-                state = BottlesTextFieldState.Error("Error Message"),
+                state = BottlesTextFieldState.Error,
                 interactionSource = interactionSource
             )
             BottlesLineTextFieldWithTrailingIcon( // 5. disabled
