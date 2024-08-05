@@ -19,7 +19,7 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 
 @Composable
-fun ProgressButton(
+fun ProgressChip(
     modifier: Modifier = Modifier,
     firstNumber: Int,
     secondNUmber: Int,
@@ -61,7 +61,7 @@ fun ProgressButton(
 @Composable
 fun ProgressButtonPreview() {
     BottlesTheme {
-        ProgressButton(
+        ProgressChip(
             firstNumber = 0,
             secondNUmber = 0,
         )
