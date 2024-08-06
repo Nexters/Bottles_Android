@@ -1,21 +1,21 @@
 package com.team.bottles.core.common.extension
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
 
 fun Uri.toFile(context: Context): File {
+    val bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, this))
     val tempFile =
-        File.createTempFile("temp_image", null, context.cacheDir).also { file ->
+        File.createTempFile("temp_image", ".png", context.cacheDir).also { file ->
             file.deleteOnExit()
         }
 
-    val inputStream: InputStream? = context.contentResolver.openInputStream(this)
-
     FileOutputStream(tempFile).use { output ->
-        inputStream?.copyTo(output)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
     }
 
     return tempFile
