@@ -152,7 +152,7 @@ fun BottlesOutlinedButtonWithIcon(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
-                space = BottlesTheme.spacing.spacing8,
+                space = BottlesTheme.spacing.extraSmall,
             )
         ) {
             Icon(
@@ -195,7 +195,7 @@ fun BottlesOutlinedButtonWithImage(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(
-                space = BottlesTheme.spacing.spacing12,
+                space = BottlesTheme.spacing.small,
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

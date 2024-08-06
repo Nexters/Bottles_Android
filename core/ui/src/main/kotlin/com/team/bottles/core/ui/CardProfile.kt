@@ -38,18 +38,18 @@ fun CardProfile(
                 color = BottlesTheme.color.border.primary
             )
             .padding(
-                vertical = BottlesTheme.spacing.spacing24,
-                horizontal = BottlesTheme.spacing.spacing12
+                vertical = BottlesTheme.spacing.extraLarge,
+                horizontal = BottlesTheme.spacing.small
             ),
         verticalArrangement = Arrangement.spacedBy(
-            space = BottlesTheme.spacing.spacing24
+            space = BottlesTheme.spacing.extraLarge
         )
     ) {
         keyPoints.forEach { keypoint ->
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(
-                    space = BottlesTheme.spacing.spacing12
+                    space = BottlesTheme.spacing.small
                 ),
             ) {
                 Text(

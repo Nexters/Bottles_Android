@@ -95,10 +95,10 @@ internal fun IntroductionScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color = BottlesTheme.color.background.primary)
-                    .padding(horizontal = BottlesTheme.spacing.spacing16)
+                    .padding(horizontal = BottlesTheme.spacing.medium)
                     .verticalScroll(state = scrollState),
             ) {
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing24))
+                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
 
                 Title(
                     currentPage = uiState.step.page,
@@ -107,7 +107,7 @@ internal fun IntroductionScreen(
                     subTitle = uiState.step.subTitle
                 )
 
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing32))
+                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
 
                 when (uiState.step) {
                     IntroductionStep.INPUT_INTRODUCTION -> {
@@ -123,7 +123,7 @@ internal fun IntroductionScreen(
                         )
 
                         if (uiState.introductionTextFiledState is BottlesTextFieldState.Error) {
-                            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing4))
+                            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
 
                             Text(
                                 text = "최소 ${uiState.minLength}글자 이상 작성해주세요",
@@ -132,7 +132,7 @@ internal fun IntroductionScreen(
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing12))
+                        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
 
                         CardProfile(keyPoints = uiState.keyPoints)
                     }
@@ -145,7 +145,7 @@ internal fun IntroductionScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing24))
+                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
             }
         }
     }

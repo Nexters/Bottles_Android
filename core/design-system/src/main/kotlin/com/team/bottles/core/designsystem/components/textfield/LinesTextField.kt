@@ -136,7 +136,7 @@ fun BottlesLinesMaxLengthTextField(
                     innerTextField.invoke()
                 }
 
-                Spacer(Modifier.height(height = BottlesTheme.spacing.spacing12))
+                Spacer(Modifier.height(height = BottlesTheme.spacing.small))
 
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -253,7 +253,7 @@ fun BottlesLinesTextFieldWithButton(
                     innerTextField.invoke()
                 }
 
-                Spacer(Modifier.height(height = BottlesTheme.spacing.spacing12))
+                Spacer(Modifier.height(height = BottlesTheme.spacing.small))
 
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -264,7 +264,7 @@ fun BottlesLinesTextFieldWithButton(
                 )
             }
 
-            Spacer(Modifier.height(height = BottlesTheme.spacing.spacing12))
+            Spacer(Modifier.height(height = BottlesTheme.spacing.small))
 
             BottlesSolidButton(
                 modifier = Modifier.fillMaxWidth(),

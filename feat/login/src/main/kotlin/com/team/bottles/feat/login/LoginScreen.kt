@@ -70,7 +70,7 @@ fun LoginScreen(
                     buttonText = stringResource(id = R.string.kakao_login),
                     onClick = { onIntent(LoginIntent.ClickKakaoLoginButton) },
                 )
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing12))
+                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
                 BottlesSolidButton(
                     modifier = Modifier.fillMaxWidth(),
                     buttonType = SolidButtonType.LG,
@@ -78,7 +78,7 @@ fun LoginScreen(
                     onClick = { onIntent(LoginIntent.ClickSmsLoginButton) },
                     isDebounce = true
                 )
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing24))
+                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
                 Text(
                     modifier = Modifier.debounceNoRippleClickable(
                         onClick = { onIntent(LoginIntent.ClickSignupButton) },

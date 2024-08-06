@@ -74,8 +74,8 @@ fun BottlesBottomNavBar(
                 )
             )
             .padding(
-                top = BottlesTheme.spacing.spacing24,
-                bottom = BottlesTheme.spacing.spacing12
+                top = BottlesTheme.spacing.extraLarge,
+                bottom = BottlesTheme.spacing.small
             ),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {

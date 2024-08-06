@@ -62,7 +62,7 @@ fun UserProfileItem(
                 shape = RoundedCornerShape(20.dp)
             )
             .padding(BottlesTheme.padding.medium),
-        verticalArrangement = Arrangement.spacedBy(space = BottlesTheme.spacing.spacing12)
+        verticalArrangement = Arrangement.spacedBy(space = BottlesTheme.spacing.small)
     ) {
         if (remainingTime != null) {
             EtcText(text = remainingTime)
@@ -84,7 +84,7 @@ fun UserProfileItem(
                     if (!isRead) {
                         val circleColor = BottlesTheme.color.icon.update
 
-                        Spacer(modifier = Modifier.width(width = BottlesTheme.spacing.spacing4))
+                        Spacer(modifier = Modifier.width(width = BottlesTheme.spacing.doubleExtraSmall))
                         Canvas(modifier = Modifier.size(4.dp)) {
                             drawCircle(color = circleColor)
                         }

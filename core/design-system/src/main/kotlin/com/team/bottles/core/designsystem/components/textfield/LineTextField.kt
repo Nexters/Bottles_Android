@@ -128,7 +128,7 @@ fun BottlesLineTextFieldWithTrailingIcon(
             if (state is BottlesTextFieldState.Focused || state is BottlesTextFieldState.Error) {
                 Spacer(
                     modifier = Modifier.width(
-                        width = BottlesTheme.spacing.spacing12
+                        width = BottlesTheme.spacing.small
                     )
                 )
                 trailingIcon.invoke()
@@ -222,7 +222,7 @@ fun BottlesLineTextFieldWithTrailingButton(
                 innerTextField.invoke()
             }
 
-            Spacer(Modifier.width(width = BottlesTheme.spacing.spacing12))
+            Spacer(Modifier.width(width = BottlesTheme.spacing.small))
 
             trailingButton.invoke()
         }

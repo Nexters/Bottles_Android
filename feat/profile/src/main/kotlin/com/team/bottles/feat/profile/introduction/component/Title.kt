@@ -22,13 +22,13 @@ internal fun Title(
             firstNumber = currentPage,
             secondNUmber = maxPage
         )
-        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing24))
+        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
         Text(
             text = title,
             style = BottlesTheme.typography.title1,
             color = BottlesTheme.color.text.primary
         )
-        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing12))
+        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
         Text(
             text = subTitle,
             style = BottlesTheme.typography.body,

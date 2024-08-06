@@ -85,7 +85,7 @@ fun BottlesBalloonPopupWithButton(
                 style = BottlesTheme.typography.body,
                 color = BottlesTheme.color.text.secondary
             )
-            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.spacing4))
+            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
             BottlesSolidButton(
                 buttonType = SolidButtonType.XS,
                 text = buttonText,
