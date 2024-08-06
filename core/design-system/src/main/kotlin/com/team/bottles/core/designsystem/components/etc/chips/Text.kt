@@ -27,7 +27,7 @@ fun EtcText(
         modifier = modifier
             .background(
                 color = BottlesTheme.color.container.secondary,
-                shape = BottlesTheme.shape.radius8,
+                shape = BottlesTheme.shape.extraSmall,
             )
             .padding(
                 horizontal = 8.dp,

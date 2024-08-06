@@ -102,12 +102,12 @@ fun BottlesLineTextFieldWithTrailingIcon(
                 .height(56.dp)
                 .background(
                     color = containerColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .border(
                     width = 1.dp,
                     color = borderColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -199,12 +199,12 @@ fun BottlesLineTextFieldWithTrailingButton(
                 .height(56.dp)
                 .background(
                     color = containerColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .border(
                     width = 1.dp,
                     color = borderColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,

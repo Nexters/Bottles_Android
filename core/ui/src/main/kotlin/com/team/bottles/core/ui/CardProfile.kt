@@ -29,12 +29,12 @@ fun CardProfile(
         modifier = Modifier
             .background(
                 color = BottlesTheme.color.container.primary,
-                shape = BottlesTheme.shape.radius24
+                shape = BottlesTheme.shape.extraLarge
             )
-            .clip(shape = BottlesTheme.shape.radius24)
+            .clip(shape = BottlesTheme.shape.extraLarge)
             .border(
                 width = 1.dp,
-                shape = BottlesTheme.shape.radius24,
+                shape = BottlesTheme.shape.extraLarge,
                 color = BottlesTheme.color.border.primary
             )
             .padding(

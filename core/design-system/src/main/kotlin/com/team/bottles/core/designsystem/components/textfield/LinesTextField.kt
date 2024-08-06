@@ -102,12 +102,12 @@ fun BottlesLinesMaxLengthTextField(
             modifier = Modifier
                 .background(
                     color = containerColor,
-                    shape = BottlesTheme.shape.radius24
+                    shape = BottlesTheme.shape.extraLarge
                 )
                 .border(
                     width = 1.dp,
                     color = borderColor,
-                    shape = BottlesTheme.shape.radius24
+                    shape = BottlesTheme.shape.extraLarge
                 )
                 .padding(paddingValues = BottlesTheme.padding.medium),
         ) {
@@ -115,7 +115,7 @@ fun BottlesLinesMaxLengthTextField(
                 modifier = modifier
                     .background(
                         color = onContainerColor,
-                        shape = BottlesTheme.shape.radius12
+                        shape = BottlesTheme.shape.small
                     )
                     .padding(paddingValues = BottlesTheme.padding.medium),
                 verticalArrangement = Arrangement.SpaceBetween
@@ -219,12 +219,12 @@ fun BottlesLinesTextFieldWithButton(
             modifier = Modifier
                 .background(
                     color = containerColor,
-                    shape = BottlesTheme.shape.radius16
+                    shape = BottlesTheme.shape.medium
                 )
                 .border(
                     width = 1.dp,
                     color = borderColor,
-                    shape = BottlesTheme.shape.radius16
+                    shape = BottlesTheme.shape.medium
                 )
                 .padding(paddingValues = BottlesTheme.padding.medium),
         ) {
@@ -232,7 +232,7 @@ fun BottlesLinesTextFieldWithButton(
                 modifier = modifier
                     .background(
                         color = onContainerColor,
-                        shape = BottlesTheme.shape.radius12
+                        shape = BottlesTheme.shape.small
                     )
                     .padding(paddingValues = BottlesTheme.padding.medium),
                 verticalArrangement = Arrangement.SpaceBetween

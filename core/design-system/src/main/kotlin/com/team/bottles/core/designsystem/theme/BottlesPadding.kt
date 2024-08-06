@@ -50,7 +50,7 @@ private fun PaddingPreview() {
             BottlesPaddingDefaults.entries.forEach { entry ->
                 Box(modifier = Modifier
                     .size(size = 100.dp)
-                    .border(width = 1.dp, color = Color.Black, shape = BottlesTheme.shape.radius8)
+                    .border(width = 1.dp, color = Color.Black, shape = BottlesTheme.shape.extraSmall)
                     .padding(paddingValues = entry.paddingValues),
                     contentAlignment = Alignment.Center
                 ) {

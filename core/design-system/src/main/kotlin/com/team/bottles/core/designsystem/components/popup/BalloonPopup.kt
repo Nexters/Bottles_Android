@@ -31,12 +31,12 @@ fun BottlesBalloonPopup(
             modifier = Modifier
                 .background(
                     color = BottlesTheme.color.container.primary,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .border(
                     width = 1.dp,
                     color = BottlesTheme.color.border.primary,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .padding(
                     horizontal = 12.dp,
@@ -70,12 +70,12 @@ fun BottlesBalloonPopupWithButton(
             modifier = Modifier
                 .background(
                     color = BottlesTheme.color.container.primary,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .border(
                     width = 1.dp,
                     color = BottlesTheme.color.border.primary,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .padding(paddingValues = BottlesTheme.padding.medium),
             horizontalAlignment = Alignment.CenterHorizontally

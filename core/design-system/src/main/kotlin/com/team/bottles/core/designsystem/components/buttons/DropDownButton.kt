@@ -79,12 +79,12 @@ fun BottlesDefaultDropDownButton(
             .height(56.dp)
             .background(
                 color = containerColor,
-                shape = BottlesTheme.shape.radius12
+                shape = BottlesTheme.shape.small
             )
             .border(
                 width = 1.dp,
                 color = borderColor,
-                shape = BottlesTheme.shape.radius12
+                shape = BottlesTheme.shape.small
             )
             .clickable(onClick = onClickButton)
             .padding(BottlesTheme.padding.medium),
@@ -144,12 +144,12 @@ fun BottlesLetterDropDownButton(
             .fillMaxWidth()
             .background(
                 color = containerColor,
-                shape = BottlesTheme.shape.radius24
+                shape = BottlesTheme.shape.extraLarge
             )
             .border(
                 width = 1.dp,
                 color = borderColor,
-                shape = BottlesTheme.shape.radius24
+                shape = BottlesTheme.shape.extraLarge
             )
             .clickable(
                 onClick = onClickButton,

@@ -41,13 +41,13 @@ internal fun SelectImageCard(
             .aspectRatio(1f)
             .background(
                 color = BottlesTheme.color.onContainer.enabledSecondary,
-                shape = BottlesTheme.shape.radius16
+                shape = BottlesTheme.shape.medium
             )
-            .clip(shape = BottlesTheme.shape.radius16)
+            .clip(shape = BottlesTheme.shape.medium)
             .border(
                 width = 1.dp,
                 color = BottlesTheme.color.border.enabled,
-                shape = BottlesTheme.shape.radius16
+                shape = BottlesTheme.shape.medium
             )
             .clickable(
                 onClick = { launcher.launch("image/*") }
