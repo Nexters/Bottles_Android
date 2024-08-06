@@ -87,7 +87,7 @@ fun BottlesDefaultDropDownButton(
                 shape = BottlesTheme.shape.radius12
             )
             .clickable(onClick = onClickButton)
-            .padding(BottlesTheme.padding.padding16),
+            .padding(BottlesTheme.padding.medium),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -77,7 +77,7 @@ fun BottlesBalloonPopupWithButton(
                     color = BottlesTheme.color.border.primary,
                     shape = BottlesTheme.shape.radius12
                 )
-                .padding(paddingValues = BottlesTheme.padding.padding16),
+                .padding(paddingValues = BottlesTheme.padding.medium),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(

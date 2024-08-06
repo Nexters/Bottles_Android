@@ -61,7 +61,7 @@ fun UserProfileItem(
                 color = BottlesTheme.color.border.primary,
                 shape = RoundedCornerShape(20.dp)
             )
-            .padding(BottlesTheme.padding.padding16),
+            .padding(BottlesTheme.padding.medium),
         verticalArrangement = Arrangement.spacedBy(space = BottlesTheme.spacing.spacing12)
     ) {
         if (remainingTime != null) {
@@ -217,7 +217,7 @@ private fun UserProfileItemPreview() {
 
         LazyColumn(
             state = listState,
-            contentPadding = BottlesTheme.padding.padding16,
+            contentPadding = BottlesTheme.padding.medium,
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             items(

@@ -109,7 +109,7 @@ fun BottlesLinesMaxLengthTextField(
                     color = borderColor,
                     shape = BottlesTheme.shape.radius24
                 )
-                .padding(paddingValues = BottlesTheme.padding.padding16),
+                .padding(paddingValues = BottlesTheme.padding.medium),
         ) {
             Column(
                 modifier = modifier
@@ -117,7 +117,7 @@ fun BottlesLinesMaxLengthTextField(
                         color = onContainerColor,
                         shape = BottlesTheme.shape.radius12
                     )
-                    .padding(paddingValues = BottlesTheme.padding.padding16),
+                    .padding(paddingValues = BottlesTheme.padding.medium),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Box(
@@ -226,7 +226,7 @@ fun BottlesLinesTextFieldWithButton(
                     color = borderColor,
                     shape = BottlesTheme.shape.radius16
                 )
-                .padding(paddingValues = BottlesTheme.padding.padding16),
+                .padding(paddingValues = BottlesTheme.padding.medium),
         ) {
             Column(
                 modifier = modifier
@@ -234,7 +234,7 @@ fun BottlesLinesTextFieldWithButton(
                         color = onContainerColor,
                         shape = BottlesTheme.shape.radius12
                     )
-                    .padding(paddingValues = BottlesTheme.padding.padding16),
+                    .padding(paddingValues = BottlesTheme.padding.medium),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Box(
