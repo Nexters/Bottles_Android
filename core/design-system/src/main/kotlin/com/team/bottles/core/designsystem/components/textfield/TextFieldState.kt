@@ -8,7 +8,7 @@ sealed class BottlesTextFieldState {
 
     data object Focused: BottlesTextFieldState()
 
-    data class Error(val message: String): BottlesTextFieldState()
+    data object Error: BottlesTextFieldState()
 
     data object Disabled: BottlesTextFieldState()
 

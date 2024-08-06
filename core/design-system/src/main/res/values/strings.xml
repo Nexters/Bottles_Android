@@ -10,4 +10,7 @@
     <string name="other_login">다른 방법으로 로그인</string>
     <string name="signup">회원가입</string>
 
+    <!-- Introduction Screen -->
+    <string name="introduction_hint">호기심 많고 새로운 경험을 즐깁니다. 주말엔 책을 읽거나 맛집을 찾아다니며 여유를 즐기고, 친구들과 소소한 모임으로 에너지를 충전해요.</string>
+
 </resources>

@@ -322,7 +322,7 @@ private fun BottlesLinesTextFieldPreview() {
                 onValueChange = { value2 = it },
                 hint = "placeHolder",
                 maxLength = 150,
-                state = BottlesTextFieldState.Error("Error Message"),
+                state = BottlesTextFieldState.Error,
                 interactionSource = interaction
             )
         }
