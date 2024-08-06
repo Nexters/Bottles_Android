@@ -4,6 +4,7 @@ import com.team.bottles.core.data.mapper.toRequest
 import com.team.bottles.core.domain.profile.model.QuestionAndAnswer
 import com.team.bottles.core.domain.profile.repository.ProfileRepository
 import com.team.bottles.network.datasource.ProfileDataSource
+import java.io.File
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -12,6 +13,10 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override suspend fun createIntroduction(questionsAndAnswers: List<QuestionAndAnswer>) {
         profileDataSource.createIntroduction(request = questionsAndAnswers.toRequest())
+    }
+
+    override suspend fun uploadProfileImage(imageFile: File) {
+        profileDataSource.postProfileImage(imageFile = imageFile)
     }
 
 }
