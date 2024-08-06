@@ -25,6 +25,7 @@ class IntroductionViewModel @Inject constructor(
             is IntroductionIntent.ClickBottomButton -> onClickBottomButton()
             is IntroductionIntent.OnFocusedTextField -> changeTextFieldState()
             is IntroductionIntent.ClickPhoto -> reduce { copy(imageUri = intent.uri) }
+            is IntroductionIntent.ClickDeleteButton -> reduce { copy(imageUri = null) }
         }
     }
 

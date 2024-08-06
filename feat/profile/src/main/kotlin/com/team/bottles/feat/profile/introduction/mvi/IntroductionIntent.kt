@@ -15,4 +15,6 @@ sealed interface IntroductionIntent : UiIntent {
 
     data class ClickPhoto(val uri: Uri) : IntroductionIntent
 
+    data object ClickDeleteButton : IntroductionIntent
+
 }
