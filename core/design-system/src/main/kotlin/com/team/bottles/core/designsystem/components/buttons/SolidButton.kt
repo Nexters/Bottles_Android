@@ -45,8 +45,8 @@ fun BottlesSolidButton(
     val isPressed by interactionSource.collectIsPressedAsState()
 
     val shape = when(buttonType) {
-        SolidButtonType.XS -> BottlesTheme.shape.radius8
-        else -> BottlesTheme.shape.radius12
+        SolidButtonType.XS -> BottlesTheme.shape.extraSmall
+        else -> BottlesTheme.shape.small
     }
 
     SolidButton(

@@ -18,17 +18,17 @@ import com.team.bottles.core.designsystem.foundation.BottlesShapeDefaults
 
 @Immutable
 data class BottlesShape(
-    val radius8: Shape,
-    val radius12: Shape,
-    val radius16: Shape,
-    val radius24: Shape,
+    val extraSmall: Shape,
+    val small: Shape,
+    val medium: Shape,
+    val extraLarge: Shape,
 ) {
     companion object {
         fun defaultRadius(): BottlesShape = BottlesShape (
-            radius8 = BottlesShapeDefaults.RADIUS_XS.shape,
-            radius12 = BottlesShapeDefaults.RADIUS_S.shape,
-            radius16 = BottlesShapeDefaults.RADIUS_M.shape,
-            radius24 = BottlesShapeDefaults.RADIUS_XL.shape,
+            extraSmall = BottlesShapeDefaults.RADIUS_XS.shape,
+            small = BottlesShapeDefaults.RADIUS_S.shape,
+            medium = BottlesShapeDefaults.RADIUS_M.shape,
+            extraLarge = BottlesShapeDefaults.RADIUS_XL.shape,
         )
     }
 }

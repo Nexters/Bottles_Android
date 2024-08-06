@@ -23,17 +23,17 @@ import com.team.bottles.core.designsystem.foundation.BottlesPaddingDefaults
 
 @Immutable
 data class BottlesPadding(
-    val padding8: PaddingValues,
-    val padding12: PaddingValues,
-    val padding16: PaddingValues,
-    val padding24: PaddingValues,
+    val extraSmall: PaddingValues,
+    val small: PaddingValues,
+    val medium: PaddingValues,
+    val extraLarge: PaddingValues,
 ) {
     companion object {
         fun defaultPadding(): BottlesPadding = BottlesPadding(
-            padding8 = BottlesPaddingDefaults.PADDING_XS.paddingValues,
-            padding12 = BottlesPaddingDefaults.PADDING_S.paddingValues,
-            padding16 = BottlesPaddingDefaults.PADDING_M.paddingValues,
-            padding24 = BottlesPaddingDefaults.PADDING_XL.paddingValues
+            extraSmall = BottlesPaddingDefaults.PADDING_XS.paddingValues,
+            small = BottlesPaddingDefaults.PADDING_S.paddingValues,
+            medium = BottlesPaddingDefaults.PADDING_M.paddingValues,
+            extraLarge = BottlesPaddingDefaults.PADDING_XL.paddingValues
         )
     }
 }
@@ -50,7 +50,7 @@ private fun PaddingPreview() {
             BottlesPaddingDefaults.entries.forEach { entry ->
                 Box(modifier = Modifier
                     .size(size = 100.dp)
-                    .border(width = 1.dp, color = Color.Black, shape = BottlesTheme.shape.radius8)
+                    .border(width = 1.dp, color = Color.Black, shape = BottlesTheme.shape.extraSmall)
                     .padding(paddingValues = entry.paddingValues),
                     contentAlignment = Alignment.Center
                 ) {

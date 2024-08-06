@@ -102,12 +102,12 @@ fun BottlesLineTextFieldWithTrailingIcon(
                 .height(56.dp)
                 .background(
                     color = containerColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .border(
                     width = 1.dp,
                     color = borderColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -128,7 +128,7 @@ fun BottlesLineTextFieldWithTrailingIcon(
             if (state is BottlesTextFieldState.Focused || state is BottlesTextFieldState.Error) {
                 Spacer(
                     modifier = Modifier.width(
-                        width = BottlesTheme.spacing.spacing12
+                        width = BottlesTheme.spacing.small
                     )
                 )
                 trailingIcon.invoke()
@@ -199,12 +199,12 @@ fun BottlesLineTextFieldWithTrailingButton(
                 .height(56.dp)
                 .background(
                     color = containerColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .border(
                     width = 1.dp,
                     color = borderColor,
-                    shape = BottlesTheme.shape.radius12
+                    shape = BottlesTheme.shape.small
                 )
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -222,7 +222,7 @@ fun BottlesLineTextFieldWithTrailingButton(
                 innerTextField.invoke()
             }
 
-            Spacer(Modifier.width(width = BottlesTheme.spacing.spacing12))
+            Spacer(Modifier.width(width = BottlesTheme.spacing.small))
 
             trailingButton.invoke()
         }

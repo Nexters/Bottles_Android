@@ -32,9 +32,9 @@ internal fun KakaoLoginButton(
             .height(height = 64.dp)
             .background(
                 color = Color(0xFFFEE500),
-                shape = BottlesTheme.shape.radius12
+                shape = BottlesTheme.shape.small
             )
-            .clip(shape = BottlesTheme.shape.radius12)
+            .clip(shape = BottlesTheme.shape.small)
             .debounceClickable(
                 onClick = onClick,
             ),

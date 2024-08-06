@@ -79,15 +79,15 @@ fun BottlesDefaultDropDownButton(
             .height(56.dp)
             .background(
                 color = containerColor,
-                shape = BottlesTheme.shape.radius12
+                shape = BottlesTheme.shape.small
             )
             .border(
                 width = 1.dp,
                 color = borderColor,
-                shape = BottlesTheme.shape.radius12
+                shape = BottlesTheme.shape.small
             )
             .clickable(onClick = onClickButton)
-            .padding(BottlesTheme.padding.padding16),
+            .padding(BottlesTheme.padding.medium),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -144,12 +144,12 @@ fun BottlesLetterDropDownButton(
             .fillMaxWidth()
             .background(
                 color = containerColor,
-                shape = BottlesTheme.shape.radius24
+                shape = BottlesTheme.shape.extraLarge
             )
             .border(
                 width = 1.dp,
                 color = borderColor,
-                shape = BottlesTheme.shape.radius24
+                shape = BottlesTheme.shape.extraLarge
             )
             .clickable(
                 onClick = onClickButton,
@@ -157,8 +157,8 @@ fun BottlesLetterDropDownButton(
                 indication = null
             )
             .padding(
-                horizontal = BottlesTheme.spacing.spacing16,
-                vertical = BottlesTheme.spacing.spacing24
+                horizontal = BottlesTheme.spacing.medium,
+                vertical = BottlesTheme.spacing.extraLarge
             ),
     ) {
         Row(
@@ -241,14 +241,14 @@ private fun BottlesLetterDropDownButtonPreview() {
                 state = DropDownButtonState.Focused,
                 contents = {
                     Column {
-                        Spacer(modifier = Modifier.height(BottlesTheme.spacing.spacing24))
+                        Spacer(modifier = Modifier.height(BottlesTheme.spacing.extraLarge))
 
                         HorizontalDivider(
                             thickness = 1.dp,
                             color = BottlesTheme.color.border.secondary
                         )
 
-                        Spacer(modifier = Modifier.height(BottlesTheme.spacing.spacing24))
+                        Spacer(modifier = Modifier.height(BottlesTheme.spacing.extraLarge))
 
                         Text(
                             text = "나의 프로필 사진을 공유할까요?",

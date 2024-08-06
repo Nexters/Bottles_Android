@@ -53,8 +53,8 @@ fun BottlesOutLinedButton(
     contentHorizontalPadding: Dp = 0.dp,
 ) {
     val shape = when (buttonType) {
-        OutlinedButtonType.SM -> BottlesTheme.shape.radius8
-        else -> BottlesTheme.shape.radius12
+        OutlinedButtonType.SM -> BottlesTheme.shape.extraSmall
+        else -> BottlesTheme.shape.small
     }
 
     val textColor = when (state) {
@@ -142,7 +142,7 @@ fun BottlesOutlinedButtonWithIcon(
     OutlinedButton(
         modifier = modifier,
         onClick = onClick,
-        shape = BottlesTheme.shape.radius8,
+        shape = BottlesTheme.shape.extraSmall,
         state = state,
         contentPadding = PaddingValues(
             vertical = OutlinedButtonType.SM.contentVerticalPadding,
@@ -152,7 +152,7 @@ fun BottlesOutlinedButtonWithIcon(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
-                space = BottlesTheme.spacing.spacing8,
+                space = BottlesTheme.spacing.extraSmall,
             )
         ) {
             Icon(
@@ -186,7 +186,7 @@ fun BottlesOutlinedButtonWithImage(
     OutlinedButton(
         modifier = modifier,
         onClick = onClick,
-        shape = BottlesTheme.shape.radius8,
+        shape = BottlesTheme.shape.extraSmall,
         state = state,
         contentPadding = PaddingValues(
             vertical = 23.5f.dp,
@@ -195,7 +195,7 @@ fun BottlesOutlinedButtonWithImage(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(
-                space = BottlesTheme.spacing.spacing12,
+                space = BottlesTheme.spacing.small,
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

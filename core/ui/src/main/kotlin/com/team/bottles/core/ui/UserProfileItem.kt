@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -53,15 +54,15 @@ fun UserProfileItem(
         modifier = modifier
             .background(
                 color = BottlesTheme.color.container.primary,
-                shape = BottlesTheme.shape.radius12
+                shape = RoundedCornerShape(20.dp)
             )
             .border(
                 width = 1.dp,
                 color = BottlesTheme.color.border.primary,
-                shape = BottlesTheme.shape.radius12
+                shape = RoundedCornerShape(20.dp)
             )
-            .padding(BottlesTheme.padding.padding16),
-        verticalArrangement = Arrangement.spacedBy(12.5f.dp)
+            .padding(BottlesTheme.padding.medium),
+        verticalArrangement = Arrangement.spacedBy(space = BottlesTheme.spacing.small)
     ) {
         if (remainingTime != null) {
             EtcText(text = remainingTime)
@@ -76,14 +77,14 @@ fun UserProfileItem(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = name,
-                        style = BottlesTheme.typography.subTitle1,
+                        style = BottlesTheme.typography.subTitle2,
                         color = BottlesTheme.color.text.secondary
                     )
 
                     if (!isRead) {
                         val circleColor = BottlesTheme.color.icon.update
 
-                        Spacer(modifier = Modifier.width(width = BottlesTheme.spacing.spacing4))
+                        Spacer(modifier = Modifier.width(width = BottlesTheme.spacing.doubleExtraSmall))
                         Canvas(modifier = Modifier.size(4.dp)) {
                             drawCircle(color = circleColor)
                         }
@@ -215,9 +216,8 @@ private fun UserProfileItemPreview() {
         )
 
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
             state = listState,
-            contentPadding = BottlesTheme.padding.padding16,
+            contentPadding = BottlesTheme.padding.medium,
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             items(

@@ -48,12 +48,12 @@ fun BottlesBottomNavItem(
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(
-            space = BottlesTheme.spacing.spacing8
+            space = BottlesTheme.spacing.extraSmall
         ),
     ) {
         Icon(
             modifier = Modifier.size(
-                size = BottlesTheme.spacing.spacing32
+                size = BottlesTheme.spacing.doubleExtraLarge
             ),
             painter = painterResource(id = icon),
             contentDescription = null,
