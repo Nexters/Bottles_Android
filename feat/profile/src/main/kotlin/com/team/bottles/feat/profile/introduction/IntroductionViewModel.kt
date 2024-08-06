@@ -3,6 +3,8 @@ package com.team.bottles.feat.profile.introduction
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
+import com.team.bottles.core.domain.profile.model.QuestionAndAnswer
+import com.team.bottles.core.domain.profile.usecase.CreateIntroductionUseCase
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionSideEffect
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
@@ -12,6 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IntroductionViewModel @Inject constructor(
+    private val createIntroductionUseCase: CreateIntroductionUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<IntroductionUiState, IntroductionSideEffect, IntroductionIntent>(savedStateHandle) {
 
@@ -42,10 +45,25 @@ class IntroductionViewModel @Inject constructor(
 
     private fun onClickBottomButton() {
         when (currentState.step) {
-            IntroductionStep.INPUT_INTRODUCTION -> reduce { copy(step = IntroductionStep.SELECT_USER_IMAGE) }
+            IntroductionStep.INPUT_INTRODUCTION -> createIntroduction()
             IntroductionStep.SELECT_USER_IMAGE -> postSideEffect(IntroductionSideEffect.NavigateToSandBeach)
         }
     }
+
+    private fun createIntroduction() {
+        launch {
+            createIntroductionUseCase(
+                questionsAndAnswers = listOf(
+                    QuestionAndAnswer(
+                        question = "",
+                        answer = currentState.introduce)
+                    )
+            )
+
+            reduce { copy(step = IntroductionStep.SELECT_USER_IMAGE) }
+        }
+    }
+
 
     private fun textChange(text: String) {
         reduce { copy(introduce = text) }
