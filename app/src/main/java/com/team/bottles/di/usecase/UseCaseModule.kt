@@ -4,6 +4,8 @@ import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCase
 import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCaseImpl
 import com.team.bottles.core.domain.auth.usecase.WebViewConnectUseCase
 import com.team.bottles.core.domain.auth.usecase.WebViewConnectUseCaseImpl
+import com.team.bottles.core.domain.profile.usecase.CreateIntroductionUseCase
+import com.team.bottles.core.domain.profile.usecase.CreateIntroductionUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,5 +24,10 @@ abstract class UseCaseModule {
     abstract fun bindsWebViewConnectUseCase(
         useCaseImpl: WebViewConnectUseCaseImpl
     ): WebViewConnectUseCase
+
+    @Binds
+    abstract fun bindsCreateIntroductionUseCase(
+        useCaseImpl: CreateIntroductionUseCaseImpl
+    ): CreateIntroductionUseCase
 
 }
