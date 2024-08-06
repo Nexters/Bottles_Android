@@ -2,6 +2,8 @@ package com.team.bottles.network.di
 
 import com.team.bottles.network.datasource.AuthDataSource
 import com.team.bottles.network.datasource.AuthDataSourceImpl
+import com.team.bottles.network.datasource.ProfileDataSource
+import com.team.bottles.network.datasource.ProfileDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,5 +17,9 @@ abstract class RemoteDataSourceModule {
     @Binds
     @Singleton
     abstract fun bindsAuthDataSource(dataSourceImpl: AuthDataSourceImpl): AuthDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindsProfileDataSource(dataSourceImpl: ProfileDataSourceImpl): ProfileDataSource
 
 }

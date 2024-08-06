@@ -1,6 +1,7 @@
 package com.team.bottles.network.di
 
 import com.team.bottles.network.api.AuthService
+import com.team.bottles.network.api.ProfileService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,5 +16,8 @@ object ServiceModule {
 
     @Provides
     fun providesDefaultAuthService(@Named("Default") retrofit: Retrofit): AuthService = retrofit.create()
+
+    @Provides
+    fun providesSecureProfileService(@Named("Secure") retrofit: Retrofit): ProfileService = retrofit.create()
 
 }
