@@ -1,7 +1,7 @@
 package com.team.bottles.feat.profile.introduction.mvi
 
-import android.net.Uri
 import com.team.bottles.core.common.UiIntent
+import java.io.File
 
 sealed interface IntroductionIntent : UiIntent {
 
@@ -13,7 +13,7 @@ sealed interface IntroductionIntent : UiIntent {
 
     data class ChangeIntroduction(val text: String) : IntroductionIntent
 
-    data class ClickPhoto(val uri: Uri) : IntroductionIntent
+    data class ClickPhoto(val file: File) : IntroductionIntent
 
     data object ClickDeleteButton : IntroductionIntent
 

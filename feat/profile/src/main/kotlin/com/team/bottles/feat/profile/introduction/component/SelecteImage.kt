@@ -1,12 +1,15 @@
 package com.team.bottles.feat.profile.introduction.component
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -16,26 +19,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
+import com.team.bottles.core.common.extension.toFile
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.buttons.BottlesIconButton
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
+import java.io.File
 
+@SuppressLint("Recycle")
 @Composable
 internal fun SelectImageCard(
-    imageUri: Uri?,
+    imageFile: File?,
     onIntent: (IntroductionIntent) -> Unit
 ) {
+    val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri != null) {
-            onIntent(IntroductionIntent.ClickPhoto(uri = uri))
+            val file = uri.toFile(context)
+            onIntent(IntroductionIntent.ClickPhoto(file = file))
         }
     }
 
@@ -57,10 +66,10 @@ internal fun SelectImageCard(
             ),
         contentAlignment = Alignment.Center
     ) {
-        if (imageUri != null) {
+        if (imageFile != null) {
             CoilImage(
                 modifier = Modifier.fillMaxSize(),
-                imageModel = { imageUri },
+                imageModel = { imageFile },
                 previewPlaceholder = painterResource(id = R.drawable.sample_image),
                 imageOptions = ImageOptions(
                     contentScale = ContentScale.Fit
@@ -87,9 +96,15 @@ internal fun SelectImageCard(
 @Composable
 private fun SelectImagePreview() {
     BottlesTheme {
-        SelectImageCard(
-            imageUri = Uri.EMPTY,
-            onIntent = {}
-        )
+        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
+            SelectImageCard(
+                imageFile = File.createTempFile("test", null),
+                onIntent = {}
+            )
+            SelectImageCard(
+                imageFile = null,
+                onIntent = {}
+            )
+        }
     }
 }

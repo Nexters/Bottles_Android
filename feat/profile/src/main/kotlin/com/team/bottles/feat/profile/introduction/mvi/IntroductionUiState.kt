@@ -1,10 +1,10 @@
 package com.team.bottles.feat.profile.introduction.mvi
 
-import android.net.Uri
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.ui.model.UserKeyPoint
+import java.io.File
 
 @Stable
 data class IntroductionUiState(
@@ -15,7 +15,7 @@ data class IntroductionUiState(
     val introductionTextFiledState: BottlesTextFieldState = BottlesTextFieldState.Enabled,
     val isEnabledWithBottomButton: Boolean = false,
     val keyPoints: List<UserKeyPoint> = emptyList(),
-    val imageUri: Uri? = null
+    val imageFile: File? = null
 ) : UiState
 
 enum class IntroductionStep(

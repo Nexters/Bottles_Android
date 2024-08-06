@@ -139,7 +139,7 @@ internal fun IntroductionScreen(
 
                     IntroductionStep.SELECT_USER_IMAGE -> {
                         SelectImageCard(
-                            imageUri = uiState.imageUri,
+                            imageFile = uiState.imageFile,
                             onIntent = onIntent
                         )
                     }
@@ -174,7 +174,7 @@ private fun IntroductionScreenStep2Preview() {
                 step = IntroductionStep.SELECT_USER_IMAGE,
                 keyPoints = UserKeyPoint.exampleUerKeyPoints(),
                 isEnabledWithBottomButton = true,
-                imageUri = null
+                imageFile = null
             ),
             onIntent = {}
         )
