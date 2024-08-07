@@ -23,7 +23,7 @@ fun BottlesWebView(
     url: String,
     bridgeName: String,
     webView: WebView,
-    bridge: () -> Unit
+    bridge: () -> Any
 ) {
     var canGoBack by remember { mutableStateOf(false) }
 
