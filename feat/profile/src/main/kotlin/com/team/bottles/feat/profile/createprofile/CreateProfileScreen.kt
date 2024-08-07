@@ -1,35 +1,40 @@
 package com.team.bottles.feat.profile.createprofile
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import android.annotation.SuppressLint
+import android.webkit.WebView
+import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
-import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import com.team.bottles.core.ui.BottlesWebView
+import com.team.bottles.feat.profile.BuildConfig
 import com.team.bottles.feat.profile.createprofile.mvi.CreateProfileIntent
 import com.team.bottles.feat.profile.createprofile.mvi.CreateProfileUiState
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 internal fun CreateProfileScreen(
     uiState: CreateProfileUiState,
     onIntent: (CreateProfileIntent) -> Unit
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "프로필 제작 화면")
-        BottlesSolidButton(
-            buttonType = SolidButtonType.XS,
-            text = "메인 으로",
-            onClick = { onIntent(CreateProfileIntent.ClickNextButton) },
-            contentHorizontalPadding = 12.dp
-        )
-    }
+    val context = LocalContext.current
+    val webView = remember { WebView(context) }
+
+    BottlesWebView(
+        url = BuildConfig.BOTTLES_CREATE_PROFILE_URL + "?accessToken=${uiState.token.accessToken}&refreshToken=${uiState.token.refreshToken}",
+        bridge = {
+            CreateProfileBridge { webEvent ->
+                when (webEvent) {
+                    is CreateProfileWebAction.OnToastOpen ->
+                        Toast.makeText(context, webEvent.message, Toast.LENGTH_SHORT).show()
+                    is CreateProfileWebAction.OnWebViewClose ->
+                        onIntent(CreateProfileIntent.ClickWebCloseButton)
+                    is CreateProfileWebAction.OnCreateComplete ->
+                        onIntent(CreateProfileIntent.ClickWebCompleteButton(token = webEvent.token))
+                }
+            }
+        },
+        bridgeName = CreateProfileBridge.NAME,
+        webView = webView
+    )
 }

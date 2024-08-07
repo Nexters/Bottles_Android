@@ -38,7 +38,10 @@ fun BottlesNavHost(
                 navigateToSmsLogin = ::navigateToSmsLogin
             )
             onboardingScreen(navigateToCreateProfile = ::navigateToCreateProfile)
-            createProfileScreen(navigateToSandBeach = ::navigateToSandBeach)
+            createProfileScreen(
+                navigateToSandBeach = ::navigateToSandBeach,
+                navigateToOnboarding = ::navigateToOnboarding
+            )
             sandBeachScreen(
                 navigateToIntroduction = ::navigateToIntroduction,
                 navigateToArrivedBottles = ::navigateToArrivedBottles

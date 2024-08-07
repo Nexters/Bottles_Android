@@ -7,10 +7,14 @@ import com.team.bottles.feat.profile.createprofile.CreateProfileRoute
 import com.team.bottles.feat.profile.introduction.IntroductionRoute
 
 fun NavGraphBuilder.createProfileScreen(
-    navigateToSandBeach: () -> Unit
+    navigateToSandBeach: () -> Unit,
+    navigateToOnboarding: () -> Unit
 ) {
     composable<ProfileNavigator.CreateProfile> {
-        CreateProfileRoute(navigateToSandBeach = navigateToSandBeach)
+        CreateProfileRoute(
+            navigateToSandBeach = navigateToSandBeach,
+            navigateToOnboarding = navigateToOnboarding
+        )
     }
 }
 
