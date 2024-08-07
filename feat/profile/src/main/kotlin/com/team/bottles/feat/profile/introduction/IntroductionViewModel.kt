@@ -3,6 +3,11 @@ package com.team.bottles.feat.profile.introduction
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
+import com.team.bottles.core.domain.profile.model.QuestionAndAnswer
+import com.team.bottles.core.domain.profile.usecase.CreateIntroductionUseCase
+import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
+import com.team.bottles.core.domain.profile.usecase.UploadProfileImageUseCase
+import com.team.bottles.core.ui.model.UserKeyPoint
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionSideEffect
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
@@ -12,8 +17,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IntroductionViewModel @Inject constructor(
+    private val createIntroductionUseCase: CreateIntroductionUseCase,
+    private val uploadProfileImageUseCase: UploadProfileImageUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<IntroductionUiState, IntroductionSideEffect, IntroductionIntent>(savedStateHandle) {
+
+    init {
+        launch {
+            getUserProfileUseCase().profileSelect.run {
+                reduce {
+                    copy(keyPoints = UserKeyPoint.introduction(
+                        keyWords = listOf(job, mbti, region.city, height.toString(), smoking, alcohol),
+                        personality = keyword,
+                        hobbies = interest.run { etc + sports + entertainment + culture })
+                    )
+                }
+            }
+        }
+    }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): IntroductionUiState =
         IntroductionUiState()
@@ -24,7 +46,8 @@ class IntroductionViewModel @Inject constructor(
             is IntroductionIntent.ChangeIntroduction -> textChange(text = intent.text)
             is IntroductionIntent.ClickBottomButton -> onClickBottomButton()
             is IntroductionIntent.OnFocusedTextField -> changeTextFieldState()
-            is IntroductionIntent.ClickPhoto -> reduce { copy(imageUri = intent.uri) }
+            is IntroductionIntent.ClickPhoto -> reduce { copy(imageFile = intent.file) }
+            is IntroductionIntent.ClickDeleteButton -> reduce { copy(imageFile = null) }
         }
     }
 
@@ -41,10 +64,35 @@ class IntroductionViewModel @Inject constructor(
 
     private fun onClickBottomButton() {
         when (currentState.step) {
-            IntroductionStep.INPUT_INTRODUCTION -> reduce { copy(step = IntroductionStep.SELECT_USER_IMAGE) }
-            IntroductionStep.SELECT_USER_IMAGE -> postSideEffect(IntroductionSideEffect.NavigateToSandBeach)
+            IntroductionStep.INPUT_INTRODUCTION -> createIntroduction()
+            IntroductionStep.SELECT_USER_IMAGE -> uploadProfileImage()
         }
     }
+
+    private fun createIntroduction() {
+        launch {
+            createIntroductionUseCase(
+                questionsAndAnswers = listOf(
+                    QuestionAndAnswer(
+                        question = "",
+                        answer = currentState.introduce)
+                    )
+            )
+
+            reduce { copy(step = IntroductionStep.SELECT_USER_IMAGE) }
+        }
+    }
+
+    private fun uploadProfileImage() {
+        launch {
+            currentState.imageFile?.let { imageFile ->
+                uploadProfileImageUseCase(imageFile = imageFile)
+            }
+
+            postSideEffect(IntroductionSideEffect.CompleteIntroduction(toastMessage = "자기소개 작성을 완료했어요."))
+        }
+    }
+
 
     private fun textChange(text: String) {
         reduce { copy(introduce = text) }
