@@ -19,5 +19,24 @@ data class UserKeyPoint(
                 properties = listOf("코인노래방", "헬스", "드라이브", "만화 · 웹툰 정주행", "자전거")
             ),
         )
+
+        fun introduction(
+            keyWords: List<String>,
+            personality: List<String>,
+            hobbies: List<String>
+        ): List<UserKeyPoint> = listOf(
+            UserKeyPoint(
+                subtitle = "내 키워드를 참고해보세요",
+                properties = keyWords
+            ),
+            UserKeyPoint(
+                subtitle = "나의 성격은",
+                properties = personality
+            ),
+            UserKeyPoint(
+                subtitle = "내가 푹 빠진 취미는",
+                properties = hobbies
+            ),
+        )
     }
 }

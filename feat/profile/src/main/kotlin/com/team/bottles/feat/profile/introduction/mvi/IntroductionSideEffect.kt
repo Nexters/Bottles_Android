@@ -6,4 +6,6 @@ sealed interface IntroductionSideEffect: UiSideEffect {
 
     data object NavigateToSandBeach: IntroductionSideEffect
 
+    data class CompleteIntroduction(val toastMessage: String) : IntroductionSideEffect
+
 }
