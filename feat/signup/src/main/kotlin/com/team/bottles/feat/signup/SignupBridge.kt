@@ -6,7 +6,7 @@ import com.team.bottles.core.domain.auth.model.Token
 import kotlinx.serialization.json.Json
 
 internal class SignupBridge(private val onAction: (SignupWebAction) -> Unit) :
-    SignupBridgeListener() {
+    SignupBridgeListener {
 
     @JavascriptInterface
     override fun onSignup(json: String) {
@@ -40,8 +40,8 @@ sealed interface SignupWebAction {
 
 }
 
-abstract class SignupBridgeListener : BaseBridgeListener() {
+interface SignupBridgeListener : BaseBridgeListener {
 
-    abstract fun onSignup(json: String)
+    fun onSignup(json: String)
 
 }

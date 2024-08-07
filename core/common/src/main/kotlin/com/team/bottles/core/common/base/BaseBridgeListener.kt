@@ -1,9 +1,9 @@
 package com.team.bottles.core.common.base
 
-abstract class BaseBridgeListener {
+interface BaseBridgeListener {
 
-    abstract fun onWebViewClose()
+    fun onWebViewClose()
 
-    open fun onToastOpen(message: String) {}
+    fun onToastOpen(message: String)
 
 }
