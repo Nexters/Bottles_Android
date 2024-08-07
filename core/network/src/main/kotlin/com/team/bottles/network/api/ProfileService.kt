@@ -12,7 +12,7 @@ import retrofit2.http.Part
 interface ProfileService {
 
     @GET("/api/v1/profile")
-    suspend fun getMyProfileInfo(): UserProfileResponse
+    suspend fun getUserProfileInfo(): UserProfileResponse
 
     @POST("/api/v1/profile/introduction")
     suspend fun createIntroduction(

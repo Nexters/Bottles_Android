@@ -1,6 +1,7 @@
 package com.team.bottles.network.datasource
 
 import com.team.bottles.network.api.ProfileService
+import com.team.bottles.network.dto.profile.reponse.UserProfileResponse
 import com.team.bottles.network.dto.profile.request.RegisterIntroductionRequest
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -25,5 +26,8 @@ class ProfileDataSourceImpl @Inject constructor(
             )
         )
     }
+
+    override suspend fun fetchUserProfile(): UserProfileResponse =
+        profileService.getUserProfileInfo()
 
 }
