@@ -6,6 +6,8 @@ import com.team.bottles.core.domain.auth.usecase.WebViewConnectUseCase
 import com.team.bottles.core.domain.auth.usecase.WebViewConnectUseCaseImpl
 import com.team.bottles.core.domain.profile.usecase.CreateIntroductionUseCase
 import com.team.bottles.core.domain.profile.usecase.CreateIntroductionUseCaseImpl
+import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
+import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCaseImpl
 import com.team.bottles.core.domain.profile.usecase.UploadProfileImageUseCase
 import com.team.bottles.core.domain.profile.usecase.UploadProfileImageUseCaseImpl
 import dagger.Binds
@@ -36,5 +38,10 @@ abstract class UseCaseModule {
     abstract fun bindsUploadProfileImageUseCase(
         useCaseImpl: UploadProfileImageUseCaseImpl
     ): UploadProfileImageUseCase
+
+    @Binds
+    abstract fun bindsGetUserProfileUseCase(
+        useCaseImpl: GetUserProfileUseCaseImpl
+    ): GetUserProfileUseCase
 
 }
