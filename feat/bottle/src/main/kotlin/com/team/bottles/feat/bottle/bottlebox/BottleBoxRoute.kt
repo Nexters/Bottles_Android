@@ -10,14 +10,14 @@ import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxSideEffect
 @Composable
 internal fun BottleBoxRoute(
     viewModel: BottleBoxViewModel = hiltViewModel(),
-    navigateToBottle: () -> Unit
+    navigateToBottle: (Int) -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is BottleBoxSideEffect.NavigateToBottle -> navigateToBottle()
+                is BottleBoxSideEffect.NavigateToBottle -> navigateToBottle(sideEffect.bottleId)
             }
         }
     }
