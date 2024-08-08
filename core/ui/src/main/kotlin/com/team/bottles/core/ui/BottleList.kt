@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.model.Bottle
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun BottleContents(
@@ -37,7 +38,7 @@ fun BottleContents(
 @Composable
 fun BottleList(
     modifier: Modifier = Modifier,
-    bottles: List<Bottle>,
+    bottles: ImmutableList<Bottle>,
     onClickItem: (Bottle) -> Unit
 ) {
     LazyColumn(
@@ -69,7 +70,7 @@ fun BottleList(
 private fun BottleListPreview() {
     BottlesTheme {
         BottleList(
-            bottles = Bottle.exampleBottleBox(),
+            bottles = Bottle.exampleBottleBox().toImmutableList(),
             onClickItem = {}
         )
     }
