@@ -2,6 +2,7 @@ package com.team.bottles.feat.bottle.bottlebox
 
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
+import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
 import com.team.bottles.core.ui.model.Bottle
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxIntent
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxSideEffect
@@ -11,15 +12,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BottleBoxViewModel @Inject constructor(
+    private val getPingPongListUseCase: GetPingPongListUseCase,
     savedStateHandle: SavedStateHandle
-
 ) : BaseViewModel<BottleBoxUiState, BottleBoxSideEffect, BottleBoxIntent>(
     savedStateHandle
 ) {
 
+    init {
+        getPingPongList()
+    }
+
     override fun createInitialState(savedStateHandle: SavedStateHandle): BottleBoxUiState =
         BottleBoxUiState()
-
 
     override suspend fun handleIntent(intent: BottleBoxIntent) {
         when (intent) {
@@ -38,6 +42,40 @@ class BottleBoxViewModel @Inject constructor(
 
     private fun changeTab(tab: BottleBoxUiState.BottleBoxTab) {
         reduce { copy(topTab = tab) }
+        getPingPongList()
+    }
+
+    private fun getPingPongList() {
+        launch {
+            getPingPongListUseCase().run {
+                reduce {
+                    copy(
+                        talkingBottles = activeBottles.map { pingPongBottle ->
+                            Bottle(
+                                id = pingPongBottle.id,
+                                imageUrl = pingPongBottle.userImageUrl,
+                                name = pingPongBottle.userName,
+                                age = pingPongBottle.age,
+                                mbti = pingPongBottle.mbti,
+                                personality = pingPongBottle.keyword,
+                                isRead = pingPongBottle.isRead,
+                            )
+                        },
+                        completeBottles = doneBottles.map { pingPongBottle ->
+                            Bottle(
+                                id = pingPongBottle.id,
+                                imageUrl = pingPongBottle.userImageUrl,
+                                name = pingPongBottle.userName,
+                                age = pingPongBottle.age,
+                                mbti = pingPongBottle.mbti,
+                                personality = pingPongBottle.keyword,
+                                isRead = pingPongBottle.isRead,
+                            )
+                        }
+                    )
+                }
+            }
+        }
     }
 
 }
