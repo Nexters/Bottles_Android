@@ -1,6 +1,6 @@
 package com.team.bottles.feat.pingpong
 
-import BottleNavigator
+import PingPongNavigator
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
@@ -20,7 +20,7 @@ class PingPongViewModel @Inject constructor(
 ) {
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState {
-        val test = savedStateHandle.toRoute<BottleNavigator.Bottle>()
+        val test = savedStateHandle.toRoute<PingPongNavigator>()
         Log.d("보틀 아이디", test.bottleId.toString())
         return PingPongUiState()
     }
