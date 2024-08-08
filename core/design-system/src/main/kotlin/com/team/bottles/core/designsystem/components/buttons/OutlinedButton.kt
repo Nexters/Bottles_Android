@@ -3,7 +3,6 @@ package com.team.bottles.core.designsystem.components.buttons
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 enum class OutlinedButtonState {
@@ -114,8 +114,9 @@ fun OutlinedButton(
                 shape = shape
             )
             .padding(contentPadding)
-            .clickable(
-                enabled = state != OutlinedButtonState.DISABLED,
+            .noRippleClickable(
+                enabled = state != OutlinedButtonState.DISABLED &&
+                        state != OutlinedButtonState.SELECTED,
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center
