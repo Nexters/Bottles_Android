@@ -1,6 +1,9 @@
 package com.team.bottles.feat.bottle
 
+import BottleNavigator
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesIntent
 import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesSideEffect
@@ -19,8 +22,11 @@ class BottleViewModel @Inject constructor(
     savedStateHandle
 ) {
 
-    override fun createInitialState(savedStateHandle: SavedStateHandle): BottleUiState =
-        BottleUiState()
+    override fun createInitialState(savedStateHandle: SavedStateHandle): BottleUiState {
+        val test = savedStateHandle.toRoute<BottleNavigator.Bottle>()
+        Log.d("보틀 아이디", test.bottleId.toString())
+        return BottleUiState()
+    }
 
 
     override suspend fun handleIntent(intent: BottleIntent) {

@@ -2,6 +2,7 @@ package com.team.bottles.feat.bottle.bottlebox
 
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
+import com.team.bottles.core.ui.model.Bottle
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxIntent
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxSideEffect
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxUiState
@@ -22,7 +23,8 @@ class BottleBoxViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: BottleBoxIntent) {
         when (intent) {
-            is BottleBoxIntent.ClickBottleItem -> navigateToBottle()
+            is BottleBoxIntent.ClickBottleItem -> navigateToBottle(bottle = intent.bottle)
+            is BottleBoxIntent.ClickTopTab -> changeTab(tab = intent.tab)
         }
     }
 
@@ -30,8 +32,12 @@ class BottleBoxViewModel @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    private fun navigateToBottle() {
-        postSideEffect(BottleBoxSideEffect.NavigateToBottle)
+    private fun navigateToBottle(bottle: Bottle) {
+        postSideEffect(BottleBoxSideEffect.NavigateToBottle(bottleId = bottle.id))
+    }
+
+    private fun changeTab(tab: BottleBoxUiState.BottleBoxTab) {
+        reduce { copy(topTab = tab) }
     }
 
 }
