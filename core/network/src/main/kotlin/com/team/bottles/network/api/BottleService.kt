@@ -1,6 +1,6 @@
 package com.team.bottles.network.api
 
-import com.team.bottles.network.dto.profile.reponse.PingPongListResponse
+import com.team.bottles.network.dto.bottle.reponse.PingPongListResponse
 import retrofit2.http.GET
 
 interface BottleService {

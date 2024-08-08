@@ -1,7 +1,7 @@
 package com.team.bottles.network.datasource
 
 import com.team.bottles.network.api.BottleService
-import com.team.bottles.network.dto.profile.reponse.PingPongListResponse
+import com.team.bottles.network.dto.bottle.reponse.PingPongListResponse
 import javax.inject.Inject
 
 class BottleDataSourceImpl @Inject constructor(

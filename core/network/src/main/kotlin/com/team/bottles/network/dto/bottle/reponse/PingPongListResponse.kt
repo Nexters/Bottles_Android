@@ -1,4 +1,4 @@
-package com.team.bottles.network.dto.profile.reponse
+package com.team.bottles.network.dto.bottle.reponse
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
