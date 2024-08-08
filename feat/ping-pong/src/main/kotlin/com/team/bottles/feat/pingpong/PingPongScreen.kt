@@ -1,4 +1,4 @@
-package com.team.bottles.feat.bottle
+package com.team.bottles.feat.pingpong
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,15 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
 import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
-import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesIntent
-import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesUiState
-import com.team.bottles.feat.bottle.mvi.BottleIntent
-import com.team.bottles.feat.bottle.mvi.BottleUiState
+import com.team.bottles.feat.pingpong.mvi.PingPongIntent
+import com.team.bottles.feat.pingpong.mvi.PingPongUiState
 
 @Composable
-internal fun BottleScreen(
-    uiState: BottleUiState,
-    onIntent: (BottleIntent) -> Unit
+internal fun PingPongScreen(
+    uiState: PingPongUiState,
+    onIntent: (PingPongIntent) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -29,7 +27,7 @@ internal fun BottleScreen(
         BottlesSolidButton(
             buttonType = SolidButtonType.XS,
             text = "뒤로 가기",
-            onClick = { onIntent(BottleIntent.ClickBackButton) },
+            onClick = { onIntent(PingPongIntent.ClickBackButton) },
             contentHorizontalPadding = 12.dp
         )
     }

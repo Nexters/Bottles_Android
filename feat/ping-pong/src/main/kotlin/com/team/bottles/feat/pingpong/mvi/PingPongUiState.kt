@@ -1,7 +1,7 @@
-package com.team.bottles.feat.bottle.mvi
+package com.team.bottles.feat.pingpong.mvi
 
 import com.team.bottles.core.common.UiState
 
-data class BottleUiState(
+data class PingPongUiState(
     val text: String = ""
 ) : UiState

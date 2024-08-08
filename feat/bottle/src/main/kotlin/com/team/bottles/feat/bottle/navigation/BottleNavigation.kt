@@ -1,34 +1,24 @@
 package com.team.bottles.feat.bottle.navigation
 
-import BottleNavigator
+import ArrivedBottlesNavigator
 import MainNavigator
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
-import com.team.bottles.feat.bottle.BottleRoute
 import com.team.bottles.feat.bottle.arrivedbottles.ArrivedBottlesRoute
 import com.team.bottles.feat.bottle.bottlebox.BottleBoxRoute
 
 fun NavGraphBuilder.arrivedBottlesScreen(
     navigateToSandBeach: () -> Unit
 ) {
-    composable<BottleNavigator.ArrivedBottles> {
+    composable<ArrivedBottlesNavigator> {
         ArrivedBottlesRoute(navigateToSandBeach = navigateToSandBeach)
     }
 }
 
 fun NavGraphBuilder.bottleBoxScreen(
-    navigateToBottle: (Long) -> Unit
+    navigateToPingPong: (Long) -> Unit
 ) {
     composable<MainNavigator.BottlesBox> {
-        BottleBoxRoute(navigateToBottle = navigateToBottle)
-    }
-}
-
-fun NavGraphBuilder.bottleScreen(
-    navigateToBottleBox: () -> Unit
-) {
-    composable<BottleNavigator.Bottle> {
-        BottleRoute(navigateToBottleBox = navigateToBottleBox)
+        BottleBoxRoute(navigateToPingPong = navigateToPingPong)
     }
 }

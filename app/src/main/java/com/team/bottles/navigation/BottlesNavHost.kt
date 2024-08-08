@@ -1,22 +1,23 @@
 package com.team.bottles.navigation
 
-import BottleNavigator
+import ArrivedBottlesNavigator
+import LoginNavigator
+import MainNavigator
+import OnboardingNavigator
+import PingPongNavigator
+import ProfileNavigator
+import SignupNavigator
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import LoginNavigator
-import MainNavigator
-import OnboardingNavigator
-import ProfileNavigator
-import SignupNavigator
 import com.team.bottles.feat.bottle.navigation.arrivedBottlesScreen
 import com.team.bottles.feat.bottle.navigation.bottleBoxScreen
-import com.team.bottles.feat.bottle.navigation.bottleScreen
 import com.team.bottles.feat.login.navigation.loginScreen
 import com.team.bottles.feat.login.navigation.smsLoginScreen
 import com.team.bottles.feat.mypage.navigation.myPageScreen
 import com.team.bottles.feat.onboarding.navigation.onboardingScreen
+import com.team.bottles.feat.pingpong.navigation.pingPongScreen
 import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
@@ -44,9 +45,9 @@ fun BottlesNavHost(
                 navigateToArrivedBottles = ::navigateToArrivedBottles
             )
             arrivedBottlesScreen(navigateToSandBeach = ::navigateToSandBeach)
-            bottleBoxScreen(navigateToBottle = ::navigateToBottle)
+            bottleBoxScreen(navigateToPingPong = ::navigateToPingPong)
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
-            bottleScreen(navigateToBottleBox = ::navigateToBottleBox)
+            pingPongScreen(navigateToBottleBox = ::navigateToBottleBox)
             myPageScreen(navigateToLogin = ::navigateToLoginEndpoint)
             signupScreen(
                 navigateToSandBeach = ::navigateToSandBeach,
@@ -77,10 +78,10 @@ fun NavController.navigateToIntroduction() =
     navigate(ProfileNavigator.Introduction)
 
 fun NavController.navigateToArrivedBottles() =
-    navigate(BottleNavigator.ArrivedBottles)
+    navigate(ArrivedBottlesNavigator)
 
-fun NavController.navigateToBottle(bottleId: Long) =
-    navigate(BottleNavigator.Bottle(bottleId = bottleId))
+fun NavController.navigateToPingPong(bottleId: Long) =
+    navigate(PingPongNavigator(bottleId = bottleId))
 
 fun NavController.navigateToBottleBox() =
     navigate(MainNavigator.BottlesBox) {
