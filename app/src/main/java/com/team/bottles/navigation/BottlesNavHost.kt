@@ -28,7 +28,7 @@ fun BottlesNavHost(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = MainNavigator.BottlesBox
+        startDestination = LoginNavigator.Endpoint
     ) {
         with(navHostController) {
             loginScreen(
@@ -79,7 +79,7 @@ fun NavController.navigateToIntroduction() =
 fun NavController.navigateToArrivedBottles() =
     navigate(BottleNavigator.ArrivedBottles)
 
-fun NavController.navigateToBottle(bottleId: Int) =
+fun NavController.navigateToBottle(bottleId: Long) =
     navigate(BottleNavigator.Bottle(bottleId = bottleId))
 
 fun NavController.navigateToBottleBox() =
