@@ -6,6 +6,6 @@ sealed class BottleNavigator {
     data object ArrivedBottles : MainNavigator()
 
     @Serializable
-    data class Bottle(val bottleId: Int) : MainNavigator()
+    data class Bottle(val bottleId: Long) : MainNavigator()
 
 }

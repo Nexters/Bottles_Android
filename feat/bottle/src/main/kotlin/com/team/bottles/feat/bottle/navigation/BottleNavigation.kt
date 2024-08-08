@@ -18,7 +18,7 @@ fun NavGraphBuilder.arrivedBottlesScreen(
 }
 
 fun NavGraphBuilder.bottleBoxScreen(
-    navigateToBottle: (Int) -> Unit
+    navigateToBottle: (Long) -> Unit
 ) {
     composable<MainNavigator.BottlesBox> {
         BottleBoxRoute(navigateToBottle = navigateToBottle)
