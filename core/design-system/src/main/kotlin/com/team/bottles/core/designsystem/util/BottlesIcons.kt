@@ -16,4 +16,5 @@ object BottlesIcons {
     val ic_bottle_24 = R.drawable.ic_bottle_24
     val ic_user_24 = R.drawable.ic_user_24
     val ic_close_16 = R.drawable.ic_close_16
+    val ic_spacing_bar_3_15 = R.drawable.ic_spacing_bar_3_15
 }
