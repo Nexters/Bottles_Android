@@ -17,7 +17,7 @@ fun UserProfileResponse.toUserProfile(): UserProfile =
         age = this.age,
         imageUrl = this.imageUrl?: "",
         introduction = this.introduction.map { dto -> dto.toQuestionAndAnswer() },
-        profileSelect = this.profileSelect?.toUserProfileSelect()?: UserProfileSelect.empty()
+        profileSelect = this.profileSelect?.toUserProfileSelect()?: UserProfileSelect()
     )
 
 fun QuestionAndAnswerDTO.toQuestionAndAnswer(): QuestionAndAnswer =
