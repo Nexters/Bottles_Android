@@ -7,6 +7,7 @@ import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
 import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
+import com.team.bottles.feat.pingpong.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.mvi.PingPongUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -29,6 +30,9 @@ class PingPongViewModel @Inject constructor(
     override suspend fun handleIntent(intent: PingPongIntent) {
         when (intent) {
             is PingPongIntent.ClickBackButton -> navigateToBottleBox()
+            is PingPongIntent.ClickReportButton -> { /* TODO : 신고기능 */ }
+            is PingPongIntent.ClickTabButton -> changeTab(tab = intent.tab)
+            is PingPongIntent.ClickConversationFinishButton -> finishPingPong()
         }
     }
 
@@ -40,4 +44,11 @@ class PingPongViewModel @Inject constructor(
         postSideEffect(PingPongSideEffect.NavigateToBottleBox)
     }
 
+    private fun changeTab(tab: PingPongTab) {
+        reduce { copy(currentTab = tab) }
+    }
+
+    private fun finishPingPong() {
+        // TODO : 핑퐁 종료 버튼 누르면 sideEffect로 Alter 띄우기
+    }
 }

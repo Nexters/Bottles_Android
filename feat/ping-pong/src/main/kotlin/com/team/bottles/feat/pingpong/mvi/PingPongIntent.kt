@@ -6,4 +6,10 @@ sealed interface PingPongIntent : UiIntent {
 
     data object ClickBackButton : PingPongIntent
 
+    data object ClickReportButton : PingPongIntent
+
+    data class ClickTabButton(val tab: PingPongTab) : PingPongIntent
+
+    data object ClickConversationFinishButton : PingPongIntent
+
 }
