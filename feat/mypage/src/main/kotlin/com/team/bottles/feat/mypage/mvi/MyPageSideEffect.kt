@@ -4,6 +4,6 @@ import com.team.bottles.core.common.UiSideEffect
 
 sealed interface MyPageSideEffect : UiSideEffect {
 
-    data object LogOut : MyPageSideEffect
+    data object NavigateToLoginEndPoint : MyPageSideEffect
 
 }

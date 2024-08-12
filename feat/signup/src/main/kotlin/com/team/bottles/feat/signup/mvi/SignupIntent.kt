@@ -7,8 +7,8 @@ sealed interface SignupIntent : UiIntent {
 
     data object ClickWebCloseButton : SignupIntent
 
-    data class ClickSignupButton(val token: Token) : SignupIntent
+    data class ClickWebSignupButton(val token: Token) : SignupIntent
 
-    data class LoadWebPage(val canGoBack: Boolean) : SignupIntent
+    data class ClickWebLink(val href: String) : SignupIntent
 
 }

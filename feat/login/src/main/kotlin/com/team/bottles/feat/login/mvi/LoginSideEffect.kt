@@ -6,6 +6,8 @@ sealed interface LoginSideEffect: UiSideEffect {
 
     data object NavigateToOnboarding: LoginSideEffect
 
+    data object NavigateToCreateProfile: LoginSideEffect
+
     data object NavigateToSandBeach: LoginSideEffect
 
     data object NavigateToSmsLogin: LoginSideEffect
