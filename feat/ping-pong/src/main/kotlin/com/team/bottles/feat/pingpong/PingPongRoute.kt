@@ -1,16 +1,15 @@
-package com.team.bottles.feat.bottle
+package com.team.bottles.feat.pingpong
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesSideEffect
-import com.team.bottles.feat.bottle.mvi.BottleSideEffect
+import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
 
 @Composable
-internal fun BottleRoute(
-    viewModel: BottleViewModel = hiltViewModel(),
+internal fun PingPongRoute(
+    viewModel: PingPongViewModel = hiltViewModel(),
     navigateToBottleBox: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
@@ -18,12 +17,12 @@ internal fun BottleRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is BottleSideEffect.NavigateToBottleBox -> navigateToBottleBox()
+                is PingPongSideEffect.NavigateToBottleBox -> navigateToBottleBox()
             }
         }
     }
 
-    BottleScreen(
+    PingPongScreen(
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )

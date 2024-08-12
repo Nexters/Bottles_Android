@@ -38,5 +38,24 @@ data class UserKeyPoint(
                 properties = hobbies
             ),
         )
+
+        fun pingPong(
+            keyWords: List<String>,
+            personality: List<String>,
+            hobbies: List<String>
+        ): List<UserKeyPoint> = listOf(
+            UserKeyPoint(
+                subtitle = "기본 정보",
+                properties = keyWords
+            ),
+            UserKeyPoint(
+                subtitle = "나의 성격은",
+                properties = personality
+            ),
+            UserKeyPoint(
+                subtitle = "내가 푹 빠진 취미는",
+                properties = hobbies
+            ),
+        )
     }
 }

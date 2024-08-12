@@ -3,6 +3,11 @@
     <string name="sand_beach">모래사장</string>
     <string name="bottle_box">보틀 보관함</string>
     <string name="my_page">마이페이지</string>
+    
+    <!-- Ui -->
+    <string name="finished_conversation_card_quit">%s님이 대화를 중단했어요</string>
+    <string name="delete_day_card_quit">대화는 %d일후 완전히 삭제돼요</string>
+    <string name="user_age_user_info">%d세</string>
 
     <!-- Login Screen -->
     <string name="branding_message">진심을 담은 보틀로\n서로를 밀도있게 알아가요</string>
@@ -15,4 +20,9 @@
 
     <!-- BottleBox Screen -->
     <string name="empty_bottle_box">아직 보관중인\n보틀이 없어요!</string>
+
+    <!-- PingPong Screen -->
+    <string name="conversation_finish">대화 종료하기</string>
+    <string name="user_name_send_letter">%s님이 보내는 편지</string>
+
 </resources>

@@ -37,7 +37,7 @@ class BottleBoxViewModel @Inject constructor(
     }
 
     private fun navigateToBottle(bottle: Bottle) {
-        postSideEffect(BottleBoxSideEffect.NavigateToBottle(bottleId = bottle.id))
+        postSideEffect(BottleBoxSideEffect.NavigateToPingPong(bottleId = bottle.id))
     }
 
     private fun changeTab(tab: BottleBoxUiState.BottleBoxTab) {
