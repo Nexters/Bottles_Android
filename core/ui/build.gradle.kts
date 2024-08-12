@@ -11,4 +11,5 @@ dependencies {
     implementation(projects.core.designSystem)
 
     implementation(libs.androidx.compose.activity)
+    implementation(libs.kotlinx.collections.immutable)
 }

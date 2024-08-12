@@ -4,6 +4,6 @@ import com.team.bottles.core.common.UiSideEffect
 
 sealed interface BottleBoxSideEffect : UiSideEffect {
 
-    data object NavigateToBottle : BottleBoxSideEffect
+    data class NavigateToBottle(val bottleId: Long) : BottleBoxSideEffect
 
 }

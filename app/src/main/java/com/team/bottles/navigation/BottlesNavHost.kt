@@ -82,8 +82,8 @@ fun NavController.navigateToIntroduction() =
 fun NavController.navigateToArrivedBottles() =
     navigate(BottleNavigator.ArrivedBottles)
 
-fun NavController.navigateToBottle() =
-    navigate(BottleNavigator.Bottle)
+fun NavController.navigateToBottle(bottleId: Long) =
+    navigate(BottleNavigator.Bottle(bottleId = bottleId))
 
 fun NavController.navigateToBottleBox() =
     navigate(MainNavigator.BottlesBox) {

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -37,18 +38,15 @@ import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.etc.chips.EtcText
 import com.team.bottles.core.designsystem.foundation.wantedSansStd
+import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.model.Bottle
 
 @Composable
-fun UserProfileItem(
+fun LazyItemScope.BottleItem(
     modifier: Modifier = Modifier,
-    imageUrl: String,
-    name: String,
-    age: Int,
-    mbti: String,
-    personality: List<String>,
-    isRead: Boolean,
-    remainingTime: String? = null,
+    bottle: Bottle,
+    onClickItem: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -61,11 +59,12 @@ fun UserProfileItem(
                 color = BottlesTheme.color.border.primary,
                 shape = RoundedCornerShape(20.dp)
             )
-            .padding(BottlesTheme.padding.medium),
+            .padding(BottlesTheme.padding.medium)
+            .debounceNoRippleClickable(onClick = onClickItem),
         verticalArrangement = Arrangement.spacedBy(space = BottlesTheme.spacing.small)
     ) {
-        if (remainingTime != null) {
-            EtcText(text = remainingTime)
+        if (bottle.remainingTime != null) {
+            EtcText(text = bottle.remainingTime)
         }
 
         Row(
@@ -76,12 +75,12 @@ fun UserProfileItem(
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = name,
+                        text = bottle.name,
                         style = BottlesTheme.typography.subTitle2,
                         color = BottlesTheme.color.text.secondary
                     )
 
-                    if (!isRead) {
+                    if (!bottle.isRead) {
                         val circleColor = BottlesTheme.color.icon.update
 
                         Spacer(modifier = Modifier.width(width = BottlesTheme.spacing.doubleExtraSmall))
@@ -98,7 +97,7 @@ fun UserProfileItem(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "${age}세",
+                        text = "${bottle.age}세",
                         style = BottlesTheme.typography.caption,
                         color = BottlesTheme.color.text.tertiary
                     )
@@ -116,7 +115,7 @@ fun UserProfileItem(
                     )
 
                     Text(
-                        text = mbti,
+                        text = bottle.mbti,
                         style = BottlesTheme.typography.caption,
                         color = BottlesTheme.color.text.tertiary
                     )
@@ -134,7 +133,7 @@ fun UserProfileItem(
                     )
 
                     Text(
-                        text = "${personality[0]}, ${personality[1]}, ${personality[2]}",
+                        text = "${bottle.personality[0]}, ${bottle.personality[1]}, ${bottle.personality[2]}",
                         style = BottlesTheme.typography.caption,
                         color = BottlesTheme.color.text.tertiary
                     )
@@ -145,7 +144,7 @@ fun UserProfileItem(
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape),
-                imageModel = { imageUrl },
+                imageModel = { bottle.imageUrl },
                 previewPlaceholder = painterResource(id = R.drawable.sample_image),
                 loading = { _ ->
                     Box(
@@ -176,75 +175,3 @@ fun UserProfileItem(
         }
     }
 }
-
-/*==============Preview==============*/
-
-@Preview(showBackground = true)
-@Composable
-private fun UserProfileItemPreview() {
-    BottlesTheme {
-        val listState = rememberLazyListState()
-        val userList = listOf(
-            UserInfo(
-                id = 1,
-                image = "https://avatars.githubusercontent.com/u/54674781?v=4",
-                name = "냥냥이",
-                age = 15,
-                remainingTime = null,
-                mbti = "INTP",
-                personality = listOf("적극적인", "열적정인", "예의바른"),
-                isRead = true
-            ),
-            UserInfo(
-                id = 2,
-                name = "뇽뇽이",
-                age = 15,
-                remainingTime = null,
-                mbti = "INTP",
-                personality = listOf("적극적인", "열적정인", "예의바른"),
-                isRead = false
-            ),
-            UserInfo(
-                id = 3,
-                name = "냥냥이",
-                age = 15,
-                remainingTime = "1시간 후 사라져요",
-                mbti = "INTP",
-                personality = listOf("적극적인", "열적정인", "예의바른"),
-                isRead = true
-            )
-        )
-
-        LazyColumn(
-            state = listState,
-            contentPadding = BottlesTheme.padding.medium,
-            verticalArrangement = Arrangement.spacedBy(5.dp)
-        ) {
-            items(
-                items = userList,
-                key = { userInfo -> userInfo.id }
-            ) { userInfo ->
-                UserProfileItem(
-                    imageUrl = userInfo.image,
-                    name = userInfo.name,
-                    age = userInfo.age,
-                    mbti = userInfo.mbti,
-                    remainingTime = userInfo.remainingTime,
-                    personality = userInfo.personality,
-                    isRead = userInfo.isRead
-                )
-            }
-        }
-    }
-}
-
-private data class UserInfo(
-    val id: Int = 0,
-    val image: String = "",
-    val name: String = "",
-    val age: Int = 0,
-    val remainingTime: String? = null,
-    val mbti: String = "",
-    val personality: List<String> = emptyList(),
-    val isRead: Boolean = false,
-)

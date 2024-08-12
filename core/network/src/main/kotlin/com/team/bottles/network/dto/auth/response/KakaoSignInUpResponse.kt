@@ -7,5 +7,6 @@ import kotlinx.serialization.Serializable
 data class KakaoSignInUpResponse(
     @SerialName("accessToken") val accessToken: String,
     @SerialName("isSignUp") val isSignUp: Boolean,
-    @SerialName("refreshToken") val refreshToken: String
+    @SerialName("refreshToken") val refreshToken: String,
+    @SerialName("hasCompleteIntroduction") val hasCompleteIntroduction: Boolean,
 )
