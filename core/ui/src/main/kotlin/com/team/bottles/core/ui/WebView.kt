@@ -3,6 +3,7 @@ package com.team.bottles.core.ui
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebView.setWebContentsDebuggingEnabled
 import android.webkit.WebViewClient
@@ -51,6 +52,10 @@ fun BottlesWebView(
                 layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
                 settings.domStorageEnabled = true
                 settings.javaScriptEnabled = true
+                settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+                settings.setSupportZoom(false)
+                settings.builtInZoomControls = false
+
                 setWebContentsDebuggingEnabled(true)
                 loadUrl(url)
             }
