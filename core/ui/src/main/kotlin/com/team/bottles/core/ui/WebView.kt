@@ -21,9 +21,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 @Composable
 fun BottlesWebView(
     url: String,
-    bridgeName: String,
     webView: WebView,
-    bridge: () -> Any
 ) {
     var canGoBack by remember { mutableStateOf(false) }
 
@@ -45,6 +43,7 @@ fun BottlesWebView(
             webView.destroy()
         }
     }
+
     AndroidView(
         modifier = Modifier.fillMaxSize(),
         factory = {
@@ -54,10 +53,6 @@ fun BottlesWebView(
                 settings.javaScriptEnabled = true
                 setWebContentsDebuggingEnabled(true)
                 loadUrl(url)
-                addJavascriptInterface(
-                    bridge,
-                    bridgeName
-                )
             }
         }
     )
