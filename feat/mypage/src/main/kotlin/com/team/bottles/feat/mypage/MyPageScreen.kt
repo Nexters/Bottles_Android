@@ -58,7 +58,7 @@ internal fun MyPageScreen(
 
         if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
             BottlesWebView(
-                url = BuildConfig.BOTTLES_MY_PAGE_URL,
+                url = BuildConfig.BOTTLES_MY_PAGE_URL + "?accessToken=${uiState.token.accessToken}&refreshToken=${uiState.token.refreshToken}",
                 webView = webView
             )
         }
