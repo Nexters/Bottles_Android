@@ -17,7 +17,7 @@ class SignupViewModel @Inject constructor(
 ) : BaseViewModel<SignupUiState, SignupSideEffect, SignupIntent>(savedStateHandle) {
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): SignupUiState =
-        SignupUiState()
+        SignupUiState
 
     override fun handleClientException(throwable: Throwable) {
         TODO("Not yet implemented")
@@ -25,9 +25,9 @@ class SignupViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: SignupIntent) {
         when (intent) {
-            is SignupIntent.ClickSignupButton -> signup(token = intent.token)
+            is SignupIntent.ClickWebSignupButton -> signup(token = intent.token)
             is SignupIntent.ClickWebCloseButton -> navigateToLoginEndPoint()
-            is SignupIntent.LoadWebPage -> reduce { copy(isWebPageCanGoBack = intent.canGoBack) }
+            is SignupIntent.ClickWebLink -> openLink(href = intent.href)
         }
     }
 
@@ -40,6 +40,10 @@ class SignupViewModel @Inject constructor(
 
     private fun navigateToLoginEndPoint() {
         postSideEffect(SignupSideEffect.NavigateToLoginEndPoint)
+    }
+
+    private fun openLink(href: String) {
+        postSideEffect(SignupSideEffect.OpenLink(href = href))
     }
 
 }

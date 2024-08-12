@@ -8,4 +8,6 @@ sealed interface SignupSideEffect : UiSideEffect {
 
     data object NavigateToSandBeach : SignupSideEffect
 
+    data class OpenLink(val href: String) : SignupSideEffect
+
 }

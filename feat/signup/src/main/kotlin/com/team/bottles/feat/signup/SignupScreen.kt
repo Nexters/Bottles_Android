@@ -1,21 +1,15 @@
 package com.team.bottles.feat.signup
 
 import android.annotation.SuppressLint
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.content.Context
 import android.webkit.WebView
-import android.webkit.WebView.setWebContentsDebuggingEnabled
-import android.webkit.WebViewClient
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.fillMaxSize
+import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.viewinterop.AndroidView
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesWebView
 import com.team.bottles.feat.signup.mvi.SignupIntent
 import com.team.bottles.feat.signup.mvi.SignupUiState
 
@@ -26,52 +20,25 @@ fun SignupScreen(
     onIntent: (SignupIntent) -> Unit,
 ) {
     val context = LocalContext.current
-    val webView = remember { WebView(context) }
-
-    BackHandler {
-        if (uiState.isWebPageCanGoBack){
-            webView.goBack()
-        }
-        else {
-            onIntent(SignupIntent.ClickWebCloseButton)
-        }
-    }
-
-    DisposableEffect(webView) {
-        webView.webViewClient = object : WebViewClient() {
-            override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
-                super.doUpdateVisitedHistory(view, url, isReload)
-
-                onIntent(SignupIntent.LoadWebPage(canGoBack = view?.canGoBack()?: false))
-            }
-        }
-
-        onDispose {
-            webView.destroy()
+    val webView = remember {
+        WebView(context).apply {
+            addJavascriptInterface(
+                SignupBridge { webAction ->
+                    when (webAction) {
+                        is SignupWebAction.OnToastOpen -> Toast.makeText(context, webAction.message, Toast.LENGTH_SHORT).show()
+                        is SignupWebAction.OnWebViewClose -> onIntent(SignupIntent.ClickWebCloseButton)
+                        is SignupWebAction.OnSignup -> onIntent(SignupIntent.ClickWebSignupButton(token = webAction.token))
+                        is SignupWebAction.OnOpenLink -> onIntent(SignupIntent.ClickWebLink(href = webAction.href))
+                    }
+                },
+                SignupBridge.NAME
+            )
         }
     }
 
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = {
-            webView.apply {
-                layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-                settings.domStorageEnabled = true
-                settings.javaScriptEnabled = true
-                setWebContentsDebuggingEnabled(true)
-                loadUrl(BuildConfig.BOTTLES_SIGNUP_URL)
-                addJavascriptInterface(
-                    SignupBridge { webEvent ->
-                        when (webEvent) {
-                            is SignupWebAction.OnToastOpen -> {  }
-                            is SignupWebAction.OnWebViewClose -> onIntent(SignupIntent.ClickWebCloseButton)
-                            is SignupWebAction.OnSignup -> onIntent(SignupIntent.ClickSignupButton(token = webEvent.token))
-                        }
-                    },
-                    SignupBridge.NAME
-                )
-            }
-        }
+    BottlesWebView(
+        url = BuildConfig.BOTTLES_SIGNUP_URL,
+        webView = webView
     )
 }
 
@@ -80,7 +47,7 @@ fun SignupScreen(
 private fun SignupScreenPreview() {
     BottlesTheme {
         SignupScreen(
-            uiState = SignupUiState(),
+            uiState = SignupUiState,
             onIntent = { },
         )
     }
