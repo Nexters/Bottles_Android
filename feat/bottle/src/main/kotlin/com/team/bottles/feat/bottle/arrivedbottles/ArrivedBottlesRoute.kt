@@ -10,7 +10,8 @@ import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesSideEffect
 @Composable
 internal fun ArrivedBottlesRoute(
     viewModel: ArrivedBottlesViewModel = hiltViewModel(),
-    navigateToSandBeach: () -> Unit
+    navigateToSandBeach: () -> Unit,
+    navigateToBottleBox: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -18,6 +19,7 @@ internal fun ArrivedBottlesRoute(
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is ArrivedBottlesSideEffect.NavigateToSandBeach -> navigateToSandBeach()
+                is ArrivedBottlesSideEffect.NavigateToBottleBox -> navigateToBottleBox()
             }
         }
     }

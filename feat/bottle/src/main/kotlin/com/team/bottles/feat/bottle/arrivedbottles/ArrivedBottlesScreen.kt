@@ -1,15 +1,12 @@
 package com.team.bottles.feat.bottle.arrivedbottles
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import android.webkit.WebView
+import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
-import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import com.team.bottles.core.ui.BottlesWebView
+import com.team.bottles.feat.bottle.BuildConfig
 import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesIntent
 import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesUiState
 
@@ -18,17 +15,26 @@ internal fun ArrivedBottlesScreen(
     uiState: ArrivedBottlesUiState,
     onIntent: (ArrivedBottlesIntent) -> Unit
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = "도착한 보틀 화면")
-        BottlesSolidButton(
-            buttonType = SolidButtonType.XS,
-            text = "뒤로 가기",
-            onClick = { onIntent(ArrivedBottlesIntent.ClickBackButton) },
-            contentHorizontalPadding = 12.dp
+    val context = LocalContext.current
+    val webView = remember {
+        WebView(context).apply {
+            addJavascriptInterface(
+                ArrivedBottlesBridge { webAction ->
+                    when (webAction) {
+                        is ArrivedBottlesWebAction.OnWebViewClose -> onIntent(ArrivedBottlesIntent.ClickWebCloseButton)
+                        is ArrivedBottlesWebAction.OnBottleAccept -> onIntent(ArrivedBottlesIntent.ClickWebBottleAcceptButton)
+                        is ArrivedBottlesWebAction.OnToastOpen -> Toast.makeText(context, webAction.message, Toast.LENGTH_SHORT).show()
+                    }
+                },
+                ArrivedBottlesBridge.NAME
+            )
+        }
+    }
+
+    if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
+        BottlesWebView(
+            url = BuildConfig.BOTTLES_ARRIVED_BOTTLES_URL,
+            webView = webView
         )
     }
 }

@@ -48,7 +48,10 @@ fun BottlesNavHost(
                 navigateToIntroduction = ::navigateToIntroduction,
                 navigateToArrivedBottles = ::navigateToArrivedBottles
             )
-            arrivedBottlesScreen(navigateToSandBeach = ::navigateToSandBeach)
+            arrivedBottlesScreen(
+                navigateToSandBeach = ::navigateToSandBeach,
+                navigateToBottleBox = ::navigateToBottleBox
+            )
             bottleBoxScreen(navigateToPingPong = ::navigateToPingPong)
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
             pingPongScreen(navigateToBottleBox = ::navigateToBottleBox)

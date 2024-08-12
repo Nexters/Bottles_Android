@@ -8,10 +8,14 @@ import com.team.bottles.feat.bottle.arrivedbottles.ArrivedBottlesRoute
 import com.team.bottles.feat.bottle.bottlebox.BottleBoxRoute
 
 fun NavGraphBuilder.arrivedBottlesScreen(
-    navigateToSandBeach: () -> Unit
+    navigateToSandBeach: () -> Unit,
+    navigateToBottleBox: () -> Unit
 ) {
     composable<ArrivedBottlesNavigator> {
-        ArrivedBottlesRoute(navigateToSandBeach = navigateToSandBeach)
+        ArrivedBottlesRoute(
+            navigateToSandBeach = navigateToSandBeach,
+            navigateToBottleBox = navigateToBottleBox
+        )
     }
 }
 
