@@ -7,12 +7,13 @@ import com.team.bottles.core.ui.model.UserKeyPoint
 
 data class PingPongUiState(
     val showDialog: Boolean = false,
-    val currentRelationShip: PingPongRelationShip = PingPongRelationShip.ING,
+    val currentRelationShip: PingPongRelationShip = PingPongRelationShip.SUCCESS,
     val currentTab: PingPongTab = PingPongTab.INTRODUCTION,
     val partnerProfile: UserProfile = UserProfile(),
     val introduction: IntroductionTabState = IntroductionTabState(),
-    val isMatched: Boolean = false,
-    val closedDay: Int = 0
+    val isMatched: Boolean = true,
+    val closedDay: Int = 0,
+    val kakaoId: String = "QQQQQQ",
 ) : UiState
 
 enum class PingPongTab(override val tabName: String): TabItem {

@@ -32,8 +32,6 @@ internal fun LazyItemScope.IntroductionContents(
     introductionTabState: IntroductionTabState,
     onClickConversationFinish: () -> Unit
 ) {
-    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
-
     when (currentRelationShip) {
         PingPongRelationShip.ING,
         PingPongRelationShip.SUCCESS -> {
@@ -77,8 +75,6 @@ internal fun LazyItemScope.IntroductionContents(
         style = BottlesTheme.typography.subTitle2,
         color = BottlesTheme.color.text.enabledSecondary
     )
-
-    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraSmall))
 }
 
 @Preview(showBackground = true)

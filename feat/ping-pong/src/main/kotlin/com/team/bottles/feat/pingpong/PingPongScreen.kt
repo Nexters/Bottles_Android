@@ -16,6 +16,8 @@ import com.team.bottles.core.ui.BottlesAlertDialog
 import com.team.bottles.core.ui.model.AlertType
 import com.team.bottles.core.ui.model.UserKeyPoint
 import com.team.bottles.feat.pingpong.components.IntroductionContents
+import com.team.bottles.feat.pingpong.components.MatchingContents
+import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
 import com.team.bottles.feat.pingpong.mvi.IntroductionTabState
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
@@ -55,6 +57,22 @@ internal fun PingPongScreen(
                 isMatched = uiState.isMatched,
                 currentTab = uiState.currentTab
             )
+        },
+        bottomBar = {
+            if (uiState.currentTab == PingPongTab.MATCHING &&
+                uiState.currentRelationShip != PingPongRelationShip.ING
+            ) {
+                PingPongBottomBar(
+                    onClickButton = {
+                        if (uiState.currentRelationShip == PingPongRelationShip.SUCCESS) {
+                            onIntent(PingPongIntent.ClickGoToKakaoTalkButton)
+                        } else if (uiState.currentRelationShip == PingPongRelationShip.FAIL) {
+                            onIntent(PingPongIntent.ClickOtherOpenBottleButton)
+                        }
+                    },
+                    currentRelationShip = uiState.currentRelationShip,
+                )
+            }
         }
     ) { innerPadding ->
         LazyColumn(
@@ -67,7 +85,10 @@ internal fun PingPongScreen(
                 PingPongTab.MATCHING -> matchingScrollState
             },
             contentPadding = PaddingValues(
-                horizontal = BottlesTheme.spacing.medium
+                start = BottlesTheme.spacing.medium,
+                end = BottlesTheme.spacing.medium,
+                top = BottlesTheme.spacing.doubleExtraLarge,
+                bottom = BottlesTheme.spacing.extraLarge
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -88,7 +109,11 @@ internal fun PingPongScreen(
                     }
 
                     PingPongTab.MATCHING -> {
-
+                        MatchingContents(
+                            currentRelationShip = uiState.currentRelationShip,
+                            userName = uiState.partnerProfile.userName,
+                            kakaoId = uiState.kakaoId
+                        )
                     }
                 }
             }
@@ -102,13 +127,13 @@ private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongScreen(
             uiState = PingPongUiState(
-                currentRelationShip = PingPongRelationShip.ING,
+                currentRelationShip = PingPongRelationShip.SUCCESS,
                 partnerProfile = UserProfile.sampleUserProfile(),
                 introduction = IntroductionTabState(
                     partnerLetter = "편지 내용입니다.",
                     userKeyPoints = UserKeyPoint.exampleUerKeyPoints()
                 ),
-                isMatched = false
+                isMatched = true
             ),
             onIntent = {}
         )

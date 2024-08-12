@@ -16,4 +16,8 @@ sealed interface PingPongIntent : UiIntent {
 
     data object ClickConfirmAlert : PingPongIntent
 
+    data object ClickGoToKakaoTalkButton : PingPongIntent
+
+    data object ClickOtherOpenBottleButton : PingPongIntent
+
 }

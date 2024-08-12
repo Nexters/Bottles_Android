@@ -34,11 +34,17 @@ class PingPongViewModel @Inject constructor(
             is PingPongIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
             is PingPongIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
             is PingPongIntent.ClickConfirmAlert -> deletePingPong()
+            is PingPongIntent.ClickOtherOpenBottleButton -> navigateToBottleBox()
+            is PingPongIntent.ClickGoToKakaoTalkButton -> openKakaoTalkApp()
         }
     }
 
     override fun handleClientException(throwable: Throwable) {
         TODO("Not yet implemented")
+    }
+
+    private fun openKakaoTalkApp() {
+        postSideEffect(PingPongSideEffect.OpenKakaoTalkApp)
     }
 
     private fun navigateToBottleBox() {
