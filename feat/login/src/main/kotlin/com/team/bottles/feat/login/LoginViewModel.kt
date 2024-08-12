@@ -34,13 +34,16 @@ class LoginViewModel @Inject constructor(
 
     private fun kakaoLoin(kakaoClientResult: KakaoClientResult) {
         launch {
-            val isSignUp =
-                loginWithKakaoUseCase(accessToken = kakaoClientResult.accessToken).isSignUp
-
-            if (isSignUp) {
-                postSideEffect(LoginSideEffect.NavigateToSandBeach)
-            } else {
-                postSideEffect(LoginSideEffect.NavigateToOnboarding)
+            loginWithKakaoUseCase(accessToken = kakaoClientResult.accessToken).run {
+                if (isSignUp) { // 회원가입일 경우
+                    postSideEffect(LoginSideEffect.NavigateToOnboarding)
+                } else { // 로그인 일 경우
+                    if (hasCompleteUserProfile) { // 프로필 생성을 했다면
+                        postSideEffect(LoginSideEffect.NavigateToSandBeach)
+                    } else { // 프로필 생성을 안했으면
+                        postSideEffect(LoginSideEffect.NavigateToCreateProfile)
+                    }
+                }
             }
         }
     }
