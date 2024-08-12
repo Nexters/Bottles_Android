@@ -7,6 +7,7 @@ data class PingPongResult(
 
 data class PingPongBottle(
     val id: Long,
+    val userId: Long,
     val isRead: Boolean,
     val userName: String,
     val age: Int,
