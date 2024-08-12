@@ -25,6 +25,13 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun logout() {
         val accessToken = tokenDataSource.getAccessToken()
         authDataSource.logout(accessToken = accessToken)
+        tokenDataSource.clear()
+    }
+
+    override suspend fun deleteUser() {
+        val accessToken = tokenDataSource.getAccessToken()
+        authDataSource.deleteUser(accessToken = accessToken)
+        tokenDataSource.clear()
     }
 
     override suspend fun fetchLocalToken(): Token =

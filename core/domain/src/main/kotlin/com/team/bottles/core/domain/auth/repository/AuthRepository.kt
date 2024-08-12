@@ -9,6 +9,8 @@ interface AuthRepository {
 
     suspend fun logout()
 
+    suspend fun deleteUser()
+
     suspend fun fetchLocalToken(): Token
 
     suspend fun updateLocalToken(token: Token)

@@ -1,5 +1,9 @@
 package com.team.bottles.di.usecase
 
+import com.team.bottles.core.domain.auth.usecase.DeleteUserUseCase
+import com.team.bottles.core.domain.auth.usecase.DeleteUserUseCaseImpl
+import com.team.bottles.core.domain.auth.usecase.LogOutUseCase
+import com.team.bottles.core.domain.auth.usecase.LogOutUseCaseImpl
 import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCase
 import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCaseImpl
 import com.team.bottles.core.domain.auth.usecase.WebViewConnectUseCase
@@ -22,5 +26,15 @@ abstract class AuthUseCaseModule {
     abstract fun bindsWebViewConnectUseCase(
         useCaseImpl: WebViewConnectUseCaseImpl
     ): WebViewConnectUseCase
+
+    @Binds
+    abstract fun bindsLogOutUseCase(
+        useCaseImpl: LogOutUseCaseImpl
+    ): LogOutUseCase
+
+    @Binds
+    abstract fun bindsDeleteUserUseCase(
+        useCaseImpl: DeleteUserUseCaseImpl
+    ): DeleteUserUseCase
 
 }
