@@ -7,12 +7,12 @@ import com.team.bottles.feat.signup.SignupRoute
 
 fun NavGraphBuilder.signupScreen(
     navigateToLoginEndpoint: () -> Unit,
-    navigateToSandBeach: () -> Unit
+    navigateToOnboarding: () -> Unit
 ) {
     composable<SignupNavigator> {
         SignupRoute(
             navigateToLoginEndpoint = navigateToLoginEndpoint,
-            navigateToSandBeach = navigateToSandBeach
+            navigateToOnboarding = navigateToOnboarding
         )
     }
 }

@@ -18,7 +18,8 @@ fun LoginRoute(
     navigateToOnboarding: () -> Unit,
     navigateToSandBeach: () -> Unit,
     navigateToSignup: () -> Unit,
-    navigateToSmsLogin: () -> Unit
+    navigateToSmsLogin: () -> Unit,
+    navigateToCreateProfile: () -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val activity = LocalContext.current as Activity
@@ -27,6 +28,7 @@ fun LoginRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
+                is LoginSideEffect.NavigateToCreateProfile -> navigateToCreateProfile()
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
                 is LoginSideEffect.NavigateToSandBeach -> navigateToSandBeach()
                 is LoginSideEffect.NavigateToSignup -> navigateToSignup()

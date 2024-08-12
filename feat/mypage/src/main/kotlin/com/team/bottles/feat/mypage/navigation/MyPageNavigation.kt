@@ -6,9 +6,9 @@ import androidx.navigation.compose.composable
 import com.team.bottles.feat.mypage.MyPageRoute
 
 fun NavGraphBuilder.myPageScreen(
-    navigateToLogin: () -> Unit
+    navigateToLoginEndPoint: () -> Unit
 ) {
     composable<MainNavigator.MyPage> {
-        MyPageRoute(navigateToLogin = navigateToLogin)
+        MyPageRoute(navigateToLoginEndPoint = navigateToLoginEndPoint)
     }
 }

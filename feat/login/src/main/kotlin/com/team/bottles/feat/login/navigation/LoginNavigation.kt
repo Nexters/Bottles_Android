@@ -10,26 +10,30 @@ fun NavGraphBuilder.loginScreen(
     navigateToOnboarding: () -> Unit,
     navigateToSandBeach: () -> Unit,
     navigateToSignup: () -> Unit,
-    navigateToSmsLogin: () -> Unit
+    navigateToSmsLogin: () -> Unit,
+    navigateToCreateProfile: () -> Unit
 ) {
     composable<LoginNavigator.Endpoint> {
         LoginRoute(
             navigateToOnboarding = navigateToOnboarding,
             navigateToSandBeach = navigateToSandBeach,
             navigateToSignup = navigateToSignup,
-            navigateToSmsLogin = navigateToSmsLogin
+            navigateToSmsLogin = navigateToSmsLogin,
+            navigateToCreateProfile = navigateToCreateProfile
         )
     }
 }
 
 fun NavGraphBuilder.smsLoginScreen(
-    navigateToLogin: () -> Unit,
+    navigateToLoginEndPoint: () -> Unit,
     navigateToSandBeach: () -> Unit,
+    navigateToOnboarding: () -> Unit,
 ) {
     composable<LoginNavigator.SmsLogin> {
         SmsLoginRoute(
-            navigateToLogin = navigateToLogin,
+            navigateToLoginEndPoint = navigateToLoginEndPoint,
             navigateToSandBeach = navigateToSandBeach,
+            navigateToOnboarding = navigateToOnboarding
         )
     }
 }

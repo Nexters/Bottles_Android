@@ -4,6 +4,8 @@ import com.team.bottles.core.common.UiIntent
 
 sealed interface ArrivedBottlesIntent : UiIntent {
 
-    data object ClickBackButton : ArrivedBottlesIntent
+    data object ClickWebCloseButton : ArrivedBottlesIntent
+
+    data object ClickWebBottleAcceptButton : ArrivedBottlesIntent
 
 }

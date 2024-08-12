@@ -14,6 +14,7 @@ fun PingPongListResponse.toPingPongResult(): PingPongResult =
 fun PingPongBottleDto.toPingPongBottle(): PingPongBottle =
     PingPongBottle(
         id = this.id,
+        userId = this.userId,
         isRead = this.isRead,
         userName = this.userName,
         age = this.age,

@@ -10,14 +10,14 @@ import com.team.bottles.feat.mypage.mvi.MyPageSideEffect
 @Composable
 internal fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
-    navigateToLogin: () -> Unit
+    navigateToLoginEndPoint: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is MyPageSideEffect.LogOut -> navigateToLogin()
+                is MyPageSideEffect.NavigateToLoginEndPoint -> navigateToLoginEndPoint()
             }
         }
     }

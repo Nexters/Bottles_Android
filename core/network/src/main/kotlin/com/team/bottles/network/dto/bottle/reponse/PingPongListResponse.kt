@@ -18,4 +18,5 @@ data class PingPongBottleDto(
     @SerialName("mbti") val mbti: String?,
     @SerialName("keyword") val keyword: List<String>?,
     @SerialName("userImageUrl") val userImageUrl: String?,
+    @SerialName("userId") val userId: Long,
 )

@@ -36,26 +36,34 @@ fun BottlesNavHost(
                 navigateToOnboarding = ::navigateToOnboarding,
                 navigateToSandBeach = ::navigateToSandBeach,
                 navigateToSignup = ::navigateToSignup,
-                navigateToSmsLogin = ::navigateToSmsLogin
+                navigateToSmsLogin = ::navigateToSmsLogin,
+                navigateToCreateProfile = ::navigateToCreateProfile
             )
             onboardingScreen(navigateToCreateProfile = ::navigateToCreateProfile)
-            createProfileScreen(navigateToSandBeach = ::navigateToSandBeach)
+            createProfileScreen(
+                navigateToSandBeach = ::navigateToSandBeach,
+                navigateToOnboarding = ::navigateToOnboarding
+            )
             sandBeachScreen(
                 navigateToIntroduction = ::navigateToIntroduction,
                 navigateToArrivedBottles = ::navigateToArrivedBottles
             )
-            arrivedBottlesScreen(navigateToSandBeach = ::navigateToSandBeach)
+            arrivedBottlesScreen(
+                navigateToSandBeach = ::navigateToSandBeach,
+                navigateToBottleBox = ::navigateToBottleBox
+            )
             bottleBoxScreen(navigateToPingPong = ::navigateToPingPong)
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
             pingPongScreen(navigateToBottleBox = ::navigateToBottleBox)
-            myPageScreen(navigateToLogin = ::navigateToLoginEndpoint)
+            myPageScreen(navigateToLoginEndPoint = ::navigateToLoginEndpoint)
             signupScreen(
-                navigateToSandBeach = ::navigateToSandBeach,
+                navigateToOnboarding = ::navigateToOnboarding,
                 navigateToLoginEndpoint = ::navigateToLoginEndpoint
             )
             smsLoginScreen(
                 navigateToSandBeach = ::navigateToSandBeach,
-                navigateToLogin = ::navigateToLoginEndpoint
+                navigateToLoginEndPoint = ::navigateToLoginEndpoint,
+                navigateToOnboarding = ::navigateToOnboarding
             )
         }
     }
