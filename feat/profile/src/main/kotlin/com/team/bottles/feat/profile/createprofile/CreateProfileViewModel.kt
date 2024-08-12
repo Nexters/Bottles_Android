@@ -21,9 +21,12 @@ class CreateProfileViewModel @Inject constructor(
         launch {
             webViewConnectUseCase.getLocalToken().run {
                 reduce {
-                    copy(token = Token(
+                    copy(
+                        token = Token(
                             accessToken = accessToken,
-                            refreshToken = refreshToken))
+                            refreshToken = refreshToken
+                        )
+                    )
                 }
             }
         }
@@ -34,7 +37,7 @@ class CreateProfileViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: CreateProfileIntent) {
         when (intent) {
-            is CreateProfileIntent.ClickWebCompleteButton -> createProfile(token = intent.token)
+            is CreateProfileIntent.ClickWebCreateProfileButton -> createProfile()
             is CreateProfileIntent.ClickWebCloseButton -> navigateToOnboarding()
         }
     }
@@ -43,11 +46,8 @@ class CreateProfileViewModel @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    private fun createProfile(token: Token) {
-        launch {
-            webViewConnectUseCase.setLocalToken(token = token)
-            postSideEffect(CreateProfileSideEffect.NavigateToMain)
-        }
+    private fun createProfile() {
+        postSideEffect(CreateProfileSideEffect.NavigateToMain)
     }
 
     private fun navigateToOnboarding() {

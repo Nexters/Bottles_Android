@@ -2,16 +2,13 @@ package com.team.bottles.feat.profile.createprofile
 
 import android.webkit.JavascriptInterface
 import com.team.bottles.core.common.base.BaseBridgeListener
-import com.team.bottles.core.domain.auth.model.Token
-import kotlinx.serialization.json.Json
 
 internal class CreateProfileBridge(private val onAction: (CreateProfileWebAction) -> Unit) :
     CreateProfileBridgeListener {
 
     @JavascriptInterface
-    override fun onCreateProfileComplete(json: String) {
-        val token = Json.decodeFromString<Token>(json)
-        onAction(CreateProfileWebAction.OnCreateComplete(token =token))
+    override fun onCreateProfileComplete() {
+        onAction(CreateProfileWebAction.OnCreateComplete)
     }
 
     @JavascriptInterface
@@ -32,7 +29,7 @@ internal class CreateProfileBridge(private val onAction: (CreateProfileWebAction
 
 sealed interface CreateProfileWebAction {
 
-    data class OnCreateComplete(val token: Token) : CreateProfileWebAction
+    data object OnCreateComplete : CreateProfileWebAction
 
     data object OnWebViewClose : CreateProfileWebAction
 
@@ -42,6 +39,6 @@ sealed interface CreateProfileWebAction {
 
 interface CreateProfileBridgeListener : BaseBridgeListener {
 
-    fun onCreateProfileComplete(json: String)
+    fun onCreateProfileComplete()
 
 }
