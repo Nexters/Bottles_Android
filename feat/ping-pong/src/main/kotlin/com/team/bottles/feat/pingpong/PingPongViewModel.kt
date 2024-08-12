@@ -26,13 +26,14 @@ class PingPongViewModel @Inject constructor(
         return PingPongUiState()
     }
 
-
     override suspend fun handleIntent(intent: PingPongIntent) {
         when (intent) {
             is PingPongIntent.ClickBackButton -> navigateToBottleBox()
-            is PingPongIntent.ClickReportButton -> { /* TODO : 신고기능 */ }
+            is PingPongIntent.ClickReportButton -> { /* TODO : userId와 함께 신고하기 화면으로 이동 */ }
             is PingPongIntent.ClickTabButton -> changeTab(tab = intent.tab)
-            is PingPongIntent.ClickConversationFinishButton -> finishPingPong()
+            is PingPongIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
+            is PingPongIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
+            is PingPongIntent.ClickConfirmAlert -> deletePingPong()
         }
     }
 
@@ -48,7 +49,12 @@ class PingPongViewModel @Inject constructor(
         reduce { copy(currentTab = tab) }
     }
 
-    private fun finishPingPong() {
-        // TODO : 핑퐁 종료 버튼 누르면 sideEffect로 Alter 띄우기
+    private fun deletePingPong() {
+        launch {
+            // TODO : 대화 중단 API 호출
+            reduce { copy(showDialog = false) }
+            postSideEffect(PingPongSideEffect.NavigateToBottleBox)
+        }
     }
+
 }

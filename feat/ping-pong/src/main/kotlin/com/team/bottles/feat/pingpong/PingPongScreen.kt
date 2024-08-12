@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.profile.model.UserProfile
+import com.team.bottles.core.ui.BottlesAlertDialog
+import com.team.bottles.core.ui.model.AlertType
 import com.team.bottles.core.ui.model.UserKeyPoint
 import com.team.bottles.feat.pingpong.components.IntroductionContents
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
@@ -29,6 +31,17 @@ internal fun PingPongScreen(
     val introductionTabScrollState = rememberLazyListState()
     val pingPongTabScrollState = rememberLazyListState()
     val matchingScrollState = rememberLazyListState()
+
+    if (uiState.showDialog) {
+        BottlesAlertDialog(
+            onClose = { onIntent(PingPongIntent.ClickCloseAlert) },
+            onConfirm = { onIntent(PingPongIntent.ClickConfirmAlert) },
+            confirmText = AlertType.STOP_PING_PONG.confirmText,
+            dismissText = AlertType.STOP_PING_PONG.dismissText,
+            title = AlertType.STOP_PING_PONG.title,
+            content = AlertType.STOP_PING_PONG.content
+        )
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

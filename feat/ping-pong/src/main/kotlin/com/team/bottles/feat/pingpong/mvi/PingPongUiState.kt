@@ -6,6 +6,7 @@ import com.team.bottles.core.ui.TabItem
 import com.team.bottles.core.ui.model.UserKeyPoint
 
 data class PingPongUiState(
+    val showDialog: Boolean = false,
     val currentRelationShip: PingPongRelationShip = PingPongRelationShip.ING,
     val currentTab: PingPongTab = PingPongTab.INTRODUCTION,
     val partnerProfile: UserProfile = UserProfile(),

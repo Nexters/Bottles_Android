@@ -44,9 +44,10 @@ internal fun MyPageScreen(
             BottlesAlertDialog(
                 onClose = { onIntent(MyPageIntent.ClickCancel) },
                 onConfirm = {
-                    when(uiState.alertType) {
-                        AlertType.LOG_OUT -> onIntent(MyPageIntent.ClickDialogLogOutButton)
-                        AlertType.DELETE_USER -> onIntent(MyPageIntent.ClickDialogDeleteUserButton)
+                    if (uiState.alertType == AlertType.LOG_OUT) {
+                        onIntent(MyPageIntent.ClickDialogLogOutButton)
+                    } else if (uiState.alertType == AlertType.DELETE_USER) {
+                        onIntent(MyPageIntent.ClickDialogDeleteUserButton)
                     }
                 },
                 confirmText = uiState.alertType.confirmText,
