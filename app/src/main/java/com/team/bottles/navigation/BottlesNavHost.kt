@@ -54,7 +54,7 @@ fun BottlesNavHost(
             pingPongScreen(navigateToBottleBox = ::navigateToBottleBox)
             myPageScreen(navigateToLoginEndPoint = ::navigateToLoginEndpoint)
             signupScreen(
-                navigateToSandBeach = ::navigateToSandBeach,
+                navigateToOnboarding = ::navigateToOnboarding,
                 navigateToLoginEndpoint = ::navigateToLoginEndpoint
             )
             smsLoginScreen(

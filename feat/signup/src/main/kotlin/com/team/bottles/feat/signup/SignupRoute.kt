@@ -14,7 +14,7 @@ import com.team.bottles.feat.signup.mvi.SignupSideEffect
 fun SignupRoute(
     viewModel: SignupViewModel = hiltViewModel(),
     navigateToLoginEndpoint: () -> Unit,
-    navigateToSandBeach: () -> Unit
+    navigateToOnboarding: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -22,7 +22,7 @@ fun SignupRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is SignupSideEffect.NavigateToSandBeach -> navigateToSandBeach()
+                is SignupSideEffect.NavigateToOnboarding -> navigateToOnboarding()
                 is SignupSideEffect.NavigateToLoginEndPoint -> navigateToLoginEndpoint()
                 is SignupSideEffect.OpenLink -> {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(sideEffect.href))

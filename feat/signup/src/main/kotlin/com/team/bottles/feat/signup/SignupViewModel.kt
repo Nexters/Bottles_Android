@@ -34,7 +34,7 @@ class SignupViewModel @Inject constructor(
     private fun signup(token: Token) {
         launch {
             webViewConnectUseCase.setLocalToken(token = token)
-            postSideEffect(SignupSideEffect.NavigateToSandBeach)
+            postSideEffect(SignupSideEffect.NavigateToOnboarding)
         }
     }
 

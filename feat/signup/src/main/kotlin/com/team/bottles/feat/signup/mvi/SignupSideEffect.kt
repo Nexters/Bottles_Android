@@ -6,7 +6,7 @@ sealed interface SignupSideEffect : UiSideEffect {
 
     data object NavigateToLoginEndPoint : SignupSideEffect
 
-    data object NavigateToSandBeach : SignupSideEffect
+    data object NavigateToOnboarding : SignupSideEffect
 
     data class OpenLink(val href: String) : SignupSideEffect
 
