@@ -59,7 +59,8 @@ fun BottlesNavHost(
             )
             smsLoginScreen(
                 navigateToSandBeach = ::navigateToSandBeach,
-                navigateToLogin = ::navigateToLoginEndpoint
+                navigateToLoginEndPoint = ::navigateToLoginEndpoint,
+                navigateToOnboarding = ::navigateToOnboarding
             )
         }
     }

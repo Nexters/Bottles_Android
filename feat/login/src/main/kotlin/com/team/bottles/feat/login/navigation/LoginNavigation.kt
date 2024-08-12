@@ -25,13 +25,15 @@ fun NavGraphBuilder.loginScreen(
 }
 
 fun NavGraphBuilder.smsLoginScreen(
-    navigateToLogin: () -> Unit,
+    navigateToLoginEndPoint: () -> Unit,
     navigateToSandBeach: () -> Unit,
+    navigateToOnboarding: () -> Unit,
 ) {
     composable<LoginNavigator.SmsLogin> {
         SmsLoginRoute(
-            navigateToLogin = navigateToLogin,
+            navigateToLoginEndPoint = navigateToLoginEndPoint,
             navigateToSandBeach = navigateToSandBeach,
+            navigateToOnboarding = navigateToOnboarding
         )
     }
 }

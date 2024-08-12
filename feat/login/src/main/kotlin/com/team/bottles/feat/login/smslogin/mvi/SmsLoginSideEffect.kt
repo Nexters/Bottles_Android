@@ -4,8 +4,10 @@ import com.team.bottles.core.common.UiSideEffect
 
 sealed interface SmsLoginSideEffect :UiSideEffect {
 
-    data object NavigateToLogin: SmsLoginSideEffect
+    data object NavigateToLoginEndPoint: SmsLoginSideEffect
 
     data object NavigateToSandBeach: SmsLoginSideEffect
+
+    data object NavigateToOnboarding: SmsLoginSideEffect
 
 }
