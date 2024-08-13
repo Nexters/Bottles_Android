@@ -14,14 +14,12 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.BottlesAlertDialog
 import com.team.bottles.core.ui.model.AlertType
-import com.team.bottles.core.ui.model.UserKeyPoint
 import com.team.bottles.feat.pingpong.components.IntroductionContents
 import com.team.bottles.feat.pingpong.components.MatchingContents
 import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
-import com.team.bottles.feat.pingpong.mvi.IntroductionTabState
+import com.team.bottles.feat.pingpong.mvi.MatchStatus
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
-import com.team.bottles.feat.pingpong.mvi.PingPongRelationShip
 import com.team.bottles.feat.pingpong.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.mvi.PingPongUiState
 
@@ -54,23 +52,20 @@ internal fun PingPongScreen(
                 onClickTrailingIcon = { onIntent(PingPongIntent.ClickReportButton) },
                 onClickTab = { tab -> onIntent(PingPongIntent.ClickTabButton(tab = tab)) },
                 userName = uiState.partnerProfile.userName,
-                isMatched = uiState.isMatched,
+                isFinalAnswer = uiState.isFinalAnswer,
                 currentTab = uiState.currentTab
             )
         },
         bottomBar = {
-            if (uiState.currentTab == PingPongTab.MATCHING &&
-                uiState.currentRelationShip != PingPongRelationShip.ING
-            ) {
+            if (uiState.isVisibilityBottomBar) {
                 PingPongBottomBar(
                     onClickButton = {
-                        if (uiState.currentRelationShip == PingPongRelationShip.SUCCESS) {
-                            onIntent(PingPongIntent.ClickGoToKakaoTalkButton)
-                        } else if (uiState.currentRelationShip == PingPongRelationShip.FAIL) {
-                            onIntent(PingPongIntent.ClickOtherOpenBottleButton)
+                        when (uiState.isMatched) {
+                            true -> onIntent(PingPongIntent.ClickGoToKakaoTalkButton)
+                            false -> onIntent(PingPongIntent.ClickOtherOpenBottleButton)
                         }
                     },
-                    currentRelationShip = uiState.currentRelationShip,
+                    isMatched = uiState.isMatched,
                 )
             }
         }
@@ -96,10 +91,11 @@ internal fun PingPongScreen(
                 when (uiState.currentTab) {
                     PingPongTab.INTRODUCTION -> {
                         IntroductionContents(
-                            currentRelationShip = uiState.currentRelationShip,
-                            introductionTabState = uiState.introduction,
+                            isStoppedPingPong = uiState.isStoppedPingPong,
                             partnerProfile = uiState.partnerProfile,
-                            closedDay = uiState.closedDay,
+                            partnerLetter = uiState.partnerLetter,
+                            partnerKeyPoints = uiState.partnerKeyPoints,
+                            deleteAfterDay = uiState.deleteAfterDay,
                             onClickConversationFinish = { onIntent(PingPongIntent.ClickConversationFinishButton) }
                         )
                     }
@@ -110,8 +106,10 @@ internal fun PingPongScreen(
 
                     PingPongTab.MATCHING -> {
                         MatchingContents(
-                            currentRelationShip = uiState.currentRelationShip,
-                            userName = uiState.partnerProfile.userName,
+                            matchStatus = uiState.matchStatus,
+                            title = uiState.title,
+                            subTitle = uiState.subTitle,
+                            illustration = uiState.illustration,
                             kakaoId = uiState.kakaoId
                         )
                     }
@@ -127,13 +125,10 @@ private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongScreen(
             uiState = PingPongUiState(
-                currentRelationShip = PingPongRelationShip.SUCCESS,
-                partnerProfile = UserProfile.sampleUserProfile(),
-                introduction = IntroductionTabState(
-                    partnerLetter = "편지 내용입니다.",
-                    userKeyPoints = UserKeyPoint.exampleUerKeyPoints()
-                ),
-                isMatched = true
+                currentTab = PingPongTab.MATCHING,
+                matchStatus = MatchStatus.IN_CONVERSATION,
+                isFinalAnswer = true,
+                partnerProfile = UserProfile.sampleUserProfile()
             ),
             onIntent = {}
         )

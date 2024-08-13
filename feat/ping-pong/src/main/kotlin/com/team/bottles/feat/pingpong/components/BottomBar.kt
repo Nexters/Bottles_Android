@@ -13,20 +13,13 @@ import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
 import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.feat.pingpong.mvi.PingPongRelationShip
 
 @Composable
 internal fun PingPongBottomBar(
     modifier: Modifier = Modifier,
     onClickButton: () -> Unit,
-    currentRelationShip: PingPongRelationShip,
+    isMatched: Boolean,
 ) {
-    val buttonText = if (currentRelationShip == PingPongRelationShip.SUCCESS) {
-        "카카오톡 바로가기"
-    } else {
-        "다른 보틀 열어보기"
-    }
-
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -40,7 +33,7 @@ internal fun PingPongBottomBar(
         BottlesSolidButton(
             modifier = Modifier.fillMaxWidth(),
             buttonType = SolidButtonType.LG,
-            text = buttonText,
+            text = if (isMatched) "카카오톡 바로가기" else "다른 보틀 알아보기",
             onClick = onClickButton
         )
     }
@@ -52,7 +45,7 @@ private fun PingPongBottomBarPreview() {
     BottlesTheme {
         PingPongBottomBar(
             onClickButton = { /*TODO*/ },
-            currentRelationShip = PingPongRelationShip.FAIL
+            isMatched = true
         )
     }
 }

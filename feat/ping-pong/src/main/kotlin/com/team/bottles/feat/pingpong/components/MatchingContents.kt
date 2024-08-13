@@ -1,10 +1,10 @@
 package com.team.bottles.feat.pingpong.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -22,25 +22,16 @@ import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.CardKakaoId
-import com.team.bottles.feat.pingpong.mvi.PingPongRelationShip
+import com.team.bottles.feat.pingpong.mvi.MatchStatus
 
 @Composable
 internal fun LazyItemScope.MatchingContents(
-    currentRelationShip: PingPongRelationShip,
-    userName: String,
+    matchStatus: MatchStatus,
+    title: String,
+    subTitle: String,
+    @DrawableRes illustration: Int?,
     kakaoId: String
 ) {
-    val title = when (currentRelationShip) {
-        PingPongRelationShip.ING -> "${userName}님의\n결정을 기다리고 있어요"
-        PingPongRelationShip.SUCCESS -> "축하해요! 지금부터 찐-하게\n서로를 알아가 보세요"
-        PingPongRelationShip.FAIL -> "다른 보틀을\n열어보는 건 어때요?"
-    }
-    val subTitle = when (currentRelationShip) {
-        PingPongRelationShip.ING -> "조금만 더 기다려봐요!"
-        PingPongRelationShip.SUCCESS -> "아이디를 복사해 더 깊은 대화를 나눠보세요"
-        PingPongRelationShip.FAIL -> "아쉽지만 매칭에 실패했어요"
-    }
-
     MatchingContentsTitle(
         title = title,
         subTitle = subTitle
@@ -48,22 +39,17 @@ internal fun LazyItemScope.MatchingContents(
 
     Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
 
-    when(currentRelationShip) {
-        PingPongRelationShip.FAIL,
-        PingPongRelationShip.ING -> {
+    when (matchStatus) {
+        MatchStatus.IN_CONVERSATION,
+        MatchStatus.MATCH_FAILED -> {
             CoilImage(
                 modifier = Modifier.size(size = 250.dp),
-                imageModel = {
-                    if (currentRelationShip == PingPongRelationShip.ING) {
-                        R.drawable.illustration_phone
-                    } else {
-                        R.drawable.illustration_search_bottle
-                    }
-                },
+                imageModel = { illustration },
                 previewPlaceholder = painterResource(id = R.drawable.illustration_search_bottle)
             )
         }
-        PingPongRelationShip.SUCCESS -> {
+
+        MatchStatus.MATCH_SUCCEEDED -> {
             CardKakaoId(kakaoId = kakaoId)
         }
     }
@@ -94,12 +80,13 @@ private fun MatchingContentsTitle(
     }
 }
 
+/*=========Preview=========*/
+
 @Preview(showBackground = true)
 @Composable
-private fun MatchingContentsPreview() {
+private fun MatchingContentsStayPreview() {
     BottlesTheme {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
             state = rememberLazyListState(),
             contentPadding = PaddingValues(
                 start = BottlesTheme.spacing.medium,
@@ -111,9 +98,65 @@ private fun MatchingContentsPreview() {
         ) {
             item {
                 MatchingContents(
-                    currentRelationShip = PingPongRelationShip.SUCCESS,
-                    userName = "뇽뇽이",
-                    kakaoId = "QQQQQQQQQQQQQ"
+                    matchStatus = MatchStatus.IN_CONVERSATION,
+                    title = "핑퐁 진행중",
+                    subTitle = "진행중입니다",
+                    illustration = R.drawable.illustration_phone,
+                    kakaoId = ""
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MatchingContentsSuccessPreview() {
+    BottlesTheme {
+        LazyColumn(
+            state = rememberLazyListState(),
+            contentPadding = PaddingValues(
+                start = BottlesTheme.spacing.medium,
+                end = BottlesTheme.spacing.medium,
+                top = BottlesTheme.spacing.doubleExtraLarge,
+                bottom = BottlesTheme.spacing.extraLarge
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                MatchingContents(
+                    matchStatus = MatchStatus.MATCH_SUCCEEDED,
+                    title = "매칭됨",
+                    subTitle = "매칭되었어요",
+                    illustration = R.drawable.illustration_phone,
+                    kakaoId = "카톡아이디"
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MatchingContentsFailPreview() {
+    BottlesTheme {
+        LazyColumn(
+            state = rememberLazyListState(),
+            contentPadding = PaddingValues(
+                start = BottlesTheme.spacing.medium,
+                end = BottlesTheme.spacing.medium,
+                top = BottlesTheme.spacing.doubleExtraLarge,
+                bottom = BottlesTheme.spacing.extraLarge
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                MatchingContents(
+                    matchStatus = MatchStatus.MATCH_FAILED,
+                    title = "매칭 실패",
+                    subTitle = "매칭에 실패",
+                    illustration = R.drawable.illustration_search_bottle,
+                    kakaoId = ""
                 )
             }
         }

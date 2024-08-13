@@ -21,7 +21,7 @@ internal fun PingPongTopBar(
     onClickTrailingIcon: () -> Unit,
     onClickTab: (PingPongTab) -> Unit,
     userName: String,
-    isMatched: Boolean,
+    isFinalAnswer: Boolean,
     currentTab: PingPongTab,
 ) {
     Column(
@@ -57,7 +57,7 @@ internal fun PingPongTopBar(
             tabs = PingPongTab.entries,
             stateProvider = { tab ->
                 when {
-                    !isMatched && tab == PingPongTab.MATCHING -> OutlinedButtonState.DISABLED
+                    !isFinalAnswer && tab == PingPongTab.MATCHING -> OutlinedButtonState.DISABLED
                     currentTab == tab -> OutlinedButtonState.SELECTED
                     else -> OutlinedButtonState.ENABLED
                 }

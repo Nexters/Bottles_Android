@@ -21,20 +21,19 @@ import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.CardProfile
 import com.team.bottles.core.ui.CardQuit
 import com.team.bottles.core.ui.LetterCard
-import com.team.bottles.feat.pingpong.mvi.IntroductionTabState
-import com.team.bottles.feat.pingpong.mvi.PingPongRelationShip
+import com.team.bottles.core.ui.model.UserKeyPoint
 
 @Composable
 internal fun LazyItemScope.IntroductionContents(
-    closedDay: Int,
-    currentRelationShip: PingPongRelationShip,
+    isStoppedPingPong: Boolean,
+    deleteAfterDay: Int,
     partnerProfile: UserProfile,
-    introductionTabState: IntroductionTabState,
+    partnerKeyPoints: List<UserKeyPoint>,
+    partnerLetter: String,
     onClickConversationFinish: () -> Unit
 ) {
-    when (currentRelationShip) {
-        PingPongRelationShip.ING,
-        PingPongRelationShip.SUCCESS -> {
+    when (isStoppedPingPong) {
+        false -> {
             UserInfo(
                 imageUrl = partnerProfile.imageUrl,
                 userName = partnerProfile.userName,
@@ -48,21 +47,21 @@ internal fun LazyItemScope.IntroductionContents(
                     id = R.string.user_name_send_letter,
                     formatArgs = arrayOf(partnerProfile.userName)
                 ),
-                content = introductionTabState.partnerLetter
+                content = partnerLetter
             )
         }
 
-        PingPongRelationShip.FAIL -> {
+        true -> {
             CardQuit(
                 userName = partnerProfile.userName,
-                deleteDay = closedDay
+                deleteDay = deleteAfterDay
             )
         }
     }
 
     Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
 
-    CardProfile(keyPoints = introductionTabState.userKeyPoints)
+    CardProfile(keyPoints = partnerKeyPoints)
 
     Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.large))
 
@@ -91,10 +90,11 @@ private fun IntroductionContentsPreview() {
         ) {
             item {
                 IntroductionContents(
-                    closedDay = 3,
-                    currentRelationShip = PingPongRelationShip.FAIL,
+                    isStoppedPingPong = false,
+                    deleteAfterDay = 0,
                     partnerProfile = UserProfile.sampleUserProfile(),
-                    introductionTabState = IntroductionTabState.sample(),
+                    partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints(),
+                    partnerLetter = "편지내용입니다.",
                     onClickConversationFinish = {}
                 )
             }
