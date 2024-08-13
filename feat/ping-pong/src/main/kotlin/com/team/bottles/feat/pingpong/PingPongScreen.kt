@@ -14,10 +14,10 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.BottlesAlertDialog
 import com.team.bottles.core.ui.model.AlertType
-import com.team.bottles.feat.pingpong.components.IntroductionContents
-import com.team.bottles.feat.pingpong.components.MatchingContents
 import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
+import com.team.bottles.feat.pingpong.components.introductionContents
+import com.team.bottles.feat.pingpong.components.matchingContents
 import com.team.bottles.feat.pingpong.mvi.MatchStatus
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
 import com.team.bottles.feat.pingpong.mvi.PingPongTab
@@ -87,32 +87,30 @@ internal fun PingPongScreen(
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                when (uiState.currentTab) {
-                    PingPongTab.INTRODUCTION -> {
-                        IntroductionContents(
-                            isStoppedPingPong = uiState.isStoppedPingPong,
-                            partnerProfile = uiState.partnerProfile,
-                            partnerLetter = uiState.partnerLetter,
-                            partnerKeyPoints = uiState.partnerKeyPoints,
-                            deleteAfterDay = uiState.deleteAfterDay,
-                            onClickConversationFinish = { onIntent(PingPongIntent.ClickConversationFinishButton) }
-                        )
-                    }
+            when (uiState.currentTab) {
+                PingPongTab.INTRODUCTION -> {
+                    introductionContents(
+                        isStoppedPingPong = uiState.isStoppedPingPong,
+                        partnerProfile = uiState.partnerProfile,
+                        partnerLetter = uiState.partnerLetter,
+                        partnerKeyPoints = uiState.partnerKeyPoints,
+                        deleteAfterDay = uiState.deleteAfterDay,
+                        onClickConversationFinish = { onIntent(PingPongIntent.ClickConversationFinishButton) }
+                    )
+                }
 
-                    PingPongTab.PING_PONG -> {
+                PingPongTab.PING_PONG -> {
 
-                    }
+                }
 
-                    PingPongTab.MATCHING -> {
-                        MatchingContents(
-                            matchStatus = uiState.matchStatus,
-                            title = uiState.title,
-                            subTitle = uiState.subTitle,
-                            illustration = uiState.illustration,
-                            kakaoId = uiState.kakaoId
-                        )
-                    }
+                PingPongTab.MATCHING -> {
+                    matchingContents(
+                        matchStatus = uiState.matchStatus,
+                        title = uiState.title,
+                        subTitle = uiState.subTitle,
+                        illustration = uiState.illustration,
+                        kakaoId = uiState.kakaoId
+                    )
                 }
             }
         }

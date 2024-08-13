@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,8 +23,7 @@ import com.team.bottles.core.ui.CardQuit
 import com.team.bottles.core.ui.LetterCard
 import com.team.bottles.core.ui.model.UserKeyPoint
 
-@Composable
-internal fun LazyItemScope.IntroductionContents(
+internal fun LazyListScope.introductionContents(
     isStoppedPingPong: Boolean,
     deleteAfterDay: Int,
     partnerProfile: UserProfile,
@@ -32,48 +31,50 @@ internal fun LazyItemScope.IntroductionContents(
     partnerLetter: String,
     onClickConversationFinish: () -> Unit
 ) {
-    when (isStoppedPingPong) {
-        false -> {
-            UserInfo(
-                imageUrl = partnerProfile.imageUrl,
-                userName = partnerProfile.userName,
-                userAge = partnerProfile.age
-            )
+    item {
+        when (isStoppedPingPong) {
+            false -> {
+                UserInfo(
+                    imageUrl = partnerProfile.imageUrl,
+                    userName = partnerProfile.userName,
+                    userAge = partnerProfile.age
+                )
 
-            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
+                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
 
-            LetterCard(
-                title = stringResource(
-                    id = R.string.user_name_send_letter,
-                    formatArgs = arrayOf(partnerProfile.userName)
+                LetterCard(
+                    title = stringResource(
+                        id = R.string.user_name_send_letter,
+                        formatArgs = arrayOf(partnerProfile.userName)
+                    ),
+                    content = partnerLetter
+                )
+            }
+
+            true -> {
+                CardQuit(
+                    userName = partnerProfile.userName,
+                    deleteDay = deleteAfterDay
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
+
+        CardProfile(keyPoints = partnerKeyPoints)
+
+        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.large))
+
+        Text(
+            modifier = Modifier
+                .debounceNoRippleClickable(
+                    onClick = onClickConversationFinish
                 ),
-                content = partnerLetter
-            )
-        }
-
-        true -> {
-            CardQuit(
-                userName = partnerProfile.userName,
-                deleteDay = deleteAfterDay
-            )
-        }
+            text = stringResource(id = R.string.conversation_finish),
+            style = BottlesTheme.typography.subTitle2,
+            color = BottlesTheme.color.text.enabledSecondary
+        )
     }
-
-    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
-
-    CardProfile(keyPoints = partnerKeyPoints)
-
-    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.large))
-
-    Text(
-        modifier = Modifier
-            .debounceNoRippleClickable(
-                onClick = onClickConversationFinish
-            ),
-        text = stringResource(id = R.string.conversation_finish),
-        style = BottlesTheme.typography.subTitle2,
-        color = BottlesTheme.color.text.enabledSecondary
-    )
 }
 
 @Preview(showBackground = true)
@@ -88,16 +89,14 @@ private fun IntroductionContentsPreview() {
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                IntroductionContents(
-                    isStoppedPingPong = false,
-                    deleteAfterDay = 0,
-                    partnerProfile = UserProfile.sampleUserProfile(),
-                    partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints(),
-                    partnerLetter = "편지내용입니다.",
-                    onClickConversationFinish = {}
-                )
-            }
+            introductionContents(
+                isStoppedPingPong = false,
+                deleteAfterDay = 0,
+                partnerProfile = UserProfile.sampleUserProfile(),
+                partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints(),
+                partnerLetter = "편지내용입니다.",
+                onClickConversationFinish = {}
+            )
         }
     }
 }
