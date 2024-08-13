@@ -95,6 +95,7 @@ internal fun PingPongScreen(
                         partnerLetter = uiState.partnerLetter,
                         partnerKeyPoints = uiState.partnerKeyPoints,
                         deleteAfterDay = uiState.deleteAfterDay,
+                        matchStatus = uiState.matchStatus,
                         onClickConversationFinish = { onIntent(PingPongIntent.ClickConversationFinishButton) }
                     )
                 }
@@ -123,7 +124,7 @@ private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongScreen(
             uiState = PingPongUiState(
-                currentTab = PingPongTab.MATCHING,
+                currentTab = PingPongTab.INTRODUCTION,
                 matchStatus = MatchStatus.IN_CONVERSATION,
                 isFinalAnswer = true,
                 partnerProfile = UserProfile.sampleUserProfile()

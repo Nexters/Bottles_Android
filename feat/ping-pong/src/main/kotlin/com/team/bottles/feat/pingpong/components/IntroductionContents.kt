@@ -22,14 +22,16 @@ import com.team.bottles.core.ui.CardProfile
 import com.team.bottles.core.ui.CardQuit
 import com.team.bottles.core.ui.LetterCard
 import com.team.bottles.core.ui.model.UserKeyPoint
+import com.team.bottles.feat.pingpong.mvi.MatchStatus
 
 internal fun LazyListScope.introductionContents(
+    onClickConversationFinish: () -> Unit,
     isStoppedPingPong: Boolean,
+    matchStatus: MatchStatus,
     deleteAfterDay: Int,
     partnerProfile: UserProfile,
     partnerKeyPoints: List<UserKeyPoint>,
     partnerLetter: String,
-    onClickConversationFinish: () -> Unit
 ) {
     item {
         when (isStoppedPingPong) {
@@ -68,11 +70,13 @@ internal fun LazyListScope.introductionContents(
         Text(
             modifier = Modifier
                 .debounceNoRippleClickable(
-                    onClick = onClickConversationFinish
+                    onClick = onClickConversationFinish,
+                    enabled = matchStatus == MatchStatus.IN_CONVERSATION
                 ),
             text = stringResource(id = R.string.conversation_finish),
             style = BottlesTheme.typography.subTitle2,
-            color = BottlesTheme.color.text.enabledSecondary
+            color = if(matchStatus == MatchStatus.IN_CONVERSATION) BottlesTheme.color.text.enabledSecondary
+            else BottlesTheme.color.text.disabledSecondary
         )
     }
 }
@@ -90,12 +94,13 @@ private fun IntroductionContentsPreview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             introductionContents(
+                onClickConversationFinish = {},
                 isStoppedPingPong = false,
+                matchStatus = MatchStatus.MATCH_FAILED,
                 deleteAfterDay = 0,
                 partnerProfile = UserProfile.sampleUserProfile(),
                 partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints(),
                 partnerLetter = "편지내용입니다.",
-                onClickConversationFinish = {}
             )
         }
     }
