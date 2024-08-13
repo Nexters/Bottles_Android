@@ -1,19 +1,26 @@
 package com.team.bottles.feat.pingpong
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.BottlesAlertDialog
 import com.team.bottles.core.ui.model.AlertType
+import com.team.bottles.core.ui.model.UserKeyPoint
 import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
 import com.team.bottles.feat.pingpong.components.introductionContents
@@ -95,8 +102,6 @@ internal fun PingPongScreen(
                         partnerLetter = uiState.partnerLetter,
                         partnerKeyPoints = uiState.partnerKeyPoints,
                         deleteAfterDay = uiState.deleteAfterDay,
-                        matchStatus = uiState.matchStatus,
-                        onClickConversationFinish = { onIntent(PingPongIntent.ClickConversationFinishButton) }
                     )
                 }
 
@@ -114,20 +119,40 @@ internal fun PingPongScreen(
                     )
                 }
             }
+
+            if (uiState.currentTab != PingPongTab.MATCHING) {
+                item {
+                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.large))
+
+                    Text(
+                        modifier = Modifier
+                            .debounceNoRippleClickable(
+                                onClick = { onIntent(PingPongIntent.ClickConversationFinishButton) },
+                                enabled = uiState.matchStatus == MatchStatus.IN_CONVERSATION
+                            ),
+                        text = stringResource(id = R.string.conversation_finish),
+                        style = BottlesTheme.typography.subTitle2,
+                        color = if(uiState.matchStatus == MatchStatus.IN_CONVERSATION) BottlesTheme.color.text.enabledSecondary
+                        else BottlesTheme.color.text.disabledSecondary
+                    )
+                }
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, heightDp = 1000)
 @Composable
 private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongScreen(
             uiState = PingPongUiState(
-                currentTab = PingPongTab.INTRODUCTION,
+                currentTab = PingPongTab.PING_PONG,
                 matchStatus = MatchStatus.IN_CONVERSATION,
                 isFinalAnswer = true,
-                partnerProfile = UserProfile.sampleUserProfile()
+                partnerProfile = UserProfile.sampleUserProfile(),
+                partnerLetter = "편지내용입니다.",
+                partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints()
             ),
             onIntent = {}
         )
