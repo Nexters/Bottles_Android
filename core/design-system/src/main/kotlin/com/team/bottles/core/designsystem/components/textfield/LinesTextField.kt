@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -160,6 +161,7 @@ fun BottlesLinesTextFieldWithButton(
     state: BottlesTextFieldState,
     buttonText: String,
     enabled: Boolean = true,
+    maxLength: Int,
     interactionSource: MutableInteractionSource,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default
@@ -192,27 +194,23 @@ fun BottlesLinesTextFieldWithButton(
         is BottlesTextFieldState.Error -> Color.Transparent
         is BottlesTextFieldState.Disabled -> Color.Transparent
     }
-    val countTextColor = when (state) {
-        is BottlesTextFieldState.Enabled -> BottlesTheme.color.text.enabledTertiary
-        is BottlesTextFieldState.Active -> BottlesTheme.color.text.activeSecondary
-        is BottlesTextFieldState.Focused -> BottlesTheme.color.text.focusedSecondary
-        is BottlesTextFieldState.Error -> Color.Transparent
-        is BottlesTextFieldState.Disabled -> Color.Transparent
-    }
 
     BasicTextField(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         textStyle = BottlesTheme.typography.body.copy(
-            color = textColor
+            color = textColor,
+            textAlign = TextAlign.Start
         ),
         cursorBrush = SolidColor(
             value = BottlesTheme.color.border.focusedSecondary
         ),
         enabled = enabled,
         interactionSource = interactionSource,
-        keyboardOptions = keyboardOptions,
+        keyboardOptions = keyboardOptions.copy(
+            imeAction = ImeAction.Done
+        ),
         keyboardActions = keyboardActions,
     ) { innerTextField ->
         Column(
@@ -242,10 +240,10 @@ fun BottlesLinesTextFieldWithButton(
                         .fillMaxWidth()
                         .height(75.dp)
                 ) {
-                    if (state is BottlesTextFieldState.Enabled) {
+                    if (value.isEmpty()) {
                         Text(
                             text = hint,
-                            color = textColor,
+                            color = BottlesTheme.color.text.tertiary,
                             style = BottlesTheme.typography.body
                         )
                     }
@@ -258,9 +256,10 @@ fun BottlesLinesTextFieldWithButton(
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
-                    text = "${value.length} / 100",
+                    text = "${value.length} / $maxLength",
                     style = BottlesTheme.typography.body,
-                    color = countTextColor
+                    color = if (value.isEmpty()) BottlesTheme.color.text.enabledTertiary
+                    else BottlesTheme.color.text.activeSecondary
                 )
             }
 
@@ -270,7 +269,7 @@ fun BottlesLinesTextFieldWithButton(
                 modifier = Modifier.fillMaxWidth(),
                 buttonType = SolidButtonType.MD,
                 text = buttonText,
-                enabled = state != BottlesTextFieldState.Enabled,
+                enabled = value.isNotEmpty(),
                 onClick = onClickButton,
             )
         }
@@ -352,6 +351,7 @@ private fun BottlesLinesTextFieldWithButtonPreview() {
                 state = BottlesTextFieldState.Enabled,
                 interactionSource = interaction,
                 buttonText = "Text",
+                maxLength = 150
             )
             BottlesLinesTextFieldWithButton( // 2. active
                 value = value2,
@@ -360,7 +360,8 @@ private fun BottlesLinesTextFieldWithButtonPreview() {
                 hint = "placeHolder",
                 state = BottlesTextFieldState.Active,
                 interactionSource = interaction,
-                buttonText = "Text"
+                buttonText = "Text",
+                maxLength = 150
             )
             BottlesLinesTextFieldWithButton( // 3. focused
                 value = value2,
@@ -369,7 +370,8 @@ private fun BottlesLinesTextFieldWithButtonPreview() {
                 hint = "placeHolder",
                 state = BottlesTextFieldState.Focused,
                 interactionSource = interaction,
-                buttonText = "Text"
+                buttonText = "Text",
+                maxLength = 150
             )
         }
     }
