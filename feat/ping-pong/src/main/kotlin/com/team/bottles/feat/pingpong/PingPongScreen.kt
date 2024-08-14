@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.domain.bottle.model.MatchStatus
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.BottlesAlertDialog
 import com.team.bottles.core.ui.model.AlertType
@@ -25,7 +26,7 @@ import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
 import com.team.bottles.feat.pingpong.components.introductionContents
 import com.team.bottles.feat.pingpong.components.matchingContents
-import com.team.bottles.feat.pingpong.mvi.MatchStatus
+import com.team.bottles.feat.pingpong.components.pingPongContents
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
 import com.team.bottles.feat.pingpong.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.mvi.PingPongUiState
@@ -106,7 +107,20 @@ internal fun PingPongScreen(
                 }
 
                 PingPongTab.PING_PONG -> {
+                    pingPongContents(
+                        pingPongCards = uiState.pingPongCards,
+                        onClickSendLetter = { order, text ->
+                            onIntent(PingPongIntent.ClickSendLetter(order = order, text = text)) },
+                        onValueChange = { order, text ->
+                            onIntent(PingPongIntent.OnLetterTextChange(order = order, text = text)) },
+                        onClickLetterCard = { order -> // 카드 드롭 다운 버튼 클릭시 expanded 처리
+                            onIntent(PingPongIntent.ClickLetterCard(order = order))
+                        },
+                        onFocusedTextField = { order, isFocused ->
+                            onIntent(PingPongIntent.OnFocusedTextField(order = order, isFocused = isFocused))
+                        },
 
+                    )
                 }
 
                 PingPongTab.MATCHING -> {

@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.domain.bottle.model.MatchStatus
 import com.team.bottles.core.ui.CardKakaoId
-import com.team.bottles.feat.pingpong.mvi.MatchStatus
 
 internal fun LazyListScope.matchingContents(
     matchStatus: MatchStatus,
