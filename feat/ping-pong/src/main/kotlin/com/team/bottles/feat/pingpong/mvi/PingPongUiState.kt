@@ -3,6 +3,7 @@ package com.team.bottles.feat.pingpong.mvi
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
 import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.domain.bottle.model.MatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
@@ -123,7 +124,7 @@ sealed class PingPongCard {
 
     data class Photo(
         val isExpanded: Boolean = false,
-        val isEnabled: Boolean = false,
+        val selectButtonState: PhotoShareSelectState = PhotoShareSelectState.NONE,
         val photo: PingPongPhoto = PingPongPhoto()
     ) : PingPongCard()
 
@@ -133,4 +134,11 @@ sealed class PingPongCard {
         val matchResult: PingPongMatchResult = PingPongMatchResult()
     ) : PingPongCard()
 
+}
+
+enum class PhotoShareSelectState {
+    LIKE_SHARE,
+    HATE_SHARE,
+    NONE,
+    ;
 }

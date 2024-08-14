@@ -113,13 +113,16 @@ internal fun PingPongScreen(
                             onIntent(PingPongIntent.ClickSendLetter(order = order, text = text)) },
                         onValueChange = { order, text ->
                             onIntent(PingPongIntent.OnLetterTextChange(order = order, text = text)) },
-                        onClickLetterCard = { order -> // 카드 드롭 다운 버튼 클릭시 expanded 처리
+                        onClickLetterCard = { order ->
                             onIntent(PingPongIntent.ClickLetterCard(order = order))
                         },
                         onFocusedTextField = { order, isFocused ->
                             onIntent(PingPongIntent.OnFocusedTextField(order = order, isFocused = isFocused))
                         },
-
+                        onClickLikeShare = { onIntent(PingPongIntent.ClickLikeShareButton) },
+                        onClickHateShare = { onIntent(PingPongIntent.ClickHateShareButton) },
+                        onClickPhotoCard = { onIntent(PingPongIntent.ClickPhotoCard) },
+                        onClickShareProfilePhoto = { onIntent(PingPongIntent.ClickShareProfilePhoto) }
                     )
                 }
 

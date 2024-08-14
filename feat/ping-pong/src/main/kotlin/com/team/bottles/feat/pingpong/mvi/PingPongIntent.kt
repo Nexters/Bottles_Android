@@ -36,4 +36,13 @@ sealed interface PingPongIntent : UiIntent {
     ) : PingPongIntent
 
     data class ClickLetterCard(val order: Int) : PingPongIntent
+
+    data object ClickPhotoCard : PingPongIntent
+
+    data object ClickLikeShareButton : PingPongIntent
+
+    data object ClickHateShareButton : PingPongIntent
+
+    data object ClickShareProfilePhoto : PingPongIntent
+
 }
