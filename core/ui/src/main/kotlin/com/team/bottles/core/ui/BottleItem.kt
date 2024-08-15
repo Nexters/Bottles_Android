@@ -1,7 +1,6 @@
 package com.team.bottles.core.ui
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -30,7 +25,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skydoves.landscapist.ImageOptions
@@ -43,7 +37,7 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.model.Bottle
 
 @Composable
-fun LazyItemScope.BottleItem(
+fun BottleItem(
     modifier: Modifier = Modifier,
     bottle: Bottle,
     onClickItem: () -> Unit
@@ -160,12 +154,6 @@ fun LazyItemScope.BottleItem(
                             .fillMaxSize()
                             .background(color = BottlesTheme.color.icon.secondary)
                             .clip(shape = CircleShape),
-                    )
-                },
-                success = { _, painter ->
-                    Image(
-                        painter = painter,
-                        contentDescription = null
                     )
                 },
                 imageOptions = ImageOptions(
