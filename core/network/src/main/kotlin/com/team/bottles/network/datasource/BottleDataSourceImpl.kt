@@ -3,6 +3,7 @@ package com.team.bottles.network.datasource
 import com.team.bottles.network.api.BottleService
 import com.team.bottles.network.dto.bottle.reponse.BottlePingPongResponse
 import com.team.bottles.network.dto.bottle.reponse.PingPongListResponse
+import com.team.bottles.network.dto.bottle.request.RegisterLetterRequest
 import javax.inject.Inject
 
 class BottleDataSourceImpl @Inject constructor(
@@ -14,5 +15,9 @@ class BottleDataSourceImpl @Inject constructor(
 
     override suspend fun fetchPingPongDetail(bottleId: Int): BottlePingPongResponse =
         bottleService.getPingPongDetail(bottleId = bottleId)
+
+    override suspend fun sendPingPongLetter(bottleId: Int, request: RegisterLetterRequest) {
+        bottleService.postPingPongLetter(bottleId = bottleId, request = request)
+    }
 
 }

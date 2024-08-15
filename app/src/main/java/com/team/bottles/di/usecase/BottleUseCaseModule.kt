@@ -4,6 +4,8 @@ import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCaseImpl
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCaseImpl
+import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCase
+import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,5 +27,11 @@ abstract class BottleUseCaseModule {
     abstract fun bindsGetPingPongDetailUseCase(
         useCaseImpl: GetPingPongDetailUseCaseImpl
     ): GetPingPongDetailUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindsSendPingPongLetterUseCase(
+        useCaseImpl: SendPingPongLetterUseCaseImpl
+    ): SendPingPongLetterUseCase
 
 }

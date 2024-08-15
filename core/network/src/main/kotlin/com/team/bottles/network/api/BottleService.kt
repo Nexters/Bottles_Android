@@ -2,7 +2,10 @@ package com.team.bottles.network.api
 
 import com.team.bottles.network.dto.bottle.reponse.BottlePingPongResponse
 import com.team.bottles.network.dto.bottle.reponse.PingPongListResponse
+import com.team.bottles.network.dto.bottle.request.RegisterLetterRequest
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface BottleService {
@@ -14,5 +17,11 @@ interface BottleService {
     suspend fun getPingPongDetail(
         @Path("bottleId") bottleId: Int
     ) : BottlePingPongResponse
+
+    @POST("/api/v1/bottles/ping-pong/{bottleId}/letters")
+    suspend fun postPingPongLetter(
+        @Path("bottleId") bottleId: Int,
+        @Body request: RegisterLetterRequest
+    )
 
 }

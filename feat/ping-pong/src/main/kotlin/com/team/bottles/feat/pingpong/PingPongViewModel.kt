@@ -6,6 +6,7 @@ import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
+import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCase
 import com.team.bottles.feat.pingpong.mvi.PingPongCard
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
 import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PingPongViewModel @Inject constructor(
     private val getPingPongDetailUseCase: GetPingPongDetailUseCase,
+    private val sendPingPongLetterUseCase: SendPingPongLetterUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
@@ -106,9 +108,8 @@ class PingPongViewModel @Inject constructor(
 
     private fun sendLetter(order: Int, answer: String) {
         launch {
-            // TODO : 편지 보내기 UseCase 구현시 연결
-
-            // TODO : 핑퐁 정보 가져오기 UseCase 구현시 연결
+            sendPingPongLetterUseCase(bottleId = currentState.bottleId, letterOrder = order, answer = answer)
+            getPingPongDetail()
         }
     }
 

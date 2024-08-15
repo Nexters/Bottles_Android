@@ -9,4 +9,10 @@ interface BottleRepository {
 
     suspend fun loadPingPongDetail(bottleId: Int): PingPongDetail
 
+    suspend fun sendPingPongLetter(
+        bottleId: Int,
+        letterOrder: Int,
+        answer: String
+    )
+
 }
