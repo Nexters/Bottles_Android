@@ -6,6 +6,7 @@ import com.team.bottles.core.domain.bottle.model.PingPongDetail
 import com.team.bottles.core.domain.bottle.model.PingPongList
 import com.team.bottles.core.domain.bottle.repository.BottleRepository
 import com.team.bottles.network.datasource.BottleDataSource
+import com.team.bottles.network.dto.bottle.request.BottleImageShareRequest
 import com.team.bottles.network.dto.bottle.request.RegisterLetterRequest
 import javax.inject.Inject
 
@@ -25,6 +26,15 @@ class BottleRepositoryImpl @Inject constructor(
             request = RegisterLetterRequest(
                 order = letterOrder,
                 answer = answer)
+        )
+    }
+
+    override suspend fun selectPingPongSharePhoto(bottleId: Int, willShare: Boolean) {
+        bottleDataSource.insertPingPongSharePhoto(
+            bottleId = bottleId,
+            request = BottleImageShareRequest(
+                willShare = willShare
+            )
         )
     }
 
