@@ -150,7 +150,7 @@ internal fun PingPongScreen(
                         modifier = Modifier
                             .debounceNoRippleClickable(
                                 onClick = { onIntent(PingPongIntent.ClickConversationFinishButton) },
-                                enabled = uiState.isStoppedPingPong
+                                enabled = !uiState.isStoppedPingPong
                             ),
                         text = stringResource(id = R.string.conversation_finish),
                         style = BottlesTheme.typography.subTitle2,
