@@ -1,6 +1,7 @@
 package com.team.bottles.core.domain.profile.model
 
 data class UserProfile(
+    val userId: Long = 0L,
     val userName: String = "",
     val age: Int = 0,
     val imageUrl: String = "",

@@ -3,7 +3,7 @@ package com.team.bottles.feat.pingpong.mvi
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
-import com.team.bottles.core.domain.bottle.model.MatchStatus
+import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
 import com.team.bottles.core.domain.bottle.model.PingPongPhotoStatus
 import com.team.bottles.core.domain.bottle.model.PingPongPhotos
@@ -13,17 +13,15 @@ import com.team.bottles.core.ui.model.UserKeyPoint
 
 @Stable
 data class PingPongUiState(
+    val bottleId: Int = 0,
     val showDialog: Boolean = false,
     val isStoppedPingPong: Boolean = false,
     val deleteAfterDay: Int = 0,
     val stopUserName: String = "",
     val currentTab: PingPongTab = PingPongTab.INTRODUCTION,
     val partnerProfile: UserProfile = UserProfile(),
-    val partnerLetter: String = "",
-    val partnerKeyPoints: List<UserKeyPoint> = emptyList(),
     val partnerKakaoId: String = "",
-    val matchStatus: MatchStatus = MatchStatus.NONE,
-    val isFinalAnswer: Boolean = false,
+    val pingPongMatchStatus: PingPongMatchStatus = PingPongMatchStatus.NONE,
     val pingPongCards: List<PingPongCard> = listOf(
         PingPongCard.Letter(),
         PingPongCard.Letter(),
@@ -33,17 +31,29 @@ data class PingPongUiState(
     )
 ) : UiState {
 
+    val partnerKeyPoints: List<UserKeyPoint>
+        get() = partnerProfile.profileSelect.run {
+            UserKeyPoint.pingPong(
+                keyWords = listOf(job, mbti, region.city, height.toString(), smoking, alcohol),
+                personality = keyword,
+                hobbies = interest.run { etc + sports + entertainment + culture }
+            )
+        }
+
+    val partnerLetter: String
+        get() = partnerProfile.introduction.joinToString(" ") { it.answer }
+
     val isVisibilityBottomBar: Boolean
         get() = currentTab == PingPongTab.MATCHING &&
-                (matchStatus == MatchStatus.MATCH_FAILED || matchStatus == MatchStatus.MATCH_SUCCEEDED)
+                (pingPongMatchStatus == PingPongMatchStatus.MATCH_FAILED || pingPongMatchStatus == PingPongMatchStatus.MATCH_SUCCEEDED)
 
     val isMatched: Boolean
-        get() = matchStatus == MatchStatus.MATCH_SUCCEEDED
+        get() = pingPongMatchStatus == PingPongMatchStatus.MATCH_SUCCEEDED
 
     val matchingResult: MatchingResult
-        get() = when (matchStatus) {
-            MatchStatus.MATCH_SUCCEEDED -> MatchingResult.SUCCESS
-            MatchStatus.MATCH_FAILED -> MatchingResult.FAIL
+        get() = when (pingPongMatchStatus) {
+            PingPongMatchStatus.MATCH_SUCCEEDED -> MatchingResult.SUCCESS
+            PingPongMatchStatus.MATCH_FAILED -> MatchingResult.FAIL
             else -> MatchingResult.WAITING
         }
 

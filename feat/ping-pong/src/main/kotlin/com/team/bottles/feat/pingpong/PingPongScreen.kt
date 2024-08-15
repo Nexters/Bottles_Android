@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.domain.bottle.model.MatchStatus
+import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.BottlesAlertDialog
 import com.team.bottles.core.ui.model.AlertType
@@ -60,7 +60,7 @@ internal fun PingPongScreen(
                 onClickTrailingIcon = { onIntent(PingPongIntent.ClickReportButton) },
                 onClickTab = { tab -> onIntent(PingPongIntent.ClickTabButton(tab = tab)) },
                 partnerName = uiState.partnerProfile.userName,
-                matchStatus = uiState.matchStatus,
+                pingPongMatchStatus = uiState.pingPongMatchStatus,
                 currentTab = uiState.currentTab
             )
         },
@@ -109,7 +109,7 @@ internal fun PingPongScreen(
                 PingPongTab.PING_PONG -> {
                     pingPongContents(
                         pingPongCards = uiState.pingPongCards,
-                        matchStatus = uiState.matchStatus,
+                        pingPongMatchStatus = uiState.pingPongMatchStatus,
                         onClickSendLetter = { order, text ->
                             onIntent(PingPongIntent.ClickSendLetter(order = order, text = text)) },
                         onValueChange = { order, text ->
@@ -170,11 +170,8 @@ private fun PingPongScreenPreview() {
         PingPongScreen(
             uiState = PingPongUiState(
                 currentTab = PingPongTab.PING_PONG,
-                matchStatus = MatchStatus.NONE,
-                isFinalAnswer = true,
+                pingPongMatchStatus = PingPongMatchStatus.NONE,
                 partnerProfile = UserProfile.sampleUserProfile(),
-                partnerLetter = "편지내용입니다.",
-                partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints()
             ),
             onIntent = {}
         )

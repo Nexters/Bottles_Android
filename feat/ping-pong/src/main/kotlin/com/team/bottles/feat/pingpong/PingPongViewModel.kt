@@ -1,11 +1,15 @@
 package com.team.bottles.feat.pingpong
 
 import PingPongNavigator
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
+import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
+import com.team.bottles.core.domain.bottle.usecase.SelectPingPongShareKakaoIdUseCase
+import com.team.bottles.core.domain.bottle.usecase.SelectPingPongSharePhotoUseCase
+import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCase
+import com.team.bottles.core.domain.bottle.usecase.StopPingPongUseCase
 import com.team.bottles.feat.pingpong.mvi.PingPongCard
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
 import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
@@ -17,16 +21,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PingPongViewModel @Inject constructor(
+    private val getPingPongDetailUseCase: GetPingPongDetailUseCase,
+    private val sendPingPongLetterUseCase: SendPingPongLetterUseCase,
+    private val selectPingPongSharePhotoUseCase: SelectPingPongSharePhotoUseCase,
+    private val selectPingPongShareKakaoIdUseCase: SelectPingPongShareKakaoIdUseCase,
+    private val stopPingPongUseCase: StopPingPongUseCase,
     savedStateHandle: SavedStateHandle
+) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
-) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(
-    savedStateHandle
-) {
+    init {
+        getPingPongDetail()
+    }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState {
-        val test = savedStateHandle.toRoute<PingPongNavigator>()
-        Log.d("보틀 아이디", test.bottleId.toString())
-        return PingPongUiState.examplePingPongState()
+        val bottleId = savedStateHandle.toRoute<PingPongNavigator>().bottleId.toInt()
+        return PingPongUiState(bottleId = bottleId)
     }
 
     override suspend fun handleIntent(intent: PingPongIntent) {
@@ -36,7 +45,7 @@ class PingPongViewModel @Inject constructor(
             is PingPongIntent.ClickTabButton -> changeTab(tab = intent.tab)
             is PingPongIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
             is PingPongIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
-            is PingPongIntent.ClickConfirmAlert -> deletePingPong()
+            is PingPongIntent.ClickConfirmAlert -> stopPingPong()
             is PingPongIntent.ClickOtherOpenBottleButton -> navigateToBottleBox()
             is PingPongIntent.ClickGoToKakaoTalkButton -> openKakaoTalkApp()
             is PingPongIntent.ClickSendLetter -> sendLetter(order = intent.order, answer = intent.text)
@@ -48,9 +57,34 @@ class PingPongViewModel @Inject constructor(
             is PingPongIntent.ClickLikeSharePhotoButton -> selectLikeSharePhotoButton()
             is PingPongIntent.ClickHateSharePhotoButton -> selectHateSharePhotoButton()
             is PingPongIntent.ClickShareProfilePhoto -> shareProfilePhoto(willShare = intent.willShare)
-            is PingPongIntent.ClickShareKakaoId -> shareShareKakaoId(willMatch = intent.willMatch)
+            is PingPongIntent.ClickShareKakaoId -> shareKakaoId(willMatch = intent.willMatch)
             is PingPongIntent.ClickHateShareKakaoIdButton -> selectHateShareKakaoIdButton()
             is PingPongIntent.ClickLikeShareKakaoIdButton -> selectLikeShareKakaoIdButton()
+        }
+    }
+
+    private fun getPingPongDetail() {
+        launch {
+            val result = getPingPongDetailUseCase(bottleId = currentState.bottleId)
+
+            val pingPongCards = result.letters.map { letter ->
+                PingPongCard.Letter(letter = letter)
+            } + listOf(
+                PingPongCard.Photo(pingPongPhotos = result.photos, pingPongPhotoStatus = result.pingPongPhotoStatus),
+                PingPongCard.KakaoShare(isFirstSelect = result.matchResult.isFirstSelect)
+            )
+
+            reduce {
+                copy(
+                    isStoppedPingPong = result.isStopped,
+                    deleteAfterDay = result.deleteAfterDays.toInt(),
+                    stopUserName = result.stopUserName,
+                    partnerProfile = result.userProfile,
+                    partnerKakaoId = result.matchResult.otherContact,
+                    pingPongMatchStatus = result.pingPongMatchStatus,
+                    pingPongCards = pingPongCards,
+                )
+            }
         }
     }
 
@@ -70,9 +104,9 @@ class PingPongViewModel @Inject constructor(
         reduce { copy(currentTab = tab) }
     }
 
-    private fun deletePingPong() {
+    private fun stopPingPong() {
         launch {
-            // TODO : 대화 중단 API 호출
+            stopPingPongUseCase(bottleId = currentState.bottleId)
             reduce { copy(showDialog = false) }
             postSideEffect(PingPongSideEffect.NavigateToBottleBox)
         }
@@ -80,9 +114,8 @@ class PingPongViewModel @Inject constructor(
 
     private fun sendLetter(order: Int, answer: String) {
         launch {
-            // TODO : 편지 보내기 UseCase 구현시 연결
-
-            // TODO : 핑퐁 정보 가져오기 UseCase 구현시 연결
+            sendPingPongLetterUseCase(bottleId = currentState.bottleId, letterOrder = order, answer = answer)
+            getPingPongDetail()
         }
     }
 
@@ -207,17 +240,15 @@ class PingPongViewModel @Inject constructor(
 
     private fun shareProfilePhoto(willShare: Boolean) {
         launch {
-            // TODO : 프로필 사진 공유 UseCase 구현
-
-            // TODO : 핑퐁 정보 가져오기 UseCase 구현시 연결
+            selectPingPongSharePhotoUseCase(bottleId = currentState.bottleId, willShare = willShare)
+            getPingPongDetail()
         }
     }
 
-    private fun shareShareKakaoId(willMatch: Boolean) {
+    private fun shareKakaoId(willMatch: Boolean) {
         launch {
-            // TODO : 최종 선택 UseCase 구현
-
-            // TODO : 핑퐁 정보 가져오기 UseCase 구현시 연결
+            selectPingPongShareKakaoIdUseCase(bottleId = currentState.bottleId, willMatch = willMatch)
+            getPingPongDetail()
         }
     }
 
