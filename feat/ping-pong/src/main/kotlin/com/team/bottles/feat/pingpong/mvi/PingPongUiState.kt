@@ -13,6 +13,7 @@ import com.team.bottles.core.ui.model.UserKeyPoint
 
 @Stable
 data class PingPongUiState(
+    val bottleId: Int = 0,
     val showDialog: Boolean = false,
     val isStoppedPingPong: Boolean = false,
     val deleteAfterDay: Int = 0,

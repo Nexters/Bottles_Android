@@ -22,11 +22,13 @@ class PingPongViewModel @Inject constructor(
 ) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
     init {
-        getPingPongDetail(savedStateHandle = savedStateHandle)
+        getPingPongDetail()
     }
 
-    override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState =
-        PingPongUiState()
+    override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState {
+        val bottleId = savedStateHandle.toRoute<PingPongNavigator>().bottleId.toInt()
+        return PingPongUiState(bottleId = bottleId)
+    }
 
     override suspend fun handleIntent(intent: PingPongIntent) {
         when (intent) {
@@ -53,10 +55,9 @@ class PingPongViewModel @Inject constructor(
         }
     }
 
-    private fun getPingPongDetail(savedStateHandle: SavedStateHandle) {
+    private fun getPingPongDetail() {
         launch {
-            val bottleId = savedStateHandle.toRoute<PingPongNavigator>().bottleId.toInt()
-            val result = getPingPongDetailUseCase(bottleId = bottleId)
+            val result = getPingPongDetailUseCase(bottleId = currentState.bottleId)
 
             val pingPongCards = result.letters.map { letter ->
                 PingPongCard.Letter(letter = letter)
