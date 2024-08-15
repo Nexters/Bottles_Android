@@ -27,4 +27,6 @@ interface BottleDataSource {
         request: BottleMatchRequest
     )
 
+    suspend fun deletePingPong(bottleId: Int)
+
 }

@@ -9,6 +9,7 @@ import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongShareKakaoIdUseCase
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongSharePhotoUseCase
 import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCase
+import com.team.bottles.core.domain.bottle.usecase.StopPingPongUseCase
 import com.team.bottles.feat.pingpong.mvi.PingPongCard
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
 import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
@@ -24,6 +25,7 @@ class PingPongViewModel @Inject constructor(
     private val sendPingPongLetterUseCase: SendPingPongLetterUseCase,
     private val selectPingPongSharePhotoUseCase: SelectPingPongSharePhotoUseCase,
     private val selectPingPongShareKakaoIdUseCase: SelectPingPongShareKakaoIdUseCase,
+    private val stopPingPongUseCase: StopPingPongUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
@@ -43,7 +45,7 @@ class PingPongViewModel @Inject constructor(
             is PingPongIntent.ClickTabButton -> changeTab(tab = intent.tab)
             is PingPongIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
             is PingPongIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
-            is PingPongIntent.ClickConfirmAlert -> deletePingPong()
+            is PingPongIntent.ClickConfirmAlert -> stopPingPong()
             is PingPongIntent.ClickOtherOpenBottleButton -> navigateToBottleBox()
             is PingPongIntent.ClickGoToKakaoTalkButton -> openKakaoTalkApp()
             is PingPongIntent.ClickSendLetter -> sendLetter(order = intent.order, answer = intent.text)
@@ -102,9 +104,9 @@ class PingPongViewModel @Inject constructor(
         reduce { copy(currentTab = tab) }
     }
 
-    private fun deletePingPong() {
+    private fun stopPingPong() {
         launch {
-            // TODO : 대화 중단 API 호출
+            stopPingPongUseCase(bottleId = currentState.bottleId)
             reduce { copy(showDialog = false) }
             postSideEffect(PingPongSideEffect.NavigateToBottleBox)
         }

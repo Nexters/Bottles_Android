@@ -30,4 +30,8 @@ class BottleDataSourceImpl @Inject constructor(
         bottleService.postPingPongKakaoIdShare(bottleId = bottleId, request = request)
     }
 
+    override suspend fun deletePingPong(bottleId: Int) {
+        bottleService.postPingPongStop(bottleId = bottleId)
+    }
+
 }

@@ -38,4 +38,9 @@ interface BottleService {
         @Body request: BottleMatchRequest
     )
 
+    @POST("/api/v1/bottles/ping-pong/{bottleId}/stop")
+    suspend fun postPingPongStop(
+        @Path("bottleId") bottleId: Int,
+    )
+
 }

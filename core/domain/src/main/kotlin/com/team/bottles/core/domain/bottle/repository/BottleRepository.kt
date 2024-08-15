@@ -19,4 +19,6 @@ interface BottleRepository {
 
     suspend fun selectPingPongShareKakaoId(bottleId: Int, willMatch: Boolean)
 
+    suspend fun stopPingPong(bottleId: Int)
+
 }

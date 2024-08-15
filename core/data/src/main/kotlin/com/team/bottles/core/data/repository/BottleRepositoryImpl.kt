@@ -48,4 +48,8 @@ class BottleRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun stopPingPong(bottleId: Int) {
+        bottleDataSource.deletePingPong(bottleId = bottleId)
+    }
+
 }
