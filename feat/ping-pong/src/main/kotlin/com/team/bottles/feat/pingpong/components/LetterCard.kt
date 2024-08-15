@@ -5,7 +5,6 @@ import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,14 +22,13 @@ import com.team.bottles.core.ui.PartnerBubble
 import com.team.bottles.core.ui.UserBubble
 
 @Composable
-internal fun LazyItemScope.LetterCard(
+internal fun LetterCard(
     onClickSendLetter: (order: Int, text: String) -> Unit,
     onClickLetterCard: (order: Int) -> Unit,
     onFocusedTextField: (order: Int, isFocused: Boolean) -> Unit,
-    inputLetter: String,
     onValueChange: (order: Int, text: String) -> Unit,
+    inputLetter: String,
     letter: PingPongLetter,
-    isEnabled: Boolean,
     isExpanded: Boolean,
     maxLength: Int,
     textFiledState: BottlesTextFieldState,
@@ -46,7 +44,7 @@ internal fun LazyItemScope.LetterCard(
         onClickButton = { onClickLetterCard(letter.order) },
         text = "${letter.order + 1} 번째 질문",
         isExpanded = isExpanded,
-        isEnabled = isEnabled
+        isEnabled = letter.canShow
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),

@@ -59,8 +59,8 @@ internal fun PingPongScreen(
                 onClickLeadingIcon = { onIntent(PingPongIntent.ClickBackButton) },
                 onClickTrailingIcon = { onIntent(PingPongIntent.ClickReportButton) },
                 onClickTab = { tab -> onIntent(PingPongIntent.ClickTabButton(tab = tab)) },
-                userName = uiState.partnerProfile.userName,
-                isFinalAnswer = uiState.isFinalAnswer,
+                partnerName = uiState.partnerProfile.userName,
+                matchStatus = uiState.matchStatus,
                 currentTab = uiState.currentTab
             )
         },
@@ -109,6 +109,7 @@ internal fun PingPongScreen(
                 PingPongTab.PING_PONG -> {
                     pingPongContents(
                         pingPongCards = uiState.pingPongCards,
+                        matchStatus = uiState.matchStatus,
                         onClickSendLetter = { order, text ->
                             onIntent(PingPongIntent.ClickSendLetter(order = order, text = text)) },
                         onValueChange = { order, text ->
@@ -119,37 +120,41 @@ internal fun PingPongScreen(
                         onFocusedTextField = { order, isFocused ->
                             onIntent(PingPongIntent.OnFocusedTextField(order = order, isFocused = isFocused))
                         },
-                        onClickLikeShare = { onIntent(PingPongIntent.ClickLikeShareButton) },
-                        onClickHateShare = { onIntent(PingPongIntent.ClickHateShareButton) },
+                        onClickLikeSharePhoto = { onIntent(PingPongIntent.ClickLikeSharePhotoButton) },
+                        onClickHateSharePhoto = { onIntent(PingPongIntent.ClickHateSharePhotoButton) },
                         onClickPhotoCard = { onIntent(PingPongIntent.ClickPhotoCard) },
-                        onClickShareProfilePhoto = { onIntent(PingPongIntent.ClickShareProfilePhoto) }
+                        onClickShareProfilePhoto = { willShare ->
+                            onIntent(PingPongIntent.ClickShareProfilePhoto(willShare = willShare)) },
+                        onClickLikeShareKakaoId = { onIntent(PingPongIntent.ClickLikeShareKakaoIdButton) },
+                        onClickHateShareKakaoId = { onIntent(PingPongIntent.ClickHateShareKakaoIdButton) },
+                        onClickKakaoShareCard = { onIntent(PingPongIntent.ClickKakaoShareCard) },
+                        onClickShareKakaoId = { willMatch ->
+                            onIntent(PingPongIntent.ClickShareKakaoId(willMatch = willMatch)) },
                     )
                 }
 
                 PingPongTab.MATCHING -> {
                     matchingContents(
-                        matchStatus = uiState.matchStatus,
-                        title = uiState.title,
-                        subTitle = uiState.subTitle,
-                        illustration = uiState.illustration,
-                        kakaoId = uiState.kakaoId
+                        matchingResult = uiState.matchingResult,
+                        kakaoId = uiState.partnerKakaoId,
+                        partnerName = uiState.partnerProfile.userName
                     )
                 }
             }
 
             if (uiState.currentTab != PingPongTab.MATCHING) {
-                item {
+                item(key = "Finish PingPong Button") {
                     Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.large))
 
                     Text(
                         modifier = Modifier
                             .debounceNoRippleClickable(
                                 onClick = { onIntent(PingPongIntent.ClickConversationFinishButton) },
-                                enabled = uiState.matchStatus == MatchStatus.IN_CONVERSATION
+                                enabled = uiState.isStoppedPingPong
                             ),
                         text = stringResource(id = R.string.conversation_finish),
                         style = BottlesTheme.typography.subTitle2,
-                        color = if(uiState.matchStatus == MatchStatus.IN_CONVERSATION) BottlesTheme.color.text.enabledSecondary
+                        color = if(uiState.isStoppedPingPong) BottlesTheme.color.text.enabledSecondary
                         else BottlesTheme.color.text.disabledSecondary
                     )
                 }
@@ -165,7 +170,7 @@ private fun PingPongScreenPreview() {
         PingPongScreen(
             uiState = PingPongUiState(
                 currentTab = PingPongTab.PING_PONG,
-                matchStatus = MatchStatus.IN_CONVERSATION,
+                matchStatus = MatchStatus.NONE,
                 isFinalAnswer = true,
                 partnerProfile = UserProfile.sampleUserProfile(),
                 partnerLetter = "편지내용입니다.",

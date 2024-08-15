@@ -2,13 +2,11 @@ package com.team.bottles.feat.pingpong.mvi
 
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
-import com.team.bottles.core.designsystem.R
-import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.domain.bottle.model.MatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
-import com.team.bottles.core.domain.bottle.model.PingPongMatchResult
-import com.team.bottles.core.domain.bottle.model.PingPongPhoto
+import com.team.bottles.core.domain.bottle.model.PingPongPhotoStatus
+import com.team.bottles.core.domain.bottle.model.PingPongPhotos
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.TabItem
 import com.team.bottles.core.ui.model.UserKeyPoint
@@ -23,43 +21,30 @@ data class PingPongUiState(
     val partnerProfile: UserProfile = UserProfile(),
     val partnerLetter: String = "",
     val partnerKeyPoints: List<UserKeyPoint> = emptyList(),
-    val kakaoId: String = "",
-    val matchStatus: MatchStatus = MatchStatus.IN_CONVERSATION,
+    val partnerKakaoId: String = "",
+    val matchStatus: MatchStatus = MatchStatus.NONE,
     val isFinalAnswer: Boolean = false,
     val pingPongCards: List<PingPongCard> = listOf(
         PingPongCard.Letter(),
         PingPongCard.Letter(),
         PingPongCard.Letter(),
         PingPongCard.Photo(),
-        PingPongCard.Final(),
+        PingPongCard.KakaoShare(),
     )
 ) : UiState {
 
     val isVisibilityBottomBar: Boolean
-        get() = currentTab == PingPongTab.MATCHING && matchStatus != MatchStatus.IN_CONVERSATION
+        get() = currentTab == PingPongTab.MATCHING &&
+                (matchStatus == MatchStatus.MATCH_FAILED || matchStatus == MatchStatus.MATCH_SUCCEEDED)
 
     val isMatched: Boolean
         get() = matchStatus == MatchStatus.MATCH_SUCCEEDED
 
-    val title: String
+    val matchingResult: MatchingResult
         get() = when (matchStatus) {
-            MatchStatus.IN_CONVERSATION -> "${partnerProfile.userName}님의\n결정을 기다리고 있어요"
-            MatchStatus.MATCH_SUCCEEDED -> "축하해요! 지금부터 찐-하게\n서로를 알아가 보세요"
-            MatchStatus.MATCH_FAILED -> "다른 보틀을\n열어보는 건 어때요?"
-        }
-
-    val subTitle: String
-        get() = when (matchStatus) {
-            MatchStatus.IN_CONVERSATION -> "조금만 더 기다려봐요!"
-            MatchStatus.MATCH_SUCCEEDED -> "아이디를 복사해 더 깊은 대화를 나눠보세요"
-            MatchStatus.MATCH_FAILED -> "아쉽지만 매칭에 실패했어요"
-        }
-
-    val illustration: Int?
-        get() = when (matchStatus) {
-            MatchStatus.IN_CONVERSATION -> R.drawable.illustration_phone
-            MatchStatus.MATCH_SUCCEEDED -> null
-            MatchStatus.MATCH_FAILED -> R.drawable.illustration_search_bottle
+            MatchStatus.MATCH_SUCCEEDED -> MatchingResult.SUCCESS
+            MatchStatus.MATCH_FAILED -> MatchingResult.FAIL
+            else -> MatchingResult.WAITING
         }
 
     companion object {
@@ -95,7 +80,7 @@ data class PingPongUiState(
                     )
                 ),
                 PingPongCard.Photo(),
-                PingPongCard.Final()
+                PingPongCard.KakaoShare()
             )
         )
     }
@@ -109,6 +94,12 @@ enum class PingPongTab(override val tabName: String) : TabItem {
     ;
 }
 
+enum class MatchingResult {
+    WAITING,
+    SUCCESS,
+    FAIL
+}
+
 sealed class PingPongCard {
 
     data class Letter(
@@ -117,26 +108,24 @@ sealed class PingPongCard {
         val text: String = "",
         val textFiledState: BottlesTextFieldState = BottlesTextFieldState.Enabled,
         val maxLength: Int = 150
-    ) : PingPongCard() {
-        val isEnabled: Boolean
-            get() = letter.canShow
-    }
+    ) : PingPongCard()
 
     data class Photo(
         val isExpanded: Boolean = false,
-        val selectButtonState: PhotoShareSelectState = PhotoShareSelectState.NONE,
-        val photo: PingPongPhoto = PingPongPhoto()
+        val shareSelectButtonState: ShareSelectButtonState = ShareSelectButtonState.NONE,
+        val pingPongPhotos: PingPongPhotos = PingPongPhotos(),
+        val pingPongPhotoStatus: PingPongPhotoStatus = PingPongPhotoStatus.NONE
     ) : PingPongCard()
 
-    data class Final(
+    data class KakaoShare(
         val isExpanded: Boolean = false,
-        val isEnabled: Boolean = false,
-        val matchResult: PingPongMatchResult = PingPongMatchResult()
+        val isFirstSelect: Boolean = true,
+        val shareSelectButtonState: ShareSelectButtonState = ShareSelectButtonState.NONE,
     ) : PingPongCard()
 
 }
 
-enum class PhotoShareSelectState {
+enum class ShareSelectButtonState {
     LIKE_SHARE,
     HATE_SHARE,
     NONE,

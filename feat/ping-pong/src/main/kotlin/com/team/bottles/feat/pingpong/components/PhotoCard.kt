@@ -4,13 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -27,33 +25,29 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.buttons.BottlesLetterDropDownButton
-import com.team.bottles.core.designsystem.components.buttons.BottlesOutlinedButtonWithImage
-import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
-import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
-import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.domain.bottle.model.PhotoCardStatus
-import com.team.bottles.core.domain.bottle.model.PingPongPhoto
+import com.team.bottles.core.domain.bottle.model.PingPongPhotoStatus
+import com.team.bottles.core.domain.bottle.model.PingPongPhotos
 import com.team.bottles.core.ui.PartnerBubble
 import com.team.bottles.core.ui.UserBubble
-import com.team.bottles.feat.pingpong.mvi.PhotoShareSelectState
+import com.team.bottles.feat.pingpong.mvi.ShareSelectButtonState
 
 @Composable
-internal fun LazyItemScope.PhotoCard(
-    photo: PingPongPhoto,
+internal fun PhotoCard(
+    pingPongPhotos: PingPongPhotos,
+    pingPongPhotoStatus: PingPongPhotoStatus,
     onClickPhotoCard: () -> Unit,
-    onClickLikeShare: () -> Unit,
-    onClickHateShare: () -> Unit,
-    onClickShareProfilePhoto: () -> Unit,
+    onClickLikeSharePhoto: () -> Unit,
+    onClickHateSharePhoto: () -> Unit,
+    onClickShareProfilePhoto: (Boolean) -> Unit,
     isExpanded: Boolean,
-    isEnabled: Boolean,
-    selectState: PhotoShareSelectState
+    selectState: ShareSelectButtonState
 ) {
     BottlesLetterDropDownButton(
         onClickButton = onClickPhotoCard,
         text = "사진 공개",
         isExpanded = isExpanded,
-        isEnabled = isEnabled
+        isEnabled = pingPongPhotoStatus != PingPongPhotoStatus.NONE
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -66,9 +60,7 @@ internal fun LazyItemScope.PhotoCard(
                 color = BottlesTheme.color.border.secondary
             )
 
-            if (photo.photoCardStatus != PhotoCardStatus.BOTH_AGREE &&
-                photo.photoCardStatus != PhotoCardStatus.NONE
-            ) {
+            if (pingPongPhotoStatus != PingPongPhotoStatus.BOTH_AGREE) {
                 Text(
                     text = "나의 프로필 사진을 공유할까요?",
                     style = BottlesTheme.typography.subTitle2,
@@ -76,25 +68,28 @@ internal fun LazyItemScope.PhotoCard(
                 )
             }
 
-            when (photo.photoCardStatus) {
-                PhotoCardStatus.REQUIRE_SELECT -> {
+            when (pingPongPhotoStatus) {
+                PingPongPhotoStatus.REQUIRE_SELECT_OTHER_SELECT,
+                PingPongPhotoStatus.REQUIRE_SELECT_OTHER_NOT_SELECT -> {
                     SelectYesOrNo(
-                        onClickLikeShare = onClickLikeShare,
-                        onClickHateShare = onClickHateShare,
-                        onClickShareProfilePhoto = onClickShareProfilePhoto,
+                        onClickAgree = onClickLikeSharePhoto,
+                        onClickReject = onClickHateSharePhoto,
+                        onClickComplete = onClickShareProfilePhoto,
                         selectState = selectState
                     )
                 }
-                PhotoCardStatus.BOTH_AGREE -> {
+
+                PingPongPhotoStatus.BOTH_AGREE -> {
                     Done(
-                        otherImageUrl = photo.otherImageUrl,
-                        myImageUrl = photo.myImageUrl
+                        otherImageUrl = pingPongPhotos.otherImageUrl,
+                        myImageUrl = pingPongPhotos.myImageUrl
                     )
                 }
-                PhotoCardStatus.MY_REJECT -> MyReject()
-                PhotoCardStatus.OTHER_REJECT -> PartnerReject()
-                PhotoCardStatus.WAITING_OTHER_ANSWER -> HoldOtherAnswer()
-                PhotoCardStatus.NONE -> { }
+
+                PingPongPhotoStatus.MY_REJECT -> MyReject()
+                PingPongPhotoStatus.OTHER_REJECT -> PartnerReject()
+                PingPongPhotoStatus.WAITING_OTHER_ANSWER -> HoldOtherAnswer()
+                PingPongPhotoStatus.NONE -> {}
             }
         }
     }
@@ -115,19 +110,6 @@ private fun HoldOtherAnswer() {
 }
 
 @Composable
-private fun PartnerReject() {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(
-            space = BottlesTheme.spacing.small
-        )
-    ) {
-        PartnerBubble(text = "공유를 거절했어요")
-        PartnerBubble(text = "상대방이 대화를 중단했어요")
-    }
-}
-
-@Composable
 private fun MyReject() {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -141,47 +123,7 @@ private fun MyReject() {
 }
 
 @Composable
-private fun ColumnScope.SelectYesOrNo(
-    onClickLikeShare: () -> Unit,
-    onClickHateShare: () -> Unit,
-    onClickShareProfilePhoto: () -> Unit,
-    selectState: PhotoShareSelectState,
-) {
-    Row(
-        modifier = Modifier,
-        horizontalArrangement = Arrangement.spacedBy(
-            space = BottlesTheme.spacing.small
-        )
-    ) {
-        BottlesOutlinedButtonWithImage(
-            modifier = Modifier.weight(1f),
-            text = "네! 좋아요",
-            image = R.drawable.illustration_yes,
-            onClick = onClickLikeShare,
-            state = if (selectState == PhotoShareSelectState.LIKE_SHARE) OutlinedButtonState.SELECTED
-            else OutlinedButtonState.ENABLED
-        )
-        BottlesOutlinedButtonWithImage(
-            modifier = Modifier.weight(1f),
-            text = "아니요",
-            image = R.drawable.illustration_no,
-            onClick = onClickHateShare,
-            state = if (selectState == PhotoShareSelectState.HATE_SHARE) OutlinedButtonState.SELECTED
-            else OutlinedButtonState.ENABLED
-        )
-    }
-
-    BottlesSolidButton(
-        modifier = Modifier.fillMaxWidth(),
-        buttonType = SolidButtonType.MD,
-        text = "선택 완료",
-        onClick = onClickShareProfilePhoto,
-        enabled = selectState != PhotoShareSelectState.NONE
-    )
-}
-
-@Composable
-private fun ColumnScope.Done(
+private fun Done(
     otherImageUrl: String?,
     myImageUrl: String?
 ) {
@@ -218,23 +160,24 @@ private fun ColumnScope.Done(
                     contentScale = ContentScale.Crop
                 ),
                 loading = {
-                    Box(modifier = Modifier
-                        .aspectRatio(1f)
-                        .background(
-                            color = BottlesTheme.color.icon.secondary,
-                            shape = RoundedCornerShape(
-                                topStart = BottlesTheme.spacing.medium,
-                                topEnd = BottlesTheme.spacing.medium,
-                                bottomStart = BottlesTheme.spacing.medium,
+                    Box(
+                        modifier = Modifier
+                            .aspectRatio(1f)
+                            .background(
+                                color = BottlesTheme.color.icon.secondary,
+                                shape = RoundedCornerShape(
+                                    topStart = BottlesTheme.spacing.medium,
+                                    topEnd = BottlesTheme.spacing.medium,
+                                    bottomStart = BottlesTheme.spacing.medium,
+                                )
                             )
-                        )
-                        .clip(
-                            shape = RoundedCornerShape(
-                                topEnd = BottlesTheme.spacing.medium,
-                                bottomStart = BottlesTheme.spacing.medium,
-                                bottomEnd = BottlesTheme.spacing.medium
+                            .clip(
+                                shape = RoundedCornerShape(
+                                    topEnd = BottlesTheme.spacing.medium,
+                                    bottomStart = BottlesTheme.spacing.medium,
+                                    bottomEnd = BottlesTheme.spacing.medium
+                                )
                             )
-                        )
                     )
                 }
             )
@@ -256,22 +199,18 @@ private fun PhotoCardPreview() {
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            PhotoCardStatus.entries.forEach { photoCardStatus ->
-                if (photoCardStatus != PhotoCardStatus.NONE) {
-                    item {
-                        PhotoCard(
-                            photo = PingPongPhoto(
-                                photoCardStatus = photoCardStatus
-                            ),
-                            onClickPhotoCard = { /*TODO*/ },
-                            onClickLikeShare = { /*TODO*/ },
-                            onClickHateShare = { /*TODO*/ },
-                            onClickShareProfilePhoto = {},
-                            isExpanded = true,
-                            isEnabled = true,
-                            selectState = PhotoShareSelectState.NONE
-                        )
-                    }
+            PingPongPhotoStatus.entries.forEach { photoCardStatus ->
+                item {
+                    PhotoCard(
+                        pingPongPhotos = PingPongPhotos(),
+                        pingPongPhotoStatus = photoCardStatus,
+                        onClickPhotoCard = { /*TODO*/ },
+                        onClickLikeSharePhoto = {},
+                        onClickHateSharePhoto = {},
+                        onClickShareProfilePhoto = {},
+                        isExpanded = true,
+                        selectState = ShareSelectButtonState.NONE
+                    )
                 }
             }
         }

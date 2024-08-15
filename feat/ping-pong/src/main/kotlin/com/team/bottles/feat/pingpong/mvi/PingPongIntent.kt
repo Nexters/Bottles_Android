@@ -39,10 +39,18 @@ sealed interface PingPongIntent : UiIntent {
 
     data object ClickPhotoCard : PingPongIntent
 
-    data object ClickLikeShareButton : PingPongIntent
+    data object ClickLikeSharePhotoButton : PingPongIntent
 
-    data object ClickHateShareButton : PingPongIntent
+    data object ClickHateSharePhotoButton : PingPongIntent
 
-    data object ClickShareProfilePhoto : PingPongIntent
+    data class ClickShareProfilePhoto(val willShare: Boolean) : PingPongIntent
+
+    data object ClickKakaoShareCard : PingPongIntent
+
+    data object ClickLikeShareKakaoIdButton : PingPongIntent
+
+    data object ClickHateShareKakaoIdButton : PingPongIntent
+
+    data class ClickShareKakaoId(val willMatch: Boolean) : PingPongIntent
 
 }

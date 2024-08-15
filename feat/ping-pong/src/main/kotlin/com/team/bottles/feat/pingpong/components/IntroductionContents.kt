@@ -28,7 +28,7 @@ internal fun LazyListScope.introductionContents(
     partnerKeyPoints: List<UserKeyPoint>,
     partnerLetter: String,
 ) {
-    item {
+    item(key = "Introduction Contents") {
         when (isStoppedPingPong) {
             false -> {
                 UserInfo(

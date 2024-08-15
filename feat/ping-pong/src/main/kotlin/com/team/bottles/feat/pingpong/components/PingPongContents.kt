@@ -12,20 +12,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.domain.bottle.model.PhotoCardStatus
+import com.team.bottles.core.domain.bottle.model.MatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
 import com.team.bottles.feat.pingpong.mvi.PingPongCard
 
 internal fun LazyListScope.pingPongContents(
     pingPongCards: List<PingPongCard>,
+    matchStatus: MatchStatus,
     onClickLetterCard: (order: Int) -> Unit,
     onValueChange: (order: Int, text: String) -> Unit,
     onFocusedTextField: (order: Int, isFocused: Boolean) -> Unit,
     onClickSendLetter: (order: Int, text: String) -> Unit,
     onClickPhotoCard: () -> Unit,
-    onClickLikeShare: () -> Unit,
-    onClickHateShare: () -> Unit,
-    onClickShareProfilePhoto: () -> Unit
+    onClickLikeSharePhoto: () -> Unit,
+    onClickHateSharePhoto: () -> Unit,
+    onClickShareProfilePhoto: (Boolean) -> Unit,
+    onClickLikeShareKakaoId: () -> Unit,
+    onClickHateShareKakaoId: () -> Unit,
+    onClickKakaoShareCard: () -> Unit,
+    onClickShareKakaoId: (Boolean) -> Unit,
 ) {
     items(
         items = pingPongCards,
@@ -33,7 +38,7 @@ internal fun LazyListScope.pingPongContents(
             when (card) {
                 is PingPongCard.Letter -> "Letter-${card.letter.order}"
                 is PingPongCard.Photo -> "Photo"
-                is PingPongCard.Final -> "Final"
+                is PingPongCard.KakaoShare -> "Kakao Share"
             }
         }
     ) { card ->
@@ -42,30 +47,40 @@ internal fun LazyListScope.pingPongContents(
                 LetterCard(
                     onClickSendLetter = onClickSendLetter,
                     onClickLetterCard = onClickLetterCard,
+                    onValueChange = onValueChange,
+                    onFocusedTextField = onFocusedTextField,
                     letter = card.letter,
-                    isEnabled = card.isEnabled,
                     isExpanded = card.isExpanded,
                     inputLetter = card.text,
-                    onValueChange = onValueChange,
                     maxLength = card.maxLength,
-                    onFocusedTextField = onFocusedTextField,
                     textFiledState = card.textFiledState
                 )
             }
 
             is PingPongCard.Photo -> {
                 PhotoCard(
-                    photo = card.photo,
                     onClickPhotoCard = onClickPhotoCard,
-                    onClickLikeShare = onClickLikeShare,
-                    onClickHateShare = onClickHateShare,
+                    onClickLikeSharePhoto = onClickLikeSharePhoto,
+                    onClickHateSharePhoto = onClickHateSharePhoto,
                     onClickShareProfilePhoto = onClickShareProfilePhoto,
+                    pingPongPhotos = card.pingPongPhotos,
+                    pingPongPhotoStatus = card.pingPongPhotoStatus,
+                    selectState = card.shareSelectButtonState,
                     isExpanded = card.isExpanded,
-                    isEnabled = card.photo.photoCardStatus != PhotoCardStatus.NONE,
-                    selectState = card.selectButtonState
                 )
             }
-            is PingPongCard.Final -> {}
+            is PingPongCard.KakaoShare -> {
+                KakaoShareCard(
+                    onClickLikeShareKakaoId = onClickLikeShareKakaoId,
+                    onClickHateShareKakaoId = onClickHateShareKakaoId,
+                    onClickKakaoShareCard = onClickKakaoShareCard,
+                    onClickShareKakaoId = onClickShareKakaoId,
+                    matchStatus = matchStatus,
+                    selectState = card.shareSelectButtonState,
+                    isExpanded = card.isExpanded,
+                    isFirstSelect = card.isFirstSelect
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(BottlesTheme.spacing.small))
@@ -103,16 +118,21 @@ private fun PingPongContentsPreview() {
                         letter = PingPongLetter(order = 2)
                     ),
                     PingPongCard.Photo(),
-                    PingPongCard.Final()
+                    PingPongCard.KakaoShare()
                 ),
                 onClickLetterCard = {},
                 onValueChange = { _, _ -> },
                 onFocusedTextField = { _, _ -> },
                 onClickSendLetter = { _, _ -> },
                 onClickShareProfilePhoto = {},
-                onClickHateShare = {},
-                onClickLikeShare = {},
-                onClickPhotoCard = {}
+                onClickPhotoCard = {},
+                onClickHateSharePhoto = {},
+                onClickLikeSharePhoto = {},
+                onClickHateShareKakaoId = {},
+                onClickLikeShareKakaoId = {},
+                onClickKakaoShareCard = {},
+                onClickShareKakaoId = {},
+                matchStatus = MatchStatus.NONE,
             )
         }
     }

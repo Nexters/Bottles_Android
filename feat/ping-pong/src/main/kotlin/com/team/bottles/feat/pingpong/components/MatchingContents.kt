@@ -1,6 +1,5 @@
 package com.team.bottles.feat.pingpong.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,17 +20,27 @@ import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.domain.bottle.model.MatchStatus
 import com.team.bottles.core.ui.CardKakaoId
+import com.team.bottles.feat.pingpong.mvi.MatchingResult
 
 internal fun LazyListScope.matchingContents(
-    matchStatus: MatchStatus,
-    title: String,
-    subTitle: String,
-    @DrawableRes illustration: Int?,
+    matchingResult: MatchingResult,
+    partnerName: String,
     kakaoId: String
 ) {
-    item {
+    item(key = "Matching Contents") {
+        val title = when (matchingResult) {
+            MatchingResult.WAITING -> "${partnerName}님의\n결정을 기다리고 있어요"
+            MatchingResult.SUCCESS -> "축하해요! 지금부터 찐-하게\n서로를 알아가 보세요"
+            MatchingResult.FAIL -> "다른 보틀을\n열어보는 건 어때요?"
+        }
+
+        val subTitle = when (matchingResult) {
+            MatchingResult.WAITING -> "조금만 더 기다려봐요!"
+            MatchingResult.SUCCESS -> "아이디를 복사해 더 깊은 대화를 나눠보세요"
+            MatchingResult.FAIL -> "아쉽지만 매칭에 실패했어요"
+        }
+
         MatchingContentsTitle(
             title = title,
             subTitle = subTitle
@@ -39,19 +48,17 @@ internal fun LazyListScope.matchingContents(
 
         Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
 
-        when (matchStatus) {
-            MatchStatus.IN_CONVERSATION,
-            MatchStatus.MATCH_FAILED -> {
-                CoilImage(
-                    modifier = Modifier.size(size = 250.dp),
-                    imageModel = { illustration },
-                    previewPlaceholder = painterResource(id = R.drawable.illustration_search_bottle)
-                )
-            }
-
-            MatchStatus.MATCH_SUCCEEDED -> {
-                CardKakaoId(kakaoId = kakaoId)
-            }
+        if (matchingResult == MatchingResult.SUCCESS) {
+            CardKakaoId(kakaoId = kakaoId)
+        } else {
+            CoilImage(
+                modifier = Modifier.size(size = 250.dp),
+                imageModel = {
+                    if (matchingResult == MatchingResult.FAIL) R.drawable.illustration_search_bottle
+                    else R.drawable.illustration_phone
+                },
+                previewPlaceholder = painterResource(id = R.drawable.illustration_search_bottle)
+            )
         }
     }
 }
@@ -98,11 +105,9 @@ private fun MatchingContentsStayPreview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             matchingContents(
-                matchStatus = MatchStatus.IN_CONVERSATION,
-                title = "핑퐁 진행중",
-                subTitle = "진행중입니다",
-                illustration = R.drawable.illustration_phone,
-                kakaoId = ""
+                matchingResult = MatchingResult.WAITING,
+                kakaoId = "asdasf123",
+                partnerName = "뇽뇽이"
             )
         }
     }
@@ -123,11 +128,9 @@ private fun MatchingContentsSuccessPreview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             matchingContents(
-                matchStatus = MatchStatus.MATCH_SUCCEEDED,
-                title = "매칭됨",
-                subTitle = "매칭되었어요",
-                illustration = R.drawable.illustration_phone,
-                kakaoId = "카톡아이디"
+                matchingResult = MatchingResult.SUCCESS,
+                kakaoId = "asdasf123",
+                partnerName = "뇽뇽이"
             )
         }
     }
@@ -148,11 +151,9 @@ private fun MatchingContentsFailPreview() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             matchingContents(
-                matchStatus = MatchStatus.MATCH_FAILED,
-                title = "매칭 실패",
-                subTitle = "매칭에 실패",
-                illustration = R.drawable.illustration_search_bottle,
-                kakaoId = ""
+                matchingResult = MatchingResult.FAIL,
+                kakaoId = "asdasf123",
+                partnerName = "뇽뇽이"
             )
         }
     }
