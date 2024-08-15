@@ -108,35 +108,35 @@ fun BottlesDefaultDropDownButton(
 @Composable
 fun BottlesLetterDropDownButton(
     modifier: Modifier = Modifier,
-    text: String,
     onClickButton: () -> Unit,
-    state: DropDownButtonState,
+    text: String,
+    isExpanded: Boolean,
+    isEnabled: Boolean,
     contents: @Composable () -> Unit,
-    isExpanded: Boolean = false
 ) {
-    val containerColor = when (state) {
-        is DropDownButtonState.Enabled -> BottlesTheme.color.container.enabledPrimary
-        is DropDownButtonState.Focused -> BottlesTheme.color.container.focusedSecondary
-        is DropDownButtonState.Active -> Color.Transparent
-        is DropDownButtonState.Disabled -> BottlesTheme.color.container.disabledPrimary
+    val containerColor = when {
+        isExpanded -> BottlesTheme.color.container.focusedSecondary
+        isEnabled -> BottlesTheme.color.container.enabledPrimary
+        !isEnabled -> BottlesTheme.color.container.disabledPrimary
+        else -> Color.Transparent
     }
-    val borderColor = when (state) {
-        is DropDownButtonState.Enabled -> BottlesTheme.color.border.enabled
-        is DropDownButtonState.Focused -> BottlesTheme.color.border.focusedPrimary
-        is DropDownButtonState.Active -> Color.Transparent
-        is DropDownButtonState.Disabled -> BottlesTheme.color.border.disabled
+    val borderColor = when {
+        isExpanded -> BottlesTheme.color.border.focusedPrimary
+        isEnabled -> BottlesTheme.color.border.enabled
+        !isEnabled -> BottlesTheme.color.border.disabled
+        else -> Color.Transparent
     }
-    val textColor = when (state) {
-        is DropDownButtonState.Enabled -> BottlesTheme.color.text.enabledSecondary
-        is DropDownButtonState.Focused -> BottlesTheme.color.text.focusedPrimary
-        is DropDownButtonState.Active -> Color.Transparent
-        is DropDownButtonState.Disabled -> BottlesTheme.color.text.disabledSecondary
+    val textColor = when {
+        isExpanded -> BottlesTheme.color.text.focusedPrimary
+        isEnabled -> BottlesTheme.color.text.enabledSecondary
+        !isEnabled -> BottlesTheme.color.text.disabledSecondary
+        else -> Color.Transparent
     }
-    val iconColor = when (state) {
-        is DropDownButtonState.Enabled -> BottlesTheme.color.icon.primary
-        is DropDownButtonState.Focused -> BottlesTheme.color.icon.primary
-        is DropDownButtonState.Active -> Color.Transparent
-        is DropDownButtonState.Disabled -> BottlesTheme.color.icon.disabled
+    val iconColor = when {
+        isExpanded -> BottlesTheme.color.icon.primary
+        isEnabled -> BottlesTheme.color.icon.primary
+        !isEnabled -> BottlesTheme.color.icon.disabled
+        else -> Color.Transparent
     }
 
     Column(
@@ -153,6 +153,7 @@ fun BottlesLetterDropDownButton(
             )
             .clickable(
                 onClick = onClickButton,
+                enabled = isEnabled,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null
             )
@@ -172,11 +173,15 @@ fun BottlesLetterDropDownButton(
                 color = textColor
             )
             Icon(
-                painter = if (state is DropDownButtonState.Focused) painterResource(id = R.drawable.ic_up_24)
+                painter = if (isExpanded) painterResource(id = R.drawable.ic_up_24)
                 else painterResource(id = R.drawable.ic_down_24),
                 contentDescription = null,
                 tint = iconColor
             )
+        }
+
+        if(isExpanded) {
+            Spacer(modifier = Modifier.height(BottlesTheme.spacing.extraLarge))
         }
 
         AnimatedVisibility(
@@ -230,19 +235,17 @@ private fun BottlesLetterDropDownButtonPreview() {
             BottlesLetterDropDownButton(
                 text = "text",
                 onClickButton = {},
-                state = DropDownButtonState.Enabled,
-                contents = {
-
-                }
+                isExpanded = false,
+                isEnabled = true,
+                contents = {}
             )
             BottlesLetterDropDownButton(
                 text = "사진공개",
                 onClickButton = { isExpanded = !isExpanded },
-                state = DropDownButtonState.Focused,
+                isExpanded = isExpanded,
+                isEnabled = true,
                 contents = {
                     Column {
-                        Spacer(modifier = Modifier.height(BottlesTheme.spacing.extraLarge))
-
                         HorizontalDivider(
                             thickness = 1.dp,
                             color = BottlesTheme.color.border.secondary
@@ -257,15 +260,13 @@ private fun BottlesLetterDropDownButtonPreview() {
                         )
                     }
                 },
-                isExpanded = isExpanded
             )
             BottlesLetterDropDownButton(
                 text = "text",
                 onClickButton = {},
-                state = DropDownButtonState.Disabled,
-                contents = {
-
-                }
+                isExpanded = false,
+                isEnabled = false,
+                contents = {}
             )
         }
     }

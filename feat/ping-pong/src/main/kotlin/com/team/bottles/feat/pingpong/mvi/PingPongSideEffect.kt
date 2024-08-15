@@ -6,4 +6,6 @@ sealed interface PingPongSideEffect : UiSideEffect {
 
     data object NavigateToBottleBox : PingPongSideEffect
 
+    data object OpenKakaoTalkApp : PingPongSideEffect
+
 }

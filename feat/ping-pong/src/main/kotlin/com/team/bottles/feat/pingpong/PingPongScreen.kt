@@ -1,23 +1,33 @@
 package com.team.bottles.feat.pingpong
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.domain.bottle.model.MatchStatus
 import com.team.bottles.core.domain.profile.model.UserProfile
+import com.team.bottles.core.ui.BottlesAlertDialog
+import com.team.bottles.core.ui.model.AlertType
 import com.team.bottles.core.ui.model.UserKeyPoint
-import com.team.bottles.feat.pingpong.components.IntroductionContents
+import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
-import com.team.bottles.feat.pingpong.mvi.IntroductionTabState
+import com.team.bottles.feat.pingpong.components.introductionContents
+import com.team.bottles.feat.pingpong.components.matchingContents
+import com.team.bottles.feat.pingpong.components.pingPongContents
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
-import com.team.bottles.feat.pingpong.mvi.PingPongRelationShip
 import com.team.bottles.feat.pingpong.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.mvi.PingPongUiState
 
@@ -30,6 +40,17 @@ internal fun PingPongScreen(
     val pingPongTabScrollState = rememberLazyListState()
     val matchingScrollState = rememberLazyListState()
 
+    if (uiState.showDialog) {
+        BottlesAlertDialog(
+            onClose = { onIntent(PingPongIntent.ClickCloseAlert) },
+            onConfirm = { onIntent(PingPongIntent.ClickConfirmAlert) },
+            confirmText = AlertType.STOP_PING_PONG.confirmText,
+            dismissText = AlertType.STOP_PING_PONG.dismissText,
+            title = AlertType.STOP_PING_PONG.title,
+            content = AlertType.STOP_PING_PONG.content
+        )
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = BottlesTheme.color.background.primary,
@@ -38,10 +59,23 @@ internal fun PingPongScreen(
                 onClickLeadingIcon = { onIntent(PingPongIntent.ClickBackButton) },
                 onClickTrailingIcon = { onIntent(PingPongIntent.ClickReportButton) },
                 onClickTab = { tab -> onIntent(PingPongIntent.ClickTabButton(tab = tab)) },
-                userName = uiState.partnerProfile.userName,
-                isMatched = uiState.isMatched,
+                partnerName = uiState.partnerProfile.userName,
+                matchStatus = uiState.matchStatus,
                 currentTab = uiState.currentTab
             )
+        },
+        bottomBar = {
+            if (uiState.isVisibilityBottomBar) {
+                PingPongBottomBar(
+                    onClickButton = {
+                        when (uiState.isMatched) {
+                            true -> onIntent(PingPongIntent.ClickGoToKakaoTalkButton)
+                            false -> onIntent(PingPongIntent.ClickOtherOpenBottleButton)
+                        }
+                    },
+                    isMatched = uiState.isMatched,
+                )
+            }
         }
     ) { innerPadding ->
         LazyColumn(
@@ -54,48 +88,93 @@ internal fun PingPongScreen(
                 PingPongTab.MATCHING -> matchingScrollState
             },
             contentPadding = PaddingValues(
-                horizontal = BottlesTheme.spacing.medium
+                start = BottlesTheme.spacing.medium,
+                end = BottlesTheme.spacing.medium,
+                top = BottlesTheme.spacing.doubleExtraLarge,
+                bottom = BottlesTheme.spacing.extraLarge
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                when (uiState.currentTab) {
-                    PingPongTab.INTRODUCTION -> {
-                        IntroductionContents(
-                            currentRelationShip = uiState.currentRelationShip,
-                            introductionTabState = uiState.introduction,
-                            partnerProfile = uiState.partnerProfile,
-                            closedDay = uiState.closedDay,
-                            onClickConversationFinish = { onIntent(PingPongIntent.ClickConversationFinishButton) }
-                        )
-                    }
+            when (uiState.currentTab) {
+                PingPongTab.INTRODUCTION -> {
+                    introductionContents(
+                        isStoppedPingPong = uiState.isStoppedPingPong,
+                        partnerProfile = uiState.partnerProfile,
+                        partnerLetter = uiState.partnerLetter,
+                        partnerKeyPoints = uiState.partnerKeyPoints,
+                        deleteAfterDay = uiState.deleteAfterDay,
+                    )
+                }
 
-                    PingPongTab.PING_PONG -> {
+                PingPongTab.PING_PONG -> {
+                    pingPongContents(
+                        pingPongCards = uiState.pingPongCards,
+                        matchStatus = uiState.matchStatus,
+                        onClickSendLetter = { order, text ->
+                            onIntent(PingPongIntent.ClickSendLetter(order = order, text = text)) },
+                        onValueChange = { order, text ->
+                            onIntent(PingPongIntent.OnLetterTextChange(order = order, text = text)) },
+                        onClickLetterCard = { order ->
+                            onIntent(PingPongIntent.ClickLetterCard(order = order))
+                        },
+                        onFocusedTextField = { order, isFocused ->
+                            onIntent(PingPongIntent.OnFocusedTextField(order = order, isFocused = isFocused))
+                        },
+                        onClickLikeSharePhoto = { onIntent(PingPongIntent.ClickLikeSharePhotoButton) },
+                        onClickHateSharePhoto = { onIntent(PingPongIntent.ClickHateSharePhotoButton) },
+                        onClickPhotoCard = { onIntent(PingPongIntent.ClickPhotoCard) },
+                        onClickShareProfilePhoto = { willShare ->
+                            onIntent(PingPongIntent.ClickShareProfilePhoto(willShare = willShare)) },
+                        onClickLikeShareKakaoId = { onIntent(PingPongIntent.ClickLikeShareKakaoIdButton) },
+                        onClickHateShareKakaoId = { onIntent(PingPongIntent.ClickHateShareKakaoIdButton) },
+                        onClickKakaoShareCard = { onIntent(PingPongIntent.ClickKakaoShareCard) },
+                        onClickShareKakaoId = { willMatch ->
+                            onIntent(PingPongIntent.ClickShareKakaoId(willMatch = willMatch)) },
+                    )
+                }
 
-                    }
+                PingPongTab.MATCHING -> {
+                    matchingContents(
+                        matchingResult = uiState.matchingResult,
+                        kakaoId = uiState.partnerKakaoId,
+                        partnerName = uiState.partnerProfile.userName
+                    )
+                }
+            }
 
-                    PingPongTab.MATCHING -> {
+            if (uiState.currentTab != PingPongTab.MATCHING) {
+                item(key = "Finish PingPong Button") {
+                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.large))
 
-                    }
+                    Text(
+                        modifier = Modifier
+                            .debounceNoRippleClickable(
+                                onClick = { onIntent(PingPongIntent.ClickConversationFinishButton) },
+                                enabled = uiState.isStoppedPingPong
+                            ),
+                        text = stringResource(id = R.string.conversation_finish),
+                        style = BottlesTheme.typography.subTitle2,
+                        color = if(uiState.isStoppedPingPong) BottlesTheme.color.text.enabledSecondary
+                        else BottlesTheme.color.text.disabledSecondary
+                    )
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, heightDp = 1000)
 @Composable
 private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongScreen(
             uiState = PingPongUiState(
-                currentRelationShip = PingPongRelationShip.ING,
+                currentTab = PingPongTab.PING_PONG,
+                matchStatus = MatchStatus.NONE,
+                isFinalAnswer = true,
                 partnerProfile = UserProfile.sampleUserProfile(),
-                introduction = IntroductionTabState(
-                    partnerLetter = "편지 내용입니다.",
-                    userKeyPoints = UserKeyPoint.exampleUerKeyPoints()
-                ),
-                isMatched = false
+                partnerLetter = "편지내용입니다.",
+                partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints()
             ),
             onIntent = {}
         )

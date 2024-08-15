@@ -8,6 +8,8 @@
     <string name="finished_conversation_card_quit">%s님이 대화를 중단했어요</string>
     <string name="delete_day_card_quit">대화는 %d일후 완전히 삭제돼요</string>
     <string name="user_age_user_info">%d세</string>
+    <string name="kakao_id_card_kakao_id">카카오톡 아이디</string>
+    <string name="copy_card_kakao_id">복사하기</string>
 
     <!-- Login Screen -->
     <string name="branding_message">진심을 담은 보틀로\n서로를 밀도있게 알아가요</string>

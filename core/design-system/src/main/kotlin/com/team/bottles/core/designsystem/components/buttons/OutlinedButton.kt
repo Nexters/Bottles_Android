@@ -174,7 +174,7 @@ fun BottlesOutlinedButtonWithIcon(
 fun BottlesOutlinedButtonWithImage(
     modifier: Modifier = Modifier,
     text: String,
-    image: Any?,
+    @DrawableRes image: Int?,
     onClick: () -> Unit,
     state: OutlinedButtonState = OutlinedButtonState.ENABLED,
 ) {
@@ -203,10 +203,7 @@ fun BottlesOutlinedButtonWithImage(
             CoilImage(
                 modifier = Modifier.size(100.dp),
                 imageModel = { image },
-                previewPlaceholder = painterResource(id = R.drawable.sample_image),
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop
-                )
+                previewPlaceholder = painterResource(id = R.drawable.illustration_yes),
             )
             Text(
                 text = text,

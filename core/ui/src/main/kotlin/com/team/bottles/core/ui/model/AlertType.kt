@@ -30,5 +30,11 @@ enum class AlertType(
         confirmText = "탈퇴하기",
         dismissText = "취소하기"
     ),
+    STOP_PING_PONG(
+        title = "중단하기",
+        content = "중단 시 모든 핑퐁 내용이 사라져요.\n정말 중단하시겠어요?",
+        confirmText = "중단하기",
+        dismissText = "계속하기"
+    ),
     ;
 }
