@@ -43,4 +43,9 @@ interface BottleService {
         @Path("bottleId") bottleId: Int,
     )
 
+    @POST("/api/v1/bottles/ping-pong/{bottleId}/read")
+    suspend fun postPingPongRead(
+        @Path("bottleId") bottleId: Int,
+    )
+
 }

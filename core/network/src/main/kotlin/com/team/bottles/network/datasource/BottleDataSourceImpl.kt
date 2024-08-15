@@ -34,4 +34,8 @@ class BottleDataSourceImpl @Inject constructor(
         bottleService.postPingPongStop(bottleId = bottleId)
     }
 
+    override suspend fun updatePingPongReadStatus(bottleId: Int) {
+        bottleService.postPingPongRead(bottleId = bottleId)
+    }
+
 }

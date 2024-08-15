@@ -29,4 +29,6 @@ interface BottleDataSource {
 
     suspend fun deletePingPong(bottleId: Int)
 
+    suspend fun updatePingPongReadStatus(bottleId: Int)
+
 }
