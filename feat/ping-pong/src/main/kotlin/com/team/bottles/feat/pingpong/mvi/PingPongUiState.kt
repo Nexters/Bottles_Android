@@ -3,7 +3,7 @@ package com.team.bottles.feat.pingpong.mvi
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
-import com.team.bottles.core.domain.bottle.model.MatchStatus
+import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
 import com.team.bottles.core.domain.bottle.model.PingPongPhotoStatus
 import com.team.bottles.core.domain.bottle.model.PingPongPhotos
@@ -22,7 +22,7 @@ data class PingPongUiState(
     val partnerLetter: String = "",
     val partnerKeyPoints: List<UserKeyPoint> = emptyList(),
     val partnerKakaoId: String = "",
-    val matchStatus: MatchStatus = MatchStatus.NONE,
+    val pingPongMatchStatus: PingPongMatchStatus = PingPongMatchStatus.NONE,
     val isFinalAnswer: Boolean = false,
     val pingPongCards: List<PingPongCard> = listOf(
         PingPongCard.Letter(),
@@ -35,15 +35,15 @@ data class PingPongUiState(
 
     val isVisibilityBottomBar: Boolean
         get() = currentTab == PingPongTab.MATCHING &&
-                (matchStatus == MatchStatus.MATCH_FAILED || matchStatus == MatchStatus.MATCH_SUCCEEDED)
+                (pingPongMatchStatus == PingPongMatchStatus.MATCH_FAILED || pingPongMatchStatus == PingPongMatchStatus.MATCH_SUCCEEDED)
 
     val isMatched: Boolean
-        get() = matchStatus == MatchStatus.MATCH_SUCCEEDED
+        get() = pingPongMatchStatus == PingPongMatchStatus.MATCH_SUCCEEDED
 
     val matchingResult: MatchingResult
-        get() = when (matchStatus) {
-            MatchStatus.MATCH_SUCCEEDED -> MatchingResult.SUCCESS
-            MatchStatus.MATCH_FAILED -> MatchingResult.FAIL
+        get() = when (pingPongMatchStatus) {
+            PingPongMatchStatus.MATCH_SUCCEEDED -> MatchingResult.SUCCESS
+            PingPongMatchStatus.MATCH_FAILED -> MatchingResult.FAIL
             else -> MatchingResult.WAITING
         }
 

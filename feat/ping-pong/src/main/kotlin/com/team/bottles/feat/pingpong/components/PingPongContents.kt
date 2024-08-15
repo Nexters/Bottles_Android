@@ -12,13 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.domain.bottle.model.MatchStatus
+import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
 import com.team.bottles.feat.pingpong.mvi.PingPongCard
 
 internal fun LazyListScope.pingPongContents(
     pingPongCards: List<PingPongCard>,
-    matchStatus: MatchStatus,
+    pingPongMatchStatus: PingPongMatchStatus,
     onClickLetterCard: (order: Int) -> Unit,
     onValueChange: (order: Int, text: String) -> Unit,
     onFocusedTextField: (order: Int, isFocused: Boolean) -> Unit,
@@ -75,7 +75,7 @@ internal fun LazyListScope.pingPongContents(
                     onClickHateShareKakaoId = onClickHateShareKakaoId,
                     onClickKakaoShareCard = onClickKakaoShareCard,
                     onClickShareKakaoId = onClickShareKakaoId,
-                    matchStatus = matchStatus,
+                    pingPongMatchStatus = pingPongMatchStatus,
                     selectState = card.shareSelectButtonState,
                     isExpanded = card.isExpanded,
                     isFirstSelect = card.isFirstSelect
@@ -132,7 +132,7 @@ private fun PingPongContentsPreview() {
                 onClickLikeShareKakaoId = {},
                 onClickKakaoShareCard = {},
                 onClickShareKakaoId = {},
-                matchStatus = MatchStatus.NONE,
+                pingPongMatchStatus = PingPongMatchStatus.NONE,
             )
         }
     }

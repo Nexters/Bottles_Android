@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.components.buttons.BottlesLetterDropDownButton
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.domain.bottle.model.MatchStatus
+import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.ui.PartnerBubble
 import com.team.bottles.core.ui.UserBubble
 import com.team.bottles.feat.pingpong.mvi.ShareSelectButtonState
@@ -22,7 +22,7 @@ internal fun KakaoShareCard(
     onClickLikeShareKakaoId: () -> Unit,
     onClickHateShareKakaoId: () -> Unit,
     onClickShareKakaoId: (Boolean) -> Unit,
-    matchStatus: MatchStatus,
+    pingPongMatchStatus: PingPongMatchStatus,
     selectState: ShareSelectButtonState,
     isExpanded: Boolean,
     isFirstSelect: Boolean
@@ -31,7 +31,7 @@ internal fun KakaoShareCard(
         onClickButton = onClickKakaoShareCard,
         text = "최종 선택",
         isExpanded = isExpanded,
-        isEnabled = matchStatus != MatchStatus.NONE
+        isEnabled = pingPongMatchStatus != PingPongMatchStatus.NONE
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -50,12 +50,12 @@ internal fun KakaoShareCard(
                 color = BottlesTheme.color.text.secondary
             )
 
-            when (matchStatus) {
-                MatchStatus.NONE -> {}
-                MatchStatus.MATCH_SUCCEEDED -> MathSucceeded(isFirstSelect = isFirstSelect)
-                MatchStatus.WAITING_OTHER_ANSWER -> WaitingOtherAnswer()
-                MatchStatus.MATCH_FAILED -> PartnerReject()
-                MatchStatus.REQUIRE_SELECT -> SelectYesOrNo(
+            when (pingPongMatchStatus) {
+                PingPongMatchStatus.NONE -> {}
+                PingPongMatchStatus.MATCH_SUCCEEDED -> MathSucceeded(isFirstSelect = isFirstSelect)
+                PingPongMatchStatus.WAITING_OTHER_ANSWER -> WaitingOtherAnswer()
+                PingPongMatchStatus.MATCH_FAILED -> PartnerReject()
+                PingPongMatchStatus.REQUIRE_SELECT -> SelectYesOrNo(
                     onClickAgree = onClickLikeShareKakaoId,
                     onClickReject = onClickHateShareKakaoId,
                     onClickComplete = onClickShareKakaoId,
@@ -110,7 +110,7 @@ private fun FinalCardPreview() {
             onClickShareKakaoId = {},
             onClickLikeShareKakaoId = {},
             onClickHateShareKakaoId = {},
-            matchStatus = MatchStatus.NONE,
+            pingPongMatchStatus = PingPongMatchStatus.NONE,
             selectState = ShareSelectButtonState.NONE,
             isExpanded = true,
             isFirstSelect = true

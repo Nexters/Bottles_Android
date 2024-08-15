@@ -11,7 +11,7 @@ import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.domain.bottle.model.MatchStatus
+import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.ui.BottlesRowTab
 import com.team.bottles.feat.pingpong.mvi.PingPongTab
 
@@ -22,7 +22,7 @@ internal fun PingPongTopBar(
     onClickTrailingIcon: () -> Unit,
     onClickTab: (PingPongTab) -> Unit,
     partnerName: String,
-    matchStatus: MatchStatus,
+    pingPongMatchStatus: PingPongMatchStatus,
     currentTab: PingPongTab,
 ) {
     Column(
@@ -59,7 +59,7 @@ internal fun PingPongTopBar(
             stateProvider = { tab ->
                 when {
                     tab == PingPongTab.MATCHING &&
-                            (matchStatus == MatchStatus.NONE || matchStatus == MatchStatus.REQUIRE_SELECT) -> OutlinedButtonState.DISABLED
+                            (pingPongMatchStatus == PingPongMatchStatus.NONE || pingPongMatchStatus == PingPongMatchStatus.REQUIRE_SELECT) -> OutlinedButtonState.DISABLED
 
                     currentTab == tab -> OutlinedButtonState.SELECTED
                     else -> OutlinedButtonState.ENABLED
