@@ -19,11 +19,8 @@ data class PingPongUiState(
     val stopUserName: String = "",
     val currentTab: PingPongTab = PingPongTab.INTRODUCTION,
     val partnerProfile: UserProfile = UserProfile(),
-    val partnerLetter: String = "",
-    val partnerKeyPoints: List<UserKeyPoint> = emptyList(),
     val partnerKakaoId: String = "",
     val pingPongMatchStatus: PingPongMatchStatus = PingPongMatchStatus.NONE,
-    val isFinalAnswer: Boolean = false,
     val pingPongCards: List<PingPongCard> = listOf(
         PingPongCard.Letter(),
         PingPongCard.Letter(),
@@ -32,6 +29,18 @@ data class PingPongUiState(
         PingPongCard.KakaoShare(),
     )
 ) : UiState {
+
+    val partnerKeyPoints: List<UserKeyPoint>
+        get() = partnerProfile.profileSelect.run {
+            UserKeyPoint.pingPong(
+                keyWords = listOf(job, mbti, region.city, height.toString(), smoking, alcohol),
+                personality = keyword,
+                hobbies = interest.run { etc + sports + entertainment + culture }
+            )
+        }
+
+    val partnerLetter: String
+        get() = partnerProfile.introduction.joinToString(" ") { it.answer }
 
     val isVisibilityBottomBar: Boolean
         get() = currentTab == PingPongTab.MATCHING &&

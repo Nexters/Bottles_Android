@@ -171,10 +171,7 @@ private fun PingPongScreenPreview() {
             uiState = PingPongUiState(
                 currentTab = PingPongTab.PING_PONG,
                 pingPongMatchStatus = PingPongMatchStatus.NONE,
-                isFinalAnswer = true,
                 partnerProfile = UserProfile.sampleUserProfile(),
-                partnerLetter = "편지내용입니다.",
-                partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints()
             ),
             onIntent = {}
         )

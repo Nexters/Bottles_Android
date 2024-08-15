@@ -1,11 +1,11 @@
 package com.team.bottles.feat.pingpong
 
 import PingPongNavigator
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
+import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
 import com.team.bottles.feat.pingpong.mvi.PingPongCard
 import com.team.bottles.feat.pingpong.mvi.PingPongIntent
 import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
@@ -17,17 +17,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PingPongViewModel @Inject constructor(
+    private val getPingPongDetailUseCase: GetPingPongDetailUseCase,
     savedStateHandle: SavedStateHandle
+) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
-) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(
-    savedStateHandle
-) {
-
-    override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState {
-        val test = savedStateHandle.toRoute<PingPongNavigator>()
-        Log.d("보틀 아이디", test.bottleId.toString())
-        return PingPongUiState.examplePingPongState()
+    init {
+        getPingPongDetail(savedStateHandle = savedStateHandle)
     }
+
+    override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState =
+        PingPongUiState()
 
     override suspend fun handleIntent(intent: PingPongIntent) {
         when (intent) {
@@ -51,6 +50,32 @@ class PingPongViewModel @Inject constructor(
             is PingPongIntent.ClickShareKakaoId -> shareShareKakaoId(willMatch = intent.willMatch)
             is PingPongIntent.ClickHateShareKakaoIdButton -> selectHateShareKakaoIdButton()
             is PingPongIntent.ClickLikeShareKakaoIdButton -> selectLikeShareKakaoIdButton()
+        }
+    }
+
+    private fun getPingPongDetail(savedStateHandle: SavedStateHandle) {
+        launch {
+            val bottleId = savedStateHandle.toRoute<PingPongNavigator>().bottleId.toInt()
+            val result = getPingPongDetailUseCase(bottleId = bottleId)
+
+            val pingPongCards = result.letters.map { letter ->
+                PingPongCard.Letter(letter = letter)
+            } + listOf(
+                PingPongCard.Photo(pingPongPhotos = result.photos, pingPongPhotoStatus = result.pingPongPhotoStatus),
+                PingPongCard.KakaoShare(isFirstSelect = result.matchResult.isFirstSelect)
+            )
+
+            reduce {
+                copy(
+                    isStoppedPingPong = result.isStopped,
+                    deleteAfterDay = result.deleteAfterDays.toInt(),
+                    stopUserName = result.stopUserName,
+                    partnerProfile = result.userProfile,
+                    partnerKakaoId = result.matchResult.otherContact,
+                    pingPongMatchStatus = result.pingPongMatchStatus,
+                    pingPongCards = pingPongCards,
+                )
+            }
         }
     }
 
