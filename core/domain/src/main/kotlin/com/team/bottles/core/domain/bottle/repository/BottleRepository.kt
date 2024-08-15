@@ -17,4 +17,6 @@ interface BottleRepository {
 
     suspend fun selectPingPongSharePhoto(bottleId: Int, willShare: Boolean)
 
+    suspend fun selectPingPongShareKakaoId(bottleId: Int, willMatch: Boolean)
+
 }

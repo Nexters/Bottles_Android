@@ -6,6 +6,7 @@ import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
+import com.team.bottles.core.domain.bottle.usecase.SelectPingPongShareKakaoIdUseCase
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongSharePhotoUseCase
 import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCase
 import com.team.bottles.feat.pingpong.mvi.PingPongCard
@@ -22,6 +23,7 @@ class PingPongViewModel @Inject constructor(
     private val getPingPongDetailUseCase: GetPingPongDetailUseCase,
     private val sendPingPongLetterUseCase: SendPingPongLetterUseCase,
     private val selectPingPongSharePhotoUseCase: SelectPingPongSharePhotoUseCase,
+    private val selectPingPongShareKakaoIdUseCase: SelectPingPongShareKakaoIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
@@ -53,7 +55,7 @@ class PingPongViewModel @Inject constructor(
             is PingPongIntent.ClickLikeSharePhotoButton -> selectLikeSharePhotoButton()
             is PingPongIntent.ClickHateSharePhotoButton -> selectHateSharePhotoButton()
             is PingPongIntent.ClickShareProfilePhoto -> shareProfilePhoto(willShare = intent.willShare)
-            is PingPongIntent.ClickShareKakaoId -> shareShareKakaoId(willMatch = intent.willMatch)
+            is PingPongIntent.ClickShareKakaoId -> shareKakaoId(willMatch = intent.willMatch)
             is PingPongIntent.ClickHateShareKakaoIdButton -> selectHateShareKakaoIdButton()
             is PingPongIntent.ClickLikeShareKakaoIdButton -> selectLikeShareKakaoIdButton()
         }
@@ -241,11 +243,10 @@ class PingPongViewModel @Inject constructor(
         }
     }
 
-    private fun shareShareKakaoId(willMatch: Boolean) {
+    private fun shareKakaoId(willMatch: Boolean) {
         launch {
-            // TODO : 최종 선택 UseCase 구현
-
-            // TODO : 핑퐁 정보 가져오기 UseCase 구현시 연결
+            selectPingPongShareKakaoIdUseCase(bottleId = currentState.bottleId, willMatch = willMatch)
+            getPingPongDetail()
         }
     }
 
