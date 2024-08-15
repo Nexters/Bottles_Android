@@ -1,6 +1,6 @@
 package com.team.bottles.core.domain.bottle.model
 
-data class PingPongResult(
+data class PingPongList(
     val activeBottles: List<PingPongBottle>,
     val doneBottles: List<PingPongBottle>
 )

@@ -1,9 +1,9 @@
 package com.team.bottles.core.domain.bottle.repository
 
-import com.team.bottles.core.domain.bottle.model.PingPongResult
+import com.team.bottles.core.domain.bottle.model.PingPongList
 
 interface BottleRepository {
 
-    suspend fun loadPingPongList(): PingPongResult
+    suspend fun loadPingPongList(): PingPongList
 
 }
