@@ -2,7 +2,6 @@ package com.team.bottles.core.domain.bottle.model
 
 data class PingPongMatchResult(
     val otherContact: String = "",
-    val shouldAnswer: Boolean = true,
     val isFirstSelect: Boolean = false,
 )
 

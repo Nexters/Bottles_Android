@@ -1,8 +1,8 @@
 package com.team.bottles.core.domain.bottle.model
 
 data class PingPongPhotos(
-    val myImageUrl: String? = null,
-    val otherImageUrl: String? = null,
+    val myImageUrl: String = "",
+    val otherImageUrl: String = "",
 )
 
 enum class PingPongPhotoStatus {
