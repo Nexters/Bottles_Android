@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -17,16 +18,15 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 
 @Composable
-fun Number(
+fun BottlesChip(
+    modifier: Modifier = Modifier,
     number: Int,
     circleColor: Color = BottlesTheme.color.icon.update,
     textColor: Color = BottlesTheme.color.text.quaternary,
 ) {
     Box(
+        modifier = modifier.size(size = 24.dp),
         contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .width(24.dp)
-            .height(24.dp)
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             drawCircle(color = circleColor)
@@ -43,6 +43,6 @@ fun Number(
 @Composable
 fun NumberedCirclePreview() {
     BottlesTheme {
-        Number(number = 5)
+        BottlesChip(number = 5)
     }
 }
