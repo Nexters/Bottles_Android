@@ -1,6 +1,5 @@
 package com.team.bottles.feat.login.component
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +25,7 @@ internal fun Symbol() {
     ) {
         Spacer(modifier = Modifier.height(height = 52.dp))
         Icon(
-            painter = painterResource(id = R.drawable.bottle_logo),
+            painter = painterResource(id = R.drawable.bottle_logo_white),
             contentDescription = null,
             tint = BottlesTheme.color.text.quaternary
         )

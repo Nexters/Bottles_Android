@@ -49,6 +49,7 @@ dependencies {
     implementation(projects.feat.profile)
     implementation(projects.feat.signup)
     implementation(projects.feat.pingPong)
+    implementation(projects.feat.splash)
 
     // Compose
     implementation(libs.androidx.compose.activity)
