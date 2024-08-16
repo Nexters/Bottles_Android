@@ -1,6 +1,5 @@
 package com.team.bottles.feat.login.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
@@ -48,7 +48,7 @@ internal fun BottomButtons(
                     .padding(
                         horizontal = BottlesTheme.spacing.extraSmall
                     )
-                    .clickable(
+                    .noRippleClickable(
                         onClick = onClickNormalLogin
                     ),
                 text = stringResource(id = R.string.normal_login),
@@ -60,7 +60,7 @@ internal fun BottomButtons(
                     .padding(
                         horizontal = BottlesTheme.spacing.medium
                     )
-                    .clickable(
+                    .noRippleClickable(
                         onClick = onClickSignup
                     ),
                 text = stringResource(id = R.string.signup),
