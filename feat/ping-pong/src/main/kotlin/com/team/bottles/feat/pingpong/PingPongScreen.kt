@@ -154,7 +154,7 @@ internal fun PingPongScreen(
                             ),
                         text = stringResource(id = R.string.conversation_finish),
                         style = BottlesTheme.typography.subTitle2,
-                        color = if(uiState.isStoppedPingPong) BottlesTheme.color.text.enabledSecondary
+                        color = if(!uiState.isStoppedPingPong) BottlesTheme.color.text.enabledSecondary
                         else BottlesTheme.color.text.disabledSecondary
                     )
                 }
