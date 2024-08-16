@@ -12,6 +12,7 @@ internal fun SandBeachRoute(
     viewModel: SandBeachViewModel = hiltViewModel(),
     navigateToIntroduction: () -> Unit,
     navigateToArrivedBottles: () -> Unit,
+    navigateToBottleBox: () -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -20,6 +21,7 @@ internal fun SandBeachRoute(
             when(sideEffect) {
                 is SandBeachSideEffect.NavigateToIntroduction -> navigateToIntroduction()
                 is SandBeachSideEffect.NavigateToArrivedBottle -> navigateToArrivedBottles()
+                is SandBeachSideEffect.NavigateToBottleBox -> navigateToBottleBox()
             }
         }
     }

@@ -42,7 +42,7 @@ internal fun LetterCard(
 
     BottlesLetterDropDownButton(
         onClickButton = { onClickLetterCard(letter.order) },
-        text = "${letter.order + 1} 번째 질문",
+        text = "${letter.order} 번째 질문",
         isExpanded = isExpanded,
         isEnabled = letter.canShow
     ) {

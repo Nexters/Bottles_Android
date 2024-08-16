@@ -76,7 +76,9 @@ fun PhotoStatusDTO.toPingPongPhotoStatus(): PingPongPhotoStatus =
 
 fun MatchStatusTypeDTO.toPingPongMatchStatus(): PingPongMatchStatus =
     when(this) {
+        MatchStatusTypeDTO.NONE -> PingPongMatchStatus.NONE
         MatchStatusTypeDTO.MATCH_SUCCEEDED -> PingPongMatchStatus.MATCH_SUCCEEDED
         MatchStatusTypeDTO.MATCH_FAILED -> PingPongMatchStatus.MATCH_FAILED
-        MatchStatusTypeDTO.IN_CONVERSATION -> PingPongMatchStatus.WAITING_OTHER_ANSWER
+        MatchStatusTypeDTO.REQUIRE_SELECT -> PingPongMatchStatus.REQUIRE_SELECT
+        MatchStatusTypeDTO.WAITING_OTHER_ANSWER -> PingPongMatchStatus.WAITING_OTHER_ANSWER
     }

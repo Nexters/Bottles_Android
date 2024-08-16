@@ -8,11 +8,13 @@ import com.team.bottles.feat.sandbeach.SandBeachRoute
 fun NavGraphBuilder.sandBeachScreen(
     navigateToIntroduction: () -> Unit,
     navigateToArrivedBottles: () -> Unit,
+    navigateToBottleBox: () -> Unit,
 ) {
     composable<MainNavigator.SandBeach> {
         SandBeachRoute(
             navigateToIntroduction = navigateToIntroduction,
-            navigateToArrivedBottles = navigateToArrivedBottles
+            navigateToArrivedBottles = navigateToArrivedBottles,
+            navigateToBottleBox = navigateToBottleBox
         )
     }
 }

@@ -6,6 +6,6 @@ sealed interface SandBeachIntent : UiIntent {
 
     data object ClickCreateIntroductionButton : SandBeachIntent
 
-    data object ClickBottle : SandBeachIntent
+    data object ClickSandBeach : SandBeachIntent
 
 }

@@ -24,17 +24,15 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 @Composable
 fun BottlesTopBar(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = BottlesTheme.color.background.primary,
     leadingIcon: (@Composable () -> Unit)? = null,
-    text: String? = null,
+    centerContents: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
-            .background(backgroundColor)
-            .padding(horizontal =  16.dp),
+            .padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -51,12 +49,8 @@ fun BottlesTopBar(
             }
         }
 
-        if (text != null) {
-            Text(
-                text = text,
-                style = BottlesTheme.typography.body,
-                color = BottlesTheme.color.text.secondary,
-            )
+        if (centerContents != null) {
+            centerContents()
         }
     }
 }
@@ -104,7 +98,13 @@ fun PreviewTopBar() {
                         contentDescription = "Back"
                     )
                 },
-                text = "Title"
+                centerContents = {
+                    Text(
+                        text = "Title",
+                        style = BottlesTheme.typography.body,
+                        color = BottlesTheme.color.text.secondary,
+                    )
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -117,7 +117,13 @@ fun PreviewTopBar() {
                         contentDescription = "Back"
                     )
                 },
-                text = "Title",
+                centerContents = {
+                    Text(
+                        text = "Title",
+                        style = BottlesTheme.typography.body,
+                        color = BottlesTheme.color.text.secondary,
+                    )
+                },
                 trailingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_left_24),

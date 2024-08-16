@@ -66,12 +66,16 @@ data class MatchResultDTO(
     @SerialName("otherContact") val otherContact: String,
     @SerialName("shouldAnswer") val shouldAnswer: Boolean,
     @SerialName("isFirstSelect") val isFirstSelect: Boolean,
+    @SerialName("meetingPlace") val meetingPlace: String?,
+    @SerialName("meetingPlaceImageUrl") val meetingPlaceImageUrl: String?,
 )
 
 @Serializable
 enum class MatchStatusTypeDTO {
-    @SerialName("IN_CONVERSATION") IN_CONVERSATION,
     @SerialName("MATCH_FAILED") MATCH_FAILED,
     @SerialName("MATCH_SUCCEEDED") MATCH_SUCCEEDED,
+    @SerialName("NONE") NONE,
+    @SerialName("REQUIRE_SELECT") REQUIRE_SELECT,
+    @SerialName("WAITING_OTHER_ANSWER") WAITING_OTHER_ANSWER,
     ;
 }
