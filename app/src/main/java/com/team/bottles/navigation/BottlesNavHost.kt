@@ -46,7 +46,8 @@ fun BottlesNavHost(
             )
             sandBeachScreen(
                 navigateToIntroduction = ::navigateToIntroduction,
-                navigateToArrivedBottles = ::navigateToArrivedBottles
+                navigateToArrivedBottles = ::navigateToArrivedBottles,
+                navigateToBottleBox = ::navigateToBottleBox
             )
             arrivedBottlesScreen(
                 navigateToSandBeach = ::navigateToSandBeach,
