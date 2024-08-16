@@ -31,17 +31,17 @@ enum class BottomNavItem(
 ) {
     SAND_BEACH(
         route = SAND_BEACH_ROUTE,
-        icon = R.drawable.ic_down_24, // TODO : 모래 사장 아이콘으로 변경
+        icon = R.drawable.ic_beach_32,
         label = R.string.sand_beach
     ),
     BOTTLE_BOX(
         route = BOTTLES_BOX_ROUTE,
-        icon = R.drawable.ic_siren_24, // TODO : 보틀 박스 아이콘으로 변경
+        icon = R.drawable.ic_bottle_32, // TODO : 보틀 박스 아이콘으로 변경
         label = R.string.bottle_box
     ),
     MY_PAGE(
         route = MY_PAGE_ROUTE,
-        icon = R.drawable.ic_delete_24, // TODO : 마이 페이지 아이콘으로 변경
+        icon = R.drawable.ic_user_32, // TODO : 마이 페이지 아이콘으로 변경
         label = R.string.my_page
     ),
     ;
@@ -74,8 +74,7 @@ fun BottlesBottomNavBar(
                 )
             )
             .padding(
-                top = BottlesTheme.spacing.extraLarge,
-                bottom = BottlesTheme.spacing.small
+                vertical = BottlesTheme.spacing.extraSmall,
             ),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
