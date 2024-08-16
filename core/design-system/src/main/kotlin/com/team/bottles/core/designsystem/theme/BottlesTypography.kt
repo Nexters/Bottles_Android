@@ -24,12 +24,12 @@ import com.team.bottles.core.designsystem.foundation.wantedSansStd
 data class BottlesTypography(
     val title1: TextStyle,
     val title2: TextStyle,
+    val title3: TextStyle,
     val subTitle1: TextStyle,
     val subTitle2: TextStyle,
     val body: TextStyle,
     val caption: TextStyle,
     val kakaoLogin: TextStyle,
-    val branding: TextStyle,
 ) {
     companion object {
         fun defaultTypography(): BottlesTypography = BottlesTypography(
@@ -37,11 +37,19 @@ data class BottlesTypography(
             TextStyle(
                 fontFamily = wantedSansStd,
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
+                fontSize = 32.sp,
                 letterSpacing = 0.sp,
                 lineHeight = 24.sp * 1.3f,
             ),
             title2 =
+            TextStyle(
+                fontFamily = wantedSansStd,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                letterSpacing = 0.sp,
+                lineHeight = 20.sp * 1.3f,
+            ),
+            title3 =
             TextStyle(
                 fontFamily = wantedSansStd,
                 fontWeight = FontWeight.Bold,
@@ -89,14 +97,6 @@ data class BottlesTypography(
                 letterSpacing = 0.15.sp,
                 lineHeight = 14.sp * 1.4f,
             ),
-            branding =
-            TextStyle(
-                fontFamily = laundryGothic,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                letterSpacing = 0.sp,
-                lineHeight = 24.sp * 1.3f,
-            )
         )
     }
 }
@@ -113,7 +113,7 @@ private fun TypographyPreview() {
             Text(
                 modifier = Modifier.border(1.dp, Color.Blue),
                 text = "진심을 담은 보틀로\n서로를 밀도있게 알아가요",
-                style = BottlesTheme.typography.branding,
+                style = BottlesTheme.typography.title3,
                 color = Color.Black,
                 textAlign = TextAlign.Center
             )
