@@ -1,5 +1,6 @@
 package com.team.bottles.network.api
 
+import com.team.bottles.network.dto.profile.reponse.ExistIntroductionResponse
 import com.team.bottles.network.dto.profile.reponse.UserProfileResponse
 import com.team.bottles.network.dto.profile.request.RegisterIntroductionRequest
 import okhttp3.MultipartBody
@@ -25,5 +26,7 @@ interface ProfileService {
         @Part file: MultipartBody.Part
     )
 
+    @GET("/api/v1/profile/introduction/exist")
+    suspend fun getIntroductionStatus(): ExistIntroductionResponse
 
 }

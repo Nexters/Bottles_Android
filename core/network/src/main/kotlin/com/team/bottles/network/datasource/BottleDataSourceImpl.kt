@@ -1,6 +1,7 @@
 package com.team.bottles.network.datasource
 
 import com.team.bottles.network.api.BottleService
+import com.team.bottles.network.dto.bottle.reponse.BottleListResponse
 import com.team.bottles.network.dto.bottle.reponse.BottlePingPongResponse
 import com.team.bottles.network.dto.bottle.reponse.PingPongListResponse
 import com.team.bottles.network.dto.bottle.request.BottleImageShareRequest
@@ -37,5 +38,8 @@ class BottleDataSourceImpl @Inject constructor(
     override suspend fun updatePingPongReadStatus(bottleId: Int) {
         bottleService.postPingPongRead(bottleId = bottleId)
     }
+
+    override suspend fun fetchBottleList(): BottleListResponse =
+        bottleService.getBottleList()
 
 }

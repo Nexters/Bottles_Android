@@ -24,4 +24,7 @@ class ProfileRepositoryImpl @Inject constructor(
     override suspend fun loadUserProfile(): UserProfile =
         profileDataSource.fetchUserProfile().toUserProfile()
 
+    override suspend fun loadUserIntroductionStatus(): Boolean =
+        profileDataSource.fetchIntroductionStatus().isExist
+
 }

@@ -1,5 +1,6 @@
 package com.team.bottles.network.api
 
+import com.team.bottles.network.dto.bottle.reponse.BottleListResponse
 import com.team.bottles.network.dto.bottle.reponse.BottlePingPongResponse
 import com.team.bottles.network.dto.bottle.reponse.PingPongListResponse
 import com.team.bottles.network.dto.bottle.request.BottleImageShareRequest
@@ -47,5 +48,8 @@ interface BottleService {
     suspend fun postPingPongRead(
         @Path("bottleId") bottleId: Int,
     )
+
+    @GET("/api/v1/bottles")
+    suspend fun getBottleList(): BottleListResponse
 
 }

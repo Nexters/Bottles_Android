@@ -1,5 +1,6 @@
 package com.team.bottles.network.datasource
 
+import com.team.bottles.network.dto.bottle.reponse.BottleListResponse
 import com.team.bottles.network.dto.bottle.reponse.BottlePingPongResponse
 import com.team.bottles.network.dto.bottle.reponse.PingPongListResponse
 import com.team.bottles.network.dto.bottle.request.BottleImageShareRequest
@@ -30,5 +31,7 @@ interface BottleDataSource {
     suspend fun deletePingPong(bottleId: Int)
 
     suspend fun updatePingPongReadStatus(bottleId: Int)
+
+    suspend fun fetchBottleList(): BottleListResponse
 
 }
