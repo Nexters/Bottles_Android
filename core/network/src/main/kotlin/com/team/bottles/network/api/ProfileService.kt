@@ -26,7 +26,7 @@ interface ProfileService {
         @Part file: MultipartBody.Part
     )
 
-    @POST("/api/v1/profile/introduction/exist")
+    @GET("/api/v1/profile/introduction/exist")
     suspend fun getIntroductionStatus(): ExistIntroductionResponse
 
 }
