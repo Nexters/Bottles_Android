@@ -7,6 +7,7 @@ import OnboardingNavigator
 import PingPongNavigator
 import ProfileNavigator
 import SignupNavigator
+import SplashNavigator
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -22,6 +23,7 @@ import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
 import com.team.bottles.feat.signup.navigation.signupScreen
+import com.team.bottles.feat.splash.splashScreen
 
 @Composable
 fun BottlesNavHost(
@@ -29,9 +31,13 @@ fun BottlesNavHost(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = LoginNavigator.Endpoint
+        startDestination = SplashNavigator
     ) {
         with(navHostController) {
+            splashScreen(
+                navigateToSandBeach = ::navigateToSandBeach,
+                navigateToLoginEndpoint = ::navigateToLoginEndpoint
+            )
             loginScreen(
                 navigateToOnboarding = ::navigateToOnboarding,
                 navigateToSandBeach = ::navigateToSandBeach,
