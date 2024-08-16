@@ -31,7 +31,7 @@ class ProfileDataSourceImpl @Inject constructor(
     override suspend fun fetchUserProfile(): UserProfileResponse =
         profileService.getUserProfileInfo()
 
-    override suspend fun loadIntroductionStatus(): ExistIntroductionResponse =
+    override suspend fun fetchIntroductionStatus(): ExistIntroductionResponse =
         profileService.getIntroductionStatus()
 
 }

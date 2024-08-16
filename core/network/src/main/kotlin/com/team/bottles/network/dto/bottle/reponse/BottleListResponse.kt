@@ -13,7 +13,7 @@ data class BottleListResponse(
 @Serializable
 data class BottleDto(
     @SerialName("id") val id: Long,
-    @SerialName("v") val userId: Long,
+    @SerialName("userId") val userId: Long,
     @SerialName("userName") val userName: String,
     @SerialName("age") val age: Int,
     @SerialName("mbti") val mbti: String?,

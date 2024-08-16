@@ -1,5 +1,7 @@
 package com.team.bottles.di.usecase
 
+import com.team.bottles.core.domain.bottle.usecase.GetBottleListUseCase
+import com.team.bottles.core.domain.bottle.usecase.GetBottleListUseCaseImpl
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCaseImpl
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
@@ -35,27 +37,29 @@ abstract class BottleUseCaseModule {
     ): GetPingPongDetailUseCase
 
     @Binds
-    @Singleton
     abstract fun bindsSendPingPongLetterUseCase(
         useCaseImpl: SendPingPongLetterUseCaseImpl
     ): SendPingPongLetterUseCase
 
     @Binds
-    @Singleton
     abstract fun bindsSelectPingPongSharePhotoUseCase(
         useCaseImpl: SelectPingPongSharePhotoUseCaseImpl
     ): SelectPingPongSharePhotoUseCase
 
     @Binds
-    @Singleton
     abstract fun bindsSelectPingPongShareKakaoIdUseCase(
         useCaseImpl: SelectPingPongShareKakaoIdUseCaseImpl
     ): SelectPingPongShareKakaoIdUseCase
 
     @Binds
-    @Singleton
     abstract fun bindsStopPingPongUseCase(
         useCaseImpl: StopPingPongUseCaseImpl
     ): StopPingPongUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindsGetBottleListUseCase(
+        useCaseImpl: GetBottleListUseCaseImpl
+    ): GetBottleListUseCase
 
 }

@@ -1,7 +1,9 @@
 package com.team.bottles.core.data.repository
 
+import com.team.bottles.core.data.mapper.toArrivedBottle
 import com.team.bottles.core.data.mapper.toPingPongDetail
 import com.team.bottles.core.data.mapper.toPingPongResult
+import com.team.bottles.core.domain.bottle.model.ArrivedBottle
 import com.team.bottles.core.domain.bottle.model.PingPongDetail
 import com.team.bottles.core.domain.bottle.model.PingPongList
 import com.team.bottles.core.domain.bottle.repository.BottleRepository
@@ -54,5 +56,8 @@ class BottleRepositoryImpl @Inject constructor(
     override suspend fun stopPingPong(bottleId: Int) {
         bottleDataSource.deletePingPong(bottleId = bottleId)
     }
+
+    override suspend fun loadBottleList(): ArrivedBottle =
+        bottleDataSource.fetchBottleList().toArrivedBottle()
 
 }

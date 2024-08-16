@@ -13,6 +13,6 @@ interface ProfileDataSource {
 
     suspend fun fetchUserProfile(): UserProfileResponse
 
-    suspend fun loadIntroductionStatus(): ExistIntroductionResponse
+    suspend fun fetchIntroductionStatus(): ExistIntroductionResponse
 
 }

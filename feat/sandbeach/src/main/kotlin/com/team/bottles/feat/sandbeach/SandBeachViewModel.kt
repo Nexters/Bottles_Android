@@ -2,6 +2,9 @@ package com.team.bottles.feat.sandbeach
 
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
+import com.team.bottles.core.domain.bottle.usecase.GetBottleListUseCase
+import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
+import com.team.bottles.core.domain.profile.usecase.GetUserIntroductionStatusUseCase
 import com.team.bottles.feat.sandbeach.mvi.BottleStatus
 import com.team.bottles.feat.sandbeach.mvi.SandBeachIntent
 import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
@@ -11,9 +14,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SandBeachViewModel @Inject constructor(
+    private val getUserIntroductionStatusUseCase: GetUserIntroductionStatusUseCase,
+    private val getBottleListUseCase: GetBottleListUseCase,
+    private val getPingPongListUseCase: GetPingPongListUseCase,
     savedStateHandle: SavedStateHandle
+) : BaseViewModel<SandBeachUiState, SandBeachSideEffect, SandBeachIntent>(savedStateHandle) {
 
-): BaseViewModel<SandBeachUiState, SandBeachSideEffect, SandBeachIntent>(savedStateHandle) {
+    init {
+        setSandBeachState()
+    }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): SandBeachUiState =
         SandBeachUiState()
@@ -22,8 +31,51 @@ class SandBeachViewModel @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    private fun setSandBeachState() {
+        launch {
+            val isCreatedIntroduction = getUserIntroductionStatusUseCase()
+
+            if (!isCreatedIntroduction) {
+                reduce { copy(bottleStatus = BottleStatus.REQUIRE_INTRODUCTION) }
+                return@launch
+            } else {
+                val arrivedBottles = getBottleListUseCase()
+
+                if (arrivedBottles.sentBottles.isNotEmpty() || arrivedBottles.randomBottles.isNotEmpty()) {
+                    reduce {
+                        copy(
+                            bottleStatus = BottleStatus.IN_ARRIVED_BOTTLE,
+                            newBottleValue = arrivedBottles.randomBottles.size + arrivedBottles.sentBottles.size
+                        )
+                    }
+                    return@launch
+                } else {
+                    val pingPongList = getPingPongListUseCase().run { doneBottles + activeBottles }
+
+                    if (pingPongList.isNotEmpty()) {
+                        reduce {
+                            copy(
+                                bottleStatus = BottleStatus.IN_BOTTLE_BOX,
+                                bottleBoxValue = pingPongList.size
+                            )
+                        }
+                        return@launch
+                    } else {
+                        reduce {
+                            copy(
+                                bottleStatus = BottleStatus.NONE_BOTTLE,
+                                afterArrivedTime = arrivedBottles.nextBottleLeftHours
+                            )
+                        }
+                        return@launch
+                    }
+                }
+            }
+        }
+    }
+
     override suspend fun handleIntent(intent: SandBeachIntent) {
-        when(intent) {
+        when (intent) {
             is SandBeachIntent.ClickCreateIntroductionButton -> navigateToIntroduction()
             is SandBeachIntent.ClickSandBeach -> onClickSandBeach()
         }

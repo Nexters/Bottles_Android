@@ -12,4 +12,6 @@ interface ProfileRepository {
 
     suspend fun loadUserProfile(): UserProfile
 
+    suspend fun loadUserIntroductionStatus(): Boolean
+
 }
