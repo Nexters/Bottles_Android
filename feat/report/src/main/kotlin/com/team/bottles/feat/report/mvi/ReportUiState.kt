@@ -5,6 +5,7 @@ import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldS
 
 data class ReportUiState(
     val showDialog: Boolean = false,
+    val userId: Long = 0L,
     val userImageUrl: String = "",
     val userName: String = "",
     val userAge: Int = 0,

@@ -19,6 +19,7 @@ class ReportViewModel @Inject constructor(
     override fun createInitialState(savedStateHandle: SavedStateHandle): ReportUiState {
         val savedState = savedStateHandle.toRoute<ReportNavigator>()
         return ReportUiState(
+            userId = savedState.userId,
             userImageUrl = savedState.userImageUrl,
             userName = savedState.userName,
             userAge = savedState.userAge

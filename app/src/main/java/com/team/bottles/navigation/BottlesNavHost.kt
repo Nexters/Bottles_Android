@@ -63,7 +63,10 @@ fun BottlesNavHost(
             )
             bottleBoxScreen(navigateToPingPong = ::navigateToPingPong)
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
-            pingPongScreen(navigateToBottleBox = ::navigateToBottleBox)
+            pingPongScreen(
+                navigateToBottleBox = ::navigateToBottleBox,
+                navigateToReport = ::navigateToReport
+            )
             myPageScreen(navigateToLoginEndPoint = ::navigateToLoginEndpoint)
             signupScreen(
                 navigateToOnboarding = ::navigateToOnboarding,
@@ -121,3 +124,10 @@ fun NavController.navigateToSignup() =
 
 fun NavController.navigateToSmsLogin() =
     navigate(LoginNavigator.SmsLogin)
+
+fun NavController.navigateToReport(userId: Long, userName: String, userImageUrl: String, userAge: Int) =
+    navigate(ReportNavigator(
+        userAge = userAge,
+        userName = userName,
+        userId = userId,
+        userImageUrl = userImageUrl))

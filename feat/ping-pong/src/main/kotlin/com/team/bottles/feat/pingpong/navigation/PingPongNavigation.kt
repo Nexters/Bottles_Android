@@ -6,9 +6,13 @@ import androidx.navigation.compose.composable
 import com.team.bottles.feat.pingpong.PingPongRoute
 
 fun NavGraphBuilder.pingPongScreen(
-    navigateToBottleBox: () -> Unit
+    navigateToBottleBox: () -> Unit,
+    navigateToReport: (userId: Long, userName: String, userImageUrl: String, userAge: Int) -> Unit
 ) {
     composable<PingPongNavigator> {
-        PingPongRoute(navigateToBottleBox = navigateToBottleBox)
+        PingPongRoute(
+            navigateToBottleBox = navigateToBottleBox,
+            navigateToReport = navigateToReport
+        )
     }
 }
