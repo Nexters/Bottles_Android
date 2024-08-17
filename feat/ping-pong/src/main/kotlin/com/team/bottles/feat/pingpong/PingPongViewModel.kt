@@ -41,7 +41,7 @@ class PingPongViewModel @Inject constructor(
     override suspend fun handleIntent(intent: PingPongIntent) {
         when (intent) {
             is PingPongIntent.ClickBackButton -> navigateToBottleBox()
-            is PingPongIntent.ClickReportButton -> { /* TODO : userId와 함께 신고하기 화면으로 이동 */ }
+            is PingPongIntent.ClickReportButton -> navigateToReport()
             is PingPongIntent.ClickTabButton -> changeTab(tab = intent.tab)
             is PingPongIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
             is PingPongIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
@@ -90,6 +90,15 @@ class PingPongViewModel @Inject constructor(
 
     override fun handleClientException(throwable: Throwable) {
         TODO("Not yet implemented")
+    }
+
+    private fun navigateToReport() {
+        postSideEffect(PingPongSideEffect.NavigateToReport(
+            userId = currentState.partnerProfile.userId,
+            userName = currentState.partnerProfile.userName,
+            userAge = currentState.partnerProfile.age,
+            userImageUrl = currentState.partnerProfile.imageUrl
+        ))
     }
 
     private fun openKakaoTalkApp() {

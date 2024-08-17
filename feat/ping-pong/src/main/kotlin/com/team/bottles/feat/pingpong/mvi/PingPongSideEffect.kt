@@ -8,4 +8,11 @@ sealed interface PingPongSideEffect : UiSideEffect {
 
     data object OpenKakaoTalkApp : PingPongSideEffect
 
+    data class NavigateToReport(
+        val userId: Long,
+        val userName: String,
+        val userImageUrl: String,
+        val userAge: Int
+    ) : PingPongSideEffect
+
 }

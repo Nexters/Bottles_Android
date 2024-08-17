@@ -14,7 +14,8 @@ import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
 @Composable
 internal fun PingPongRoute(
     viewModel: PingPongViewModel = hiltViewModel(),
-    navigateToBottleBox: () -> Unit
+    navigateToBottleBox: () -> Unit,
+    navigateToReport: (userId: Long, userName: String, userImageUrl: String, userAge: Int) -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -23,7 +24,10 @@ internal fun PingPongRoute(
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is PingPongSideEffect.NavigateToBottleBox -> navigateToBottleBox()
-                PingPongSideEffect.OpenKakaoTalkApp -> {
+                is PingPongSideEffect.NavigateToReport -> {
+                    navigateToReport(sideEffect.userId, sideEffect.userName, sideEffect.userImageUrl, sideEffect.userAge)
+                }
+                is PingPongSideEffect.OpenKakaoTalkApp -> {
                     val kakaoPackageName = "com.kakao.talk"
                     val packageManager = context.packageManager
                     val launchIntent = packageManager.getLaunchIntentForPackage(kakaoPackageName)
