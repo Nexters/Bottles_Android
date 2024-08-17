@@ -2,7 +2,6 @@ package com.team.bottles.feat.login.smslogin
 
 import android.webkit.JavascriptInterface
 import com.team.bottles.core.common.base.BaseBridgeListener
-import com.team.bottles.core.domain.auth.model.Token
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -32,7 +31,9 @@ internal class SmsLoginBridge(private val onAction: (SmsLoginWebAction) -> Unit)
 
 @Serializable
 data class SmsLoginWebResult(
-    val token: Token,
+    val accessToken: String,
+    val refreshToken: String,
+    val hasCompleteUserProfile: Boolean,
     val hasCompleteIntroduction: Boolean
 )
 

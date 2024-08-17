@@ -2,6 +2,7 @@ package com.team.bottles.feat.login.smslogin
 
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
+import com.team.bottles.core.domain.auth.model.Token
 import com.team.bottles.core.domain.auth.usecase.WebViewConnectUseCase
 import com.team.bottles.feat.login.smslogin.mvi.SmsLoginIntent
 import com.team.bottles.feat.login.smslogin.mvi.SmsLoginSideEffect
@@ -31,8 +32,10 @@ class SmsLoginViewModel @Inject constructor(
 
     private fun smsLogin(smsLoginWebResult: SmsLoginWebResult) {
         launch {
-            webViewConnectUseCase.setLocalToken(token = smsLoginWebResult.token)
-            if (smsLoginWebResult.hasCompleteIntroduction) { // 프로필 생성을 했다면
+            webViewConnectUseCase.setLocalToken(token = Token(
+                accessToken = smsLoginWebResult.accessToken,
+                refreshToken = smsLoginWebResult.refreshToken))
+            if (smsLoginWebResult.hasCompleteUserProfile) { // 프로필 생성을 했다면
                 postSideEffect(SmsLoginSideEffect.NavigateToSandBeach)
             } else { // 프로필 생성을 안했으면
                 postSideEffect(SmsLoginSideEffect.NavigateToOnboarding)
