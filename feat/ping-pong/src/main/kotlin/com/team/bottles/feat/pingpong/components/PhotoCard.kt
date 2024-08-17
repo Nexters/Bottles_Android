@@ -69,8 +69,7 @@ internal fun PhotoCard(
             }
 
             when (pingPongPhotoStatus) {
-                PingPongPhotoStatus.REQUIRE_SELECT_OTHER_SELECT,
-                PingPongPhotoStatus.REQUIRE_SELECT_OTHER_NOT_SELECT -> {
+                PingPongPhotoStatus.REQUIRE_SELECT -> {
                     SelectYesOrNo(
                         onClickAgree = onClickLikeSharePhoto,
                         onClickReject = onClickHateSharePhoto,
