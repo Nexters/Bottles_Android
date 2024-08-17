@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.konan.properties.Properties
+import java.io.FileInputStream
 
 plugins {
     id("team.bottles.android.application")
@@ -29,6 +31,29 @@ android {
 
     hilt {
         enableAggregatingTask = true
+    }
+
+    signingConfigs {
+        create("release") {
+            Properties().apply {
+                load(FileInputStream(rootProject.file("local.properties")))
+                storeFile = rootProject.file(this["STORE_FILE"] as String)
+                keyAlias = this["KEY_ALIAS"] as String
+                keyPassword = this["KEY_PASSWORD"] as String
+                storePassword = this["STORE_PASSWORD"] as String
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
     }
 }
 
