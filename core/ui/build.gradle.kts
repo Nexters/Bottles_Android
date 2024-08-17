@@ -12,4 +12,5 @@ dependencies {
 
     implementation(libs.androidx.compose.activity)
     implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.airbnb.lottie)
 }
