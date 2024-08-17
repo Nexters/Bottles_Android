@@ -1,5 +1,6 @@
 package com.team.bottles.feat.pingpong.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -51,13 +52,13 @@ internal fun LazyListScope.matchingContents(
         if (matchingResult == MatchingResult.SUCCESS) {
             CardKakaoId(kakaoId = kakaoId)
         } else {
-            CoilImage(
+            Image(
                 modifier = Modifier.size(size = 250.dp),
-                imageModel = {
+                painter = painterResource(id =
                     if (matchingResult == MatchingResult.FAIL) R.drawable.illustration_search_bottle
                     else R.drawable.illustration_phone
-                },
-                previewPlaceholder = painterResource(id = R.drawable.illustration_search_bottle)
+                ),
+                contentDescription = null
             )
         }
     }
