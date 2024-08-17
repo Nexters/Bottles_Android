@@ -3,7 +3,7 @@ package com.team.bottles.feat.sandbeach.mvi
 import com.team.bottles.core.common.UiState
 
 data class SandBeachUiState(
-    val bottleStatus: BottleStatus = BottleStatus.IN_BOTTLE_BOX,
+    val bottleStatus: BottleStatus = BottleStatus.NONE_BOTTLE,
     val newBottleValue: Int = 0,
     val bottleBoxValue: Int = 0,
     val afterArrivedTime: Int = 0
