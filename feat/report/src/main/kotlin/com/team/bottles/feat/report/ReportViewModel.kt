@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
+import com.team.bottles.core.domain.user.usecase.ReportUserUseCase
 import com.team.bottles.feat.report.mvi.ReportIntent
 import com.team.bottles.feat.report.mvi.ReportSideEffect
 import com.team.bottles.feat.report.mvi.ReportUiState
@@ -13,6 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
+    private val reportUserUseCase: ReportUserUseCase,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<ReportUiState, ReportSideEffect, ReportIntent>(savedStateHandle) {
 
@@ -43,8 +45,14 @@ class ReportViewModel @Inject constructor(
     }
 
     private fun report() {
-        // TODO : 신고 UseCase 연결 + showDialog false로 변경
-        postSideEffect(ReportSideEffect.ShowToastMessage)
+        launch {
+            reportUserUseCase(
+                userId = currentState.userId.toInt(),
+                contents = currentState.reportContents
+            )
+            reduce { copy(showDialog = false) }
+            postSideEffect(ReportSideEffect.ShowToastMessage)
+        }
     }
 
     private fun changeTextFieldState(isFocused: Boolean) {

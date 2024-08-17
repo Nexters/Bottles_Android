@@ -3,6 +3,7 @@ package com.team.bottles.network.di
 import com.team.bottles.network.api.AuthService
 import com.team.bottles.network.api.BottleService
 import com.team.bottles.network.api.ProfileService
+import com.team.bottles.network.api.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +24,8 @@ object ServiceModule {
 
     @Provides
     fun providesSecureBottleService(@Named("Secure") retrofit: Retrofit): BottleService = retrofit.create()
+
+    @Provides
+    fun providesSecureUserService(@Named("Secure") retrofit: Retrofit): UserService = retrofit.create()
 
 }
