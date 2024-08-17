@@ -77,7 +77,10 @@ fun BottlesNavHost(
                 navigateToLoginEndPoint = ::navigateToLoginEndpoint,
                 navigateToOnboarding = ::navigateToOnboarding
             )
-            reportScreen(navigateToPingPong = { popBackStack() })
+            reportScreen(
+                navigateToPingPong = { popBackStack() },
+                navigateToBottleBox = ::navigateToBottleBox
+            )
         }
     }
 }

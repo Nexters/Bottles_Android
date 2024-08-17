@@ -44,6 +44,7 @@ class ReportViewModel @Inject constructor(
 
     private fun report() {
         // TODO : 신고 UseCase 연결 + showDialog false로 변경
+        postSideEffect(ReportSideEffect.ShowToastMessage)
     }
 
     private fun changeTextFieldState(isFocused: Boolean) {

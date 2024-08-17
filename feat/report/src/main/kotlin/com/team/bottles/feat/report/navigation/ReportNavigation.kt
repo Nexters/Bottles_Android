@@ -7,10 +7,12 @@ import com.team.bottles.feat.report.ReportRoute
 
 fun NavGraphBuilder.reportScreen(
     navigateToPingPong: () -> Unit,
+    navigateToBottleBox: () -> Unit,
 ) {
     composable<ReportNavigator> {
         ReportRoute(
             navigateToPingPong = navigateToPingPong,
+            navigateToBottleBox = navigateToBottleBox
         )
     }
 }

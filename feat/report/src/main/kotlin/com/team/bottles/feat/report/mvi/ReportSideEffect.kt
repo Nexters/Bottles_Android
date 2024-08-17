@@ -6,4 +6,6 @@ sealed interface ReportSideEffect : UiSideEffect {
 
     data object NavigateToPingPong : ReportSideEffect
 
+    data object ShowToastMessage : ReportSideEffect
+
 }
