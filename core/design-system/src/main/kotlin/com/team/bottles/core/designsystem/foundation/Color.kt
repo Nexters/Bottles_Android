@@ -24,8 +24,8 @@ internal val Black100 = Color(0xFF000000)
 internal val White100 = Color(0xFFFFFFFF)
 internal val Red = Color(0xFFF03E3E)
 
-internal val Gradient = Brush.linearGradient(
-    0.0f to Neutral50, 1.0f to Neutral50
+internal val Gradient = Brush.verticalGradient(
+    0.0f to Neutral50.copy(alpha = 0f), 0.5f to Neutral50
 )
 
 /*===================================================*/
