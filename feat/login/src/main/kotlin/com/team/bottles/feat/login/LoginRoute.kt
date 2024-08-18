@@ -1,6 +1,8 @@
 package com.team.bottles.feat.login
 
 import android.app.Activity
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -34,8 +36,12 @@ fun LoginRoute(
                 is LoginSideEffect.NavigateToSignup -> navigateToSignup()
                 is LoginSideEffect.NavigateToSmsLogin -> navigateToSmsLogin()
                 is LoginSideEffect.StartKakaoClient -> {
-                    val kakaoClientResult = kakaoClient.login()
-                    viewModel.intent(LoginIntent.KakaoLogin(kakaoClientResult = kakaoClientResult))
+                    try {
+                        val kakaoClientResult = kakaoClient.login()
+                        viewModel.intent(LoginIntent.KakaoLogin(kakaoClientResult = kakaoClientResult))
+                    } catch (e: Throwable) {
+                        // TODO : 카카오 로그인 취소시 예외 처리
+                    }
                 }
             }
         }

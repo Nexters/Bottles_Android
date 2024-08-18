@@ -5,8 +5,8 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.team.bottles.core.domain.auth.KakaoClientResult
 import com.team.bottles.core.domain.auth.KakaoClient
+import com.team.bottles.core.domain.auth.KakaoClientResult
 import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class KakaoClientImpl @Inject constructor(
             UserApiClient.instance.loginWithKakaoTalk(activityContext) { token: OAuthToken?, error: Throwable? ->
                 if (error != null) {
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                        continuation.cancel()
+                        continuation.cancel(error)
                     }
 
                     UserApiClient.instance.loginWithKakaoAccount(activityContext) { accountToken: OAuthToken?, accountError: Throwable? ->
@@ -58,7 +58,7 @@ class KakaoClientImpl @Inject constructor(
                 when {
                     error != null -> {
                         if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                            continuation.cancel()
+                            continuation.cancel(error)
                         } else {
                             continuation.resumeWithException(error)
                         }
