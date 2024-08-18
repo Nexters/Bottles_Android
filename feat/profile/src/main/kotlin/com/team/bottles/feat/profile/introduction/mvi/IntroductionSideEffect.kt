@@ -8,4 +8,6 @@ sealed interface IntroductionSideEffect: UiSideEffect {
 
     data class CompleteIntroduction(val toastMessage: String) : IntroductionSideEffect
 
+    data class RequireSelectPhoto(val toastMessage: String) : IntroductionSideEffect
+
 }
