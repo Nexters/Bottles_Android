@@ -38,7 +38,8 @@ fun BottlesNavHost(
         with(navHostController) {
             splashScreen(
                 navigateToSandBeach = ::navigateToSandBeach,
-                navigateToLoginEndpoint = ::navigateToLoginEndpoint
+                navigateToLoginEndpoint = ::navigateToLoginEndpoint,
+                navigateToOnboarding = ::navigateToOnboarding
             )
             loginScreen(
                 navigateToOnboarding = ::navigateToOnboarding,

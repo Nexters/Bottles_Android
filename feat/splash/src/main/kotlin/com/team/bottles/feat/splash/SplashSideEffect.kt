@@ -6,4 +6,6 @@ sealed interface SplashSideEffect {
 
     data object NavigateToSandBeach : SplashSideEffect
 
+    data object NavigateToOnboarding : SplashSideEffect
+
 }

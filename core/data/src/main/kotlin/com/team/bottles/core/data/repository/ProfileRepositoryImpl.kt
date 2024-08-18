@@ -2,8 +2,10 @@ package com.team.bottles.core.data.repository
 
 import com.team.bottles.core.data.mapper.toRequest
 import com.team.bottles.core.data.mapper.toUserProfile
+import com.team.bottles.core.data.mapper.toUserProfileStatus
 import com.team.bottles.core.domain.profile.model.QuestionAndAnswer
 import com.team.bottles.core.domain.profile.model.UserProfile
+import com.team.bottles.core.domain.profile.model.UserProfileStatus
 import com.team.bottles.core.domain.profile.repository.ProfileRepository
 import com.team.bottles.network.datasource.ProfileDataSource
 import java.io.File
@@ -26,5 +28,8 @@ class ProfileRepositoryImpl @Inject constructor(
 
     override suspend fun loadUserIntroductionStatus(): Boolean =
         profileDataSource.fetchIntroductionStatus().isExist
+
+    override suspend fun loadUserProfileStatus(): UserProfileStatus =
+        profileDataSource.fetchUserProfileStatus().toUserProfileStatus()
 
 }

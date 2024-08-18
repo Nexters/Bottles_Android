@@ -2,6 +2,7 @@ package com.team.bottles.network.api
 
 import com.team.bottles.network.dto.profile.reponse.ExistIntroductionResponse
 import com.team.bottles.network.dto.profile.reponse.UserProfileResponse
+import com.team.bottles.network.dto.profile.reponse.UserProfileStatusResponse
 import com.team.bottles.network.dto.profile.request.RegisterIntroductionRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -28,5 +29,8 @@ interface ProfileService {
 
     @GET("/api/v1/profile/introduction/exist")
     suspend fun getIntroductionStatus(): ExistIntroductionResponse
+
+    @GET("/api/v1/profile/status")
+    suspend fun getProfileStatus(): UserProfileStatusResponse
 
 }
