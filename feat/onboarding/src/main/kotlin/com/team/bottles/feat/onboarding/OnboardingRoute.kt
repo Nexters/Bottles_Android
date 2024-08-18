@@ -10,7 +10,8 @@ import com.team.bottles.feat.onboarding.mvi.OnboardingSideEffect
 @Composable
 internal fun OnboardingRoute(
     viewModel: OnboardingViewModel = hiltViewModel(),
-    navigateToCreateProfile: () -> Unit
+    navigateToCreateProfile: () -> Unit,
+    navigateToLoginEndpoint: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -18,6 +19,7 @@ internal fun OnboardingRoute(
         viewModel.sideEffect.collect { sideEffect ->
             when(sideEffect) {
                 is OnboardingSideEffect.NavigateToCreateProfile -> navigateToCreateProfile()
+                is OnboardingSideEffect.NavigateToLoginEndpoint -> navigateToLoginEndpoint()
             }
         }
     }

@@ -3,6 +3,7 @@ package com.team.bottles.feat.onboarding
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.feat.onboarding.mvi.OnboardingIntent
+import com.team.bottles.feat.onboarding.mvi.OnboardingPage
 import com.team.bottles.feat.onboarding.mvi.OnboardingSideEffect
 import com.team.bottles.feat.onboarding.mvi.OnboardingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,7 @@ class OnboardingViewModel @Inject constructor(
 ) : BaseViewModel<OnboardingUiState, OnboardingSideEffect, OnboardingIntent>(savedStateHandle) {
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): OnboardingUiState =
-        OnboardingUiState(page = 0)
+        OnboardingUiState()
 
     override fun handleClientException(throwable: Throwable) {
         TODO("Not yet implemented")
@@ -23,14 +24,32 @@ class OnboardingViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: OnboardingIntent) {
         when (intent) {
-            is OnboardingIntent.ClickNextButton -> {
-                if (currentState.page > 1) navigateToCreateProfile()
-                else reduce { copy(page = page + 1) }
-            }
+            is OnboardingIntent.ClickNextButton -> nextPage()
+            is OnboardingIntent.ClickBackButton -> previousPage()
+        }
+    }
+
+    private fun nextPage() {
+        if (currentState.currentPage.ordinal + 3 > currentState.maxPage) {
+            navigateToCreateProfile()
+        } else {
+            reduce { copy(currentPage = OnboardingPage.entries[currentPage.ordinal + 1]) }
+        }
+    }
+
+    private fun previousPage() {
+        if (currentState.currentPage.ordinal == 0) {
+            navigateToLoginEndPoint()
+        } else {
+            reduce { copy(currentPage = OnboardingPage.entries[currentPage.ordinal - 1]) }
         }
     }
 
     private fun navigateToCreateProfile() {
         postSideEffect(OnboardingSideEffect.NavigateToCreateProfile)
+    }
+
+    private fun navigateToLoginEndPoint() {
+        postSideEffect(OnboardingSideEffect.NavigateToLoginEndpoint)
     }
 }
