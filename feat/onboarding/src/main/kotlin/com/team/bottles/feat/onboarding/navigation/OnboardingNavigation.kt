@@ -6,9 +6,13 @@ import OnboardingNavigator
 import com.team.bottles.feat.onboarding.OnboardingRoute
 
 fun NavGraphBuilder.onboardingScreen(
-    navigateToCreateProfile: () -> Unit
+    navigateToCreateProfile: () -> Unit,
+    navigateToLoginEndpoint: () -> Unit
 ) {
     composable<OnboardingNavigator> {
-        OnboardingRoute(navigateToCreateProfile = navigateToCreateProfile)
+        OnboardingRoute(
+            navigateToCreateProfile = navigateToCreateProfile,
+            navigateToLoginEndpoint = navigateToLoginEndpoint
+        )
     }
 }
