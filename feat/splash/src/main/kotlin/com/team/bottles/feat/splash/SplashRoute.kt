@@ -8,13 +8,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun SplashRoute(
     viewModel: SplashViewModel = hiltViewModel(),
     navigateToLoginEndpoint: () -> Unit,
-    navigateToSandBeach: () -> Unit
+    navigateToSandBeach: () -> Unit,
+    navigateToOnboarding: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is SplashSideEffect.NavigateToSandBeach -> navigateToSandBeach()
                 is SplashSideEffect.NavigateToLoginEndpoint -> navigateToLoginEndpoint()
+                is SplashSideEffect.NavigateToOnboarding -> navigateToOnboarding()
             }
         }
     }

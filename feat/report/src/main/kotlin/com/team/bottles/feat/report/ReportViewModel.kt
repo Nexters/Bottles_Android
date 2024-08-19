@@ -86,7 +86,7 @@ class ReportViewModel @Inject constructor(
     }
 
     private fun navigateToPingPong() {
-
+        postSideEffect(ReportSideEffect.NavigateToPingPong)
     }
 
 }

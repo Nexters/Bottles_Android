@@ -25,6 +25,8 @@ internal fun IntroductionRoute(
                     Toast.makeText(context, sideEffect.toastMessage, Toast.LENGTH_SHORT).show()
                     navigateToSandBeach()
                 }
+                is IntroductionSideEffect.RequireSelectPhoto ->
+                    Toast.makeText(context, sideEffect.toastMessage, Toast.LENGTH_SHORT).show()
             }
         }
     }
