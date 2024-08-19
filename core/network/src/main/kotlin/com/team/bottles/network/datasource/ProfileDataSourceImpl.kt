@@ -3,6 +3,7 @@ package com.team.bottles.network.datasource
 import com.team.bottles.network.api.ProfileService
 import com.team.bottles.network.dto.profile.reponse.ExistIntroductionResponse
 import com.team.bottles.network.dto.profile.reponse.UserProfileResponse
+import com.team.bottles.network.dto.profile.reponse.UserProfileStatusResponse
 import com.team.bottles.network.dto.profile.request.RegisterIntroductionRequest
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -33,5 +34,8 @@ class ProfileDataSourceImpl @Inject constructor(
 
     override suspend fun fetchIntroductionStatus(): ExistIntroductionResponse =
         profileService.getIntroductionStatus()
+
+    override suspend fun fetchUserProfileStatus(): UserProfileStatusResponse =
+        profileService.getProfileStatus()
 
 }

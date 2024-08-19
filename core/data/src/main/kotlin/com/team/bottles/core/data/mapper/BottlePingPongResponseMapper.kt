@@ -68,8 +68,8 @@ fun PhotoStatusDTO.toPingPongPhotoStatus(): PingPongPhotoStatus =
         PhotoStatusDTO.NONE -> PingPongPhotoStatus.NONE
         PhotoStatusDTO.MY_REJECT -> PingPongPhotoStatus.MY_REJECT
         PhotoStatusDTO.OTHER_REJECT -> PingPongPhotoStatus.OTHER_REJECT
-        PhotoStatusDTO.REQUIRE_SELECT_OTHER_SELECT -> PingPongPhotoStatus.REQUIRE_SELECT_OTHER_SELECT
-        PhotoStatusDTO.REQUIRE_SELECT_OTHER_NOT_SELECT -> PingPongPhotoStatus.REQUIRE_SELECT_OTHER_NOT_SELECT
+        PhotoStatusDTO.REQUIRE_SELECT_OTHER_SELECT -> PingPongPhotoStatus.REQUIRE_SELECT
+        PhotoStatusDTO.REQUIRE_SELECT_OTHER_NOT_SELECT -> PingPongPhotoStatus.REQUIRE_SELECT
         PhotoStatusDTO.WAITING_OTHER_ANSWER -> PingPongPhotoStatus.WAITING_OTHER_ANSWER
         PhotoStatusDTO.BOTH_AGREE -> PingPongPhotoStatus.BOTH_AGREE
     }

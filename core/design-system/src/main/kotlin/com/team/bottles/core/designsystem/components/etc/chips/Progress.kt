@@ -2,57 +2,57 @@ package com.team.bottles.core.designsystem.components.etc.chips
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 
 @Composable
-fun ProgressChip(
+fun BottlesProgressChip(
     modifier: Modifier = Modifier,
-    firstNumber: Int,
-    secondNUmber: Int,
-    separator: String = "/",
+    currentPage: Int,
+    maxPage: Int,
     backgroundColor: Color = BottlesTheme.color.container.secondary,
-    firstColor: Color = BottlesTheme.color.text.quinary,
-    secondColor: Color = BottlesTheme.color.text.senary,
-    separatorColor: Color = BottlesTheme.color.text.senary,
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally),
         modifier = modifier
             .background(
                 color = backgroundColor,
                 shape = BottlesTheme.shape.extraSmall,
             )
-            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .padding(
+                horizontal = BottlesTheme.spacing.extraSmall,
+                vertical = BottlesTheme.spacing.doubleExtraSmall
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(
+            space = BottlesTheme.spacing.doubleExtraSmall,
+            alignment = Alignment.CenterHorizontally
+        ),
     ) {
         Text(
-            text = firstNumber.toString(),
-            color = firstColor,
+            text = currentPage.toString(),
             style = BottlesTheme.typography.subTitle2,
+            color = BottlesTheme.color.text.quinary
+        )
+        Icon(
+            painter = painterResource(id = R.drawable.ic_slash_5_14),
+            contentDescription = null,
+            tint = BottlesTheme.color.text.senary
         )
         Text(
-            text = separator,
-            color = separatorColor,
+            text = maxPage.toString(),
             style = BottlesTheme.typography.subTitle2,
-        )
-        Text(
-            text = secondNUmber.toString(),
-            color = secondColor,
-            style = BottlesTheme.typography.subTitle2,
+            color = BottlesTheme.color.text.senary
         )
     }
 }
@@ -61,9 +61,9 @@ fun ProgressChip(
 @Composable
 fun ProgressButtonPreview() {
     BottlesTheme {
-        ProgressChip(
-            firstNumber = 0,
-            secondNUmber = 0,
+        BottlesProgressChip(
+            currentPage = 1,
+            maxPage = 2
         )
     }
 }

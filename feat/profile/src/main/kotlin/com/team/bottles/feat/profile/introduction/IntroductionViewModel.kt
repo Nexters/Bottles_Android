@@ -71,25 +71,27 @@ class IntroductionViewModel @Inject constructor(
 
     private fun createIntroduction() {
         launch {
-            createIntroductionUseCase(
-                questionsAndAnswers = listOf(
-                    QuestionAndAnswer(
-                        question = "",
-                        answer = currentState.introduce)
-                    )
-            )
-
             reduce { copy(step = IntroductionStep.SELECT_USER_IMAGE) }
         }
     }
 
     private fun uploadProfileImage() {
         launch {
-            currentState.imageFile?.let { imageFile ->
-                uploadProfileImageUseCase(imageFile = imageFile)
+            if (currentState.imageFile == null) {
+                postSideEffect(IntroductionSideEffect.RequireSelectPhoto(toastMessage = "이미지를 선택해주세요."))
+            } else {
+                createIntroductionUseCase(
+                    questionsAndAnswers = listOf(
+                        QuestionAndAnswer(
+                            question = "",
+                            answer = currentState.introduce)
+                    )
+                )
+                currentState.imageFile?.let { imageFile ->
+                    uploadProfileImageUseCase(imageFile = imageFile)
+                }
+                postSideEffect(IntroductionSideEffect.CompleteIntroduction(toastMessage = "자기소개 작성을 완료했어요."))
             }
-
-            postSideEffect(IntroductionSideEffect.CompleteIntroduction(toastMessage = "자기소개 작성을 완료했어요."))
         }
     }
 

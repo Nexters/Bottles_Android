@@ -32,6 +32,7 @@ import com.team.bottles.core.designsystem.components.bars.BottlesBottomBar
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.components.textfield.BottlesLinesMaxLengthTextField
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
+import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.CardProfile
 import com.team.bottles.core.ui.model.UserKeyPoint
@@ -72,7 +73,7 @@ internal fun IntroductionScreen(
             BottlesTopBar(
                 leadingIcon = {
                     Icon(
-                        modifier = Modifier.clickable(
+                        modifier = Modifier.noRippleClickable(
                             onClick = { onIntent(IntroductionIntent.ClickBackButton) }
                         ),
                         painter = painterResource(id = R.drawable.ic_arrow_left_24),

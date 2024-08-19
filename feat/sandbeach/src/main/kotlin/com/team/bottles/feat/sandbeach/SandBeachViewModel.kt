@@ -50,13 +50,13 @@ class SandBeachViewModel @Inject constructor(
                     }
                     return@launch
                 } else {
-                    val pingPongList = getPingPongListUseCase().run { doneBottles + activeBottles }
+                    val activeBottles = getPingPongListUseCase().activeBottles
 
-                    if (pingPongList.isNotEmpty()) {
+                    if (activeBottles.isNotEmpty()) {
                         reduce {
                             copy(
                                 bottleStatus = BottleStatus.IN_BOTTLE_BOX,
-                                bottleBoxValue = pingPongList.size
+                                bottleBoxValue = activeBottles.size
                             )
                         }
                         return@launch

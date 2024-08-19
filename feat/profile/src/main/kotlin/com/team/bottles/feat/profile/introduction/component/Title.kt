@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.team.bottles.core.designsystem.components.etc.chips.ProgressChip
+import com.team.bottles.core.designsystem.components.etc.chips.BottlesProgressChip
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
@@ -18,9 +18,9 @@ internal fun Title(
     subTitle: String
 ) {
     Column {
-        ProgressChip(
-            firstNumber = currentPage,
-            secondNUmber = maxPage
+        BottlesProgressChip(
+            currentPage = currentPage,
+            maxPage = maxPage
         )
         Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
         Text(
