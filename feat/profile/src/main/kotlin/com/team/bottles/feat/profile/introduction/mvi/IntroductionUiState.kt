@@ -13,10 +13,15 @@ data class IntroductionUiState(
     val minLength: Int = 50,
     val introduce: String = "",
     val introductionTextFiledState: BottlesTextFieldState = BottlesTextFieldState.Enabled,
-    val isEnabledWithBottomButton: Boolean = false,
     val keyPoints: List<UserKeyPoint> = emptyList(),
     val imageFile: File? = null
-) : UiState
+) : UiState {
+    val isEnabledWithBottomButton: Boolean
+        get() = when(step) {
+            IntroductionStep.INPUT_INTRODUCTION -> introduce.length >= minLength
+            IntroductionStep.SELECT_USER_IMAGE -> imageFile != null
+        }
+}
 
 enum class IntroductionStep(
     val page: Int,

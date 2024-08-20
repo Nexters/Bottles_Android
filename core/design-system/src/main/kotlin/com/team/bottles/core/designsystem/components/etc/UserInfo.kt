@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.skydoves.cloudy.cloudy
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
@@ -27,7 +28,8 @@ fun UserInfo(
     modifier: Modifier = Modifier,
     imageUrl: String,
     userName: String,
-    userAge: Int
+    userAge: Int,
+    isBlur: Boolean = true
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -39,7 +41,14 @@ fun UserInfo(
         CoilImage(
             modifier = Modifier
                 .size(80.dp)
-                .clip(shape = CircleShape),
+                .clip(shape = CircleShape)
+                .then(
+                    if (isBlur) {
+                        Modifier.cloudy(radius = 5)
+                    } else {
+                        Modifier
+                    }
+                ),
             imageModel = { imageUrl },
             previewPlaceholder = painterResource(id = R.drawable.sample_image),
             imageOptions = ImageOptions(

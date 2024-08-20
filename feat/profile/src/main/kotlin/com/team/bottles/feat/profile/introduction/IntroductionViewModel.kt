@@ -71,6 +71,13 @@ class IntroductionViewModel @Inject constructor(
 
     private fun createIntroduction() {
         launch {
+            createIntroductionUseCase(
+                questionsAndAnswers = listOf(
+                    QuestionAndAnswer(
+                        question = "",
+                        answer = currentState.introduce)
+                )
+            )
             reduce { copy(step = IntroductionStep.SELECT_USER_IMAGE) }
         }
     }
@@ -80,13 +87,6 @@ class IntroductionViewModel @Inject constructor(
             if (currentState.imageFile == null) {
                 postSideEffect(IntroductionSideEffect.RequireSelectPhoto(toastMessage = "이미지를 선택해주세요."))
             } else {
-                createIntroductionUseCase(
-                    questionsAndAnswers = listOf(
-                        QuestionAndAnswer(
-                            question = "",
-                            answer = currentState.introduce)
-                    )
-                )
                 currentState.imageFile?.let { imageFile ->
                     uploadProfileImageUseCase(imageFile = imageFile)
                 }
@@ -113,7 +113,6 @@ class IntroductionViewModel @Inject constructor(
                         BottlesTextFieldState.Focused
                     }
                 },
-                isEnabledWithBottomButton = currentState.introduce.length >= currentState.minLength
             )
         }
     }

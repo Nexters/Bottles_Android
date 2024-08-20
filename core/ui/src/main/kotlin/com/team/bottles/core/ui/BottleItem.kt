@@ -21,12 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.layer.GraphicsLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.skydoves.cloudy.cloudy
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
@@ -40,7 +43,8 @@ import com.team.bottles.core.ui.model.Bottle
 fun BottleItem(
     modifier: Modifier = Modifier,
     bottle: Bottle,
-    onClickItem: () -> Unit
+    onClickItem: () -> Unit,
+    graphicsLayer: GraphicsLayer = rememberGraphicsLayer()
 ) {
     Column(
         modifier = modifier
@@ -137,7 +141,11 @@ fun BottleItem(
             CoilImage(
                 modifier = Modifier
                     .size(48.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .cloudy(
+                        radius = 5,
+                        graphicsLayer = graphicsLayer
+                    ),
                 imageModel = { bottle.imageUrl },
                 previewPlaceholder = painterResource(id = R.drawable.sample_image),
                 loading = { _ ->
