@@ -27,7 +27,6 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 @Composable
 internal fun BottomButtons(
     onClickKakaoLogin: () -> Unit,
-    onClickNormalLogin: () -> Unit,
 ) {
     val context = LocalContext.current
     val url1 = buildAnnotatedString {
@@ -76,12 +75,6 @@ internal fun BottomButtons(
 
         Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
 
-        NormalLoginButton(
-            onClickNormalLogin = onClickNormalLogin
-        )
-
-        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
-
         Text(
             modifier = Modifier
                 .noRippleClickable(
@@ -126,7 +119,6 @@ private fun BottomButtonsPreview() {
     BottlesTheme {
         BottomButtons(
             onClickKakaoLogin = {},
-            onClickNormalLogin = {},
         )
     }
 }

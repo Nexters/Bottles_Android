@@ -7,8 +7,6 @@ sealed interface LoginIntent : UiIntent {
 
     data object ClickKakaoLoginButton : LoginIntent
 
-    data object ClickSmsLoginButton: LoginIntent
-
     data class KakaoLogin(val kakaoClientResult: KakaoClientResult): LoginIntent
 
 }

@@ -37,7 +37,6 @@ fun LoginScreen(
             Symbol()
             BottomButtons(
                 onClickKakaoLogin = { onIntent(LoginIntent.ClickKakaoLoginButton) },
-                onClickNormalLogin = { onIntent(LoginIntent.ClickSmsLoginButton) }
             )
         }
     }
