@@ -7,6 +7,7 @@ appVersion = "0.9.1-beta"
 versionCode = "10001"
 versionName = "0.9.1"
 
+
 # kotlin
 kotlin = "2.0.0"
 kotlin-jvm = "1.9.23"
