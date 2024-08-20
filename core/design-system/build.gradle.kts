@@ -18,4 +18,5 @@ dependencies {
     api(libs.androidx.compose.lifecycle)
 
     api(libs.landscapist.coil.compose)
+    api(libs.compose.cloudy)
 }
