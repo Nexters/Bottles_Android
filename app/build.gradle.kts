@@ -72,7 +72,6 @@ dependencies {
     implementation(projects.feat.mypage)
     implementation(projects.feat.onboarding)
     implementation(projects.feat.profile)
-    implementation(projects.feat.signup)
     implementation(projects.feat.pingPong)
     implementation(projects.feat.splash)
     implementation(projects.feat.report)
