@@ -1,8 +1,6 @@
 package com.team.bottles.feat.login
 
 import android.app.Activity
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,7 +17,6 @@ fun LoginRoute(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToOnboarding: () -> Unit,
     navigateToSandBeach: () -> Unit,
-    navigateToSignup: () -> Unit,
     navigateToSmsLogin: () -> Unit,
     navigateToCreateProfile: () -> Unit,
 ) {
@@ -33,7 +30,6 @@ fun LoginRoute(
                 is LoginSideEffect.NavigateToCreateProfile -> navigateToCreateProfile()
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
                 is LoginSideEffect.NavigateToSandBeach -> navigateToSandBeach()
-                is LoginSideEffect.NavigateToSignup -> navigateToSignup()
                 is LoginSideEffect.NavigateToSmsLogin -> navigateToSmsLogin()
                 is LoginSideEffect.StartKakaoClient -> {
                     try {

@@ -24,7 +24,6 @@ class LoginViewModel @Inject constructor(
             is LoginIntent.ClickKakaoLoginButton -> startKakaoClient()
             is LoginIntent.KakaoLogin -> kakaoLoin(kakaoClientResult = intent.kakaoClientResult)
             is LoginIntent.ClickSmsLoginButton -> navigateToSmsLogin()
-            is LoginIntent.ClickSignupButton -> navigateToSignup()
         }
     }
 
@@ -54,10 +53,6 @@ class LoginViewModel @Inject constructor(
 
     private fun navigateToSmsLogin() {
         postSideEffect(LoginSideEffect.NavigateToSmsLogin)
-    }
-
-    private fun navigateToSignup() {
-        postSideEffect(LoginSideEffect.NavigateToSignup)
     }
 
 }

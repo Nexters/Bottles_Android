@@ -5,14 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.feat.login.component.BottomButtons
@@ -40,7 +37,6 @@ fun LoginScreen(
             Symbol()
             BottomButtons(
                 onClickKakaoLogin = { onIntent(LoginIntent.ClickKakaoLoginButton) },
-                onClickSignup = { onIntent(LoginIntent.ClickSignupButton) },
                 onClickNormalLogin = { onIntent(LoginIntent.ClickSmsLoginButton) }
             )
         }

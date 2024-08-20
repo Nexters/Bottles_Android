@@ -12,8 +12,6 @@ sealed interface LoginSideEffect: UiSideEffect {
 
     data object NavigateToSmsLogin: LoginSideEffect
 
-    data object NavigateToSignup: LoginSideEffect
-
     data object StartKakaoClient: LoginSideEffect
 
 }

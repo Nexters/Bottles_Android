@@ -9,7 +9,6 @@ import com.team.bottles.feat.login.smslogin.SmsLoginRoute
 fun NavGraphBuilder.loginScreen(
     navigateToOnboarding: () -> Unit,
     navigateToSandBeach: () -> Unit,
-    navigateToSignup: () -> Unit,
     navigateToSmsLogin: () -> Unit,
     navigateToCreateProfile: () -> Unit
 ) {
@@ -17,7 +16,6 @@ fun NavGraphBuilder.loginScreen(
         LoginRoute(
             navigateToOnboarding = navigateToOnboarding,
             navigateToSandBeach = navigateToSandBeach,
-            navigateToSignup = navigateToSignup,
             navigateToSmsLogin = navigateToSmsLogin,
             navigateToCreateProfile = navigateToCreateProfile
         )

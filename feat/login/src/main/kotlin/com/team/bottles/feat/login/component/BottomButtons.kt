@@ -1,8 +1,8 @@
 package com.team.bottles.feat.login.component
 
-import androidx.compose.foundation.layout.Arrangement
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,7 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
@@ -22,8 +28,40 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 internal fun BottomButtons(
     onClickKakaoLogin: () -> Unit,
     onClickNormalLogin: () -> Unit,
-    onClickSignup: () -> Unit
 ) {
+    val context = LocalContext.current
+    val url1 = buildAnnotatedString {
+        append("로그인 버튼을 누르면 ")
+
+        withStyle(
+            style = SpanStyle(
+                textDecoration = TextDecoration.Underline
+            )
+        ) {
+            pushStringAnnotation(
+                tag = "개인정보처리방침 URL",
+                annotation = "https://spiral-ogre-a4d.notion.site/abb2fd284516408e8c2fc267d07c6421"
+            )
+            append("개인정보처리방침")
+        }
+    }
+
+    val url2 = buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(
+                textDecoration = TextDecoration.Underline
+            )
+        ) {
+            pushStringAnnotation(
+                tag = "이용약관 URL",
+                annotation = "https://spiral-ogre-a4d.notion.site/240724-e3676639ea864147bb293cfcda40d99f"
+            )
+            append("보톡이용약관")
+        }
+
+        append("에 동의한 것으로 간주합니다.")
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,40 +74,49 @@ internal fun BottomButtons(
             onClick = onClickKakaoLogin,
         )
 
+        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
+
+        NormalLoginButton(
+            onClickNormalLogin = onClickNormalLogin
+        )
+
+        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
+
+        Text(
+            modifier = Modifier
+                .noRippleClickable(
+                    onClick = {
+                        url1.getStringAnnotations(tag = "개인정보처리방침 URL", start = 0, end = url1.length)
+                            .firstOrNull()?.let { annotation ->
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(annotation.item))
+                                context.startActivity(intent)
+                            }
+                    }
+                ),
+            text = url1,
+            textAlign = TextAlign.Center,
+            style = BottlesTheme.typography.caption,
+            color = BottlesTheme.color.text.secondary
+        )
+
+        Text(
+            modifier = Modifier
+                .noRippleClickable(
+                    onClick = {
+                        url2.getStringAnnotations(tag = "이용약관 URL", start = 0, end = url2.length)
+                            .firstOrNull()?.let { annotation ->
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(annotation.item))
+                                context.startActivity(intent)
+                            }
+                    }
+                ),
+            text = url2,
+            textAlign = TextAlign.Center,
+            style = BottlesTheme.typography.caption,
+            color = BottlesTheme.color.text.secondary
+        )
+
         Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(
-                space = BottlesTheme.spacing.medium
-            )
-        ) {
-            Text(
-                modifier = Modifier
-                    .padding(
-                        horizontal = BottlesTheme.spacing.extraSmall
-                    )
-                    .noRippleClickable(
-                        onClick = onClickNormalLogin
-                    ),
-                text = stringResource(id = R.string.normal_login),
-                style = BottlesTheme.typography.subTitle2,
-                color = BottlesTheme.color.text.enabledSecondary
-            )
-            Text(
-                modifier = Modifier
-                    .padding(
-                        horizontal = BottlesTheme.spacing.medium
-                    )
-                    .noRippleClickable(
-                        onClick = onClickSignup
-                    ),
-                text = stringResource(id = R.string.signup),
-                style = BottlesTheme.typography.subTitle2,
-                color = BottlesTheme.color.text.enabledSecondary
-            )
-        }
-
-        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
     }
 }
 
@@ -80,7 +127,6 @@ private fun BottomButtonsPreview() {
         BottomButtons(
             onClickKakaoLogin = {},
             onClickNormalLogin = {},
-            onClickSignup = {}
         )
     }
 }
