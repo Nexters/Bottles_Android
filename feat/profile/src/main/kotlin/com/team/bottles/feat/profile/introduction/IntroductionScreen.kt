@@ -41,7 +41,6 @@ import com.team.bottles.feat.profile.introduction.component.Title
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionUiState
-import java.io.File
 
 @Composable
 internal fun IntroductionScreen(
@@ -161,8 +160,6 @@ private fun IntroductionScreenStep1Preview() {
             uiState = IntroductionUiState(
                 step = IntroductionStep.INPUT_INTRODUCTION,
                 keyPoints = UserKeyPoint.exampleUerKeyPoints(),
-                introduce = "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
-                introductionTextFiledState = BottlesTextFieldState.Active
             ),
             onIntent = {}
         )
@@ -177,7 +174,8 @@ private fun IntroductionScreenStep2Preview() {
             uiState = IntroductionUiState(
                 step = IntroductionStep.SELECT_USER_IMAGE,
                 keyPoints = UserKeyPoint.exampleUerKeyPoints(),
-                //imageFile = File.createTempFile("asd","xcf"),
+                isEnabledWithBottomButton = true,
+                imageFile = null
             ),
             onIntent = {}
         )
