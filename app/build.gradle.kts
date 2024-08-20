@@ -7,6 +7,7 @@ plugins {
     id("team.bottles.android.application.compose")
     id("team.bottles.android.hilt")
     id("team.bottles.kotlin.serialization")
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -82,6 +83,10 @@ dependencies {
 
     // Kakao
     implementation(libs.kakao.login)
+
+    // Google
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 
     // Test
     testImplementation(libs.junit)
