@@ -19,8 +19,6 @@ fun LoginRoute(
     viewModel: LoginViewModel = hiltViewModel(),
     navigateToOnboarding: () -> Unit,
     navigateToSandBeach: () -> Unit,
-    navigateToSignup: () -> Unit,
-    navigateToSmsLogin: () -> Unit,
     navigateToCreateProfile: () -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
@@ -33,8 +31,6 @@ fun LoginRoute(
                 is LoginSideEffect.NavigateToCreateProfile -> navigateToCreateProfile()
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
                 is LoginSideEffect.NavigateToSandBeach -> navigateToSandBeach()
-                is LoginSideEffect.NavigateToSignup -> navigateToSignup()
-                is LoginSideEffect.NavigateToSmsLogin -> navigateToSmsLogin()
                 is LoginSideEffect.StartKakaoClient -> {
                     try {
                         val kakaoClientResult = kakaoClient.login()
