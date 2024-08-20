@@ -113,7 +113,6 @@ class IntroductionViewModel @Inject constructor(
                         BottlesTextFieldState.Focused
                     }
                 },
-                isEnabledWithBottomButton = currentState.introduce.length >= currentState.minLength
             )
         }
     }
