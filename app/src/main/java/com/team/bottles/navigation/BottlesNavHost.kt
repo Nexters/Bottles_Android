@@ -7,7 +7,6 @@ import OnboardingNavigator
 import PingPongNavigator
 import ProfileNavigator
 import ReportNavigator
-import SignupNavigator
 import SplashNavigator
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -16,7 +15,6 @@ import androidx.navigation.compose.NavHost
 import com.team.bottles.feat.bottle.navigation.arrivedBottlesScreen
 import com.team.bottles.feat.bottle.navigation.bottleBoxScreen
 import com.team.bottles.feat.login.navigation.loginScreen
-import com.team.bottles.feat.login.navigation.smsLoginScreen
 import com.team.bottles.feat.mypage.navigation.myPageScreen
 import com.team.bottles.feat.onboarding.navigation.onboardingScreen
 import com.team.bottles.feat.pingpong.navigation.pingPongScreen
@@ -24,7 +22,6 @@ import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
 import com.team.bottles.feat.report.navigation.reportScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
-import com.team.bottles.feat.signup.navigation.signupScreen
 import com.team.bottles.feat.splash.splashScreen
 
 @Composable
@@ -44,8 +41,6 @@ fun BottlesNavHost(
             loginScreen(
                 navigateToOnboarding = ::navigateToOnboarding,
                 navigateToSandBeach = ::navigateToSandBeach,
-                navigateToSignup = ::navigateToSignup,
-                navigateToSmsLogin = ::navigateToSmsLogin,
                 navigateToCreateProfile = ::navigateToCreateProfile
             )
             onboardingScreen(
@@ -72,15 +67,6 @@ fun BottlesNavHost(
                 navigateToReport = ::navigateToReport
             )
             myPageScreen(navigateToLoginEndPoint = ::navigateToLoginEndpoint)
-            signupScreen(
-                navigateToOnboarding = ::navigateToOnboarding,
-                navigateToLoginEndpoint = ::navigateToLoginEndpoint
-            )
-            smsLoginScreen(
-                navigateToSandBeach = ::navigateToSandBeach,
-                navigateToLoginEndPoint = ::navigateToLoginEndpoint,
-                navigateToOnboarding = ::navigateToOnboarding
-            )
             reportScreen(
                 navigateToPingPong = { popBackStack() },
                 navigateToBottleBox = ::navigateToBottleBox
@@ -125,12 +111,6 @@ fun NavController.navigateToMyPage() =
     navigate(MainNavigator.MyPage) {
         popUpTo(graph.id)
     }
-
-fun NavController.navigateToSignup() =
-    navigate(SignupNavigator)
-
-fun NavController.navigateToSmsLogin() =
-    navigate(LoginNavigator.SmsLogin)
 
 fun NavController.navigateToReport(userId: Long, userName: String, userImageUrl: String, userAge: Int) =
     navigate(ReportNavigator(
