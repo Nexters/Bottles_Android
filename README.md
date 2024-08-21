@@ -5,7 +5,7 @@
 
 <p div align="center">
   <img alt="API" src="https://img.shields.io/badge/API-28%2B-brightgreen.svg?style=flat"/>
-  <img alt="API" src="https://img.shields.io/badge/JDK-17-brightgreen.svg?style=flat"/>
+  <img alt="JDK" src="https://img.shields.io/badge/JDK-17-brightgreen.svg?style=flat"/>
 </p>
 
 <p div align="center">
@@ -45,7 +45,14 @@
 
 ## Architecture
 
-아키텍처 이미지 넣기.
+<p div align="center">
+  <img alt="MVI" src="https://img.shields.io/badge/Design Pattern-MVI-brightgreen.svg?style=flat"/>
+  <img alt="CleanArchitecture" src="https://img.shields.io/badge/Architecture-CleanArchitecture + Multi Module-brightgreen.svg?style=flat"/>
+</p>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/4f9a926f-65d8-468d-aff6-cfcd8dced9a6" width =80%/>
+</div>
 
 ## TechStack
 
@@ -68,15 +75,29 @@
           <img src="https://github.com/Nexters/Funch-AOS/assets/54674781/388e8bd4-3e86-4369-95ce-9956b18c70b5" width="150">
         </a>
       </td>
+      <td align="center">
+        <a href="https://github.com/injoon2019">
+          <img src="https://avatars.githubusercontent.com/u/46641538?v=4" width="150">
+        </a>
+      </td>
     </tr>
     <tr>
       <td align="center">
         <p align="center"><a href="https://github.com/ham2174">함건형</a></p>
       </td>
+      <td align="center">
+        <p align="center"><a href="https://github.com/injoon2019">손인준</a></p>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <p><a href="mailto:ham121985@gmail.com">ham121985@gmail.com</a></p>
+      </td>
+      <td align="center">
+        <p><a href="mailto:injoon486@gmail.com">injoon486@gmail.com</a></p>
+      </td>
     </tr>
   </table>
-
-  <p>📧Email - <a href="mailto:ham121985@gmail.com">ham121985@gmail.com</a></p>
 </div>
 
 
