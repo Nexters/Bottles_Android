@@ -78,6 +78,7 @@ class IntroductionViewModel @Inject constructor(
                         answer = currentState.introduce)
                 )
             )
+            reduce { copy(step = IntroductionStep.SELECT_USER_IMAGE) }
         }
     }
 
