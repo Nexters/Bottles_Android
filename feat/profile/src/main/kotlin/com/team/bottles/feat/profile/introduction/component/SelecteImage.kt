@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +31,9 @@ import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.buttons.BottlesIconButton
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 @SuppressLint("Recycle")
@@ -39,12 +43,15 @@ internal fun SelectImageCard(
     onIntent: (IntroductionIntent) -> Unit
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri != null) {
-            val file = uri.toFile(context)
-            onIntent(IntroductionIntent.ClickPhoto(file = file))
+            coroutineScope.launch(Dispatchers.IO) {
+                val file = uri.toFile(context)
+                onIntent(IntroductionIntent.ClickPhoto(file = file))
+            }
         }
     }
 

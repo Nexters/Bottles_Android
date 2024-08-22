@@ -8,6 +8,7 @@ import java.io.File
 
 @Stable
 data class IntroductionUiState(
+    val isLoading: Boolean = false,
     val step: IntroductionStep = IntroductionStep.INPUT_INTRODUCTION,
     val maxLength: Int = 300,
     val minLength: Int = 50,
