@@ -41,6 +41,7 @@ import com.team.bottles.feat.profile.introduction.component.Title
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionUiState
+import java.io.File
 
 @Composable
 internal fun IntroductionScreen(
