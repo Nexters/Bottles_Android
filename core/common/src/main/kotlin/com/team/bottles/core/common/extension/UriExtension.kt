@@ -4,18 +4,40 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
+import android.util.Log
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
 fun Uri.toFile(context: Context): File {
-    val bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, this))
+    val bitmap = try {
+        ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, this))
+    } catch (e: Exception) {
+        throw IllegalArgumentException("Filed Image Decoding", e) // TODO : 커스텀 예외 처리시 변경
+    }
     val tempFile =
-        File.createTempFile("temp_image", ".png", context.cacheDir).also { file ->
+        File.createTempFile("temp_image", ".jpg", context.cacheDir).also { file ->
             file.deleteOnExit()
         }
 
-    FileOutputStream(tempFile).use { output ->
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+    var compressQuality = 100
+    val maxSize = 1024 * 1024
+    var streamLength: Int
+    val bmpStream = ByteArrayOutputStream()
+
+    bmpStream.use { stream ->
+        do {
+            stream.reset()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, stream)
+            streamLength = stream.size()
+            compressQuality -= 5
+        } while (streamLength > maxSize && compressQuality > 0)
+
+        Log.d("ImageSize", "Compressed image size: ${streamLength / 1024} KB")
+
+        FileOutputStream(tempFile).use { output ->
+            output.write(stream.toByteArray())
+        }
     }
 
     return tempFile
