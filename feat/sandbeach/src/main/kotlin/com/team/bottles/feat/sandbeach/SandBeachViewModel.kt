@@ -4,7 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.bottle.usecase.GetBottleListUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
+import com.team.bottles.core.domain.profile.model.UserProfileStatus
 import com.team.bottles.core.domain.profile.usecase.GetUserIntroductionStatusUseCase
+import com.team.bottles.core.domain.profile.usecase.GetUserProfileStatusUseCase
 import com.team.bottles.feat.sandbeach.mvi.BottleStatus
 import com.team.bottles.feat.sandbeach.mvi.SandBeachIntent
 import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SandBeachViewModel @Inject constructor(
-    private val getUserIntroductionStatusUseCase: GetUserIntroductionStatusUseCase,
+    private val getUserProfileStatusUseCase: GetUserProfileStatusUseCase,
     private val getBottleListUseCase: GetBottleListUseCase,
     private val getPingPongListUseCase: GetPingPongListUseCase,
     savedStateHandle: SavedStateHandle
@@ -33,41 +35,45 @@ class SandBeachViewModel @Inject constructor(
 
     private fun setSandBeachState() {
         launch {
-            val isCreatedIntroduction = getUserIntroductionStatusUseCase()
+            val userProfileStatus = getUserProfileStatusUseCase()
 
-            if (!isCreatedIntroduction) {
-                reduce { copy(bottleStatus = BottleStatus.REQUIRE_INTRODUCTION) }
-                return@launch
-            } else {
-                val arrivedBottles = getBottleListUseCase()
+            when (userProfileStatus) {
+                UserProfileStatus.EMPTY,
+                UserProfileStatus.ONLY_PROFILE_CREATED,
+                UserProfileStatus.INTRODUCE_DONE -> {
+                    reduce { copy(bottleStatus = BottleStatus.REQUIRE_INTRODUCTION) }
+                }
+                UserProfileStatus.PHOTO_DONE -> {
+                    val arrivedBottles = getBottleListUseCase()
 
-                if (arrivedBottles.sentBottles.isNotEmpty() || arrivedBottles.randomBottles.isNotEmpty()) {
-                    reduce {
-                        copy(
-                            bottleStatus = BottleStatus.IN_ARRIVED_BOTTLE,
-                            newBottleValue = arrivedBottles.randomBottles.size + arrivedBottles.sentBottles.size
-                        )
-                    }
-                    return@launch
-                } else {
-                    val activeBottles = getPingPongListUseCase().activeBottles
-
-                    if (activeBottles.isNotEmpty()) {
+                    if (arrivedBottles.sentBottles.isNotEmpty() || arrivedBottles.randomBottles.isNotEmpty()) {
                         reduce {
                             copy(
-                                bottleStatus = BottleStatus.IN_BOTTLE_BOX,
-                                bottleBoxValue = activeBottles.size
+                                bottleStatus = BottleStatus.IN_ARRIVED_BOTTLE,
+                                newBottleValue = arrivedBottles.randomBottles.size + arrivedBottles.sentBottles.size
                             )
                         }
                         return@launch
                     } else {
-                        reduce {
-                            copy(
-                                bottleStatus = BottleStatus.NONE_BOTTLE,
-                                afterArrivedTime = arrivedBottles.nextBottleLeftHours
-                            )
+                        val activeBottles = getPingPongListUseCase().activeBottles
+
+                        if (activeBottles.isNotEmpty()) {
+                            reduce {
+                                copy(
+                                    bottleStatus = BottleStatus.IN_BOTTLE_BOX,
+                                    bottleBoxValue = activeBottles.size
+                                )
+                            }
+                            return@launch
+                        } else {
+                            reduce {
+                                copy(
+                                    bottleStatus = BottleStatus.NONE_BOTTLE,
+                                    afterArrivedTime = arrivedBottles.nextBottleLeftHours
+                                )
+                            }
+                            return@launch
                         }
-                        return@launch
                     }
                 }
             }
