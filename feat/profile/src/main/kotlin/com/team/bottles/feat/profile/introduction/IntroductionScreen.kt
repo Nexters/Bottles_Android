@@ -2,7 +2,6 @@ package com.team.bottles.feat.profile.introduction
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -34,6 +33,7 @@ import com.team.bottles.core.designsystem.components.textfield.BottlesLinesMaxLe
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesLoadingScreen
 import com.team.bottles.core.ui.CardProfile
 import com.team.bottles.core.ui.model.UserKeyPoint
 import com.team.bottles.feat.profile.introduction.component.SelectImageCard
@@ -53,7 +53,7 @@ internal fun IntroductionScreen(
     val isFocused by interactionSource.collectIsFocusedAsState()
     val scrollState = rememberScrollState()
 
-    BackHandler {
+    BackHandler(enabled = !uiState.isLoading) {
         onIntent(IntroductionIntent.ClickBackButton)
     }
 
@@ -61,94 +61,100 @@ internal fun IntroductionScreen(
         onIntent(IntroductionIntent.OnFocusedTextField)
     }
 
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = BottlesTheme.color.background.primary)
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = {
-                    focusManager.clearFocus()
-                })
-            },
-        topBar = {
-            BottlesTopBar(
-                leadingIcon = {
-                    Icon(
-                        modifier = Modifier.noRippleClickable(
-                            onClick = { onIntent(IntroductionIntent.ClickBackButton) }
-                        ),
-                        painter = painterResource(id = R.drawable.ic_arrow_left_24),
-                        contentDescription = null,
-                        tint = BottlesTheme.color.icon.primary
-                    )
-                }
-            )
-        },
-        bottomBar = {
-            BottlesBottomBar(
-                text = uiState.step.buttonText,
-                onClick = { onIntent(IntroductionIntent.ClickBottomButton) },
-                enabled = uiState.isEnabledWithBottomButton
-            )
-        }
-    ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = BottlesTheme.color.background.primary)
-                    .padding(horizontal = BottlesTheme.spacing.medium)
-                    .verticalScroll(state = scrollState),
-            ) {
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
-
-                Title(
-                    currentPage = uiState.step.page,
-                    maxPage = IntroductionStep.entries.size,
-                    title = uiState.step.title,
-                    subTitle = uiState.step.subTitle
-                )
-
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
-
-                when (uiState.step) {
-                    IntroductionStep.INPUT_INTRODUCTION -> {
-                        BottlesLinesMaxLengthTextField(
-                            value = uiState.introduce,
-                            onValueChange = { text ->
-                                onIntent(IntroductionIntent.ChangeIntroduction(text = text))
-                            },
-                            hint = stringResource(id = R.string.introduction_hint),
-                            maxLength = uiState.maxLength,
-                            state = uiState.introductionTextFiledState,
-                            interactionSource = interactionSource
+    Box {
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        focusManager.clearFocus()
+                    })
+                },
+            topBar = {
+                BottlesTopBar(
+                    modifier = Modifier.background(color = BottlesTheme.color.background.primary),
+                    leadingIcon = {
+                        Icon(
+                            modifier = Modifier.noRippleClickable(
+                                onClick = { onIntent(IntroductionIntent.ClickBackButton) }
+                            ),
+                            painter = painterResource(id = R.drawable.ic_arrow_left_24),
+                            contentDescription = null,
+                            tint = BottlesTheme.color.icon.primary
                         )
+                    }
+                )
+            },
+            bottomBar = {
+                BottlesBottomBar(
+                    text = uiState.step.buttonText,
+                    onClick = { onIntent(IntroductionIntent.ClickBottomButton) },
+                    enabled = uiState.isEnabledWithBottomButton
+                )
+            }
+        ) { innerPadding ->
+            Box(modifier = Modifier.padding(innerPadding)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = BottlesTheme.color.background.primary)
+                        .padding(horizontal = BottlesTheme.spacing.medium)
+                        .verticalScroll(state = scrollState),
+                ) {
+                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
 
-                        if (uiState.introductionTextFiledState is BottlesTextFieldState.Error) {
-                            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
+                    Title(
+                        currentPage = uiState.step.page,
+                        maxPage = IntroductionStep.entries.size,
+                        title = uiState.step.title,
+                        subTitle = uiState.step.subTitle
+                    )
 
-                            Text(
-                                text = "최소 ${uiState.minLength}글자 이상 작성해주세요",
-                                style = BottlesTheme.typography.caption,
-                                color = BottlesTheme.color.text.errorPrimary
+                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
+
+                    when (uiState.step) {
+                        IntroductionStep.INPUT_INTRODUCTION -> {
+                            BottlesLinesMaxLengthTextField(
+                                value = uiState.introduce,
+                                onValueChange = { text ->
+                                    onIntent(IntroductionIntent.ChangeIntroduction(text = text))
+                                },
+                                hint = stringResource(id = R.string.introduction_hint),
+                                maxLength = uiState.maxLength,
+                                state = uiState.introductionTextFiledState,
+                                interactionSource = interactionSource
                             )
+
+                            if (uiState.introductionTextFiledState is BottlesTextFieldState.Error) {
+                                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
+
+                                Text(
+                                    text = "최소 ${uiState.minLength}글자 이상 작성해주세요",
+                                    style = BottlesTheme.typography.caption,
+                                    color = BottlesTheme.color.text.errorPrimary
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
+
+                            CardProfile(keyPoints = uiState.keyPoints)
                         }
 
-                        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
-
-                        CardProfile(keyPoints = uiState.keyPoints)
+                        IntroductionStep.SELECT_USER_IMAGE -> {
+                            SelectImageCard(
+                                imageFile = uiState.imageFile,
+                                onIntent = onIntent
+                            )
+                        }
                     }
 
-                    IntroductionStep.SELECT_USER_IMAGE -> {
-                        SelectImageCard(
-                            imageFile = uiState.imageFile,
-                            onIntent = onIntent
-                        )
-                    }
+                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
                 }
-
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
             }
+        }
+
+        if (uiState.isLoading) {
+            BottlesLoadingScreen()
         }
     }
 }
@@ -159,6 +165,7 @@ private fun IntroductionScreenStep1Preview() {
     BottlesTheme {
         IntroductionScreen(
             uiState = IntroductionUiState(
+                isLoading = true,
                 step = IntroductionStep.INPUT_INTRODUCTION,
                 keyPoints = UserKeyPoint.exampleUerKeyPoints(),
                 introduce = "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",

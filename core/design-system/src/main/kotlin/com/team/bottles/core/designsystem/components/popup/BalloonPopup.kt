@@ -1,7 +1,6 @@
 package com.team.bottles.core.designsystem.components.popup
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,7 +52,7 @@ fun BottlesBalloonPopup(
         Icon(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .offset(y = -0.2.dp),
+                .offset(y = (-0.2).dp),
             painter = painterResource(id = R.drawable.ic_balloon_vertex_10_6),
             contentDescription = null,
             tint = BottlesTheme.color.border.primary
@@ -89,7 +88,7 @@ fun BottlesBalloonPopup(
         Icon(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .offset(y = -0.2.dp),
+                .offset(y = (-0.2).dp),
             painter = painterResource(id = R.drawable.ic_balloon_vertex_10_6),
             contentDescription = null,
             tint = BottlesTheme.color.container.primary
@@ -132,7 +131,7 @@ fun BottlesBalloonPopupWithButton(
         Icon(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .offset(y = -0.2.dp),
+                .offset(y = (-0.2).dp),
             painter = painterResource(id = R.drawable.ic_balloon_vertex_10_6),
             contentDescription = null,
             tint = BottlesTheme.color.container.primary

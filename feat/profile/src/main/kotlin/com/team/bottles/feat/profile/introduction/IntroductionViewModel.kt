@@ -84,17 +84,14 @@ class IntroductionViewModel @Inject constructor(
 
     private fun uploadProfileImage() {
         launch {
-            if (currentState.imageFile == null) {
-                postSideEffect(IntroductionSideEffect.RequireSelectPhoto(toastMessage = "이미지를 선택해주세요."))
-            } else {
-                currentState.imageFile?.let { imageFile ->
-                    uploadProfileImageUseCase(imageFile = imageFile)
-                }
-                postSideEffect(IntroductionSideEffect.CompleteIntroduction(toastMessage = "자기소개 작성을 완료했어요."))
+            reduce { copy(isLoading = true) }
+            currentState.imageFile?.let { imageFile ->
+                uploadProfileImageUseCase(imageFile = imageFile)
             }
+            reduce { copy(isLoading = false) }
+            postSideEffect(IntroductionSideEffect.CompleteIntroduction(toastMessage = "자기소개 작성을 완료했어요."))
         }
     }
-
 
     private fun textChange(text: String) {
         reduce { copy(introduce = text) }

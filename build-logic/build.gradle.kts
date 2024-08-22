@@ -44,5 +44,9 @@ gradlePlugin {
             id = "team.bottles.kotlin.serialization"
             implementationClass = "KotlinSerializationConventionPlugin"
         }
+        register("androidFirebase") {
+            id = "team.bottles.android.firebase"
+            implementationClass = "AndroidFirebaseConventionPlugin"
+        }
     }
 }

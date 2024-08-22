@@ -1,11 +1,9 @@
 package com.team.bottles.feat.onboarding
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -17,11 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.components.bars.BottlesBottomBar
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
-import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
-import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.feat.onboarding.components.StepFour
@@ -84,27 +80,13 @@ internal fun OnboardingScreen(
                 Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
             }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .height(88.dp)
-                    .background(brush = BottlesTheme.color.background.tertiary)
-                    .padding(
-                        horizontal = BottlesTheme.spacing.medium
-                    ),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                BottlesSolidButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter),
-                    buttonType = SolidButtonType.LG,
-                    text = if (uiState.currentPage.ordinal + 2 != uiState.maxPage) "다음"
-                    else "확인",
-                    onClick = { onIntent(OnboardingIntent.ClickNextButton) }
-                )
-            }
+            BottlesBottomBar(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                text = if (uiState.currentPage.ordinal + 2 != uiState.maxPage) "다음"
+                else "확인",
+                onClick = { onIntent(OnboardingIntent.ClickNextButton) },
+                enabled = true
+            )
         }
     }
 }

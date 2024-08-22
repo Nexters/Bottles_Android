@@ -3,9 +3,9 @@
 compileSdk = "34"
 minSdk = "28"
 targetSdk = "34"
-appVersion = "0.9.2-beta"
-versionCode = "10003"
-versionName = "0.9.2"
+appVersion = "0.9.3-beta"
+versionCode = "10004"
+versionName = "0.9.3"
 
 
 # kotlin
@@ -46,6 +46,7 @@ google-services = "4.4.2"
 
 # firebase
 firebase-bom = "33.1.2"
+firebase-crashltics-pltgin = "3.0.2"
 
 # network
 retrofit = "2.11.0"
@@ -135,6 +136,7 @@ kakao-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao-
 # firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 
 # blur-effect
 compose-cloudy = { group = "com.github.skydoves", name = "cloudy", version.ref = "cloudy" }
@@ -160,3 +162,4 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
 protobuf = { id = "com.google.protobuf", version.ref = "google-protobuf-plugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services"}
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashltics-pltgin" }

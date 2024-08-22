@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.theme.BottlesTheme
@@ -18,7 +19,8 @@ fun BottlesLoadingScreen() { // TODO : 로띠 이미지 디자인팀 준비시 �
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Black.copy(alpha = 0.4f)),
+            .background(color = Color.Black.copy(alpha = 0.4f))
+            .pointerInput(Unit) {},
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(

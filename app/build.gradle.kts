@@ -7,7 +7,7 @@ plugins {
     id("team.bottles.android.application.compose")
     id("team.bottles.android.hilt")
     id("team.bottles.kotlin.serialization")
-    alias(libs.plugins.google.services)
+    id("team.bottles.android.firebase")
 }
 
 android {
