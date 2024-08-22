@@ -15,12 +15,13 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
 fun BottlesBottomBar(
+    modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
     enabled: Boolean = false
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(brush = BottlesTheme.color.background.tertiary)
             .padding(
                 top = 24.dp,

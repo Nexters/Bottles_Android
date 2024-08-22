@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.modifier.debounceClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
-enum class SolidButtonType(val contentVerticalPadding: Dp) {
-    XS(contentVerticalPadding = 7.5.dp),
-    SM(contentVerticalPadding = 17.5.dp),
-    MD(contentVerticalPadding = 17.5.dp),
-    LG(contentVerticalPadding = 21.5.dp),
+enum class SolidButtonType(val height: Dp) {
+    XS(height = 36.dp),
+    SM(height = 56.dp),
+    MD(height = 56.dp),
+    LG(height = 64.dp),
     ;
 }
 
@@ -57,10 +58,8 @@ fun BottlesSolidButton(
         isDebounce = isDebounce,
         interactionSource = interactionSource,
         isPressed = isPressed,
-        contentPadding = PaddingValues(
-            horizontal = contentHorizontalPadding,
-            vertical = buttonType.contentVerticalPadding
-        ),
+        buttonType = buttonType,
+        contentHorizontalPadding = contentHorizontalPadding
     ) {
         val textColor = when {
             !enabled -> BottlesTheme.color.text.disabledPrimary
@@ -87,7 +86,8 @@ fun SolidButton(
     onClick: () -> Unit,
     enabled: Boolean,
     shape: Shape,
-    contentPadding: PaddingValues,
+    buttonType: SolidButtonType,
+    contentHorizontalPadding: Dp,
     isDebounce: Boolean,
     interactionSource: MutableInteractionSource,
     isPressed: Boolean,
@@ -101,12 +101,17 @@ fun SolidButton(
 
     Box(
         modifier = modifier
+            .height(height = buttonType.height)
             .background(
                 color = backgroundColor,
                 shape = shape
             )
             .clip(shape = shape)
-            .padding(contentPadding)
+            .padding(
+                paddingValues = PaddingValues(
+                    horizontal = contentHorizontalPadding,
+                ),
+            )
             .then(
                 if (isDebounce) {
                     Modifier.debounceClickable(
