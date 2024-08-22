@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
-import android.util.Log
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -32,8 +31,6 @@ fun Uri.toFile(context: Context): File {
             streamLength = stream.size()
             compressQuality -= 5
         } while (streamLength > maxSize && compressQuality > 0)
-
-        Log.d("ImageSize", "Compressed image size: ${streamLength / 1024} KB")
 
         FileOutputStream(tempFile).use { output ->
             output.write(stream.toByteArray())
