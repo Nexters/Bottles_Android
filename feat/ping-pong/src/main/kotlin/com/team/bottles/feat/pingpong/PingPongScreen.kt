@@ -21,7 +21,6 @@ import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.BottlesAlertDialog
 import com.team.bottles.core.ui.model.AlertType
-import com.team.bottles.core.ui.model.UserKeyPoint
 import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
 import com.team.bottles.feat.pingpong.components.introductionContents
