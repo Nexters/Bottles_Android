@@ -17,6 +17,7 @@ import com.team.bottles.feat.pingpong.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.mvi.PingPongUiState
 import com.team.bottles.feat.pingpong.mvi.ShareSelectButtonState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,11 +61,14 @@ class PingPongViewModel @Inject constructor(
             is PingPongIntent.ClickShareKakaoId -> shareKakaoId(willMatch = intent.willMatch)
             is PingPongIntent.ClickHateShareKakaoIdButton -> selectHateShareKakaoIdButton()
             is PingPongIntent.ClickLikeShareKakaoIdButton -> selectLikeShareKakaoIdButton()
+            is PingPongIntent.ChangeRefreshState -> reduce { copy(isRefreshing = true) }
+            is PingPongIntent.RefreshPingPong -> getPingPongDetail()
         }
     }
 
     private fun getPingPongDetail() {
         launch {
+            delay(300L)
             val result = getPingPongDetailUseCase(bottleId = currentState.bottleId)
 
             val pingPongCards = result.letters.map { letter ->
@@ -76,6 +80,7 @@ class PingPongViewModel @Inject constructor(
 
             reduce {
                 copy(
+                    isRefreshing = false,
                     isStoppedPingPong = result.isStopped,
                     deleteAfterDay = result.deleteAfterDays.toInt(),
                     stopUserName = result.stopUserName,

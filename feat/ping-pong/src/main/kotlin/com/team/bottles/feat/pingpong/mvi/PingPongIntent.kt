@@ -53,4 +53,8 @@ sealed interface PingPongIntent : UiIntent {
 
     data class ClickShareKakaoId(val willMatch: Boolean) : PingPongIntent
 
+    data object RefreshPingPong : PingPongIntent
+
+    data object ChangeRefreshState : PingPongIntent
+
 }
