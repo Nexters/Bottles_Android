@@ -20,18 +20,16 @@ class BottleRepositoryImpl @Inject constructor(
     override suspend fun loadPingPongList(): PingPongList =
         bottleDataSource.fetchPingPongList().toPingPongResult()
 
-    override suspend fun loadPingPongDetail(bottleId: Int): PingPongDetail {
-        bottleDataSource.updatePingPongReadStatus(bottleId = bottleId)
-        val pingPongDetail = bottleDataSource.fetchPingPongDetail(bottleId = bottleId).toPingPongDetail()
-        return pingPongDetail
-    }
+    override suspend fun loadPingPongDetail(bottleId: Int): PingPongDetail =
+        bottleDataSource.fetchPingPongDetail(bottleId = bottleId).toPingPongDetail()
 
     override suspend fun sendPingPongLetter(bottleId: Int, letterOrder: Int, answer: String) {
         bottleDataSource.sendPingPongLetter(
             bottleId = bottleId,
             request = RegisterLetterRequest(
                 order = letterOrder,
-                answer = answer)
+                answer = answer
+            )
         )
     }
 
@@ -59,5 +57,9 @@ class BottleRepositoryImpl @Inject constructor(
 
     override suspend fun loadBottleList(): ArrivedBottle =
         bottleDataSource.fetchBottleList().toArrivedBottle()
+
+    override suspend fun updatePingPongReadStatus(bottleId: Int) {
+        bottleDataSource.updatePingPongReadStatus(bottleId = bottleId)
+    }
 
 }

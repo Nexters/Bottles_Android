@@ -1,5 +1,6 @@
 package com.team.bottles.feat.pingpong.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
@@ -27,7 +28,9 @@ internal fun PingPongTopBar(
     currentTab: PingPongTab,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .background(color = BottlesTheme.color.background.primary)
     ) {
         BottlesTopBar(
             leadingIcon = {
