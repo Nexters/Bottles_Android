@@ -26,6 +26,14 @@ class TokenDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun setFcmDeviceToken(fcmDeviceToken: String) {
+        tokenPreferences.updateData { preferences ->
+            preferences.toBuilder()
+                .setFcmDeviceToken(fcmDeviceToken)
+                .build()
+        }
+    }
+
     override suspend fun getAccessToken(): String =
         tokenPreferences.data.map { preferences ->
             preferences.accessToken
@@ -34,6 +42,11 @@ class TokenDataSourceImpl @Inject constructor(
     override suspend fun getRefreshToken(): String =
         tokenPreferences.data.map { preferences ->
             preferences.refreshToken
+        }.first()
+
+    override suspend fun getFcmDeviceToken(): String =
+        tokenPreferences.data.map { preferences ->
+            preferences.fcmDeviceToken
         }.first()
 
     override suspend fun clear() {
