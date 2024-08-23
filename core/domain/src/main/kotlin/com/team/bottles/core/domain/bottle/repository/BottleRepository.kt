@@ -24,4 +24,6 @@ interface BottleRepository {
 
     suspend fun loadBottleList(): ArrivedBottle
 
+    suspend fun updatePingPongReadStatus(bottleId: Int)
+
 }
