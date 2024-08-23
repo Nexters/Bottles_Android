@@ -137,6 +137,7 @@ kakao-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao-
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 
 # blur-effect
 compose-cloudy = { group = "com.github.skydoves", name = "cloudy", version.ref = "cloudy" }
