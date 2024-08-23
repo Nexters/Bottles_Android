@@ -1,5 +1,6 @@
 package com.team.bottles.feat.pingpong
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -55,6 +56,10 @@ internal fun PingPongScreen(
     val pullRefreshState = rememberPullToRefreshState(
         enabled = { uiState.currentTab == PingPongTab.PING_PONG }
     )
+
+    BackHandler {
+        onIntent(PingPongIntent.ClickBackButton)
+    }
 
     LaunchedEffect(uiState.isRefreshing) {
         if (uiState.isRefreshing) {
