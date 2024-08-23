@@ -6,6 +6,7 @@ import androidx.navigation.toRoute
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
+import com.team.bottles.core.domain.bottle.usecase.ReadPingPongDetailUseCase
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongShareKakaoIdUseCase
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongSharePhotoUseCase
 import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCase
@@ -27,10 +28,12 @@ class PingPongViewModel @Inject constructor(
     private val selectPingPongSharePhotoUseCase: SelectPingPongSharePhotoUseCase,
     private val selectPingPongShareKakaoIdUseCase: SelectPingPongShareKakaoIdUseCase,
     private val stopPingPongUseCase: StopPingPongUseCase,
+    private val readPingPongDetailUseCase: ReadPingPongDetailUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
     init {
+        launch { readPingPongDetailUseCase(bottleId = currentState.bottleId) }
         getPingPongDetail()
     }
 
