@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KakaoSignInUpRequest(
-    @SerialName("code") val code: String
+    @SerialName("code") val code: String,
+    @SerialName("fcmDeviceToken") val fcmDeviceToken: String
 )
