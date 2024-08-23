@@ -217,7 +217,6 @@ internal fun PingPongScreen(
             PullToRefreshContainer(
                 modifier = Modifier.align(Alignment.TopCenter),
                 state = pullRefreshState,
-                //containerColor = Color.Transparent,
             )
         }
     }
