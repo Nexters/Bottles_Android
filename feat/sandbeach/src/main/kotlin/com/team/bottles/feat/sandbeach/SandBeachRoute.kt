@@ -35,9 +35,7 @@ internal fun SandBeachRoute(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            Toast.makeText(context, "동의했음", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "동의안함", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "알림에 동의 하였습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
