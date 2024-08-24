@@ -2,6 +2,7 @@ package com.team.bottles.network.datasource
 
 import com.team.bottles.network.dto.auth.request.AuthSmsRequest
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
+import com.team.bottles.network.dto.auth.request.ReissueTokenRequest
 import com.team.bottles.network.dto.auth.request.SignUpRequest
 import com.team.bottles.network.dto.auth.request.SmsSignInRequest
 import com.team.bottles.network.dto.auth.response.KakaoSignInUpResponse
@@ -14,7 +15,8 @@ interface AuthDataSource {
     ): KakaoSignInUpResponse
 
     suspend fun refreshAccessToken(
-        refreshToken: String
+        refreshToken: String,
+        request: ReissueTokenRequest
     ): Result<TokensResponse>
 
     suspend fun signup(

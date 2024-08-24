@@ -2,6 +2,7 @@ package com.team.bottles.network.interceptor
 
 import com.team.bottles.core.datastore.datasource.TokenDataSource
 import com.team.bottles.network.datasource.AuthDataSource
+import com.team.bottles.network.dto.auth.request.ReissueTokenRequest
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -24,7 +25,14 @@ internal class AuthAuthenticator @Inject constructor(
 
     private suspend fun getNewAccessToken(): String? {
         val currentRefreshToken = tokenDataSource.getRefreshToken()
-        val response = authDataSource.refreshAccessToken(refreshToken = currentRefreshToken).getOrNull()
+        val fcmDeviceToken = tokenDataSource.getFcmDeviceToken()
+
+        val response = authDataSource.refreshAccessToken(
+            refreshToken = currentRefreshToken,
+            request = ReissueTokenRequest(
+                fcmDeviceToken = fcmDeviceToken
+            )
+        ).getOrNull()
 
         if (response != null) {
             tokenDataSource.setAccessToken(accessToken = response.accessToken)

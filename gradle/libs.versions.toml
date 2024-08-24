@@ -3,9 +3,9 @@
 compileSdk = "34"
 minSdk = "28"
 targetSdk = "34"
-appVersion = "0.9.3-beta"
-versionCode = "10004"
-versionName = "0.9.3"
+appVersion = "0.9.4-beta"
+versionCode = "10006"
+versionName = "0.9.4"
 
 
 # kotlin
@@ -137,6 +137,7 @@ kakao-login = { group = "com.kakao.sdk", name = "v2-user", version.ref = "kakao-
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 
 # blur-effect
 compose-cloudy = { group = "com.github.skydoves", name = "cloudy", version.ref = "cloudy" }

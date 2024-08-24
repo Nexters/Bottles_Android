@@ -16,7 +16,10 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun kakaoLogin(accessToken: String): AuthResult =
         authDataSource.authenticateWithKakao(
-            request = KakaoSignInUpRequest(code = accessToken)
+            request = KakaoSignInUpRequest(
+                code = accessToken,
+                fcmDeviceToken = tokenDataSource.getFcmDeviceToken()
+            )
         ).also { response ->
             tokenDataSource.setAccessToken(response.accessToken)
             tokenDataSource.setRefreshToken(response.refreshToken)

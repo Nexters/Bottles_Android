@@ -6,6 +6,8 @@ import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongDetailUseCaseImpl
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCaseImpl
+import com.team.bottles.core.domain.bottle.usecase.ReadPingPongDetailUseCase
+import com.team.bottles.core.domain.bottle.usecase.ReadPingPongDetailUseCaseImpl
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongShareKakaoIdUseCase
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongShareKakaoIdUseCaseImpl
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongSharePhotoUseCase
@@ -61,5 +63,11 @@ abstract class BottleUseCaseModule {
     abstract fun bindsGetBottleListUseCase(
         useCaseImpl: GetBottleListUseCaseImpl
     ): GetBottleListUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindsReadPingPongDetailUseCase(
+        useCaseImpl: ReadPingPongDetailUseCaseImpl
+    ): ReadPingPongDetailUseCase
 
 }

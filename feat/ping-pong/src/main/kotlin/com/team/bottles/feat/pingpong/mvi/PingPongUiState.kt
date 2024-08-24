@@ -3,8 +3,8 @@ package com.team.bottles.feat.pingpong.mvi
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
-import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
+import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongPhotoStatus
 import com.team.bottles.core.domain.bottle.model.PingPongPhotos
 import com.team.bottles.core.domain.profile.model.UserProfile
@@ -13,6 +13,7 @@ import com.team.bottles.core.ui.model.UserKeyPoint
 
 @Stable
 data class PingPongUiState(
+    val isRefreshing: Boolean = false,
     val bottleId: Int = 0,
     val showDialog: Boolean = false,
     val isStoppedPingPong: Boolean = false,
@@ -22,13 +23,7 @@ data class PingPongUiState(
     val partnerProfile: UserProfile = UserProfile(),
     val partnerKakaoId: String = "",
     val pingPongMatchStatus: PingPongMatchStatus = PingPongMatchStatus.NONE,
-    val pingPongCards: List<PingPongCard> = listOf(
-        PingPongCard.Letter(),
-        PingPongCard.Letter(),
-        PingPongCard.Letter(),
-        PingPongCard.Photo(),
-        PingPongCard.KakaoShare(),
-    )
+    val pingPongCards: List<PingPongCard> = emptyList()
 ) : UiState {
 
     val partnerKeyPoints: List<UserKeyPoint>
@@ -56,44 +51,6 @@ data class PingPongUiState(
             PingPongMatchStatus.MATCH_FAILED -> MatchingResult.FAIL
             else -> MatchingResult.WAITING
         }
-
-    companion object {
-        fun examplePingPongState() : PingPongUiState = PingPongUiState(
-            pingPongCards = listOf(
-                PingPongCard.Letter(
-                    letter = PingPongLetter(
-                        order = 0,
-                        canShow = true,
-                        question = "Q. 첫번째 질문, 1 더하기 1이 2인 이유는?",
-                        otherAnswer = "답변은 짧게 했는데요?",
-                        myAnswer = "vhgvgh",
-                        shouldAnswer = false,
-                        isDone = true
-                    )
-                ),
-                PingPongCard.Letter(
-                    letter = PingPongLetter(
-                        canShow = true,
-                        order = 1,
-                        question = "Q. 두번째 질문, 2 더하기 2가 4인 이유는?",
-                        myAnswer = "",
-                        otherAnswer = "나는 이미 답변을 했어. 너만 하면돼.",
-                        shouldAnswer = true,
-                        isDone = false
-                    )
-                ),
-                PingPongCard.Letter(
-                    letter = PingPongLetter(
-                        canShow = false,
-                        order = 2,
-                        question = "Q. 세번째 질문, 1 곱하기 1이 1인 이유는?"
-                    )
-                ),
-                PingPongCard.Photo(),
-                PingPongCard.KakaoShare()
-            )
-        )
-    }
 
 }
 

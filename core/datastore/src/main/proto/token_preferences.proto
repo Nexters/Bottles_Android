@@ -6,4 +6,5 @@ option java_multiple_files = true;
 message TokenPreferences {
     string access_token = 1;
     string refresh_token = 2;
+    string fcm_device_token = 3;
 }

@@ -2,6 +2,7 @@ package com.team.bottles.network.api
 
 import com.team.bottles.network.dto.auth.request.AuthSmsRequest
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
+import com.team.bottles.network.dto.auth.request.ReissueTokenRequest
 import com.team.bottles.network.dto.auth.request.SignUpRequest
 import com.team.bottles.network.dto.auth.request.SmsSignInRequest
 import com.team.bottles.network.dto.auth.response.KakaoSignInUpResponse
@@ -19,7 +20,8 @@ interface AuthService {
 
     @POST("/api/v1/auth/refresh")
     suspend fun refresh(
-        @Header("Authorization") refreshToken: String
+        @Header("Authorization") refreshToken: String,
+        @Body reissueTokenRequest: ReissueTokenRequest,
     ): TokensResponse
 
     @POST("/api/v1/auth/logout")
