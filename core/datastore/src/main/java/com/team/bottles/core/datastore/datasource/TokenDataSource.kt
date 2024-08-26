@@ -8,12 +8,18 @@ interface TokenDataSource {
 
     suspend fun setFcmDeviceToken(fcmDeviceToken: String)
 
+    suspend fun setIsUpdatedFcmToken(isUpdated: Boolean)
+
     suspend fun getAccessToken(): String
 
     suspend fun getRefreshToken(): String
 
     suspend fun getFcmDeviceToken(): String
 
-    suspend fun clear()
+    suspend fun getIsUpdatedFcmToken(): Boolean
+
+    suspend fun clearAccessTokenAndRefreshToken()
+
+    suspend fun clearIsUpdatedFcmToken()
 
 }
