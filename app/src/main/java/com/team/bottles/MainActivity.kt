@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-
+  
     @Inject
     lateinit var authRepository: AuthRepository
 
