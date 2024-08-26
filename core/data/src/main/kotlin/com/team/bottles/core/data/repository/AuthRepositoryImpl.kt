@@ -70,4 +70,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getSavedLocalFcmToken(): String =
+        tokenDataSource.getFcmDeviceToken()
+
 }
