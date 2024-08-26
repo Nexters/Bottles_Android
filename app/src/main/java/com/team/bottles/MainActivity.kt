@@ -68,6 +68,12 @@ class MainActivity : ComponentActivity() {
                     return@OnCompleteListener
                 }
                 val result = task.result
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val savedLocalToken = authRepository.getSavedLocalFcmToken()
+                    if (savedLocalToken.isEmpty() || savedLocalToken != result) {
+                        authRepository.updateLocalFcmToken(fcmToken = result)
+                    }
+                }
                 Timber.tag("FCM").d("Success To Get FCM Instance >> $result")
             }
         )
