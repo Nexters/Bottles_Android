@@ -1,6 +1,7 @@
 package com.team.bottles.network.datasource
 
 import com.team.bottles.network.dto.auth.request.AuthSmsRequest
+import com.team.bottles.network.dto.auth.request.FcmUpdateRequest
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
 import com.team.bottles.network.dto.auth.request.ReissueTokenRequest
 import com.team.bottles.network.dto.auth.request.SignUpRequest
@@ -34,5 +35,10 @@ interface AuthDataSource {
     suspend fun getSmsCode(request: AuthSmsRequest)
 
     suspend fun checkSendSms(request: AuthSmsRequest)
+
+    suspend fun updateFcmToken(
+        accessToken: String,
+        request: FcmUpdateRequest
+    )
 
 }
