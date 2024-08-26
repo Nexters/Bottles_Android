@@ -84,6 +84,9 @@ dependencies {
     // Kakao
     implementation(libs.kakao.login)
 
+    // Timber
+    implementation(libs.jakewharton.timber)
+
     // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

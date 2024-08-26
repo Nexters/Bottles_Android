@@ -65,6 +65,9 @@ airbnb-lottie = "6.4.0"
 # kakao
 kakao-login = "2.14.0"
 
+# timber
+timberVersion = "5.0.1"
+
 # test
 junit = "4.13.2"
 androidx-junit-version = "1.2.1"
@@ -141,6 +144,9 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 
 # blur-effect
 compose-cloudy = { group = "com.github.skydoves", name = "cloudy", version.ref = "cloudy" }
+
+# timber
+jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "timberVersion" }
 
 # androidx test
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
