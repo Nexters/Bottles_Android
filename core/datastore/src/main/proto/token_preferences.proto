@@ -7,4 +7,5 @@ message TokenPreferences {
     string access_token = 1;
     string refresh_token = 2;
     string fcm_device_token = 3;
+    bool is_updated_fcm_token = 4;
 }
