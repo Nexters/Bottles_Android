@@ -10,6 +10,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -47,9 +48,11 @@ class MainActivity : ComponentActivity() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(
             OnCompleteListener { task ->
                 if (!task.isSuccessful) {
+                    Timber.tag("FCM").d("Fail To Get FCM Instance")
                     return@OnCompleteListener
                 }
-                task.result
+                val result = task.result
+                Timber.tag("FCM").d("Success FCM Instance >> $result")
             }
         )
     }

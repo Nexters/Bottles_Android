@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 
@@ -30,6 +31,8 @@ internal class BottleFcmService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
+
+        Timber.tag("FCM").d("On New FCM Token >> $token")
 
         scope.launch {
             tokenDataSource.setFcmDeviceToken(fcmDeviceToken = token)
