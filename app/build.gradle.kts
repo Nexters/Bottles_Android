@@ -62,7 +62,6 @@ dependencies {
     implementation(projects.core.designSystem)
     implementation(projects.core.data)
     implementation(projects.core.domain)
-    implementation(projects.core.datastore)
     implementation(projects.core.ui)
     implementation(projects.core.navigator)
     implementation(projects.core.common)
@@ -83,6 +82,9 @@ dependencies {
 
     // Kakao
     implementation(libs.kakao.login)
+
+    // Timber
+    implementation(libs.jakewharton.timber)
 
     // Test
     testImplementation(libs.junit)

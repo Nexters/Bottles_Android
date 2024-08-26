@@ -15,4 +15,8 @@ interface AuthRepository {
 
     suspend fun updateLocalToken(token: Token)
 
+    suspend fun updateLocalFcmToken(fcmToken: String)
+
+    suspend fun updateFcmTokenToServer()
+
 }
