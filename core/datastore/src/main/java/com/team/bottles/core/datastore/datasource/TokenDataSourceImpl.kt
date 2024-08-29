@@ -34,6 +34,14 @@ class TokenDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun setIsUpdatedFcmToken(isUpdated: Boolean) {
+        tokenPreferences.updateData { preferences ->
+            preferences.toBuilder()
+                .setIsUpdatedFcmToken(isUpdated)
+                .build()
+        }
+    }
+
     override suspend fun getAccessToken(): String =
         tokenPreferences.data.map { preferences ->
             preferences.accessToken
@@ -49,10 +57,24 @@ class TokenDataSourceImpl @Inject constructor(
             preferences.fcmDeviceToken
         }.first()
 
-    override suspend fun clear() {
+    override suspend fun getIsUpdatedFcmToken(): Boolean =
+        tokenPreferences.data.map { preferences ->
+            preferences.isUpdatedFcmToken
+        }.first()
+
+    override suspend fun clearAccessTokenAndRefreshToken() {
         tokenPreferences.updateData { preferences ->
             preferences.toBuilder()
-                .clear()
+                .clearAccessToken()
+                .clearRefreshToken()
+                .build()
+        }
+    }
+
+    override suspend fun clearIsUpdatedFcmToken() {
+        tokenPreferences.updateData { preferences ->
+            preferences.toBuilder()
+                .clearIsUpdatedFcmToken()
                 .build()
         }
     }

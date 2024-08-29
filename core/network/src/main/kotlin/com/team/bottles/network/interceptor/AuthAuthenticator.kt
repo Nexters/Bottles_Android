@@ -42,7 +42,7 @@ internal class AuthAuthenticator @Inject constructor(
         } else {
             val accessToken = tokenDataSource.getAccessToken()
             authDataSource.logout(accessToken = accessToken)
-            tokenDataSource.clear()
+            tokenDataSource.clearAccessTokenAndRefreshToken()
             return null
         }
     }

@@ -1,6 +1,7 @@
 package com.team.bottles.network.api
 
 import com.team.bottles.network.dto.auth.request.AuthSmsRequest
+import com.team.bottles.network.dto.auth.request.FcmUpdateRequest
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
 import com.team.bottles.network.dto.auth.request.ReissueTokenRequest
 import com.team.bottles.network.dto.auth.request.SignUpRequest
@@ -52,6 +53,12 @@ interface AuthService {
     @POST("/api/v1/auth/sms/send/check")
     suspend fun checkSendSms(
         @Body authSmsRequest: AuthSmsRequest
+    )
+
+    @POST("/api/v1/auth/fcm")
+    suspend fun postUpdatedFcmToken(
+        @Header("Authorization") accessToken: String,
+        @Body fcmUpdateRequest: FcmUpdateRequest
     )
 
 }

@@ -2,6 +2,7 @@ package com.team.bottles.network.datasource
 
 import com.team.bottles.network.api.AuthService
 import com.team.bottles.network.dto.auth.request.AuthSmsRequest
+import com.team.bottles.network.dto.auth.request.FcmUpdateRequest
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
 import com.team.bottles.network.dto.auth.request.ReissueTokenRequest
 import com.team.bottles.network.dto.auth.request.SignUpRequest
@@ -40,6 +41,10 @@ class AuthDataSourceImpl @Inject constructor(
 
     override suspend fun checkSendSms(request: AuthSmsRequest) {
         authService.checkSendSms(authSmsRequest = request)
+    }
+
+    override suspend fun updateFcmToken(accessToken: String, request: FcmUpdateRequest) {
+        authService.postUpdatedFcmToken(accessToken = "$TOKEN_TYPE $accessToken", fcmUpdateRequest = request)
     }
 
     companion object {

@@ -10,13 +10,14 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.team.bottles.core.datastore.datasource.TokenDataSource
+import com.team.bottles.core.domain.auth.repository.AuthRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 
@@ -26,13 +27,15 @@ internal class BottleFcmService : FirebaseMessagingService() {
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     @Inject
-    lateinit var tokenDataSource: TokenDataSource
+    lateinit var authRepository: AuthRepository
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
+        Timber.tag("FCM").d("On New FCM Token >> $token")
+
         scope.launch {
-            tokenDataSource.setFcmDeviceToken(fcmDeviceToken = token)
+            authRepository.updateLocalFcmToken(fcmToken = token)
         }
     }
 
