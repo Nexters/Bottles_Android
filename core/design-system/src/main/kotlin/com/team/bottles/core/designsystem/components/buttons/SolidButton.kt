@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -25,8 +26,7 @@ import com.team.bottles.core.designsystem.modifier.debounceClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 enum class SolidButtonType(val height: Dp) {
-    XS(height = 36.dp),
-    SM(height = 56.dp),
+    SM(height = 36.dp),
     MD(height = 56.dp),
     LG(height = 64.dp),
     ;
@@ -46,8 +46,15 @@ fun BottlesSolidButton(
     val isPressed by interactionSource.collectIsPressedAsState()
 
     val shape = when(buttonType) {
-        SolidButtonType.XS -> BottlesTheme.shape.extraSmall
-        else -> BottlesTheme.shape.small
+        SolidButtonType.SM -> BottlesTheme.shape.extraSmall
+        SolidButtonType.MD -> BottlesTheme.shape.small
+        SolidButtonType.LG -> BottlesTheme.shape.medium
+    }
+
+    val backgroundColor = when {
+        !enabled -> BottlesTheme.color.container.disabledSecondary
+        isPressed -> BottlesTheme.color.container.pressed
+        else -> BottlesTheme.color.container.enabledSecondary
     }
 
     SolidButton(
@@ -55,9 +62,9 @@ fun BottlesSolidButton(
         onClick = onClick,
         enabled = enabled,
         shape = shape,
+        backgroundColor = backgroundColor,
         isDebounce = isDebounce,
         interactionSource = interactionSource,
-        isPressed = isPressed,
         buttonType = buttonType,
         contentHorizontalPadding = contentHorizontalPadding
     ) {
@@ -68,7 +75,7 @@ fun BottlesSolidButton(
         }
 
         val textStyle = when(buttonType) {
-            SolidButtonType.XS -> BottlesTheme.typography.body
+            SolidButtonType.SM -> BottlesTheme.typography.body
             else -> BottlesTheme.typography.subTitle1
         }
 
@@ -86,19 +93,13 @@ fun SolidButton(
     onClick: () -> Unit,
     enabled: Boolean,
     shape: Shape,
+    backgroundColor: Color,
     buttonType: SolidButtonType,
     contentHorizontalPadding: Dp,
     isDebounce: Boolean,
     interactionSource: MutableInteractionSource,
-    isPressed: Boolean,
     content: @Composable () -> Unit,
 ) {
-    val backgroundColor = when {
-        !enabled -> BottlesTheme.color.container.disabledSecondary
-        isPressed -> BottlesTheme.color.container.pressed
-        else -> BottlesTheme.color.container.enabledSecondary
-    }
-
     Box(
         modifier = modifier
             .height(height = buttonType.height)
@@ -107,11 +108,6 @@ fun SolidButton(
                 shape = shape
             )
             .clip(shape = shape)
-            .padding(
-                paddingValues = PaddingValues(
-                    horizontal = contentHorizontalPadding,
-                ),
-            )
             .then(
                 if (isDebounce) {
                     Modifier.debounceClickable(
@@ -128,6 +124,11 @@ fun SolidButton(
                         indication = null
                     )
                 }
+            )
+            .padding(
+                paddingValues = PaddingValues(
+                    horizontal = contentHorizontalPadding,
+                ),
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -142,12 +143,6 @@ fun SolidButton(
 private fun SolidButtonPreview() {
     BottlesTheme {
         Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-            BottlesSolidButton(
-                buttonType = SolidButtonType.XS,
-                text = "Text",
-                onClick = { },
-                contentHorizontalPadding = 12.dp
-            )
             BottlesSolidButton(
                 buttonType = SolidButtonType.SM,
                 text = "Text",
