@@ -1,6 +1,5 @@
 package com.team.bottles.feat.report
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -30,7 +29,8 @@ import com.team.bottles.core.designsystem.components.etc.UserInfo
 import com.team.bottles.core.designsystem.components.textfield.BottlesLineTextFieldWithTrailingIcon
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.ui.BottlesAlertDialog
+import com.team.bottles.core.ui.BottlesAlertDialogLeftDismissRightConfirm
+import com.team.bottles.core.ui.model.AlertType
 import com.team.bottles.feat.report.components.ReportBottomBar
 import com.team.bottles.feat.report.mvi.ReportIntent
 import com.team.bottles.feat.report.mvi.ReportUiState
@@ -49,13 +49,14 @@ internal fun ReportScreen(
     }
 
     if (uiState.showDialog) {
-        BottlesAlertDialog(
+        BottlesAlertDialogLeftDismissRightConfirm(
             onClose = { onIntent(ReportIntent.ClickDialogConfirm) },
             onConfirm = { onIntent(ReportIntent.ClickDialogCancel) },
-            confirmText = "신고하기",
-            dismissText = "계속하기",
-            title = "신고하기",
-            content = "접수 후 취소할 수 없으며 해당 사용자는 차단되요.\n정말 신고하시겠어요?"
+            onDismiss = { onIntent(ReportIntent.ClickDialogConfirm) },
+            confirmButtonText = AlertType.USER_REPORT.confirmText,
+            dismissButtonText = AlertType.USER_REPORT.dismissText,
+            title = AlertType.USER_REPORT.title,
+            content = AlertType.USER_REPORT.content,
         )
     }
 
@@ -143,6 +144,7 @@ private fun ReportScreenPreview() {
     BottlesTheme {
         ReportScreen(
             uiState = ReportUiState(
+                showDialog = true,
                 userName = "뇽뇽이",
                 userAge = 15
             ),
