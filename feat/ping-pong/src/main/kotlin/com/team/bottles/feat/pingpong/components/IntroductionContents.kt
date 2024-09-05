@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.R
-import com.team.bottles.core.designsystem.components.etc.UserInfo
+import com.team.bottles.core.designsystem.components.etc.BottlesUserInfo
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.CardProfile
@@ -31,7 +31,7 @@ internal fun LazyListScope.introductionContents(
     item(key = "Introduction Contents") {
         when (isStoppedPingPong) {
             false -> {
-                UserInfo(
+                BottlesUserInfo(
                     imageUrl = partnerProfile.imageUrl,
                     userName = partnerProfile.userName,
                     userAge = partnerProfile.age

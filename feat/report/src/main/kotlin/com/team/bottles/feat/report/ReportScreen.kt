@@ -25,7 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
-import com.team.bottles.core.designsystem.components.etc.UserInfo
+import com.team.bottles.core.designsystem.components.etc.BottlesUserInfo
 import com.team.bottles.core.designsystem.components.textfield.BottlesLineTextFieldWithTrailingIcon
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
@@ -106,7 +106,7 @@ internal fun ReportScreen(
 
                 Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
 
-                UserInfo(
+                BottlesUserInfo(
                     imageUrl = uiState.userImageUrl,
                     userName = uiState.userName,
                     userAge = uiState.userAge
