@@ -123,5 +123,6 @@ data class Icon(
     val primary: Color = IconColors.iconPrimary,
     val secondary: Color = IconColors.iconSecondary,
     val disabled: Color = IconColors.iconDisabled,
-    val update: Color = IconColors.iconUpdate
+    val update: Color = IconColors.iconUpdate,
+    val selected: Color = IconColors.iconSelected
 )

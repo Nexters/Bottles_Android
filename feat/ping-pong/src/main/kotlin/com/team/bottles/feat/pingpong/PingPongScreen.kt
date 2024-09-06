@@ -31,7 +31,7 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
 import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.profile.model.UserProfile
-import com.team.bottles.core.ui.BottlesAlertDialog
+import com.team.bottles.core.ui.BottlesAlertDialogLeftDismissRightConfirm
 import com.team.bottles.core.ui.model.AlertType
 import com.team.bottles.feat.pingpong.components.PingPongBottomBar
 import com.team.bottles.feat.pingpong.components.PingPongTopBar
@@ -75,11 +75,12 @@ internal fun PingPongScreen(
     }
 
     if (uiState.showDialog) {
-        BottlesAlertDialog(
+        BottlesAlertDialogLeftDismissRightConfirm(
             onClose = { onIntent(PingPongIntent.ClickCloseAlert) },
             onConfirm = { onIntent(PingPongIntent.ClickConfirmAlert) },
-            confirmText = AlertType.STOP_PING_PONG.confirmText,
-            dismissText = AlertType.STOP_PING_PONG.dismissText,
+            onDismiss = { onIntent(PingPongIntent.ClickCloseAlert) },
+            confirmButtonText = AlertType.STOP_PING_PONG.confirmText,
+            dismissButtonText = AlertType.STOP_PING_PONG.dismissText,
             title = AlertType.STOP_PING_PONG.title,
             content = AlertType.STOP_PING_PONG.content
         )
@@ -233,6 +234,7 @@ private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongScreen(
             uiState = PingPongUiState(
+                showDialog = true,
                 currentTab = PingPongTab.INTRODUCTION,
                 pingPongMatchStatus = PingPongMatchStatus.NONE,
                 partnerProfile = UserProfile.sampleUserProfile(),

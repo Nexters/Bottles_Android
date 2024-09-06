@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.ui.BottlesAlertDialog
+import com.team.bottles.core.ui.BottlesAlertDialogLeftConfirmRightDismiss
 import com.team.bottles.core.ui.BottlesWebView
 import com.team.bottles.core.ui.model.AlertType
 import com.team.bottles.feat.mypage.mvi.MyPageIntent
@@ -41,8 +41,9 @@ internal fun MyPageScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         if (uiState.showDialog) {
-            BottlesAlertDialog(
+            BottlesAlertDialogLeftConfirmRightDismiss(
                 onClose = { onIntent(MyPageIntent.ClickCancel) },
+                onDismiss = { onIntent(MyPageIntent.ClickCancel) },
                 onConfirm = {
                     if (uiState.alertType == AlertType.LOG_OUT) {
                         onIntent(MyPageIntent.ClickDialogLogOutButton)
@@ -50,8 +51,8 @@ internal fun MyPageScreen(
                         onIntent(MyPageIntent.ClickDialogDeleteUserButton)
                     }
                 },
-                confirmText = uiState.alertType.confirmText,
-                dismissText = uiState.alertType.dismissText,
+                confirmButtonText = uiState.alertType.confirmText,
+                dismissButtonText = uiState.alertType.dismissText,
                 title = uiState.alertType.title,
                 content = uiState.alertType.content
             )

@@ -39,7 +39,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 letterSpacing = 0.sp,
-                lineHeight = 24.sp * 1.3f,
+                lineHeight = 41.6f.sp,
             ),
             title2 =
             TextStyle(
@@ -47,7 +47,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
                 letterSpacing = 0.sp,
-                lineHeight = 20.sp * 1.3f,
+                lineHeight = 31.2f.sp,
             ),
             title3 =
             TextStyle(
@@ -55,7 +55,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 letterSpacing = 0.sp,
-                lineHeight = 20.sp * 1.3f,
+                lineHeight = 26.sp,
             ),
             subTitle1 =
             TextStyle(
@@ -63,7 +63,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
                 letterSpacing = 0.sp,
-                lineHeight = 16.sp * 1.3f,
+                lineHeight = 20.8f.sp,
             ),
             subTitle2 =
             TextStyle(
@@ -71,7 +71,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp,
                 letterSpacing = 0.sp,
-                lineHeight = 14.sp * 1.3f,
+                lineHeight = 18.2f.sp,
             ),
             body =
             TextStyle(
@@ -79,7 +79,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
                 letterSpacing = 0.sp,
-                lineHeight = 14.sp * 1.5f,
+                lineHeight = 21.sp,
             ),
             caption =
             TextStyle(
@@ -87,7 +87,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.Medium,
                 fontSize = 12.sp,
                 letterSpacing = 0.sp,
-                lineHeight = 12.sp * 1.5f,
+                lineHeight = 18.sp,
             ),
             kakaoLogin =
             TextStyle(
@@ -95,7 +95,7 @@ data class BottlesTypography(
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
                 letterSpacing = 0.15.sp,
-                lineHeight = 14.sp * 1.4f,
+                lineHeight = 19.6f.sp,
             ),
         )
     }
@@ -112,8 +112,8 @@ private fun TypographyPreview() {
         ) {
             Text(
                 modifier = Modifier.border(1.dp, Color.Blue),
-                text = "진심을 담은 보틀로\n서로를 밀도있게 알아가요",
-                style = BottlesTheme.typography.title3,
+                text = "아직 보틀을\n찾지 못했어요",
+                style = BottlesTheme.typography.title1,
                 color = Color.Black,
                 textAlign = TextAlign.Center
             )
