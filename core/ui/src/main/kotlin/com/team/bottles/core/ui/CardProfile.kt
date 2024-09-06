@@ -2,45 +2,29 @@
 
 package com.team.bottles.core.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.components.buttons.BottlesOutLinedButton
 import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonType
+import com.team.bottles.core.designsystem.components.cards.BottlesCard
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.model.UserKeyPoint
 
 @Composable
 fun CardProfile(
+    modifier: Modifier = Modifier,
     keyPoints: List<UserKeyPoint>,
 ) {
-    Column(
-        modifier = Modifier
-            .background(
-                color = BottlesTheme.color.container.primary,
-                shape = BottlesTheme.shape.extraLarge
-            )
-            .clip(shape = BottlesTheme.shape.extraLarge)
-            .border(
-                width = 1.dp,
-                shape = BottlesTheme.shape.extraLarge,
-                color = BottlesTheme.color.border.primary
-            )
-            .padding(
-                vertical = BottlesTheme.spacing.extraLarge,
-                horizontal = BottlesTheme.spacing.small
-            ),
+    BottlesCard(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(
             space = BottlesTheme.spacing.extraLarge
         )
