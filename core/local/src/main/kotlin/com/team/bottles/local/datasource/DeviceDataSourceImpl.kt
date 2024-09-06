@@ -12,7 +12,7 @@ class DeviceDataSourceImpl @Inject constructor(
 ) : DeviceDataSource {
 
     override suspend fun getContacts(): List<String> {
-        val contacts = mutableListOf<String>()
+        val contacts = mutableSetOf<String>()
         val contentResolver: ContentResolver = context.contentResolver
         val cursor: Cursor? = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -26,12 +26,12 @@ class DeviceDataSourceImpl @Inject constructor(
             val numberIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
 
             while (it.moveToNext()) {
-                val number = it.getString(numberIndex)
+                val number = it.getString(numberIndex).replace(Regex("[^0-9]"), "")
                 contacts.add(number)
             }
         }
 
-        return contacts
+        return contacts.toList()
     }
 
 }
