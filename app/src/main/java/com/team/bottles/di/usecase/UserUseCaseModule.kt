@@ -1,5 +1,7 @@
 package com.team.bottles.di.usecase
 
+import com.team.bottles.core.domain.user.usecase.GetContactsUseCase
+import com.team.bottles.core.domain.user.usecase.GetContactsUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCase
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCaseImpl
 import dagger.Binds
@@ -16,5 +18,10 @@ abstract class UserUseCaseModule {
     abstract fun bindsReportUserUseCase(
         useCaseImpl: ReportUserUseCaseImpl
     ): ReportUserUseCase
+
+    @Binds
+    abstract fun bindsGetContactsUseCase(
+        useCaseImpl: GetContactsUseCaseImpl
+    ): GetContactsUseCase
 
 }

@@ -34,6 +34,7 @@ include(":core:datastore")
 include(":core:ui")
 include(":core:navigator")
 include(":core:common")
+include(":core:local")
 
 include(":feat:bottle")
 include(":feat:sandbeach")
