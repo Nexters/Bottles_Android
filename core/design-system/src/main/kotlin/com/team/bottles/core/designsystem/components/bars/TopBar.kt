@@ -29,8 +29,7 @@ fun BottlesTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(48.dp)
-            .padding(horizontal = 16.dp),
+            .height(48.dp),
         contentAlignment = Alignment.Center,
     ) {
         Row(

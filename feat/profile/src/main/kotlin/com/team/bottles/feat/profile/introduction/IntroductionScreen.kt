@@ -75,9 +75,11 @@ internal fun IntroductionScreen(
                     modifier = Modifier.background(color = BottlesTheme.color.background.primary),
                     leadingIcon = {
                         Icon(
-                            modifier = Modifier.noRippleClickable(
-                                onClick = { onIntent(IntroductionIntent.ClickBackButton) }
-                            ),
+                            modifier = Modifier
+                                .padding(start = BottlesTheme.spacing.medium)
+                                .noRippleClickable(
+                                    onClick = { onIntent(IntroductionIntent.ClickBackButton) }
+                                ),
                             painter = painterResource(id = R.drawable.ic_arrow_left_24),
                             contentDescription = null,
                             tint = BottlesTheme.color.icon.primary

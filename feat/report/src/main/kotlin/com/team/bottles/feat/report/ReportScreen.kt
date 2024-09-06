@@ -73,6 +73,7 @@ internal fun ReportScreen(
                 leadingIcon = {
                     Icon(
                         modifier = Modifier
+                            .padding(start = BottlesTheme.spacing.medium)
                             .noRippleClickable(
                                 onClick = { onIntent(ReportIntent.ClickBackButton) }
                             ),
