@@ -54,7 +54,7 @@ fun BottlesSettingItemWithToggleButton(
     title: String,
     subTitle: String? = null,
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
+    onCheckedChange: () -> Unit,
     enabled: Boolean = true
 ) {
     SettingItem(
@@ -107,10 +107,9 @@ fun BottlesSettingItem(
     modifier: Modifier = Modifier,
     title: String,
     subTitle: String,
-    onClickItem: () -> Unit
 ) {
     SettingItem(
-        modifier = modifier.noRippleClickable(onClick = onClickItem),
+        modifier = modifier,
         leadingTitle = {
             SettingItemTitleAndSubTitle(title = title, subTitle = subTitle)
         },
@@ -221,7 +220,6 @@ private fun BottlesListTitleAndArrowPreview() {
             BottlesSettingItem(
                 title = "text",
                 subTitle = "subText",
-                onClickItem = {}
             )
         }
     }
