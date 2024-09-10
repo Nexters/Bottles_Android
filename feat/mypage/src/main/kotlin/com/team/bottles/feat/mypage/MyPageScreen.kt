@@ -52,7 +52,8 @@ internal fun MyPageScreen(
             modifier = Modifier.padding(horizontal = 32.dp),
             imageUrl = uiState.imageUrl,
             userName = uiState.userName,
-            userAge = uiState.userAge
+            userAge = uiState.userAge,
+            isBlur = false
         )
 
         Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
