@@ -12,5 +12,5 @@ data class MyPageUiState(
     val appVersionName: String = BuildConfig.VERSION_NAME,
     val appVersionCode: Int = BuildConfig.VERSION_CODE,
     val canUpdateAppVersion: Boolean = false,
-    val inDeviceContacts: Int = 0,
+    val inDeviceContacts: List<String> = emptyList(),
 ) : UiState
