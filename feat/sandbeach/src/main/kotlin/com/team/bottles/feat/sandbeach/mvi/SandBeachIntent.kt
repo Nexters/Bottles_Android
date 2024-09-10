@@ -8,4 +8,6 @@ sealed interface SandBeachIntent : UiIntent {
 
     data object ClickSandBeach : SandBeachIntent
 
+    data object ClickConfirmButton : SandBeachIntent
+
 }

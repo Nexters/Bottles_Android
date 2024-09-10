@@ -21,6 +21,7 @@ import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesAlertConfirmDialog
 import com.team.bottles.feat.sandbeach.component.BottleStatusMessage
 import com.team.bottles.feat.sandbeach.component.InArrivedBottle
 import com.team.bottles.feat.sandbeach.component.InBottleBox
@@ -35,6 +36,16 @@ internal fun SandBeachScreen(
     uiState: SandBeachUiState,
     onIntent: (SandBeachIntent) -> Unit
 ) {
+    if (uiState.showDialog) {
+        BottlesAlertConfirmDialog(
+            onClose = { /* 닫기 없음 */ },
+            onConfirm = { onIntent(SandBeachIntent.ClickConfirmButton) },
+            confirmButtonText = "업데이트 하기",
+            title = "업데이트 안내",
+            content = "최적의 사용 환경을 위해\n최신 버전의 앱으로 업데이트 해주세요",
+        )
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -107,7 +118,9 @@ private fun SandBeachScreenPreview() {
                 contentScale = ContentScale.FillWidth
             )
             SandBeachScreen(
-                uiState = SandBeachUiState(bottleStatus = BottleStatus.IN_ARRIVED_BOTTLE),
+                uiState = SandBeachUiState(
+                    bottleStatus = BottleStatus.IN_ARRIVED_BOTTLE,
+                ),
                 onIntent = {}
             )
         }
