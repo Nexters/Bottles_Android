@@ -4,6 +4,18 @@ import com.team.bottles.core.common.UiSideEffect
 
 sealed interface MyPageSideEffect : UiSideEffect {
 
-    data object NavigateToLoginEndPoint : MyPageSideEffect
+    data object NavigateToEditProfile : MyPageSideEffect
+
+    data object NavigateToSettingNotification : MyPageSideEffect
+
+    data object NavigateToSettingAccountManagement : MyPageSideEffect
+
+    data object NavigateToKakaoBusinessChannel : MyPageSideEffect
+
+    data object NavigateToTermsOfUseNotion : MyPageSideEffect
+
+    data object NavigateToPolicyNotion : MyPageSideEffect
+
+    data object CheckContactPermission : MyPageSideEffect
 
 }

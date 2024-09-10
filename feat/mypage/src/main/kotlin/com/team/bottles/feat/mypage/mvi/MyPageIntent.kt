@@ -4,14 +4,24 @@ import com.team.bottles.core.common.UiIntent
 
 sealed interface MyPageIntent : UiIntent {
 
-    data object ClickWebLogOutButton : MyPageIntent
+    data object ClickEditProfile : MyPageIntent
 
-    data object ClickWebDeleteUserButton : MyPageIntent
+    data object ClickUpdateBlockContact : MyPageIntent
 
-    data object ClickDialogDeleteUserButton : MyPageIntent
+    data object ClickSettingNotification : MyPageIntent
 
-    data object ClickDialogLogOutButton : MyPageIntent
+    data object ClickAccountManagement : MyPageIntent
 
-    data object ClickCancel : MyPageIntent
+    data object ClickUpdateAppVersion : MyPageIntent
+
+    data object ClickAsk : MyPageIntent
+
+    data object ClickTermsOfUse : MyPageIntent
+
+    data object ClickPolicy : MyPageIntent
+
+    data object ClickConfirmButton : MyPageIntent
+
+    data object CloseDialog : MyPageIntent
 
 }

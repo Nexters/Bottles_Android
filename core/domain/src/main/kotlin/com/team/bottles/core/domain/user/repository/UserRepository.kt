@@ -7,4 +7,6 @@ interface UserRepository {
         contents: String
     )
 
+    suspend fun loadContacts(): List<String>
+
 }

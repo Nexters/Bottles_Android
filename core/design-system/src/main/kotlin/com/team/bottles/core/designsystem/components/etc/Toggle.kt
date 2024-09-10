@@ -19,13 +19,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
 fun BottlesToggleButton(
     modifier: Modifier = Modifier,
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
+    onCheckedChange: () -> Unit,
     enabled: Boolean = true,
 ) {
     val backgroundColor = if (checked) {
@@ -44,12 +45,9 @@ fun BottlesToggleButton(
             )
             .clip(shape = shape)
             .padding(2.dp)
-            .toggleable(
-                value = checked,
-                onValueChange = onCheckedChange,
-                enabled = enabled,
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
+            .noRippleClickable(
+                onClick = onCheckedChange,
+                enabled = enabled
             ),
         contentAlignment = if (checked) Alignment.TopEnd else Alignment.TopStart
     ) {
