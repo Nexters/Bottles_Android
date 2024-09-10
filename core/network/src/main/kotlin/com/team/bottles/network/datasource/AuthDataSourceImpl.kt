@@ -9,6 +9,7 @@ import com.team.bottles.network.dto.auth.request.SignUpRequest
 import com.team.bottles.network.dto.auth.request.SmsSignInRequest
 import com.team.bottles.network.dto.auth.response.KakaoSignInUpResponse
 import com.team.bottles.network.dto.auth.response.TokensResponse
+import com.team.bottles.network.dto.auth.response.UpdateAppVersionResponse
 import javax.inject.Inject
 
 class AuthDataSourceImpl @Inject constructor(
@@ -46,6 +47,9 @@ class AuthDataSourceImpl @Inject constructor(
     override suspend fun updateFcmToken(accessToken: String, request: FcmUpdateRequest) {
         authService.postUpdatedFcmToken(accessToken = "$TOKEN_TYPE $accessToken", fcmUpdateRequest = request)
     }
+
+    override suspend fun fetchRequiredMinimumAppVersion(): UpdateAppVersionResponse =
+        authService.getRequiredMinimumAppVersion()
 
     companion object {
         private const val TOKEN_TYPE = "Bearer"
