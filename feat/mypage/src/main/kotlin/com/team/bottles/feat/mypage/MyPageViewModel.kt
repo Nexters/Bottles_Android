@@ -2,7 +2,9 @@ package com.team.bottles.feat.mypage
 
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
+import com.team.bottles.core.domain.auth.usecase.GetLatestAppVersionUseCase
 import com.team.bottles.core.domain.user.usecase.GetContactsUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
 import com.team.bottles.feat.mypage.mvi.MyPageIntent
 import com.team.bottles.feat.mypage.mvi.MyPageSideEffect
 import com.team.bottles.feat.mypage.mvi.MyPageUiState
@@ -12,6 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val getContactsUseCase: GetContactsUseCase,
+    private val getLatestAppVersionUseCase: GetLatestAppVersionUseCase,
+    private val updateBlockingContactsUseCase: UpdateBlockingContactsUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MyPageUiState, MyPageSideEffect, MyPageIntent>(
     savedStateHandle
@@ -26,7 +30,7 @@ class MyPageViewModel @Inject constructor(
             is MyPageIntent.ClickUpdateBlockContact -> checkContactPermission()
             is MyPageIntent.ClickSettingNotification -> navigateToSettingNotification()
             is MyPageIntent.ClickAccountManagement -> navigateToSettingAccountManagement()
-            is MyPageIntent.ClickUpdateAppVersion -> updateAppVersion()
+            is MyPageIntent.ClickUpdateAppVersion -> navigateToPlayStore()
             is MyPageIntent.ClickAsk -> navigateToKakaoBusinessChannel()
             is MyPageIntent.ClickTermsOfUse -> navigateToTermsOfUseNotion()
             is MyPageIntent.ClickPolicy -> navigateToPolicyNotion()
@@ -63,6 +67,10 @@ class MyPageViewModel @Inject constructor(
         postSideEffect(MyPageSideEffect.NavigateToPolicyNotion)
     }
 
+    private fun navigateToPlayStore() {
+        postSideEffect(MyPageSideEffect.NavigateToPlayStore)
+    }
+
     private fun checkContactPermission() {
         postSideEffect(MyPageSideEffect.CheckContactPermission)
     }
@@ -77,21 +85,28 @@ class MyPageViewModel @Inject constructor(
 
     private fun updateBlockContact() {
         // TODO : 해당 연락처를 차단하는 기능 로직
-    }
-
-    private fun updateAppVersion() {
-        // TODO : 앱 업데이트 진행
-        // TODO : 다이얼로그를 띄울지? 아니면 곧바로 플레이 스토어로 갈지?
+        launch {
+            updateBlockingContactsUseCase(contacts = currentState.inDeviceContacts)
+            // TODO : 차단한 연락처 수 얻는 API 호출
+            // reduce { copy(blockedUserValue = ) }
+        }
     }
 
     fun checkAppVersion() {
-        // TODO : 현재의 앱 버전과 서버에서 제공하는 앱 버전이 같은지 체크하는 로직
+        launch {
+            val latestAppVersionCode = getLatestAppVersionUseCase().toInt()
+            val currentAppVersion = currentState.appVersionCode
+
+            if (latestAppVersionCode > currentAppVersion) {
+                reduce { copy(canUpdateAppVersion = true) }
+            }
+        }
     }
 
     fun fetchContacts() {
         launch {
             val contacts = getContactsUseCase()
-            reduce { copy(inDeviceContacts = contacts.size) }
+            reduce { copy(inDeviceContacts = contacts) }
             showBlockContactDialog()
         }
     }

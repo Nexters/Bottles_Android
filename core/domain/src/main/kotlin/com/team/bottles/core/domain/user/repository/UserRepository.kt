@@ -9,4 +9,6 @@ interface UserRepository {
 
     suspend fun loadContacts(): List<String>
 
+    suspend fun updateBlockingContacts(contacts: List<String>)
+
 }

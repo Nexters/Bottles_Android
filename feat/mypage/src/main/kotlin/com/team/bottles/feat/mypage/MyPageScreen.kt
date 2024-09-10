@@ -34,7 +34,7 @@ internal fun MyPageScreen(
             confirmButtonText = "차단하기",
             dismissButtonText = "취소하기",
             title = "연락처 차단",
-            content = "주소록에 있는 ${uiState.inDeviceContacts}개의\n"
+            content = "주소록에 있는 ${uiState.inDeviceContacts.size}개의\n"
                     + "전화번호를 차단할까요?"
         )
     }
@@ -52,7 +52,8 @@ internal fun MyPageScreen(
             modifier = Modifier.padding(horizontal = 32.dp),
             imageUrl = uiState.imageUrl,
             userName = uiState.userName,
-            userAge = uiState.userAge
+            userAge = uiState.userAge,
+            isBlur = false
         )
 
         Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))

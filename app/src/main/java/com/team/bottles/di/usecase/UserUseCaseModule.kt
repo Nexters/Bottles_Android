@@ -4,6 +4,8 @@ import com.team.bottles.core.domain.user.usecase.GetContactsUseCase
 import com.team.bottles.core.domain.user.usecase.GetContactsUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCase
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCaseImpl
+import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,5 +25,10 @@ abstract class UserUseCaseModule {
     abstract fun bindsGetContactsUseCase(
         useCaseImpl: GetContactsUseCaseImpl
     ): GetContactsUseCase
+
+    @Binds
+    abstract fun bindsUpdateBlockingContactsUseCase(
+        useCaseImpl: UpdateBlockingContactsUseCaseImpl
+    ): UpdateBlockingContactsUseCase
 
 }

@@ -8,7 +8,9 @@ import com.team.bottles.network.dto.auth.request.SignUpRequest
 import com.team.bottles.network.dto.auth.request.SmsSignInRequest
 import com.team.bottles.network.dto.auth.response.KakaoSignInUpResponse
 import com.team.bottles.network.dto.auth.response.TokensResponse
+import com.team.bottles.network.dto.auth.response.UpdateAppVersionResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
@@ -60,5 +62,8 @@ interface AuthService {
         @Header("Authorization") accessToken: String,
         @Body fcmUpdateRequest: FcmUpdateRequest
     )
+
+    @POST("/api/v1/auth/app-version")
+    suspend fun getRequiredMinimumAppVersion(): UpdateAppVersionResponse
 
 }

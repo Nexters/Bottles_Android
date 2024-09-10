@@ -49,7 +49,7 @@ internal fun SettingList(
         ) {
             BottlesSettingItemWithButton(
                 title = "연락처 차단",
-                subTitle = "연락처 속 ${blockedUserValue}명을 차단햇어요",
+                subTitle = "기기 내 모든 연락처 차단", // TODO : 연락처 속 ${blockedUserValue}명을 차단햇어요
                 onClickButton = onClickUpdateBlockContact,
                 buttonText = "업데이트"
             )

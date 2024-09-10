@@ -10,7 +10,7 @@ data class MyPageUiState(
     val userAge: Int = 0,
     val blockedUserValue: Int = 0,
     val appVersionName: String = BuildConfig.VERSION_NAME,
-    val appVersionCode: String = BuildConfig.VERSION_CODE,
+    val appVersionCode: Int = BuildConfig.VERSION_CODE,
     val canUpdateAppVersion: Boolean = false,
-    val inDeviceContacts: Int = 0,
+    val inDeviceContacts: List<String> = emptyList(),
 ) : UiState

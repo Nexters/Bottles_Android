@@ -18,4 +18,6 @@ sealed interface MyPageSideEffect : UiSideEffect {
 
     data object CheckContactPermission : MyPageSideEffect
 
+    data object NavigateToPlayStore : MyPageSideEffect
+
 }
