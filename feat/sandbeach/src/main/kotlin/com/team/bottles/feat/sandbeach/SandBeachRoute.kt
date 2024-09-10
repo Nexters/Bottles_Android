@@ -38,6 +38,7 @@ internal fun SandBeachRoute(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
+            viewModel.confirmPermission()
             Toast.makeText(context, "알림에 동의 하였습니다.", Toast.LENGTH_SHORT).show()
         }
     }
