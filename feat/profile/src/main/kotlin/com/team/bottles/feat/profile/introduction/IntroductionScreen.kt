@@ -76,7 +76,6 @@ internal fun IntroductionScreen(
                     leadingIcon = {
                         Icon(
                             modifier = Modifier
-                                .padding(start = BottlesTheme.spacing.medium)
                                 .noRippleClickable(
                                     onClick = { onIntent(IntroductionIntent.ClickBackButton) }
                                 ),
