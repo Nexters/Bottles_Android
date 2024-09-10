@@ -5,20 +5,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.team.bottles.feat.setting.SettingViewModel
-import com.team.bottles.feat.setting.mvi.SettingSideEffect
-import kotlinx.coroutines.flow.collect
+import com.team.bottles.feat.setting.notification.mvi.NotificationSideEffect
 
 @Composable
 internal fun NotificationSettingRoute(
-    viewModel: SettingViewModel = hiltViewModel(),
+    viewModel: NotificationSettingViewModel = hiltViewModel(),
     navigateToMyPage: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
-            if (sideEffect is SettingSideEffect.NavigateToMyPage) {
+            if (sideEffect is NotificationSideEffect.NavigateToMyPage) {
                 navigateToMyPage()
             }
         }

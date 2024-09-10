@@ -15,15 +15,14 @@ import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.feat.setting.components.AccountSetting
 import com.team.bottles.feat.setting.components.NotificationSetting
-import com.team.bottles.feat.setting.mvi.SettingIntent
-import com.team.bottles.feat.setting.mvi.SettingUiState
+import com.team.bottles.feat.setting.notification.mvi.NotificationIntent
+import com.team.bottles.feat.setting.notification.mvi.NotificationUiState
 
 @Composable
 internal fun NotificationSettingScreen(
-    uiState: SettingUiState,
-    onIntent: (SettingIntent) -> Unit,
+    uiState: NotificationUiState,
+    onIntent: (NotificationIntent) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -32,7 +31,7 @@ internal fun NotificationSettingScreen(
             leadingIcon = {
                 Icon(
                     modifier = Modifier
-                        .noRippleClickable(onClick = { onIntent(SettingIntent.ClickBackButton) }),
+                        .noRippleClickable(onClick = { onIntent(NotificationIntent.ClickBackButton) }),
                     painter = painterResource(id = R.drawable.ic_arrow_left_24),
                     contentDescription = null,
                     tint = BottlesTheme.color.icon.primary
@@ -48,10 +47,10 @@ internal fun NotificationSettingScreen(
             isGoodFeelingArrived = uiState.isGoodFeelingArrived,
             isConversation = uiState.isConversation,
             isMarketingResponse = uiState.isMarketingResponse,
-            onChangeFloatingBottle = { onIntent(SettingIntent.ClickFloatingBottleToggleButton) },
-            onChangeGoodFeelingArrived = { onIntent(SettingIntent.ClickGoodFeelingArrivedToggleButton) },
-            onChangeConversation = { onIntent(SettingIntent.ClickConversationToggleButton) },
-            onChangeMarketingResponse = { onIntent(SettingIntent.ClickMarketingResponseToggleButton) },
+            onChangeFloatingBottle = { onIntent(NotificationIntent.ClickFloatingBottleToggleButton) },
+            onChangeGoodFeelingArrived = { onIntent(NotificationIntent.ClickGoodFeelingArrivedToggleButton) },
+            onChangeConversation = { onIntent(NotificationIntent.ClickConversationToggleButton) },
+            onChangeMarketingResponse = { onIntent(NotificationIntent.ClickMarketingResponseToggleButton) },
         )
     }
 }
@@ -61,7 +60,7 @@ internal fun NotificationSettingScreen(
 private fun NotificationSettingScreenPreview() {
     BottlesTheme {
         NotificationSettingScreen(
-            uiState = SettingUiState(),
+            uiState = NotificationUiState(),
             onIntent = {},
         )
     }

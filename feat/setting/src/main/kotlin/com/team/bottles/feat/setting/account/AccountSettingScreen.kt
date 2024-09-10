@@ -16,20 +16,20 @@ import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottlesAlertDialogLeftConfirmRightDismiss
+import com.team.bottles.feat.setting.account.mvi.AccountSettingIntent
+import com.team.bottles.feat.setting.account.mvi.AccountSettingUiState
 import com.team.bottles.feat.setting.components.AccountSetting
-import com.team.bottles.feat.setting.mvi.SettingIntent
-import com.team.bottles.feat.setting.mvi.SettingUiState
 
 @Composable
 internal fun AccountSettingScreen(
-    uiState: SettingUiState,
-    onIntent: (SettingIntent) -> Unit,
+    uiState: AccountSettingUiState,
+    onIntent: (AccountSettingIntent) -> Unit,
 ) {
     if (uiState.showDialog) {
         BottlesAlertDialogLeftConfirmRightDismiss(
-            onClose = { onIntent(SettingIntent.ClickDismissDialogButton) },
-            onDismiss = { onIntent(SettingIntent.ClickDismissDialogButton) },
-            onConfirm = { onIntent(SettingIntent.ClickConfirmDialogButton) },
+            onClose = { onIntent(AccountSettingIntent.ClickDismissDialogButton) },
+            onDismiss = { onIntent(AccountSettingIntent.ClickDismissDialogButton) },
+            onConfirm = { onIntent(AccountSettingIntent.ClickConfirmDialogButton) },
             confirmButtonText = uiState.dialogType.confirmText,
             dismissButtonText = uiState.dialogType.dismissText,
             title = uiState.dialogType.title,
@@ -44,7 +44,7 @@ internal fun AccountSettingScreen(
             leadingIcon = {
                 Icon(
                     modifier = Modifier
-                        .noRippleClickable(onClick = { onIntent(SettingIntent.ClickBackButton) }),
+                        .noRippleClickable(onClick = { onIntent(AccountSettingIntent.ClickBackButton) }),
                     painter = painterResource(id = R.drawable.ic_arrow_left_24),
                     contentDescription = null,
                     tint = BottlesTheme.color.icon.primary
@@ -57,9 +57,9 @@ internal fun AccountSettingScreen(
         AccountSetting(
             modifier = Modifier.padding(horizontal = 16.dp),
             isMatchingActive = uiState.isMatchingActive,
-            onChangeMatchingActive = { onIntent(SettingIntent.ClickMatchingActiveToggleButton) },
-            onClickLogOut = { onIntent(SettingIntent.ClickLogOutButton) },
-            onClickDeleteUser = { onIntent(SettingIntent.ClickDeleteUserButton) },
+            onChangeMatchingActive = { onIntent(AccountSettingIntent.ClickMatchingActiveToggleButton) },
+            onClickLogOut = { onIntent(AccountSettingIntent.ClickLogOutButton) },
+            onClickDeleteUser = { onIntent(AccountSettingIntent.ClickDeleteUserButton) },
         )
     }
 }
@@ -69,7 +69,7 @@ internal fun AccountSettingScreen(
 private fun AccountSettingScreenPreview() {
     BottlesTheme {
         AccountSettingScreen(
-            uiState = SettingUiState(),
+            uiState = AccountSettingUiState(),
             onIntent = {},
         )
     }
