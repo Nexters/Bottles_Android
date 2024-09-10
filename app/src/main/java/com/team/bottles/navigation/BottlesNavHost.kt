@@ -69,7 +69,11 @@ fun BottlesNavHost(
                 navigateToBottleBox = ::navigateToBottleBox,
                 navigateToReport = ::navigateToReport
             )
-            myPageScreen(navigateToLoginEndPoint = ::navigateToLoginEndpoint)
+            myPageScreen(
+                navigateToEditProfile = {}, // TODO : 프로필 수정 웹뷰 완성시 연결
+                navigateToSettingNotification = ::navigateToSettingNotification,
+                navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,
+            )
             reportScreen(
                 navigateToPingPong = { popBackStack() },
                 navigateToBottleBox = ::navigateToBottleBox
