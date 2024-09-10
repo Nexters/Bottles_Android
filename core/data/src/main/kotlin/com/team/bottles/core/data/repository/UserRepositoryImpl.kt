@@ -1,9 +1,13 @@
 package com.team.bottles.core.data.repository
 
+import com.team.bottles.core.data.mapper.toAlimyType
+import com.team.bottles.core.data.mapper.toNotification
+import com.team.bottles.core.domain.user.model.Notification
 import com.team.bottles.core.domain.user.repository.UserRepository
 import com.team.bottles.local.datasource.DeviceDataSource
 import com.team.bottles.network.datasource.UserDataSource
 import com.team.bottles.network.dto.auth.request.BlockContactListRequest
+import com.team.bottles.network.dto.user.request.AlimyOnOffRequest
 import com.team.bottles.network.dto.user.request.ReportUserRequest
 import javax.inject.Inject
 
@@ -28,6 +32,20 @@ class UserRepositoryImpl @Inject constructor(
         userDataSource.updateWantToBlockContacts(
             request = BlockContactListRequest(
                 blockContacts = contacts
+            )
+        )
+    }
+
+    override suspend fun loadSettingNotifications(): List<Notification> =
+        userDataSource.fetchSettingNotifications().map { response ->
+            response.toNotification()
+        }
+
+    override suspend fun updateSettingNotification(notification: Notification) {
+        userDataSource.updateSettingNotification(
+            request = AlimyOnOffRequest(
+                alimyType = notification.notificationType.toAlimyType(),
+                enabled = notification.enabled
             )
         )
     }
