@@ -15,9 +15,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesAlertConfirmDialog
+import com.team.bottles.feat.splash.mvi.SplashIntent
+import com.team.bottles.feat.splash.mvi.SplashUiState
 
 @Composable
-internal fun SplashScreen() {
+internal fun SplashScreen(
+    uiState: SplashUiState,
+    onIntent: (SplashIntent) -> Unit
+) {
+    if (uiState.showDialog) {
+        BottlesAlertConfirmDialog(
+            onClose = { /* 닫기 없음 */ },
+            onConfirm = { onIntent(SplashIntent.ClickConfirmButton) },
+            confirmButtonText = "업데이트 하기",
+            title = "업데이트 안내",
+            content = "최적의 사용 환경을 위해\n최신 버전의 앱으로 업데이트 해주세요",
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -45,6 +61,11 @@ internal fun SplashScreen() {
 @Composable
 private fun SplashScreenPreview() {
     BottlesTheme {
-        SplashScreen()
+        SplashScreen(
+            uiState = SplashUiState(
+                showDialog = true
+            ),
+            onIntent = {}
+        )
     }
 }
