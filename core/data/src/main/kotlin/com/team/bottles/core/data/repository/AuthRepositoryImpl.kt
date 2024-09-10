@@ -1,6 +1,7 @@
 package com.team.bottles.core.data.repository
 
 import com.team.bottles.core.data.mapper.toAuthResult
+import com.team.bottles.core.data.mapper.toLatestVersionCode
 import com.team.bottles.core.datastore.datasource.TokenDataSource
 import com.team.bottles.core.domain.auth.model.AuthResult
 import com.team.bottles.core.domain.auth.model.Token
@@ -72,5 +73,8 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun getSavedLocalFcmToken(): String =
         tokenDataSource.getFcmDeviceToken()
+
+    override suspend fun getLatestAppVersion(): String =
+        authDataSource.fetchRequiredMinimumAppVersion().toLatestVersionCode()
 
 }

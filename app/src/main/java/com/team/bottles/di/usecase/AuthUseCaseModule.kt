@@ -2,6 +2,8 @@ package com.team.bottles.di.usecase
 
 import com.team.bottles.core.domain.auth.usecase.DeleteUserUseCase
 import com.team.bottles.core.domain.auth.usecase.DeleteUserUseCaseImpl
+import com.team.bottles.core.domain.auth.usecase.GetLatestAppVersionUseCase
+import com.team.bottles.core.domain.auth.usecase.GetLatestAppVersionUseCaseImpl
 import com.team.bottles.core.domain.auth.usecase.LogOutUseCase
 import com.team.bottles.core.domain.auth.usecase.LogOutUseCaseImpl
 import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCase
@@ -36,5 +38,10 @@ abstract class AuthUseCaseModule {
     abstract fun bindsDeleteUserUseCase(
         useCaseImpl: DeleteUserUseCaseImpl
     ): DeleteUserUseCase
+
+    @Binds
+    abstract fun bindsGetLatestAppVersionUseCase(
+        useCaseImpl: GetLatestAppVersionUseCaseImpl
+    ): GetLatestAppVersionUseCase
 
 }
