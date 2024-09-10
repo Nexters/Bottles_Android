@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         buildConfigField("String", "VERSION_NAME", "\"${libs.versions.versionName.get()}\"")
-        buildConfigField("String", "VERSION_CODE", "\"${libs.versions.versionCode.get()}\"")
+        buildConfigField("Integer", "VERSION_CODE", libs.versions.versionCode.get())
     }
 }
 

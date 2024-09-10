@@ -67,10 +67,10 @@ internal fun MyPageRoute(
                 }
                 is MyPageSideEffect.NavigateToKakaoBusinessChannel -> {
                     try {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("kakaoplus://plusfriend/friend/_hDIQG"))
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("kakaoplus://plusfriend/friend/_hDIQG")) // 카톡으로 카카오 플러스 열기
                         context.startActivity(intent)
                     } catch (e: ActivityNotFoundException) {
-                        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://pf.kakao.com/_hDIQG"))
+                        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://pf.kakao.com/_hDIQG")) // URL로 카카오 플러스 열기
                         context.startActivity(webIntent)
                     }
                 }
@@ -79,6 +79,15 @@ internal fun MyPageRoute(
                         permissionLauncher.launch(Manifest.permission.READ_CONTACTS)
                     } else {
                         viewModel.fetchContacts()
+                    }
+                }
+                is MyPageSideEffect.NavigateToPlayStore -> {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.team.bottles&hl=ko"))
+                        context.startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.team.bottles&hl=ko"))
+                        context.startActivity(webIntent)
                     }
                 }
             }
