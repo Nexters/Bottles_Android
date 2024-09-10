@@ -1,15 +1,11 @@
-package com.team.bottles.feat.setting.mvi
+package com.team.bottles.feat.setting.account.mvi
 
 import com.team.bottles.core.common.UiState
 
-data class SettingUiState(
+data class AccountSettingUiState(
     val showDialog: Boolean = false,
     val dialogType: SettingAlertDialogType = SettingAlertDialogType.LOG_OUT,
     val isMatchingActive: Boolean = false,
-    val isFloatingBottle: Boolean = false,
-    val isGoodFeelingArrived: Boolean = false,
-    val isConversation: Boolean = false,
-    val isMarketingResponse: Boolean = false,
 ) : UiState
 
 enum class SettingAlertDialogType(

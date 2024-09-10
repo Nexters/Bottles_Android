@@ -5,12 +5,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.team.bottles.feat.setting.SettingViewModel
-import com.team.bottles.feat.setting.mvi.SettingSideEffect
+import com.team.bottles.feat.setting.account.mvi.AccountSettingSideEffect
+import com.team.bottles.feat.setting.notification.mvi.NotificationSideEffect
 
 @Composable
 internal fun AccountSettingRoute(
-    viewModel: SettingViewModel = hiltViewModel(),
+    viewModel: AccountSettingViewModel = hiltViewModel(),
     navigateToLoginEndpoint: () -> Unit,
     navigateToMyPage: () -> Unit,
 ) {
@@ -19,8 +19,8 @@ internal fun AccountSettingRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is SettingSideEffect.NavigateToLoginEndpoint -> navigateToLoginEndpoint()
-                is SettingSideEffect.NavigateToMyPage -> navigateToMyPage()
+                is AccountSettingSideEffect.NavigateToLoginEndpoint -> navigateToLoginEndpoint()
+                is AccountSettingSideEffect.NavigateToMyPage -> navigateToMyPage()
             }
         }
     }
