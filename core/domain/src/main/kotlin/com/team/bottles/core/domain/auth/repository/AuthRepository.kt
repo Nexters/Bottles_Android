@@ -23,4 +23,6 @@ interface AuthRepository {
 
     suspend fun getLatestAppVersion(): String
 
+    suspend fun getRequiredAppVersion(): String
+
 }

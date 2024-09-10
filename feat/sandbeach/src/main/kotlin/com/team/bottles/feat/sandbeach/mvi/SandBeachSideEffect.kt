@@ -10,4 +10,6 @@ sealed interface SandBeachSideEffect : UiSideEffect {
 
     data object NavigateToBottleBox : SandBeachSideEffect
 
+    data object NavigateToPlayStore : SandBeachSideEffect
+
 }

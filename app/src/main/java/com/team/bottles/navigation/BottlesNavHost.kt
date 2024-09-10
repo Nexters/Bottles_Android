@@ -80,9 +80,9 @@ fun BottlesNavHost(
             )
             accountSettingScreen(
                 navigateToLoginEndpoint = ::navigateToLoginEndpoint,
-                navigateToMyPage = ::navigateToMyPage
+                navigateToMyPage = { popBackStack() }
             )
-            notificationSettingScreen(navigateToMyPage = ::navigateToMyPage)
+            notificationSettingScreen(navigateToMyPage = { popBackStack() })
         }
     }
 }

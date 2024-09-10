@@ -3,6 +3,7 @@ package com.team.bottles.feat.mypage
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.auth.usecase.GetLatestAppVersionUseCase
+import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
 import com.team.bottles.core.domain.user.usecase.GetContactsUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
 import com.team.bottles.feat.mypage.mvi.MyPageIntent
@@ -16,10 +17,21 @@ class MyPageViewModel @Inject constructor(
     private val getContactsUseCase: GetContactsUseCase,
     private val getLatestAppVersionUseCase: GetLatestAppVersionUseCase,
     private val updateBlockingContactsUseCase: UpdateBlockingContactsUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MyPageUiState, MyPageSideEffect, MyPageIntent>(
     savedStateHandle
 ) {
+
+    init {
+        launch {
+            val profile = getUserProfileUseCase()
+            val userImageUrl = profile.imageUrl
+            val userName = profile.userName
+            val userAge = profile.age
+            reduce { copy(imageUrl = userImageUrl, userName = userName, userAge = userAge) }
+        }
+    }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): MyPageUiState =
         MyPageUiState()
@@ -84,11 +96,10 @@ class MyPageViewModel @Inject constructor(
     }
 
     private fun updateBlockContact() {
-        // TODO : 해당 연락처를 차단하는 기능 로직
         launch {
             updateBlockingContactsUseCase(contacts = currentState.inDeviceContacts)
-            // TODO : 차단한 연락처 수 얻는 API 호출
-            // reduce { copy(blockedUserValue = ) }
+            // TODO : 차단한 연락처 갯수 얻는 API 호출
+            reduce { copy(showDialog = false) }
         }
     }
 

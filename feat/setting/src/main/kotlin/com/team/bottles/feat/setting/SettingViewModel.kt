@@ -44,8 +44,8 @@ class SettingViewModel @Inject constructor(
     private fun confirm() {
         launch {
             when (currentState.dialogType) {
-                SettingAlertDialogType.LOG_OUT -> logOutUseCase
-                SettingAlertDialogType.DELETE_USER -> deleteUserUseCase
+                SettingAlertDialogType.LOG_OUT -> logOutUseCase()
+                SettingAlertDialogType.DELETE_USER -> deleteUserUseCase()
             }
             reduce { copy(showDialog = false) }
             postSideEffect(SettingSideEffect.NavigateToLoginEndpoint)
