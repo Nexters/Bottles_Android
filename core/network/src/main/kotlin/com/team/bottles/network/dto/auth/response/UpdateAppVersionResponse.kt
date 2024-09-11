@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateAppVersionResponse(
-    @SerialName("minimumAndroidVersion") val minimumAndroidVersion: String?
+    @SerialName("minimumAndroidVersion") val minimumAndroidVersion: Int?,
+    @SerialName("latestAndroidVersion") val latestAndroidVersion: Int?
 )

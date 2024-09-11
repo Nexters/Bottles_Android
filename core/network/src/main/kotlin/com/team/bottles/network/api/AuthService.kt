@@ -63,7 +63,7 @@ interface AuthService {
         @Body fcmUpdateRequest: FcmUpdateRequest
     )
 
-    @POST("/api/v1/auth/app-version")
+    @GET("/api/v1/auth/app-version")
     suspend fun getRequiredMinimumAppVersion(): UpdateAppVersionResponse
 
 }
