@@ -19,7 +19,8 @@ fun BottlesBottomBar(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
-    enabled: Boolean = false
+    enabled: Boolean = false,
+    isDebounce: Boolean = true,
 ) {
     Box(
         modifier = modifier
@@ -34,7 +35,7 @@ fun BottlesBottomBar(
             text = text,
             enabled = enabled,
             onClick = onClick,
-            isDebounce = true,
+            isDebounce = isDebounce,
         )
     }
 }
