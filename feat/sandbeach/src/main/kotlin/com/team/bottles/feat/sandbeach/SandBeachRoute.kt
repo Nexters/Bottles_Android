@@ -20,7 +20,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 internal fun SandBeachRoute(
     viewModel: SandBeachViewModel = hiltViewModel(),
@@ -32,7 +31,11 @@ internal fun SandBeachRoute(
     val context = LocalContext.current
     val notificationPermissionGranted =
         remember {
-            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+            } else {
+                true
+            }
         }
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -45,7 +48,9 @@ internal fun SandBeachRoute(
 
     LaunchedEffect(notificationPermissionGranted) {
         if (!notificationPermissionGranted) {
-            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 
