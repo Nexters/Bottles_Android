@@ -1,5 +1,6 @@
 package com.team.bottles.feat.onboarding
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,10 +12,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.bars.BottlesBottomBar
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
@@ -34,8 +42,10 @@ internal fun OnboardingScreen(
     uiState: OnboardingUiState,
     onIntent: (OnboardingIntent) -> Unit
 ) {
+    var bottomBarHeight by remember { mutableIntStateOf(0) }
+
     Scaffold(
-        containerColor = BottlesTheme.color.background.primary,
+        containerColor = Color.Transparent,
         modifier = Modifier.fillMaxSize(),
         topBar = {
             BottlesTopBar(
@@ -52,8 +62,27 @@ internal fun OnboardingScreen(
                 }
             )
         },
+        bottomBar = {
+            BottlesBottomBar(
+                modifier = Modifier
+                    .onGloballyPositioned {
+                        bottomBarHeight = it.size.height
+                    },
+                text = if (uiState.currentPage.ordinal + 2 != uiState.maxPage) "다음"
+                else "확인",
+                onClick = { onIntent(OnboardingIntent.ClickNextButton) },
+                enabled = true,
+                isDebounce = false
+            )
+        }
     ) { contentPadding ->
-        Box(modifier = Modifier.padding(contentPadding)) {
+        Box(
+            modifier = Modifier
+                .background(color = BottlesTheme.color.background.primary)
+                .padding(
+                    top = contentPadding.calculateTopPadding(),
+                )
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -63,7 +92,7 @@ internal fun OnboardingScreen(
                 Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
 
                 StepTitle(
-                    currentPage = uiState.currentPage.ordinal + 2,
+                    currentPage = uiState.currentPage.ordinal + 1,
                     maxPage = uiState.maxPage,
                     titleText = uiState.currentPage.title
                 )
@@ -77,16 +106,8 @@ internal fun OnboardingScreen(
                     OnboardingPage.FOUR -> StepFour()
                 }
 
-                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
+                Spacer(modifier = Modifier.height(height = (bottomBarHeight / 2).dp))
             }
-
-            BottlesBottomBar(
-                modifier = Modifier.align(Alignment.BottomCenter),
-                text = if (uiState.currentPage.ordinal + 2 != uiState.maxPage) "다음"
-                else "확인",
-                onClick = { onIntent(OnboardingIntent.ClickNextButton) },
-                enabled = true
-            )
         }
     }
 }
