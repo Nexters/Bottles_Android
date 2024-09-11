@@ -7,13 +7,13 @@ class GetRequiredAppVersionUseCaseImpl @Inject constructor(
     private val authRepository: AuthRepository,
 ) : GetRequiredAppVersionUseCase {
 
-    override suspend fun invoke(): String =
+    override suspend fun invoke(): Int =
         authRepository.getRequiredAppVersion()
 
 }
 
 interface GetRequiredAppVersionUseCase {
 
-    suspend operator fun invoke(): String
+    suspend operator fun invoke(): Int
 
 }

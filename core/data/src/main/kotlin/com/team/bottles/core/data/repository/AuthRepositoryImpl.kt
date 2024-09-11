@@ -75,10 +75,10 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun getSavedLocalFcmToken(): String =
         tokenDataSource.getFcmDeviceToken()
 
-    override suspend fun getLatestAppVersion(): String =
+    override suspend fun getLatestAppVersion(): Int =
         authDataSource.fetchRequiredMinimumAppVersion().toLatestVersionCode()
 
-    override suspend fun getRequiredAppVersion(): String =
+    override suspend fun getRequiredAppVersion(): Int =
         authDataSource.fetchRequiredMinimumAppVersion().toMinimumVersionCode()
 
 }

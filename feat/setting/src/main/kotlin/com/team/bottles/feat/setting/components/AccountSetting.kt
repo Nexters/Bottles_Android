@@ -23,13 +23,13 @@ internal fun AccountSetting(
             space = BottlesTheme.spacing.large
         )
     ) {
-        BottlesSettingItemWithToggleButton(
-            title = "매칭 활성화",
-            subTitle = "비활성화 시 다른 사람을 추천 받을 수 없고\n" +
-                    "회원님도 다른 사람에게 추천되지 않아요",
-            checked = isMatchingActive,
-            onCheckedChange = onChangeMatchingActive
-        )
+//        BottlesSettingItemWithToggleButton(
+//            title = "매칭 활성화",
+//            subTitle = "비활성화 시 다른 사람을 추천 받을 수 없고\n" +
+//                    "회원님도 다른 사람에게 추천되지 않아요",
+//            checked = isMatchingActive,
+//            onCheckedChange = onChangeMatchingActive
+//        ) TODO : 매칭 활성화 API 구현시 UI 수정
 
         BottlesSettingItemWithArrow(
             title = "로그아웃",

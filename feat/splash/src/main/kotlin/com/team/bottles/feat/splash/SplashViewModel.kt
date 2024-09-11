@@ -23,7 +23,7 @@ class SplashViewModel @Inject constructor(
 
     init {
         launch {
-            val requiredAppVersion = getRequiredAppVersionUseCase().toInt()
+            val requiredAppVersion = getRequiredAppVersionUseCase()
 
             if (requiredAppVersion > currentState.appVersionCode) {
                 reduce { copy(showDialog = true) }

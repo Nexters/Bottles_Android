@@ -105,7 +105,7 @@ class MyPageViewModel @Inject constructor(
 
     fun checkAppVersion() {
         launch {
-            val latestAppVersionCode = getLatestAppVersionUseCase().toInt()
+            val latestAppVersionCode = getLatestAppVersionUseCase()
             val currentAppVersion = currentState.appVersionCode
 
             if (latestAppVersionCode > currentAppVersion) {
