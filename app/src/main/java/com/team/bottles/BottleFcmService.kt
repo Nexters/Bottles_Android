@@ -59,7 +59,7 @@ internal class BottleFcmService : FirebaseMessagingService() {
         )
 
         val builder = NotificationCompat.Builder(applicationContext, getString(R.string.fcm_channel_id))
-            .setSmallIcon(R.drawable.bottle_app_icon)
+            .setSmallIcon(R.drawable.bottle_notification_icon)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.bottle_app_icon))
             .setContentTitle(notification.title)
             .setContentText(notification.body)
