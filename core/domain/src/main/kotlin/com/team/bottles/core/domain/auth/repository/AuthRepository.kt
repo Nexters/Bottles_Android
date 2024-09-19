@@ -21,4 +21,8 @@ interface AuthRepository {
 
     suspend fun getSavedLocalFcmToken(): String
 
+    suspend fun getLatestAppVersion(): Int
+
+    suspend fun getRequiredAppVersion(): Int
+
 }

@@ -30,7 +30,7 @@ class OnboardingViewModel @Inject constructor(
     }
 
     private fun nextPage() {
-        if (currentState.currentPage.ordinal + 3 > currentState.maxPage) {
+        if (currentState.currentPage.ordinal + 2 > currentState.maxPage) {
             navigateToCreateProfile()
         } else {
             reduce { copy(currentPage = OnboardingPage.entries[currentPage.ordinal + 1]) }

@@ -7,6 +7,7 @@ import OnboardingNavigator
 import PingPongNavigator
 import ProfileNavigator
 import ReportNavigator
+import SettingNavigator
 import SplashNavigator
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -22,6 +23,8 @@ import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
 import com.team.bottles.feat.report.navigation.reportScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
+import com.team.bottles.feat.setting.navigation.accountSettingScreen
+import com.team.bottles.feat.setting.navigation.notificationSettingScreen
 import com.team.bottles.feat.splash.splashScreen
 
 @Composable
@@ -66,11 +69,20 @@ fun BottlesNavHost(
                 navigateToBottleBox = ::navigateToBottleBox,
                 navigateToReport = ::navigateToReport
             )
-            myPageScreen(navigateToLoginEndPoint = ::navigateToLoginEndpoint)
+            myPageScreen(
+                navigateToEditProfile = {}, // TODO : 프로필 수정 웹뷰 완성시 연결
+                navigateToSettingNotification = ::navigateToSettingNotification,
+                navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,
+            )
             reportScreen(
                 navigateToPingPong = { popBackStack() },
                 navigateToBottleBox = ::navigateToBottleBox
             )
+            accountSettingScreen(
+                navigateToLoginEndpoint = ::navigateToLoginEndpoint,
+                navigateToMyPage = { popBackStack() }
+            )
+            notificationSettingScreen(navigateToMyPage = { popBackStack() })
         }
     }
 }
@@ -118,3 +130,9 @@ fun NavController.navigateToReport(userId: Long, userName: String, userImageUrl:
         userName = userName,
         userId = userId,
         userImageUrl = userImageUrl))
+
+fun NavController.navigateToSettingAccountManagement() =
+    navigate(SettingNavigator.Account)
+
+fun NavController.navigateToSettingNotification() =
+    navigate(SettingNavigator.Notification)

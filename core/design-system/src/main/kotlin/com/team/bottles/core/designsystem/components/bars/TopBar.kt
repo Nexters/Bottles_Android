@@ -29,12 +29,13 @@ fun BottlesTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(48.dp)
-            .padding(horizontal = 16.dp),
+            .height(48.dp),
         contentAlignment = Alignment.Center,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = BottlesTheme.spacing.medium),
             horizontalArrangement = if (leadingIcon == null) Arrangement.End else Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="fcm_channel_id">fcm_channel_id</string>
-    <string name="fcm_channel_name">fcm_channel_name</string>
+    <string name="fcm_channel_name">푸쉬 알림</string>
 </resources>

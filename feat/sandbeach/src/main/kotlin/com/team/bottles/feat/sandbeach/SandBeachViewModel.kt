@@ -2,11 +2,14 @@ package com.team.bottles.feat.sandbeach
 
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
+import com.team.bottles.core.domain.auth.usecase.GetRequiredAppVersionUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetBottleListUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
 import com.team.bottles.core.domain.profile.model.UserProfileStatus
-import com.team.bottles.core.domain.profile.usecase.GetUserIntroductionStatusUseCase
 import com.team.bottles.core.domain.profile.usecase.GetUserProfileStatusUseCase
+import com.team.bottles.core.domain.user.model.Notification
+import com.team.bottles.core.domain.user.model.NotificationType
+import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCase
 import com.team.bottles.feat.sandbeach.mvi.BottleStatus
 import com.team.bottles.feat.sandbeach.mvi.SandBeachIntent
 import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
@@ -19,11 +22,20 @@ class SandBeachViewModel @Inject constructor(
     private val getUserProfileStatusUseCase: GetUserProfileStatusUseCase,
     private val getBottleListUseCase: GetBottleListUseCase,
     private val getPingPongListUseCase: GetPingPongListUseCase,
+    private val getRequiredAppVersionUseCase: GetRequiredAppVersionUseCase,
+    private val updateSettingNotificationUseCase: UpdateSettingNotificationUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<SandBeachUiState, SandBeachSideEffect, SandBeachIntent>(savedStateHandle) {
 
     init {
         setSandBeachState()
+        launch {
+            val requiredAppVersion = getRequiredAppVersionUseCase()
+
+            if (requiredAppVersion > currentState.appVersionCode) {
+                reduce { copy(showDialog = true) }
+            }
+        }
     }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): SandBeachUiState =
@@ -84,6 +96,7 @@ class SandBeachViewModel @Inject constructor(
         when (intent) {
             is SandBeachIntent.ClickCreateIntroductionButton -> navigateToIntroduction()
             is SandBeachIntent.ClickSandBeach -> onClickSandBeach()
+            is SandBeachIntent.ClickConfirmButton -> navigateToPlayStore()
         }
     }
 
@@ -106,6 +119,23 @@ class SandBeachViewModel @Inject constructor(
 
     private fun navigateToArrivedBottle() {
         postSideEffect(SandBeachSideEffect.NavigateToArrivedBottle)
+    }
+
+    private fun navigateToPlayStore() {
+        postSideEffect(SandBeachSideEffect.NavigateToPlayStore)
+    }
+
+    fun confirmPermission() {
+        launch {
+            NotificationType.entries.forEach { type ->
+                updateSettingNotificationUseCase(
+                    notification = Notification(
+                        notificationType = type,
+                        enabled = true
+                    )
+                )
+            }
+        }
     }
 
 }

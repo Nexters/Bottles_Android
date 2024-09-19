@@ -3,6 +3,7 @@ package com.team.bottles.core.designsystem.components.bars
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,16 +19,14 @@ fun BottlesBottomBar(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
-    enabled: Boolean = false
+    enabled: Boolean = false,
+    isDebounce: Boolean = true,
 ) {
     Box(
         modifier = modifier
+            .height(height = 88.dp)
             .background(brush = BottlesTheme.color.background.tertiary)
-            .padding(
-                top = 24.dp,
-                start = 16.dp,
-                end = 16.dp
-            ),
+            .padding(horizontal = BottlesTheme.spacing.medium),
         contentAlignment = Alignment.BottomCenter
     ) {
         BottlesSolidButton(
@@ -36,7 +35,7 @@ fun BottlesBottomBar(
             text = text,
             enabled = enabled,
             onClick = onClick,
-            isDebounce = true,
+            isDebounce = isDebounce,
         )
     }
 }

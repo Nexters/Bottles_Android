@@ -8,6 +8,7 @@ import com.team.bottles.network.dto.auth.request.SignUpRequest
 import com.team.bottles.network.dto.auth.request.SmsSignInRequest
 import com.team.bottles.network.dto.auth.response.KakaoSignInUpResponse
 import com.team.bottles.network.dto.auth.response.TokensResponse
+import com.team.bottles.network.dto.auth.response.UpdateAppVersionResponse
 
 interface AuthDataSource {
 
@@ -40,5 +41,7 @@ interface AuthDataSource {
         accessToken: String,
         request: FcmUpdateRequest
     )
+
+    suspend fun fetchRequiredMinimumAppVersion(): UpdateAppVersionResponse
 
 }

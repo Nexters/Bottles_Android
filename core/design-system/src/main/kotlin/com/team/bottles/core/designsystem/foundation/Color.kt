@@ -113,4 +113,5 @@ internal object IconColors {
     internal val iconSecondary = Neutral200
     internal val iconDisabled = Neutral200
     internal val iconUpdate = Red
+    internal val iconSelected = PrimaryPurple500
 }

@@ -8,6 +8,10 @@ plugins {
 
 android {
     namespace = "com.team.bottles.feat.splash"
+
+    defaultConfig {
+        buildConfigField("Integer", "VERSION_CODE", libs.versions.versionCode.get())
+    }
 }
 
 dependencies {

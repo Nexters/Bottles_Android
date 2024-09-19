@@ -29,18 +29,18 @@
 떠내려온 편지를 통해 느린 소통의 감성을 경험해보세요.
 
 ## Features
-- ✨ Feature 1
-- ✨ Feature 2
-- ✨ Feature 3
+- ✨ 매일 오후 6시마다 알림을 받고 떠내려오는 보틀에 호감을 표시해보세요.
+- ✨ 호감을 받은 상대방이 수락하면 대화가 시작돼요.
+- ✨ 상대와 끝까지 핑퐁(대화)이 완료되면 카카오톡 연락처를 얻어 서로를 이어줄게요.  
 
 ## Screenshots
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/e6a19b06-1b32-4316-a294-3f95c7179a2d" width=170/>
-  <img src="https://github.com/user-attachments/assets/8e164a4e-bf38-4dde-95ec-8e543e0453b7" width=170/>
-  <img src="https://github.com/user-attachments/assets/ee9481f9-90a0-4583-9a05-9f06d4d6a2d2" width=170/>
-  <img src="https://github.com/user-attachments/assets/f76cfb49-86c6-4322-91c8-bf89514c5a54" width=170/>
-  <img src="https://github.com/user-attachments/assets/dde9480c-ec1d-4b9b-a32e-1bdc53a15e08" width=170/>
+  <img src="https://github.com/user-attachments/assets/e6a19b06-1b32-4316-a294-3f95c7179a2d" width=150/>
+  <img src="https://github.com/user-attachments/assets/8e164a4e-bf38-4dde-95ec-8e543e0453b7" width=150/>
+  <img src="https://github.com/user-attachments/assets/ee9481f9-90a0-4583-9a05-9f06d4d6a2d2" width=150/>
+  <img src="https://github.com/user-attachments/assets/f76cfb49-86c6-4322-91c8-bf89514c5a54" width=150/>
+  <img src="https://github.com/user-attachments/assets/dde9480c-ec1d-4b9b-a32e-1bdc53a15e08" width=150/>
 </div>
 
 ## Architecture
@@ -51,7 +51,7 @@
 </p>
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/4f9a926f-65d8-468d-aff6-cfcd8dced9a6" width =80%/>
+  <img src="https://github.com/user-attachments/assets/f6483b15-294a-4646-982f-724595ab678b" width =80%/>
 </div>
 
 ## TechStack
@@ -63,7 +63,8 @@
 - **Networking**: Retrofit / OkHttp
 - **Database**: Proto-Datastore
 - **Async**: Coroutines
-- **Others**: Coil / Lottie / Cloudy
+- **Debugging Tool**: Firebase
+- **Others**: Coil / Cloudy / Kakao-Sdk / FCM
 
 ## Contact & Contributor
 

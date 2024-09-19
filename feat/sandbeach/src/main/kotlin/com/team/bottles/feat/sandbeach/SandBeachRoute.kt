@@ -1,7 +1,10 @@
 package com.team.bottles.feat.sandbeach
 
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -29,19 +32,26 @@ internal fun SandBeachRoute(
     val context = LocalContext.current
     val notificationPermissionGranted =
         remember {
-            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+            } else {
+                true
+            }
         }
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
+            viewModel.confirmPermission()
             Toast.makeText(context, "알림에 동의 하였습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
     LaunchedEffect(notificationPermissionGranted) {
         if (!notificationPermissionGranted) {
-            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 
@@ -51,6 +61,15 @@ internal fun SandBeachRoute(
                 is SandBeachSideEffect.NavigateToIntroduction -> navigateToIntroduction()
                 is SandBeachSideEffect.NavigateToArrivedBottle -> navigateToArrivedBottles()
                 is SandBeachSideEffect.NavigateToBottleBox -> navigateToBottleBox()
+                is SandBeachSideEffect.NavigateToPlayStore -> {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.team.bottles&hl=ko"))
+                        context.startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.team.bottles&hl=ko"))
+                        context.startActivity(webIntent)
+                    }
+                }
             }
         }
     }

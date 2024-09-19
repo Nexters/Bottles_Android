@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,13 +41,14 @@ fun BottlesIconButtonWithText(
                 color = BottlesTheme.color.border.enabled,
                 shape = BottlesTheme.shape.extraSmall
             )
-            .padding(
-                horizontal = BottlesTheme.spacing.small,
-                vertical = 7.5f.dp
-            )
+            .clip(shape = BottlesTheme.shape.extraSmall)
             .noRippleClickable(
                 onClick = onClick,
                 enabled = enabled
+            )
+            .padding(
+                horizontal = BottlesTheme.spacing.small,
+                vertical = 7.5f.dp
             ),
         horizontalArrangement = Arrangement.spacedBy(
             space = BottlesTheme.spacing.doubleExtraSmall,
@@ -66,29 +69,46 @@ fun BottlesIconButtonWithText(
     }
 }
 
+enum class IconButtonType {
+    CIRCLE,
+    RECTANGLE,
+    ;
+}
+
 @Composable
 fun BottlesIconButton(
     modifier: Modifier = Modifier,
+    iconButtonType: IconButtonType,
     @DrawableRes icon: Int,
     onClick: () -> Unit,
     enabled: Boolean = true
 ) {
+    val shape = when (iconButtonType) {
+        IconButtonType.RECTANGLE -> BottlesTheme.shape.extraSmall
+        IconButtonType.CIRCLE -> CircleShape
+    }
+    val padding = when (iconButtonType) {
+        IconButtonType.RECTANGLE -> 10.dp
+        IconButtonType.CIRCLE -> 6.dp
+    }
+
     Box(
         modifier = modifier
             .background(
                 color = BottlesTheme.color.container.enabledPrimary,
-                shape = BottlesTheme.shape.extraSmall
+                shape = shape
             )
             .border(
                 width = 1.dp,
                 color = BottlesTheme.color.border.enabled,
-                shape = BottlesTheme.shape.extraSmall
+                shape = shape
             )
-            .padding(10.dp)
+            .clip(shape = shape)
             .noRippleClickable(
                 onClick = onClick,
                 enabled = enabled
             )
+            .padding(all = padding)
     ) {
         Icon(
             painter = painterResource(id = icon),
@@ -98,18 +118,24 @@ fun BottlesIconButton(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun BottlesIconButtonPreview() {
     BottlesTheme {
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
             BottlesIconButton(
                 icon = R.drawable.ic_close_16,
+                iconButtonType = IconButtonType.RECTANGLE,
                 onClick = {}
             )
             BottlesIconButtonWithText(
                 text = "text",
                 icon = R.drawable.ic_group_14,
+                onClick = {}
+            )
+            BottlesIconButton(
+                icon = R.drawable.ic_pencil_12,
+                iconButtonType = IconButtonType.CIRCLE,
                 onClick = {}
             )
         }

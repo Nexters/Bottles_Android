@@ -4,7 +4,7 @@ import com.team.bottles.core.common.UiState
 
 data class OnboardingUiState(
     val currentPage: OnboardingPage = OnboardingPage.ONE,
-    val maxPage: Int = OnboardingPage.entries.size + 1,
+    val maxPage: Int = OnboardingPage.entries.size,
 ): UiState
 
 enum class OnboardingPage(val title: String) {

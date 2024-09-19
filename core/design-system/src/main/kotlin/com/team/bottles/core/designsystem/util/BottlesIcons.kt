@@ -18,4 +18,6 @@ object BottlesIcons {
     val ic_beach_32 = R.drawable.ic_beach_32
     val ic_close_16 = R.drawable.ic_close_16
     val ic_spacing_bar_3_15 = R.drawable.ic_spacing_bar_3_15
+    val ic_pencil_12 = R.drawable.ic_pencil_12
+    val ic_warning_24 = R.drawable.ic_warning_24
 }

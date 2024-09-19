@@ -21,6 +21,7 @@ data class BottlesShape(
     val extraSmall: Shape,
     val small: Shape,
     val medium: Shape,
+    val large: Shape,
     val extraLarge: Shape,
 ) {
     companion object {
@@ -28,6 +29,7 @@ data class BottlesShape(
             extraSmall = BottlesShapeDefaults.RADIUS_XS.shape,
             small = BottlesShapeDefaults.RADIUS_S.shape,
             medium = BottlesShapeDefaults.RADIUS_M.shape,
+            large = BottlesShapeDefaults.RADIUS_L.shape,
             extraLarge = BottlesShapeDefaults.RADIUS_XL.shape,
         )
     }

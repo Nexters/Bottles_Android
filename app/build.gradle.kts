@@ -75,6 +75,7 @@ dependencies {
     implementation(projects.feat.pingPong)
     implementation(projects.feat.splash)
     implementation(projects.feat.report)
+    implementation(projects.feat.setting)
 
     // Compose
     implementation(libs.androidx.compose.activity)

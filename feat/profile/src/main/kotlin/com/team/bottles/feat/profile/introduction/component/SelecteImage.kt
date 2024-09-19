@@ -29,6 +29,7 @@ import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.common.extension.toFile
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.buttons.BottlesIconButton
+import com.team.bottles.core.designsystem.components.buttons.IconButtonType
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import kotlinx.coroutines.Dispatchers
@@ -87,6 +88,7 @@ internal fun SelectImageCard(
                     .offset(x = (-16).dp, y = 16.dp)
                     .align(Alignment.TopEnd),
                 icon = R.drawable.ic_close_16,
+                iconButtonType = IconButtonType.RECTANGLE,
                 onClick = { onIntent(IntroductionIntent.ClickDeleteButton) }
             )
         } else {

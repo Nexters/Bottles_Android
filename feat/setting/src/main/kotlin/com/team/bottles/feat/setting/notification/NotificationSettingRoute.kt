@@ -1,0 +1,29 @@
+package com.team.bottles.feat.setting.notification
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.team.bottles.feat.setting.notification.mvi.NotificationSideEffect
+
+@Composable
+internal fun NotificationSettingRoute(
+    viewModel: NotificationSettingViewModel = hiltViewModel(),
+    navigateToMyPage: () -> Unit
+) {
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            if (sideEffect is NotificationSideEffect.NavigateToMyPage) {
+                navigateToMyPage()
+            }
+        }
+    }
+
+    NotificationSettingScreen(
+        uiState = uiState,
+        onIntent = { intent -> viewModel.intent(intent) },
+    )
+}

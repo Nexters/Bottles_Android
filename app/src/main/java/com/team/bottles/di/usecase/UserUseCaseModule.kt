@@ -1,7 +1,15 @@
 package com.team.bottles.di.usecase
 
+import com.team.bottles.core.domain.user.usecase.GetContactsUseCase
+import com.team.bottles.core.domain.user.usecase.GetContactsUseCaseImpl
+import com.team.bottles.core.domain.user.usecase.GetSettingNotificationsUseCase
+import com.team.bottles.core.domain.user.usecase.GetSettingNotificationsUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCase
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCaseImpl
+import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCaseImpl
+import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,5 +24,25 @@ abstract class UserUseCaseModule {
     abstract fun bindsReportUserUseCase(
         useCaseImpl: ReportUserUseCaseImpl
     ): ReportUserUseCase
+
+    @Binds
+    abstract fun bindsGetContactsUseCase(
+        useCaseImpl: GetContactsUseCaseImpl
+    ): GetContactsUseCase
+
+    @Binds
+    abstract fun bindsUpdateBlockingContactsUseCase(
+        useCaseImpl: UpdateBlockingContactsUseCaseImpl
+    ): UpdateBlockingContactsUseCase
+
+    @Binds
+    abstract fun bindsGetSettingNotificationsUseCase(
+        useCaseImpl: GetSettingNotificationsUseCaseImpl
+    ): GetSettingNotificationsUseCase
+
+    @Binds
+    abstract fun bindsUpdateSettingNotificationUseCase(
+        useCaseImpl: UpdateSettingNotificationUseCaseImpl
+    ): UpdateSettingNotificationUseCase
 
 }
