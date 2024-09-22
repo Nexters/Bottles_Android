@@ -4,7 +4,8 @@ import com.team.bottles.core.common.UiState
 import com.team.bottles.feat.mypage.BuildConfig
 
 data class MyPageUiState(
-    val showDialog: Boolean = false,
+    val showAccessPermissionGuideDialog: Boolean = false,
+    val showBlockContactsDialog: Boolean = false,
     val imageUrl: String = "",
     val userName: String = "",
     val userAge: Int = 0,

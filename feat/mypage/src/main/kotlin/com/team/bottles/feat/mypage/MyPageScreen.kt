@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.components.etc.BottlesUserInfo
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesAlertConfirmDialog
 import com.team.bottles.core.ui.BottlesAlertDialogLeftDismissRightConfirm
 import com.team.bottles.feat.mypage.components.SettingList
 import com.team.bottles.feat.mypage.mvi.MyPageIntent
@@ -26,11 +27,21 @@ internal fun MyPageScreen(
 ) {
     val scrollState = rememberScrollState()
 
-    if (uiState.showDialog) {
+    if (uiState.showAccessPermissionGuideDialog) {
+        BottlesAlertConfirmDialog(
+            onClose = { /* 닫을 수 없는 다이얼 로그 */ },
+            onConfirm = { onIntent(MyPageIntent.ClickConfirmContactAccessButton) },
+            confirmButtonText = "설정하러 가기",
+            title = "연락처 접근 권한 안내",
+            content = "설정 > 권한에서\n연락처 접근을 허락해주세요."
+        )
+    }
+
+    if (uiState.showBlockContactsDialog) {
         BottlesAlertDialogLeftDismissRightConfirm(
-            onClose = { onIntent(MyPageIntent.CloseDialog) },
-            onDismiss = { onIntent(MyPageIntent.CloseDialog) },
-            onConfirm = { onIntent(MyPageIntent.ClickConfirmButton) },
+            onClose = { onIntent(MyPageIntent.CloseBlockContactsDialog) },
+            onDismiss = { onIntent(MyPageIntent.CloseBlockContactsDialog) },
+            onConfirm = { onIntent(MyPageIntent.ClickConfirmBlockContacts) },
             confirmButtonText = "차단하기",
             dismissButtonText = "취소하기",
             title = "연락처 차단",

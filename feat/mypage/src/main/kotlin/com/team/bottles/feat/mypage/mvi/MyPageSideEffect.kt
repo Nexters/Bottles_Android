@@ -22,4 +22,6 @@ sealed interface MyPageSideEffect : UiSideEffect {
 
     data object CompleteBlockContacts : MyPageSideEffect
 
+    data object NavigateToSystemSetting : MyPageSideEffect
+
 }

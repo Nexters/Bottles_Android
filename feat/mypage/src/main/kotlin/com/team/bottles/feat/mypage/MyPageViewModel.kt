@@ -51,8 +51,12 @@ class MyPageViewModel @Inject constructor(
             is MyPageIntent.ClickAsk -> navigateToKakaoBusinessChannel()
             is MyPageIntent.ClickTermsOfUse -> navigateToTermsOfUseNotion()
             is MyPageIntent.ClickPolicy -> navigateToPolicyNotion()
-            is MyPageIntent.ClickConfirmButton -> updateBlockContact()
-            is MyPageIntent.CloseDialog -> closeDialog()
+            is MyPageIntent.ClickConfirmBlockContacts -> updateBlockContact()
+            is MyPageIntent.CloseBlockContactsDialog -> closeBlockContactsDialog()
+            is MyPageIntent.ClickConfirmContactAccessButton -> {
+                navigateToSystemSetting()
+                closeAccessPermissionGuideDialog()
+            }
         }
     }
 
@@ -93,11 +97,19 @@ class MyPageViewModel @Inject constructor(
     }
 
     private fun showBlockContactDialog() {
-        reduce { copy(showDialog = true) }
+        reduce { copy(showBlockContactsDialog = true) }
     }
 
-    private fun closeDialog() {
-        reduce { copy(showDialog = false) }
+    private fun closeBlockContactsDialog() {
+        reduce { copy(showBlockContactsDialog = false) }
+    }
+
+    private fun closeAccessPermissionGuideDialog() {
+        reduce { copy(showAccessPermissionGuideDialog = false) }
+    }
+
+    private fun navigateToSystemSetting() {
+        postSideEffect(MyPageSideEffect.NavigateToSystemSetting)
     }
 
     private fun updateBlockContact() {
@@ -106,7 +118,7 @@ class MyPageViewModel @Inject constructor(
             val profile = getUserProfileUseCase()
 
             reduce {
-                copy(showDialog = false, blockedUserValue = profile.blockedUserCount)
+                copy(showBlockContactsDialog = false, blockedUserValue = profile.blockedUserCount)
             }
             postSideEffect(MyPageSideEffect.CompleteBlockContacts)
         }
@@ -129,6 +141,10 @@ class MyPageViewModel @Inject constructor(
             reduce { copy(inDeviceContacts = contacts) }
             showBlockContactDialog()
         }
+    }
+
+    fun showAccessPermissionGuideDialog() {
+        reduce { copy(showAccessPermissionGuideDialog = true) }
     }
 
 }
