@@ -1,5 +1,6 @@
 package com.team.bottles.feat.splash
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.auth.usecase.GetRequiredAppVersionUseCase
@@ -29,6 +30,7 @@ class SplashViewModel @Inject constructor(
                 reduce { copy(showDialog = true) }
             } else {
                 val tokens = getTokenStatus.getLocalToken()
+                Log.d("현재 토큰값은?", tokens.toString())
 
                 delay(1000L)
 

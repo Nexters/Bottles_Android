@@ -17,6 +17,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:domain"))
                 add("implementation", project(":core:navigator"))
                 add("implementation", project(":core:common"))
+                add("implementation", project(":core:exception"))
                 add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
                 add("implementation", libs.findLibrary("androidx.navigation.compose").get())
                 add("implementation", libs.findLibrary("kotlinx.collections.immutable").get())
