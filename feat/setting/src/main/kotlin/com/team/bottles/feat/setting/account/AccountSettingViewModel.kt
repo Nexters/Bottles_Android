@@ -5,6 +5,7 @@ import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.auth.usecase.DeleteUserUseCase
 import com.team.bottles.core.domain.auth.usecase.LogOutUseCase
 import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateActivateMatchingUseCase
 import com.team.bottles.feat.setting.account.mvi.AccountSettingIntent
 import com.team.bottles.feat.setting.account.mvi.AccountSettingSideEffect
 import com.team.bottles.feat.setting.account.mvi.AccountSettingUiState
@@ -17,6 +18,7 @@ class AccountSettingViewModel @Inject constructor(
     private val logOutUseCase: LogOutUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
     private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val updateActivateMatchingUseCase: UpdateActivateMatchingUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<AccountSettingUiState, AccountSettingSideEffect, AccountSettingIntent>(
     savedStateHandle
@@ -25,7 +27,7 @@ class AccountSettingViewModel @Inject constructor(
     init {
         launch {
             val profile = getUserProfileUseCase()
-            reduce { copy(isMatchingActive = profile.isMatchingActive) }
+            reduce { copy(isMatchActivated = profile.isMatchActivated) }
         }
     }
 
@@ -86,8 +88,8 @@ class AccountSettingViewModel @Inject constructor(
 
     private fun changeMatchingActive() {
         launch {
-            // TODO : 매칭 활성화 on/off 로직
-            reduce { copy(isMatchingActive = !isMatchingActive) }
+            updateActivateMatchingUseCase(isActivate = !currentState.isMatchActivated)
+            reduce { copy(isMatchActivated = !isMatchActivated) }
         }
     }
 
