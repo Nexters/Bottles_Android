@@ -8,6 +8,7 @@ data class UserProfileResponse(
     @SerialName("userName") val userName: String,
     @SerialName("age") val age: Int,
     @SerialName("blockedUserCount") val blockedUserCount: Int,
+    @SerialName("isMatchingActive") val isMatchingActive: Boolean,
     @SerialName("imageUrl") val imageUrl: String?,
     @SerialName("introduction") val introduction: List<QuestionAndAnswerDTO>,
     @SerialName("profileSelect") val profileSelect: UserProfileSelectDTO?,

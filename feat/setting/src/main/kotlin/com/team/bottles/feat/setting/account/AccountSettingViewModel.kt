@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.auth.usecase.DeleteUserUseCase
 import com.team.bottles.core.domain.auth.usecase.LogOutUseCase
+import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
 import com.team.bottles.feat.setting.account.mvi.AccountSettingIntent
 import com.team.bottles.feat.setting.account.mvi.AccountSettingSideEffect
 import com.team.bottles.feat.setting.account.mvi.AccountSettingUiState
@@ -15,10 +16,19 @@ import javax.inject.Inject
 class AccountSettingViewModel @Inject constructor(
     private val logOutUseCase: LogOutUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<AccountSettingUiState, AccountSettingSideEffect, AccountSettingIntent>(
     savedStateHandle
 ) {
+
+    init {
+        launch {
+            val profile = getUserProfileUseCase()
+            reduce { copy(isMatchingActive = profile.isMatchingActive) }
+        }
+    }
+
     override fun createInitialState(savedStateHandle: SavedStateHandle): AccountSettingUiState =
         AccountSettingUiState()
 
