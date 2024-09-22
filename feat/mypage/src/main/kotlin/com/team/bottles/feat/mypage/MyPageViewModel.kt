@@ -26,10 +26,15 @@ class MyPageViewModel @Inject constructor(
     init {
         launch {
             val profile = getUserProfileUseCase()
-            val userImageUrl = profile.imageUrl
-            val userName = profile.userName
-            val userAge = profile.age
-            reduce { copy(imageUrl = userImageUrl, userName = userName, userAge = userAge) }
+
+            reduce {
+                copy(
+                    imageUrl = profile.imageUrl,
+                    userName = profile.userName,
+                    userAge = profile.age,
+                    blockedUserValue = profile.blockedUserCount
+                )
+            }
         }
     }
 
@@ -98,8 +103,12 @@ class MyPageViewModel @Inject constructor(
     private fun updateBlockContact() {
         launch {
             updateBlockingContactsUseCase(contacts = currentState.inDeviceContacts)
-            // TODO : 차단한 연락처 갯수 얻는 API 호출
-            reduce { copy(showDialog = false) }
+            val profile = getUserProfileUseCase()
+
+            reduce {
+                copy(showDialog = false, blockedUserValue = profile.blockedUserCount)
+            }
+            postSideEffect(MyPageSideEffect.CompleteBlockContacts)
         }
     }
 

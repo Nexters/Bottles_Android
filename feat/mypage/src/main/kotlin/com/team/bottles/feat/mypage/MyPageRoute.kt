@@ -52,6 +52,7 @@ internal fun MyPageRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
+                is MyPageSideEffect.CompleteBlockContacts -> Toast.makeText(context, "차단이 완료됐어요", Toast.LENGTH_SHORT).show()
                 is MyPageSideEffect.NavigateToEditProfile -> navigateToEditProfile()
                 is MyPageSideEffect.NavigateToSettingNotification -> navigateToSettingNotification()
                 is MyPageSideEffect.NavigateToSettingAccountManagement -> navigateToSettingAccountManagement()
