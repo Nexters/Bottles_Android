@@ -15,6 +15,7 @@ fun UserProfileResponse.toUserProfile(): UserProfile =
     UserProfile(
         userName = this.userName,
         age = this.age,
+        blockedUserCount = this.blockedUserCount,
         imageUrl = this.imageUrl?: "",
         introduction = this.introduction.map { dto -> dto.toQuestionAndAnswer() },
         profileSelect = this.profileSelect?.toUserProfileSelect()?: UserProfileSelect()
