@@ -56,7 +56,7 @@ internal fun AccountSettingScreen(
 
         AccountSetting(
             modifier = Modifier.padding(horizontal = 16.dp),
-            isMatchingActive = uiState.isMatchingActive,
+            isMatchingActive = uiState.isMatchActivated,
             onChangeMatchingActive = { onIntent(AccountSettingIntent.ClickMatchingActiveToggleButton) },
             onClickLogOut = { onIntent(AccountSettingIntent.ClickLogOutButton) },
             onClickDeleteUser = { onIntent(AccountSettingIntent.ClickDeleteUserButton) },

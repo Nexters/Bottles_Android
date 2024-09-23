@@ -17,4 +17,6 @@ interface UserRepository {
 
     suspend fun updateSettingNotification(notification: Notification)
 
+    suspend fun updateActivateMatching(isActivate: Boolean)
+
 }

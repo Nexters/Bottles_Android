@@ -6,6 +6,8 @@ import com.team.bottles.core.domain.user.usecase.GetSettingNotificationsUseCase
 import com.team.bottles.core.domain.user.usecase.GetSettingNotificationsUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCase
 import com.team.bottles.core.domain.user.usecase.ReportUserUseCaseImpl
+import com.team.bottles.core.domain.user.usecase.UpdateActivateMatchingUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateActivateMatchingUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCase
@@ -44,5 +46,10 @@ abstract class UserUseCaseModule {
     abstract fun bindsUpdateSettingNotificationUseCase(
         useCaseImpl: UpdateSettingNotificationUseCaseImpl
     ): UpdateSettingNotificationUseCase
+
+    @Binds
+    abstract fun bindsUpdateActivateMatchingUseCase(
+        useCaseImpl: UpdateActivateMatchingUseCaseImpl
+    ): UpdateActivateMatchingUseCase
 
 }

@@ -11,22 +11,15 @@ plugins {
 android {
     namespace = "com.team.bottles.feat.profile"
 
-    buildTypes {
-        val debugUrl = "BOTTLES_CREATE_PROFILE_URL"
+    defaultConfig {
+        val urls = listOf("BOTTLES_CREATE_PROFILE_URL", "BOTTLES_PROFILE_EDIT_URL")
         val properties = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
 
-        getByName("release") {
+        urls.forEach { url ->
             buildConfigField(
                 "String",
-                debugUrl, // TODO : 릴리즈 용 URL 생성 가능성 있음
-                properties.getProperty(debugUrl) // // TODO : 릴리즈 용 URL 생성 가능성 있음
-            )
-        }
-        getByName("debug") {
-            buildConfigField(
-                "String",
-                debugUrl,
-                properties.getProperty(debugUrl)
+                url,
+                properties.getProperty(url)
             )
         }
     }

@@ -33,14 +33,7 @@ internal fun MyPageRoute(
             if (isGranted) {
                 viewModel.fetchContacts()
             } else {
-                Toast.makeText(context,"연락처 권한을 동의 해야합니다.", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", context.packageName, null)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-
-                context.startActivity(intent)
+                viewModel.showAccessPermissionGuideDialog()
             }
         }
     )
@@ -52,6 +45,7 @@ internal fun MyPageRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
+                is MyPageSideEffect.CompleteBlockContacts -> Toast.makeText(context, "차단이 완료됐어요", Toast.LENGTH_SHORT).show()
                 is MyPageSideEffect.NavigateToEditProfile -> navigateToEditProfile()
                 is MyPageSideEffect.NavigateToSettingNotification -> navigateToSettingNotification()
                 is MyPageSideEffect.NavigateToSettingAccountManagement -> navigateToSettingAccountManagement()
@@ -89,6 +83,14 @@ internal fun MyPageRoute(
                         val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.team.bottles&hl=ko"))
                         context.startActivity(webIntent)
                     }
+                }
+                is MyPageSideEffect.NavigateToSystemSetting -> {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", context.packageName, null)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+
+                    context.startActivity(intent)
                 }
             }
         }
