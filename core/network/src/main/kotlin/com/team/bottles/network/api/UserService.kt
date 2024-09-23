@@ -1,6 +1,7 @@
 package com.team.bottles.network.api
 
 import com.team.bottles.network.dto.auth.request.BlockContactListRequest
+import com.team.bottles.network.dto.user.request.ActivateMatchingRequest
 import com.team.bottles.network.dto.user.request.AlimyOnOffRequest
 import com.team.bottles.network.dto.user.request.ReportUserRequest
 import com.team.bottles.network.dto.user.response.AlimyResponse
@@ -26,6 +27,11 @@ interface UserService {
     @POST("/api/v1/user/alimy")
     suspend fun postSettingNotification(
         @Body request: AlimyOnOffRequest
+    )
+
+    @POST("/api/v1/profile/activate/matching")
+    suspend fun postActivateMatching(
+        @Body request: ActivateMatchingRequest
     )
 
 }

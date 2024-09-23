@@ -2,6 +2,7 @@ package com.team.bottles.network.datasource
 
 import com.team.bottles.network.api.UserService
 import com.team.bottles.network.dto.auth.request.BlockContactListRequest
+import com.team.bottles.network.dto.user.request.ActivateMatchingRequest
 import com.team.bottles.network.dto.user.request.AlimyOnOffRequest
 import com.team.bottles.network.dto.user.request.ReportUserRequest
 import com.team.bottles.network.dto.user.response.AlimyResponse
@@ -24,6 +25,10 @@ class UserDataSourceImpl @Inject constructor(
 
     override suspend fun updateSettingNotification(request: AlimyOnOffRequest) {
         userService.postSettingNotification(request = request)
+    }
+
+    override suspend fun updateActivateMatching(request: ActivateMatchingRequest) {
+        userService.postActivateMatching(request = request)
     }
 
 }

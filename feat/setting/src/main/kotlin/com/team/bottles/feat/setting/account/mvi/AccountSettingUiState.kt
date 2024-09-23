@@ -5,7 +5,7 @@ import com.team.bottles.core.common.UiState
 data class AccountSettingUiState(
     val showDialog: Boolean = false,
     val dialogType: SettingAlertDialogType = SettingAlertDialogType.LOG_OUT,
-    val isMatchingActive: Boolean = false,
+    val isMatchActivated: Boolean = true,
 ) : UiState
 
 enum class SettingAlertDialogType(

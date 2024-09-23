@@ -8,4 +8,7 @@ sealed interface ProfileNavigator {
     @Serializable
     data object Introduction: ProfileNavigator
 
+    @Serializable
+    data object Edit: ProfileNavigator
+
 }

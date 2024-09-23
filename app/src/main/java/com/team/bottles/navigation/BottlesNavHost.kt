@@ -20,6 +20,7 @@ import com.team.bottles.feat.mypage.navigation.myPageScreen
 import com.team.bottles.feat.onboarding.navigation.onboardingScreen
 import com.team.bottles.feat.pingpong.navigation.pingPongScreen
 import com.team.bottles.feat.profile.navigation.createProfileScreen
+import com.team.bottles.feat.profile.navigation.editProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
 import com.team.bottles.feat.report.navigation.reportScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
@@ -70,7 +71,7 @@ fun BottlesNavHost(
                 navigateToReport = ::navigateToReport
             )
             myPageScreen(
-                navigateToEditProfile = {}, // TODO : 프로필 수정 웹뷰 완성시 연결
+                navigateToEditProfile = ::navigateToEditProfile,
                 navigateToSettingNotification = ::navigateToSettingNotification,
                 navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,
             )
@@ -83,6 +84,7 @@ fun BottlesNavHost(
                 navigateToMyPage = { popBackStack() }
             )
             notificationSettingScreen(navigateToMyPage = { popBackStack() })
+            editProfileScreen(navigateToMyPage = ::navigateToMyPage)
         }
     }
 }
@@ -136,3 +138,6 @@ fun NavController.navigateToSettingAccountManagement() =
 
 fun NavController.navigateToSettingNotification() =
     navigate(SettingNavigator.Notification)
+
+fun NavController.navigateToEditProfile() =
+    navigate(ProfileNavigator.Edit)

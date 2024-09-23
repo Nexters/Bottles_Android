@@ -26,10 +26,15 @@ class MyPageViewModel @Inject constructor(
     init {
         launch {
             val profile = getUserProfileUseCase()
-            val userImageUrl = profile.imageUrl
-            val userName = profile.userName
-            val userAge = profile.age
-            reduce { copy(imageUrl = userImageUrl, userName = userName, userAge = userAge) }
+
+            reduce {
+                copy(
+                    imageUrl = profile.imageUrl,
+                    userName = profile.userName,
+                    userAge = profile.age,
+                    blockedUserValue = profile.blockedUserCount
+                )
+            }
         }
     }
 
@@ -46,8 +51,12 @@ class MyPageViewModel @Inject constructor(
             is MyPageIntent.ClickAsk -> navigateToKakaoBusinessChannel()
             is MyPageIntent.ClickTermsOfUse -> navigateToTermsOfUseNotion()
             is MyPageIntent.ClickPolicy -> navigateToPolicyNotion()
-            is MyPageIntent.ClickConfirmButton -> updateBlockContact()
-            is MyPageIntent.CloseDialog -> closeDialog()
+            is MyPageIntent.ClickConfirmBlockContacts -> updateBlockContact()
+            is MyPageIntent.CloseBlockContactsDialog -> closeBlockContactsDialog()
+            is MyPageIntent.ClickConfirmContactAccessButton -> {
+                navigateToSystemSetting()
+                closeAccessPermissionGuideDialog()
+            }
         }
     }
 
@@ -88,18 +97,30 @@ class MyPageViewModel @Inject constructor(
     }
 
     private fun showBlockContactDialog() {
-        reduce { copy(showDialog = true) }
+        reduce { copy(showBlockContactsDialog = true) }
     }
 
-    private fun closeDialog() {
-        reduce { copy(showDialog = false) }
+    private fun closeBlockContactsDialog() {
+        reduce { copy(showBlockContactsDialog = false) }
+    }
+
+    private fun closeAccessPermissionGuideDialog() {
+        reduce { copy(showAccessPermissionGuideDialog = false) }
+    }
+
+    private fun navigateToSystemSetting() {
+        postSideEffect(MyPageSideEffect.NavigateToSystemSetting)
     }
 
     private fun updateBlockContact() {
         launch {
             updateBlockingContactsUseCase(contacts = currentState.inDeviceContacts)
-            // TODO : 차단한 연락처 갯수 얻는 API 호출
-            reduce { copy(showDialog = false) }
+            val profile = getUserProfileUseCase()
+
+            reduce {
+                copy(showBlockContactsDialog = false, blockedUserValue = profile.blockedUserCount)
+            }
+            postSideEffect(MyPageSideEffect.CompleteBlockContacts)
         }
     }
 
@@ -120,6 +141,10 @@ class MyPageViewModel @Inject constructor(
             reduce { copy(inDeviceContacts = contacts) }
             showBlockContactDialog()
         }
+    }
+
+    fun showAccessPermissionGuideDialog() {
+        reduce { copy(showAccessPermissionGuideDialog = true) }
     }
 
 }

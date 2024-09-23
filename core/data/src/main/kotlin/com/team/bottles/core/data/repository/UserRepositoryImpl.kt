@@ -7,6 +7,7 @@ import com.team.bottles.core.domain.user.repository.UserRepository
 import com.team.bottles.local.datasource.DeviceDataSource
 import com.team.bottles.network.datasource.UserDataSource
 import com.team.bottles.network.dto.auth.request.BlockContactListRequest
+import com.team.bottles.network.dto.user.request.ActivateMatchingRequest
 import com.team.bottles.network.dto.user.request.AlimyOnOffRequest
 import com.team.bottles.network.dto.user.request.ReportUserRequest
 import javax.inject.Inject
@@ -48,6 +49,10 @@ class UserRepositoryImpl @Inject constructor(
                 enabled = notification.enabled
             )
         )
+    }
+
+    override suspend fun updateActivateMatching(isActivate: Boolean) {
+        userDataSource.updateActivateMatching(request = ActivateMatchingRequest(activate = isActivate))
     }
 
 }
