@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ProfileNavigator
 import com.team.bottles.feat.profile.createprofile.CreateProfileRoute
+import com.team.bottles.feat.profile.edit.EditProfileRoute
 import com.team.bottles.feat.profile.introduction.IntroductionRoute
 
 fun NavGraphBuilder.createProfileScreen(
@@ -23,5 +24,15 @@ fun NavGraphBuilder.introductionScreen(
 ) {
     composable<ProfileNavigator.Introduction> {
         IntroductionRoute(navigateToSandBeach = navigateToSandBeach)
+    }
+}
+
+fun NavGraphBuilder.editProfileScreen(
+    navigateToMyPage: () -> Unit
+) {
+    composable<ProfileNavigator.Edit> {
+        EditProfileRoute(
+            navigateToMyPage = navigateToMyPage
+        )
     }
 }

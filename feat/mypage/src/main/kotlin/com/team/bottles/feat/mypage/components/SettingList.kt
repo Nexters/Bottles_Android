@@ -35,12 +35,12 @@ internal fun SettingList(
             space = BottlesTheme.spacing.small
         )
     ) {
-        /*BottlesCard {
+        BottlesCard {
             BottlesSettingItemWithArrow(
                 title = "프로필 수정",
                 onClickItem = onClickEditProfile
             )
-        }*/ // TODO : 웹뷰 작업 완료시 기능 추가
+        }
 
         BottlesCard(
             verticalArrangement = Arrangement.spacedBy(
