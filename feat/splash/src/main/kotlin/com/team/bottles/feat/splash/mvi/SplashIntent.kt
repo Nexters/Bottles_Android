@@ -6,4 +6,6 @@ sealed interface SplashIntent : UiIntent {
 
     data object ClickConfirmButton : SplashIntent
 
+    data object ClickRetryButton : SplashIntent
+
 }
