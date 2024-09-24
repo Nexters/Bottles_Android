@@ -25,7 +25,7 @@ import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 @Composable
-internal fun BottlesErrorScreen(
+fun BottlesErrorScreen(
     modifier: Modifier = Modifier,
     onClickBackButton: () -> Unit,
     onClickRetryButton: () -> Unit,
