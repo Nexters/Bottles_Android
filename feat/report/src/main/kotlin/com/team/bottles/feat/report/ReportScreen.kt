@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -19,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -67,7 +70,10 @@ internal fun ReportScreen(
                 detectTapGestures(onTap = {
                     focusManager.clearFocus()
                 })
-            },
+            }
+            .systemBarsPadding()
+            .imePadding(),
+        containerColor = Color.Transparent,
         topBar = {
             BottlesTopBar(
                 leadingIcon = {
@@ -89,7 +95,7 @@ internal fun ReportScreen(
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -133,6 +139,8 @@ internal fun ReportScreen(
                     state = uiState.reportContentsState,
                     interactionSource = interactionSource
                 )
+                
+                Spacer(modifier = Modifier.height(height = innerPadding.calculateBottomPadding()))
             }
         }
     }
