@@ -8,7 +8,9 @@ import java.io.File
 
 @Stable
 data class IntroductionUiState(
+    val isError: Boolean = false,
     val isLoading: Boolean = false,
+    val state: IntroductionState = IntroductionState.INIT,
     val step: IntroductionStep = IntroductionStep.INPUT_INTRODUCTION,
     val maxLength: Int = 300,
     val minLength: Int = 50,
@@ -22,6 +24,13 @@ data class IntroductionUiState(
             IntroductionStep.INPUT_INTRODUCTION -> introduce.length >= minLength
             IntroductionStep.SELECT_USER_IMAGE -> imageFile != null
         }
+
+    enum class IntroductionState {
+        INIT,
+        INPUT_INTRODUCTION,
+        UPLOAD_IMAGE,
+        ;
+    }
 }
 
 enum class IntroductionStep(

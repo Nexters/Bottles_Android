@@ -17,4 +17,8 @@ sealed interface IntroductionIntent : UiIntent {
 
     data object ClickDeleteButton : IntroductionIntent
 
+    data object ClickRetryButton : IntroductionIntent
+
+    data object ClickErrorScreenBackButton : IntroductionIntent
+
 }

@@ -33,6 +33,7 @@ import com.team.bottles.core.designsystem.components.textfield.BottlesLinesMaxLe
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.core.ui.BottlesLoadingScreen
 import com.team.bottles.core.ui.CardProfile
 import com.team.bottles.core.ui.model.UserKeyPoint
@@ -41,7 +42,6 @@ import com.team.bottles.feat.profile.introduction.component.Title
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionUiState
-import java.io.File
 
 @Composable
 internal fun IntroductionScreen(
@@ -158,6 +158,14 @@ internal fun IntroductionScreen(
             BottlesLoadingScreen()
         }
     }
+
+    if (uiState.isError) {
+        BottlesErrorScreen(
+            onClickBackButton = { onIntent(IntroductionIntent.ClickBackButton) },
+            onClickRetryButton = { onIntent(IntroductionIntent.ClickRetryButton) },
+            isVisibleLeadingIcon = true
+        )
+    }
 }
 
 @Preview(heightDp = 1100)
@@ -167,6 +175,7 @@ private fun IntroductionScreenStep1Preview() {
         IntroductionScreen(
             uiState = IntroductionUiState(
                 isLoading = true,
+                //isError = true,
                 step = IntroductionStep.INPUT_INTRODUCTION,
                 keyPoints = UserKeyPoint.exampleUerKeyPoints(),
                 introduce = "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
