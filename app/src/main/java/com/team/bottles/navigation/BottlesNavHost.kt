@@ -9,6 +9,7 @@ import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
 import SplashNavigator
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -30,7 +31,8 @@ import com.team.bottles.feat.splash.splashScreen
 
 @Composable
 fun BottlesNavHost(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    innerPadding: PaddingValues,
 ) {
     NavHost(
         navController = navHostController,
@@ -56,6 +58,7 @@ fun BottlesNavHost(
                 navigateToOnboarding = ::navigateToOnboarding
             )
             sandBeachScreen(
+                innerPadding = innerPadding,
                 navigateToIntroduction = ::navigateToIntroduction,
                 navigateToArrivedBottles = ::navigateToArrivedBottles,
                 navigateToBottleBox = ::navigateToBottleBox

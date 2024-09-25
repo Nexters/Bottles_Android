@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +25,7 @@ import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
 @Composable
 internal fun SandBeachRoute(
     viewModel: SandBeachViewModel = hiltViewModel(),
+    innerPadding: PaddingValues,
     navigateToIntroduction: () -> Unit,
     navigateToArrivedBottles: () -> Unit,
     navigateToBottleBox: () -> Unit,
@@ -76,6 +78,7 @@ internal fun SandBeachRoute(
     }
 
     SandBeachScreen(
+        innerPadding = innerPadding,
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )

@@ -3,10 +3,12 @@ package com.team.bottles.feat.sandbeach
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -34,6 +36,7 @@ import com.team.bottles.feat.sandbeach.mvi.SandBeachUiState
 
 @Composable
 internal fun SandBeachScreen(
+    innerPadding: PaddingValues,
     uiState: SandBeachUiState,
     onIntent: (SandBeachIntent) -> Unit
 ) {
@@ -49,12 +52,21 @@ internal fun SandBeachScreen(
 
     if (uiState.isError) {
         BottlesErrorScreen(
-            onClickBackButton = {  },
+            onClickBackButton = { },
             onClickRetryButton = { onIntent(SandBeachIntent.ClickRetryButton) }
         )
     } else {
-        Column(
+        Image(
             modifier = Modifier.fillMaxSize(),
+            painter = painterResource(id = R.drawable.bg_sand_beach),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues = innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             BottlesTopBar(
@@ -131,7 +143,8 @@ private fun SandBeachScreenPreview() {
                 uiState = SandBeachUiState(
                     bottleStatus = BottleStatus.IN_ARRIVED_BOTTLE,
                 ),
-                onIntent = {}
+                onIntent = {},
+                innerPadding = PaddingValues()
             )
         }
     }

@@ -49,11 +49,12 @@ enum class BottomNavItem(
 
 @Composable
 fun BottlesBottomNavBar(
+    modifier: Modifier = Modifier,
     onClickItem: (BottomNavItem) -> Unit,
     currentSelectedItem: BottomNavItem,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .shadow(
                 elevation = 24.dp,
