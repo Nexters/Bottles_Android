@@ -9,4 +9,6 @@ sealed interface BottleBoxIntent : UiIntent {
 
     data class ClickTopTab(val tab: BottleBoxUiState.BottleBoxTab) : BottleBoxIntent
 
+    data object ClickRetryButton : BottleBoxIntent
+
 }

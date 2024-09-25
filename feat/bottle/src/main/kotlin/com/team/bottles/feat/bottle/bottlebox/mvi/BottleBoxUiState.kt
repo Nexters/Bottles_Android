@@ -6,7 +6,8 @@ import com.team.bottles.core.ui.model.Bottle
 data class BottleBoxUiState(
     val topTab: BottleBoxTab = BottleBoxTab.TALKING,
     val talkingBottles: List<Bottle> = emptyList(),
-    val completeBottles: List<Bottle> = emptyList()
+    val completeBottles: List<Bottle> = emptyList(),
+    val isError: Boolean = false,
 ) : UiState {
 
     enum class BottleBoxTab(val tabName: String) {

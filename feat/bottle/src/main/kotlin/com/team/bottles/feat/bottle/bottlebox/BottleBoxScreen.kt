@@ -17,6 +17,7 @@ import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
 import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonType
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottleContents
+import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxIntent
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxUiState
 import kotlinx.collections.immutable.toImmutableList
@@ -26,48 +27,57 @@ internal fun BottleBoxScreen(
     uiState: BottleBoxUiState,
     onIntent: (BottleBoxIntent) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        BottlesTopBar()
+    if (uiState.isError) {
+        BottlesErrorScreen(
+            onClickBackButton = { },
+            onClickRetryButton = { onIntent(BottleBoxIntent.ClickRetryButton) }
+        )
+    } else {
+        Column(modifier = Modifier.fillMaxSize()) {
+            BottlesTopBar()
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(BottlesTheme.padding.medium),
-            horizontalArrangement = Arrangement.spacedBy(
-                space = BottlesTheme.spacing.extraSmall)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(BottlesTheme.padding.medium),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = BottlesTheme.spacing.extraSmall
+                )
             ) {
-            BottleBoxUiState.BottleBoxTab.entries.forEach { tab ->
-                BottlesOutLinedButton(
-                    text = tab.tabName,
-                    buttonType = OutlinedButtonType.SM,
-                    onClick = { onIntent(BottleBoxIntent.ClickTopTab(tab = tab)) },
-                    contentHorizontalPadding = BottlesTheme.spacing.small,
-                    state = if (tab == uiState.topTab) OutlinedButtonState.SELECTED
-                    else OutlinedButtonState.ENABLED
-                )
+                BottleBoxUiState.BottleBoxTab.entries.forEach { tab ->
+                    BottlesOutLinedButton(
+                        text = tab.tabName,
+                        buttonType = OutlinedButtonType.SM,
+                        onClick = { onIntent(BottleBoxIntent.ClickTopTab(tab = tab)) },
+                        contentHorizontalPadding = BottlesTheme.spacing.small,
+                        state = if (tab == uiState.topTab) OutlinedButtonState.SELECTED
+                        else OutlinedButtonState.ENABLED
+                    )
+                }
             }
-        }
 
-        when(uiState.topTab) {
-            BottleBoxUiState.BottleBoxTab.TALKING -> {
-                BottleContents(
-                    bottles = uiState.talkingBottles.toImmutableList(),
-                    emptyText = stringResource(id = R.string.empty_bottle_box),
-                    emptyImage = R.drawable.illustration_basket,
-                    onClickItem = { bottle ->
-                        onIntent(BottleBoxIntent.ClickBottleItem(bottle = bottle))
-                    }
-                )
-            }
-            BottleBoxUiState.BottleBoxTab.COMPLETE -> {
-                BottleContents(
-                    bottles = uiState.completeBottles.toImmutableList(),
-                    emptyText = stringResource(id = R.string.empty_bottle_box),
-                    emptyImage = R.drawable.illustration_basket,
-                    onClickItem = { bottle ->
-                        onIntent(BottleBoxIntent.ClickBottleItem(bottle = bottle))
-                    }
-                )
+            when (uiState.topTab) {
+                BottleBoxUiState.BottleBoxTab.TALKING -> {
+                    BottleContents(
+                        bottles = uiState.talkingBottles.toImmutableList(),
+                        emptyText = stringResource(id = R.string.empty_bottle_box),
+                        emptyImage = R.drawable.illustration_basket,
+                        onClickItem = { bottle ->
+                            onIntent(BottleBoxIntent.ClickBottleItem(bottle = bottle))
+                        }
+                    )
+                }
+
+                BottleBoxUiState.BottleBoxTab.COMPLETE -> {
+                    BottleContents(
+                        bottles = uiState.completeBottles.toImmutableList(),
+                        emptyText = stringResource(id = R.string.empty_bottle_box),
+                        emptyImage = R.drawable.illustration_basket,
+                        onClickItem = { bottle ->
+                            onIntent(BottleBoxIntent.ClickBottleItem(bottle = bottle))
+                        }
+                    )
+                }
             }
         }
     }
