@@ -16,6 +16,7 @@ import com.team.bottles.core.designsystem.components.etc.BottlesUserInfo
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottlesAlertConfirmDialog
 import com.team.bottles.core.ui.BottlesAlertDialogLeftDismissRightConfirm
+import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.mypage.components.SettingList
 import com.team.bottles.feat.mypage.mvi.MyPageIntent
 import com.team.bottles.feat.mypage.mvi.MyPageUiState
@@ -50,41 +51,48 @@ internal fun MyPageScreen(
         )
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(state = scrollState)
-    ) {
-        BottlesTopBar()
-
-        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
-
-        BottlesUserInfo(
-            modifier = Modifier.padding(horizontal = 32.dp),
-            imageUrl = uiState.imageUrl,
-            userName = uiState.userName,
-            userAge = uiState.userAge,
-            isBlur = false
+    if (uiState.isError) {
+        BottlesErrorScreen(
+            onClickBackButton = { },
+            onClickRetryButton = { onIntent(MyPageIntent.ClickRetry) }
         )
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(state = scrollState)
+        ) {
+            BottlesTopBar()
 
-        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
+            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
 
-        SettingList(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            onClickEditProfile = { onIntent(MyPageIntent.ClickEditProfile) },
-            onClickUpdateBlockContact = { onIntent(MyPageIntent.ClickUpdateBlockContact) },
-            onClickSettingNotification = { onIntent(MyPageIntent.ClickSettingNotification) },
-            onClickAccountManagement = { onIntent(MyPageIntent.ClickAccountManagement) },
-            onClickUpdateAppVersion = { onIntent(MyPageIntent.ClickUpdateAppVersion) },
-            onClickAsk = { onIntent(MyPageIntent.ClickAsk) },
-            onClickTermsOfUse = { onIntent(MyPageIntent.ClickTermsOfUse) },
-            onClickPolicy = { onIntent(MyPageIntent.ClickPolicy) },
-            blockedUserValue = uiState.blockedUserValue,
-            appVersion = uiState.appVersionName,
-            canUpdateAppVersion = uiState.canUpdateAppVersion
-        )
+            BottlesUserInfo(
+                modifier = Modifier.padding(horizontal = 32.dp),
+                imageUrl = uiState.imageUrl,
+                userName = uiState.userName,
+                userAge = uiState.userAge,
+                isBlur = false
+            )
 
-        Spacer(modifier = Modifier.height(height = 24.dp))
+            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
+
+            SettingList(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                onClickEditProfile = { onIntent(MyPageIntent.ClickEditProfile) },
+                onClickUpdateBlockContact = { onIntent(MyPageIntent.ClickUpdateBlockContact) },
+                onClickSettingNotification = { onIntent(MyPageIntent.ClickSettingNotification) },
+                onClickAccountManagement = { onIntent(MyPageIntent.ClickAccountManagement) },
+                onClickUpdateAppVersion = { onIntent(MyPageIntent.ClickUpdateAppVersion) },
+                onClickAsk = { onIntent(MyPageIntent.ClickAsk) },
+                onClickTermsOfUse = { onIntent(MyPageIntent.ClickTermsOfUse) },
+                onClickPolicy = { onIntent(MyPageIntent.ClickPolicy) },
+                blockedUserValue = uiState.blockedUserValue,
+                appVersion = uiState.appVersionName,
+                canUpdateAppVersion = uiState.canUpdateAppVersion
+            )
+
+            Spacer(modifier = Modifier.height(height = 24.dp))
+        }
     }
 }
 

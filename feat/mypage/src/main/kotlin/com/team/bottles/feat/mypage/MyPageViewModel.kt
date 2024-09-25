@@ -6,9 +6,12 @@ import com.team.bottles.core.domain.auth.usecase.GetLatestAppVersionUseCase
 import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
 import com.team.bottles.core.domain.user.usecase.GetContactsUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
+import com.team.bottles.exception.BottlesException
+import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.mypage.mvi.MyPageIntent
 import com.team.bottles.feat.mypage.mvi.MyPageSideEffect
 import com.team.bottles.feat.mypage.mvi.MyPageUiState
+import com.team.bottles.feat.mypage.mvi.MyPageUiState.MyPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,18 +27,7 @@ class MyPageViewModel @Inject constructor(
 ) {
 
     init {
-        launch {
-            val profile = getUserProfileUseCase()
-
-            reduce {
-                copy(
-                    imageUrl = profile.imageUrl,
-                    userName = profile.userName,
-                    userAge = profile.age,
-                    blockedUserValue = profile.blockedUserCount
-                )
-            }
-        }
+        initMyPage()
     }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): MyPageUiState =
@@ -57,11 +49,39 @@ class MyPageViewModel @Inject constructor(
                 navigateToSystemSetting()
                 closeAccessPermissionGuideDialog()
             }
+            is MyPageIntent.ClickRetry -> retry()
         }
     }
 
     override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
+        when (throwable) {
+            is BottlesException -> showErrorMessage(throwable.message?: "")
+            is BottlesNetworkException -> {
+                showErrorMessage(throwable.message?: "")
+                showErrorScreen()
+            }
+            else -> showErrorScreen()
+        }
+    }
+
+    private fun retry() {
+        closeErrorScreen()
+        when (currentState.myPageState) {
+            MyPageState.INIT -> initMyPage()
+            MyPageState.UPDATE_BLOCK_CONTACTS -> updateBlockContact()
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        postSideEffect(MyPageSideEffect.ShowErrorMessage(message = message))
+    }
+
+    private fun showErrorScreen() {
+        reduce { copy(isError = true, showBlockContactsDialog = false, showAccessPermissionGuideDialog = false) }
+    }
+
+    private fun closeErrorScreen() {
+        reduce { copy(isError = false) }
     }
 
     private fun navigateToEditProfile() {
@@ -114,6 +134,7 @@ class MyPageViewModel @Inject constructor(
 
     private fun updateBlockContact() {
         launch {
+            reduce { copy(myPageState = MyPageState.UPDATE_BLOCK_CONTACTS) }
             updateBlockingContactsUseCase(contacts = currentState.inDeviceContacts)
             val profile = getUserProfileUseCase()
 
@@ -124,14 +145,12 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun checkAppVersion() {
-        launch {
-            val latestAppVersionCode = getLatestAppVersionUseCase()
-            val currentAppVersion = currentState.appVersionCode
+    private suspend fun checkAppVersion() {
+        val latestAppVersionCode = getLatestAppVersionUseCase()
+        val currentAppVersion = currentState.appVersionCode
 
-            if (latestAppVersionCode > currentAppVersion) {
-                reduce { copy(canUpdateAppVersion = true) }
-            }
+        if (latestAppVersionCode > currentAppVersion) {
+            reduce { copy(canUpdateAppVersion = true) }
         }
     }
 
@@ -140,6 +159,23 @@ class MyPageViewModel @Inject constructor(
             val contacts = getContactsUseCase()
             reduce { copy(inDeviceContacts = contacts) }
             showBlockContactDialog()
+        }
+    }
+
+    private fun initMyPage() {
+        launch {
+            reduce { copy(myPageState = MyPageState.INIT) }
+            checkAppVersion()
+            val profile = getUserProfileUseCase()
+
+            reduce {
+                copy(
+                    imageUrl = profile.imageUrl,
+                    userName = profile.userName,
+                    userAge = profile.age,
+                    blockedUserValue = profile.blockedUserCount
+                )
+            }
         }
     }
 

@@ -24,4 +24,6 @@ sealed interface MyPageSideEffect : UiSideEffect {
 
     data object NavigateToSystemSetting : MyPageSideEffect
 
+    data class ShowErrorMessage(val message: String) : MyPageSideEffect
+
 }
