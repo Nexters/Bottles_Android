@@ -9,6 +9,9 @@ import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
 import SplashNavigator
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -36,7 +39,9 @@ fun BottlesNavHost(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = SplashNavigator
+        startDestination = SplashNavigator,
+        enterTransition = { fadeIn(animationSpec = tween(0)) },
+        exitTransition = { fadeOut(animationSpec = tween(0)) },
     ) {
         with(navHostController) {
             splashScreen(
