@@ -16,6 +16,7 @@ import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottlesAlertDialogLeftConfirmRightDismiss
+import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.setting.account.mvi.AccountSettingIntent
 import com.team.bottles.feat.setting.account.mvi.AccountSettingUiState
 import com.team.bottles.feat.setting.components.AccountSetting
@@ -37,30 +38,37 @@ internal fun AccountSettingScreen(
         )
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        BottlesTopBar(
-            leadingIcon = {
-                Icon(
-                    modifier = Modifier
-                        .noRippleClickable(onClick = { onIntent(AccountSettingIntent.ClickBackButton) }),
-                    painter = painterResource(id = R.drawable.ic_arrow_left_24),
-                    contentDescription = null,
-                    tint = BottlesTheme.color.icon.primary
-                )
-            }
+    if (uiState.isError) {
+        BottlesErrorScreen(
+            onClickBackButton = { },
+            onClickRetryButton = { onIntent(AccountSettingIntent.ClickRetryButton) }
         )
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            BottlesTopBar(
+                leadingIcon = {
+                    Icon(
+                        modifier = Modifier
+                            .noRippleClickable(onClick = { onIntent(AccountSettingIntent.ClickBackButton) }),
+                        painter = painterResource(id = R.drawable.ic_arrow_left_24),
+                        contentDescription = null,
+                        tint = BottlesTheme.color.icon.primary
+                    )
+                }
+            )
 
-        Spacer(modifier = Modifier.height(height = 32.dp))
+            Spacer(modifier = Modifier.height(height = 32.dp))
 
-        AccountSetting(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            isMatchingActive = uiState.isMatchActivated,
-            onChangeMatchingActive = { onIntent(AccountSettingIntent.ClickMatchingActiveToggleButton) },
-            onClickLogOut = { onIntent(AccountSettingIntent.ClickLogOutButton) },
-            onClickDeleteUser = { onIntent(AccountSettingIntent.ClickDeleteUserButton) },
-        )
+            AccountSetting(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                isMatchingActive = uiState.isMatchActivated,
+                onChangeMatchingActive = { onIntent(AccountSettingIntent.ClickMatchingActiveToggleButton) },
+                onClickLogOut = { onIntent(AccountSettingIntent.ClickLogOutButton) },
+                onClickDeleteUser = { onIntent(AccountSettingIntent.ClickDeleteUserButton) },
+            )
+        }
     }
 }
 

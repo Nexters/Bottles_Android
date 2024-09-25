@@ -16,4 +16,6 @@ sealed interface AccountSettingIntent : UiIntent {
 
     data object ClickDismissDialogButton : AccountSettingIntent
 
+    data object ClickRetryButton : AccountSettingIntent
+
 }
