@@ -1,6 +1,5 @@
 package com.team.bottles.core.data.repository
 
-import android.util.Log
 import com.team.bottles.core.data.mapper.toAuthResult
 import com.team.bottles.core.data.mapper.toLatestVersionCode
 import com.team.bottles.core.data.mapper.toMinimumVersionCode
@@ -11,7 +10,6 @@ import com.team.bottles.core.domain.auth.repository.AuthRepository
 import com.team.bottles.network.datasource.AuthDataSource
 import com.team.bottles.network.dto.auth.request.FcmUpdateRequest
 import com.team.bottles.network.dto.auth.request.KakaoSignInUpRequest
-import timber.log.Timber
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -78,7 +76,6 @@ class AuthRepositoryImpl @Inject constructor(
         tokenDataSource.getFcmDeviceToken()
 
     override suspend fun getLatestAppVersion(): Int {
-        Timber.tag("리프레쉬 토큰").d(tokenDataSource.getRefreshToken())
         return authDataSource.fetchRequiredMinimumAppVersion().toLatestVersionCode()
     }
 
