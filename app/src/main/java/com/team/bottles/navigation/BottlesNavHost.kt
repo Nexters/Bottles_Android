@@ -77,6 +77,7 @@ fun BottlesNavHost(
                 navigateToReport = ::navigateToReport
             )
             myPageScreen(
+                innerPadding = innerPadding,
                 navigateToEditProfile = ::navigateToEditProfile,
                 navigateToSettingNotification = ::navigateToSettingNotification,
                 navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,

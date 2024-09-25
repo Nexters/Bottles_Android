@@ -1,10 +1,12 @@
 package com.team.bottles.feat.mypage
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ import com.team.bottles.feat.mypage.mvi.MyPageUiState
 
 @Composable
 internal fun MyPageScreen(
+    innerPadding: PaddingValues,
     uiState: MyPageUiState,
     onIntent: (MyPageIntent) -> Unit
 ) {
@@ -53,6 +56,7 @@ internal fun MyPageScreen(
 
     if (uiState.isError) {
         BottlesErrorScreen(
+            modifier = Modifier.systemBarsPadding(),
             onClickBackButton = { },
             onClickRetryButton = { onIntent(MyPageIntent.ClickRetry) }
         )
@@ -60,6 +64,8 @@ internal fun MyPageScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(bottom = innerPadding.calculateBottomPadding())
+                .systemBarsPadding()
                 .verticalScroll(state = scrollState)
         ) {
             BottlesTopBar()
@@ -106,7 +112,8 @@ private fun MyPageScreenPreview() {
                 userAge = 15,
                 appVersionName = "1.0.0"
             ),
-            onIntent = {}
+            onIntent = {},
+            innerPadding = PaddingValues()
         )
     }
 }
