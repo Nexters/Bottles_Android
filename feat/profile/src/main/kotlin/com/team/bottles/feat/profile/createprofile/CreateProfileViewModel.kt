@@ -43,7 +43,7 @@ class CreateProfileViewModel @Inject constructor(
     }
 
     override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
+
     }
 
     private fun createProfile() {
