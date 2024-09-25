@@ -12,4 +12,6 @@ sealed interface SandBeachSideEffect : UiSideEffect {
 
     data object NavigateToPlayStore : SandBeachSideEffect
 
+    data class ShowErrorMessage(val message: String) : SandBeachSideEffect
+
 }

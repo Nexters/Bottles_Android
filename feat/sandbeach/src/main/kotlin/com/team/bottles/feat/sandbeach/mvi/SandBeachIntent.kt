@@ -10,4 +10,6 @@ sealed interface SandBeachIntent : UiIntent {
 
     data object ClickConfirmButton : SandBeachIntent
 
+    data object ClickRetryButton : SandBeachIntent
+
 }

@@ -43,7 +43,7 @@ internal fun SandBeachRoute(
     ) { isGranted ->
         if (isGranted) {
             viewModel.confirmPermission()
-            Toast.makeText(context, "알림에 동의 하였습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "알림 권한에 동의 하였습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -58,6 +58,7 @@ internal fun SandBeachRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when(sideEffect) {
+                is SandBeachSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 is SandBeachSideEffect.NavigateToIntroduction -> navigateToIntroduction()
                 is SandBeachSideEffect.NavigateToArrivedBottle -> navigateToArrivedBottles()
                 is SandBeachSideEffect.NavigateToBottleBox -> navigateToBottleBox()
