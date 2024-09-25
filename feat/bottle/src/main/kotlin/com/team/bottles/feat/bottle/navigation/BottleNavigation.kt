@@ -2,6 +2,7 @@ package com.team.bottles.feat.bottle.navigation
 
 import ArrivedBottlesNavigator
 import MainNavigator
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.team.bottles.feat.bottle.arrivedbottles.ArrivedBottlesRoute
@@ -20,9 +21,13 @@ fun NavGraphBuilder.arrivedBottlesScreen(
 }
 
 fun NavGraphBuilder.bottleBoxScreen(
+    innerPadding: PaddingValues,
     navigateToPingPong: (Long) -> Unit
 ) {
     composable<MainNavigator.BottlesBox> {
-        BottleBoxRoute(navigateToPingPong = navigateToPingPong)
+        BottleBoxRoute(
+            innerPadding = innerPadding,
+            navigateToPingPong = navigateToPingPong
+        )
     }
 }

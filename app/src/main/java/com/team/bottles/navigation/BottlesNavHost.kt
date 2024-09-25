@@ -67,7 +67,10 @@ fun BottlesNavHost(
                 navigateToSandBeach = ::navigateToSandBeach,
                 navigateToBottleBox = ::navigateToBottleBox
             )
-            bottleBoxScreen(navigateToPingPong = ::navigateToPingPong)
+            bottleBoxScreen(
+                innerPadding = innerPadding,
+                navigateToPingPong = ::navigateToPingPong
+            )
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
             pingPongScreen(
                 navigateToBottleBox = ::navigateToBottleBox,

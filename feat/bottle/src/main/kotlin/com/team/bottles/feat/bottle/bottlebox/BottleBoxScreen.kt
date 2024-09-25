@@ -2,10 +2,12 @@ package com.team.bottles.feat.bottle.bottlebox
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +26,7 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun BottleBoxScreen(
+    innerPadding: PaddingValues,
     uiState: BottleBoxUiState,
     onIntent: (BottleBoxIntent) -> Unit
 ) {
@@ -33,7 +36,12 @@ internal fun BottleBoxScreen(
             onClickRetryButton = { onIntent(BottleBoxIntent.ClickRetryButton) }
         )
     } else {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = innerPadding.calculateBottomPadding())
+                .systemBarsPadding()
+        ) {
             BottlesTopBar()
 
             Row(
@@ -88,6 +96,7 @@ internal fun BottleBoxScreen(
 private fun BottleBoxScreenPreview() {
     BottlesTheme {
         BottleBoxScreen(
+            innerPadding = PaddingValues(),
             uiState = BottleBoxUiState(),
             onIntent = {}
         )
