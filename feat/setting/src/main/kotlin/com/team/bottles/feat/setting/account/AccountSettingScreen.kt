@@ -40,8 +40,9 @@ internal fun AccountSettingScreen(
 
     if (uiState.isError) {
         BottlesErrorScreen(
-            onClickBackButton = { },
-            onClickRetryButton = { onIntent(AccountSettingIntent.ClickRetryButton) }
+            onClickBackButton = { onIntent(AccountSettingIntent.ClickBackButton) },
+            onClickRetryButton = { onIntent(AccountSettingIntent.ClickRetryButton) },
+            isVisibleLeadingIcon = true
         )
     } else {
         Column(
