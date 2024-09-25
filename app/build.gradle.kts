@@ -65,6 +65,7 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.core.navigator)
     implementation(projects.core.common)
+    implementation(projects.core.exception)
 
     implementation(projects.feat.bottle)
     implementation(projects.feat.sandbeach)

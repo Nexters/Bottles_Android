@@ -3,6 +3,7 @@ package com.team.bottles.feat.splash
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,6 +25,7 @@ fun SplashRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
+                is SplashSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 is SplashSideEffect.NavigateToSandBeach -> navigateToSandBeach()
                 is SplashSideEffect.NavigateToLoginEndpoint -> navigateToLoginEndpoint()
                 is SplashSideEffect.NavigateToOnboarding -> navigateToOnboarding()

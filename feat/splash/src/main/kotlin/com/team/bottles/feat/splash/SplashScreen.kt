@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottlesAlertConfirmDialog
+import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.splash.mvi.SplashIntent
 import com.team.bottles.feat.splash.mvi.SplashUiState
 
@@ -55,6 +56,13 @@ internal fun SplashScreen(
             tint = Color.White
         )
     }
+
+    if (uiState.isError) {
+        BottlesErrorScreen(
+            onClickBackButton = { },
+            onClickRetryButton = { onIntent(SplashIntent.ClickRetryButton) }
+        )
+    }
 }
 
 @Preview
@@ -63,7 +71,8 @@ private fun SplashScreenPreview() {
     BottlesTheme {
         SplashScreen(
             uiState = SplashUiState(
-                showDialog = true
+                //showDialog = true,
+                isError = true
             ),
             onIntent = {}
         )

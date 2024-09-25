@@ -14,4 +14,14 @@ data class MyPageUiState(
     val appVersionCode: Int = BuildConfig.VERSION_CODE,
     val canUpdateAppVersion: Boolean = false,
     val inDeviceContacts: List<String> = emptyList(),
-) : UiState
+    val myPageState: MyPageState = MyPageState.INIT,
+    val isError: Boolean = false,
+) : UiState {
+
+    enum class MyPageState {
+        INIT,
+        UPDATE_BLOCK_CONTACTS,
+        ;
+    }
+
+}

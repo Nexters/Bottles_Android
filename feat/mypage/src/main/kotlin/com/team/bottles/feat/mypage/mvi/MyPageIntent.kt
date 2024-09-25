@@ -26,4 +26,6 @@ sealed interface MyPageIntent : UiIntent {
 
     data object ClickConfirmContactAccessButton : MyPageIntent
 
+    data object ClickRetry : MyPageIntent
+
 }

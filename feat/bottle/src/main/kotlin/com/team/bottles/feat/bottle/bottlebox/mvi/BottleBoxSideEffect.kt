@@ -6,4 +6,6 @@ sealed interface BottleBoxSideEffect : UiSideEffect {
 
     data class NavigateToPingPong(val bottleId: Long) : BottleBoxSideEffect
 
+    data class ShowErrorMessage(val message: String) : BottleBoxSideEffect
+
 }

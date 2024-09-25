@@ -5,6 +5,7 @@ import com.team.bottles.feat.sandbeach.BuildConfig
 
 data class SandBeachUiState(
     val showDialog: Boolean = false,
+    val isError: Boolean = false,
     val bottleStatus: BottleStatus = BottleStatus.NONE_BOTTLE,
     val newBottleValue: Int = 0,
     val bottleBoxValue: Int = 0,

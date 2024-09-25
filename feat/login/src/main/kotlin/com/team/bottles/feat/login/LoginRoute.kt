@@ -1,7 +1,6 @@
 package com.team.bottles.feat.login
 
 import android.app.Activity
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,10 +23,12 @@ fun LoginRoute(
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val activity = LocalContext.current as Activity
     val kakaoClient by rememberUpdatedState(newValue = activity.clientEntryPoint.kakaoClient())
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
+                is LoginSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 is LoginSideEffect.NavigateToCreateProfile -> navigateToCreateProfile()
                 is LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
                 is LoginSideEffect.NavigateToSandBeach -> navigateToSandBeach()

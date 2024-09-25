@@ -68,7 +68,7 @@ internal fun OnboardingScreen(
                     .onGloballyPositioned {
                         bottomBarHeight = it.size.height
                     },
-                text = if (uiState.currentPage.ordinal + 2 != uiState.maxPage) "다음"
+                text = if (uiState.currentPage.ordinal + 1 != uiState.maxPage) "다음"
                 else "확인",
                 onClick = { onIntent(OnboardingIntent.ClickNextButton) },
                 enabled = true,

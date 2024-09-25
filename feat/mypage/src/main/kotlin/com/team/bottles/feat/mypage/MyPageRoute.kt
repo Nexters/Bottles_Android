@@ -39,12 +39,9 @@ internal fun MyPageRoute(
     )
 
     LaunchedEffect(Unit) {
-        viewModel.checkAppVersion()
-    }
-
-    LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
+                is MyPageSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 is MyPageSideEffect.CompleteBlockContacts -> Toast.makeText(context, "차단이 완료됐어요", Toast.LENGTH_SHORT).show()
                 is MyPageSideEffect.NavigateToEditProfile -> navigateToEditProfile()
                 is MyPageSideEffect.NavigateToSettingNotification -> navigateToSettingNotification()

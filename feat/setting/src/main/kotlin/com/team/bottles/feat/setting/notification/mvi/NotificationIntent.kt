@@ -14,4 +14,6 @@ sealed interface NotificationIntent : UiIntent {
 
     data object ClickMarketingResponseToggleButton : NotificationIntent
 
+    data object ClickRetryButton : NotificationIntent
+
 }

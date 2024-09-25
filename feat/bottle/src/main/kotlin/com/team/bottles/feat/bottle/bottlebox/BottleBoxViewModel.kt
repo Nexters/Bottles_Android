@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
 import com.team.bottles.core.ui.model.Bottle
+import com.team.bottles.exception.BottlesException
+import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxIntent
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxSideEffect
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxUiState
@@ -19,7 +21,7 @@ class BottleBoxViewModel @Inject constructor(
 ) {
 
     init {
-        getPingPongList()
+        initBottleBox()
     }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): BottleBoxUiState =
@@ -29,11 +31,31 @@ class BottleBoxViewModel @Inject constructor(
         when (intent) {
             is BottleBoxIntent.ClickBottleItem -> navigateToBottle(bottle = intent.bottle)
             is BottleBoxIntent.ClickTopTab -> changeTab(tab = intent.tab)
+            is BottleBoxIntent.ClickRetryButton -> retry()
         }
     }
 
     override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
+        when (throwable) {
+            is BottlesException -> showErrorMessage(throwable.message?: "")
+            is BottlesNetworkException -> {
+                showErrorMessage(throwable.message?: "")
+                showErrorScreen()
+            }
+            else -> showErrorScreen()
+        }
+    }
+
+    private fun retry() {
+        initBottleBox()
+    }
+
+    private fun showErrorMessage(message: String) {
+        postSideEffect(BottleBoxSideEffect.ShowErrorMessage(message = message))
+    }
+
+    private fun showErrorScreen() {
+        reduce { copy(isError = true) }
     }
 
     private fun navigateToBottle(bottle: Bottle) {
@@ -42,10 +64,10 @@ class BottleBoxViewModel @Inject constructor(
 
     private fun changeTab(tab: BottleBoxUiState.BottleBoxTab) {
         reduce { copy(topTab = tab) }
-        getPingPongList()
+        initBottleBox()
     }
 
-    private fun getPingPongList() {
+    private fun initBottleBox() {
         launch {
             getPingPongListUseCase().run {
                 reduce {

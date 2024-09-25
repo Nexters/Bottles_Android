@@ -6,6 +6,7 @@ import com.team.bottles.network.BuildConfig
 import com.team.bottles.network.datasource.AuthDataSource
 import com.team.bottles.network.interceptor.AuthAuthenticator
 import com.team.bottles.network.interceptor.AuthHeaderInterceptor
+import com.team.bottles.network.interceptor.ErrorInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,9 +69,11 @@ object NetworkModule {
     @Named("DefaultClient")
     fun provideDefaultOkHttpClient(
         logInterceptor: HttpLoggingInterceptor,
+        errorInterceptor: ErrorInterceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addNetworkInterceptor(logInterceptor)
+            .addInterceptor(errorInterceptor)
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
@@ -82,12 +85,14 @@ object NetworkModule {
     fun provideAuthOkHttpClient(
         logInterceptor: HttpLoggingInterceptor,
         authInterceptor: Interceptor,
-        authenticator: Authenticator
+        authenticator: Authenticator,
+        errorInterceptor: ErrorInterceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
             .authenticator(authenticator)
             .addNetworkInterceptor(logInterceptor)
             .addInterceptor(authInterceptor)
+            .addInterceptor(errorInterceptor)
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
