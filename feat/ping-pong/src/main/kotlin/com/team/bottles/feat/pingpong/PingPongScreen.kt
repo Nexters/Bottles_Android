@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -96,6 +97,7 @@ internal fun PingPongScreen(
                 })
             }
             .systemBarsPadding(),
+        containerColor = Color.Transparent,
         topBar = {
             PingPongTopBar(
                 onClickLeadingIcon = { onIntent(PingPongIntent.ClickBackButton) },
@@ -123,7 +125,6 @@ internal fun PingPongScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = BottlesTheme.color.background.primary)
                 .padding(innerPadding)
                 .nestedScroll(connection = pullRefreshState.nestedScrollConnection)
         ) {
