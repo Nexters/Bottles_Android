@@ -7,4 +7,17 @@ data class NotificationUiState(
     val isGoodFeelingArrived: Boolean = false,
     val isConversation: Boolean = false,
     val isMarketingResponse: Boolean = false,
-) : UiState
+    val isError: Boolean = false,
+    val notificationState: NotificationState = NotificationState.INIT
+) : UiState {
+
+    enum class NotificationState {
+        INIT,
+        FLOATING_BOTTLE,
+        GOOD_FEELING_ARRIVED,
+        CONVERSATION,
+        MARKETING_RESPONSE,
+        ;
+    }
+
+}
