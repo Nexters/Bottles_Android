@@ -1,6 +1,7 @@
 package com.team.bottles
 
 import android.app.Application
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -13,6 +14,7 @@ class BottlesApplication: Application() {
 
         initTimber()
         initKakaoLogin()
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
     }
 
     private fun initKakaoLogin() {
