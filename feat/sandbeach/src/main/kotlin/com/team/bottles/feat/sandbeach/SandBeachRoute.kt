@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +25,7 @@ import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
 @Composable
 internal fun SandBeachRoute(
     viewModel: SandBeachViewModel = hiltViewModel(),
+    innerPadding: PaddingValues,
     navigateToIntroduction: () -> Unit,
     navigateToArrivedBottles: () -> Unit,
     navigateToBottleBox: () -> Unit,
@@ -43,7 +45,7 @@ internal fun SandBeachRoute(
     ) { isGranted ->
         if (isGranted) {
             viewModel.confirmPermission()
-            Toast.makeText(context, "알림에 동의 하였습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "알림 권한에 동의 하였습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -58,6 +60,7 @@ internal fun SandBeachRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when(sideEffect) {
+                is SandBeachSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 is SandBeachSideEffect.NavigateToIntroduction -> navigateToIntroduction()
                 is SandBeachSideEffect.NavigateToArrivedBottle -> navigateToArrivedBottles()
                 is SandBeachSideEffect.NavigateToBottleBox -> navigateToBottleBox()
@@ -75,6 +78,7 @@ internal fun SandBeachRoute(
     }
 
     SandBeachScreen(
+        innerPadding = innerPadding,
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )

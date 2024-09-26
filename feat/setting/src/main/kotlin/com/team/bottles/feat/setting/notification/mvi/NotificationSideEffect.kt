@@ -6,4 +6,6 @@ sealed interface NotificationSideEffect : UiSideEffect {
 
     data object NavigateToMyPage : NotificationSideEffect
 
+    data class ShowErrorMessage(val message: String) : NotificationSideEffect
+
 }

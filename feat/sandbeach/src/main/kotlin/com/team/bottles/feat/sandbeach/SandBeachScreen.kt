@@ -3,10 +3,12 @@ package com.team.bottles.feat.sandbeach
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottlesAlertConfirmDialog
+import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.sandbeach.component.BottleStatusMessage
 import com.team.bottles.feat.sandbeach.component.InArrivedBottle
 import com.team.bottles.feat.sandbeach.component.InBottleBox
@@ -33,6 +36,7 @@ import com.team.bottles.feat.sandbeach.mvi.SandBeachUiState
 
 @Composable
 internal fun SandBeachScreen(
+    innerPadding: PaddingValues,
     uiState: SandBeachUiState,
     onIntent: (SandBeachIntent) -> Unit
 ) {
@@ -46,60 +50,78 @@ internal fun SandBeachScreen(
         )
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        BottlesTopBar(
-            centerContents = {
-                Icon(
-                    painter = painterResource(id = R.drawable.bottle_logo),
-                    contentDescription = null,
-                    tint = Color.Unspecified
-                )
-            }
+    if (uiState.isError) {
+        BottlesErrorScreen(
+            onClickBackButton = { },
+            onClickRetryButton = { onIntent(SandBeachIntent.ClickRetryButton) }
         )
-
-        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
-
-        BottleStatusMessage(
-            bottleStatus = uiState.bottleStatus,
-            newBottleValue = uiState.newBottleValue,
-            bottleBoxValue = uiState.bottleBoxValue
+    } else {
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(id = R.drawable.bg_sand_beach),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
         )
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues = innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            when (uiState.bottleStatus) {
-                BottleStatus.REQUIRE_INTRODUCTION -> {
-                    RequireIntroduction(
-                        onClickIntroduction = { onIntent(SandBeachIntent.ClickCreateIntroductionButton) }
+            BottlesTopBar(
+                centerContents = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.bottle_logo),
+                        contentDescription = null,
+                        tint = Color.Unspecified
                     )
                 }
-                BottleStatus.IN_ARRIVED_BOTTLE -> InArrivedBottle(bottleValue = uiState.newBottleValue)
-                BottleStatus.IN_BOTTLE_BOX -> InBottleBox()
-                BottleStatus.NONE_BOTTLE -> NoneBottle(afterArrivedTime = uiState.afterArrivedTime)
-            }
-
-            Image(
-                modifier = Modifier
-                    .sizeIn(
-                        maxWidth = 430.dp,
-                        maxHeight = 430.dp,
-                        minHeight = 280.dp,
-                        minWidth = 280.dp
-                    )
-                    .debounceNoRippleClickable(
-                        debounceTime = 200L,
-                        onClick = { onIntent(SandBeachIntent.ClickSandBeach) }
-                    ),
-                painter = painterResource(
-                    id = if (uiState.bottleStatus == BottleStatus.NONE_BOTTLE) R.drawable.illustration_island_bottle_false
-                    else R.drawable.illustration_island_bottle_true),
-                contentDescription = null
             )
+
+            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
+
+            BottleStatusMessage(
+                bottleStatus = uiState.bottleStatus,
+                newBottleValue = uiState.newBottleValue,
+                bottleBoxValue = uiState.bottleBoxValue
+            )
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                when (uiState.bottleStatus) {
+                    BottleStatus.REQUIRE_INTRODUCTION -> {
+                        RequireIntroduction(
+                            onClickIntroduction = { onIntent(SandBeachIntent.ClickCreateIntroductionButton) }
+                        )
+                    }
+
+                    BottleStatus.IN_ARRIVED_BOTTLE -> InArrivedBottle(bottleValue = uiState.newBottleValue)
+                    BottleStatus.IN_BOTTLE_BOX -> InBottleBox()
+                    BottleStatus.NONE_BOTTLE -> NoneBottle(afterArrivedTime = uiState.afterArrivedTime)
+                }
+
+                Image(
+                    modifier = Modifier
+                        .sizeIn(
+                            maxWidth = 430.dp,
+                            maxHeight = 430.dp,
+                            minHeight = 280.dp,
+                            minWidth = 280.dp
+                        )
+                        .debounceNoRippleClickable(
+                            debounceTime = 200L,
+                            onClick = { onIntent(SandBeachIntent.ClickSandBeach) }
+                        ),
+                    painter = painterResource(
+                        id = if (uiState.bottleStatus == BottleStatus.NONE_BOTTLE) R.drawable.illustration_island_bottle_false
+                        else R.drawable.illustration_island_bottle_true
+                    ),
+                    contentDescription = null
+                )
+            }
         }
     }
 }
@@ -121,7 +143,8 @@ private fun SandBeachScreenPreview() {
                 uiState = SandBeachUiState(
                     bottleStatus = BottleStatus.IN_ARRIVED_BOTTLE,
                 ),
-                onIntent = {}
+                onIntent = {},
+                innerPadding = PaddingValues()
             )
         }
     }

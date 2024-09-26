@@ -10,4 +10,6 @@ sealed interface IntroductionSideEffect: UiSideEffect {
 
     data class RequireSelectPhoto(val toastMessage: String) : IntroductionSideEffect
 
+    data class ShowErrorMessage(val message: String) : IntroductionSideEffect
+
 }

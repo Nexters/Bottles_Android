@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation(projects.core.datastore)
+    implementation(projects.core.exception)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter)

@@ -20,4 +20,10 @@ sealed interface MyPageSideEffect : UiSideEffect {
 
     data object NavigateToPlayStore : MyPageSideEffect
 
+    data object CompleteBlockContacts : MyPageSideEffect
+
+    data object NavigateToSystemSetting : MyPageSideEffect
+
+    data class ShowErrorMessage(val message: String) : MyPageSideEffect
+
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,7 +35,9 @@ internal fun StepTwo() {
             contentScale = ContentScale.FillWidth
         )
         Image(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .shadow(elevation = 25.dp),
             painter = painterResource(id = R.drawable.onboarding_qna_2),
             contentDescription = null,
             contentScale = ContentScale.FillWidth

@@ -6,9 +6,12 @@ import com.team.bottles.core.domain.auth.usecase.GetLatestAppVersionUseCase
 import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
 import com.team.bottles.core.domain.user.usecase.GetContactsUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
+import com.team.bottles.exception.BottlesException
+import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.mypage.mvi.MyPageIntent
 import com.team.bottles.feat.mypage.mvi.MyPageSideEffect
 import com.team.bottles.feat.mypage.mvi.MyPageUiState
+import com.team.bottles.feat.mypage.mvi.MyPageUiState.MyPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,13 +27,7 @@ class MyPageViewModel @Inject constructor(
 ) {
 
     init {
-        launch {
-            val profile = getUserProfileUseCase()
-            val userImageUrl = profile.imageUrl
-            val userName = profile.userName
-            val userAge = profile.age
-            reduce { copy(imageUrl = userImageUrl, userName = userName, userAge = userAge) }
-        }
+        initMyPage()
     }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): MyPageUiState =
@@ -46,13 +43,45 @@ class MyPageViewModel @Inject constructor(
             is MyPageIntent.ClickAsk -> navigateToKakaoBusinessChannel()
             is MyPageIntent.ClickTermsOfUse -> navigateToTermsOfUseNotion()
             is MyPageIntent.ClickPolicy -> navigateToPolicyNotion()
-            is MyPageIntent.ClickConfirmButton -> updateBlockContact()
-            is MyPageIntent.CloseDialog -> closeDialog()
+            is MyPageIntent.ClickConfirmBlockContacts -> updateBlockContact()
+            is MyPageIntent.CloseBlockContactsDialog -> closeBlockContactsDialog()
+            is MyPageIntent.ClickConfirmContactAccessButton -> {
+                navigateToSystemSetting()
+                closeAccessPermissionGuideDialog()
+            }
+            is MyPageIntent.ClickRetry -> retry()
         }
     }
 
     override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
+        when (throwable) {
+            is BottlesException -> showErrorMessage(throwable.message?: "")
+            is BottlesNetworkException -> {
+                showErrorMessage(throwable.message?: "")
+                showErrorScreen()
+            }
+            else -> showErrorScreen()
+        }
+    }
+
+    private fun retry() {
+        closeErrorScreen()
+        when (currentState.myPageState) {
+            MyPageState.INIT -> initMyPage()
+            MyPageState.UPDATE_BLOCK_CONTACTS -> updateBlockContact()
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        postSideEffect(MyPageSideEffect.ShowErrorMessage(message = message))
+    }
+
+    private fun showErrorScreen() {
+        reduce { copy(isError = true, showBlockContactsDialog = false, showAccessPermissionGuideDialog = false) }
+    }
+
+    private fun closeErrorScreen() {
+        reduce { copy(isError = false) }
     }
 
     private fun navigateToEditProfile() {
@@ -88,29 +117,40 @@ class MyPageViewModel @Inject constructor(
     }
 
     private fun showBlockContactDialog() {
-        reduce { copy(showDialog = true) }
+        reduce { copy(showBlockContactsDialog = true) }
     }
 
-    private fun closeDialog() {
-        reduce { copy(showDialog = false) }
+    private fun closeBlockContactsDialog() {
+        reduce { copy(showBlockContactsDialog = false) }
+    }
+
+    private fun closeAccessPermissionGuideDialog() {
+        reduce { copy(showAccessPermissionGuideDialog = false) }
+    }
+
+    private fun navigateToSystemSetting() {
+        postSideEffect(MyPageSideEffect.NavigateToSystemSetting)
     }
 
     private fun updateBlockContact() {
         launch {
+            reduce { copy(myPageState = MyPageState.UPDATE_BLOCK_CONTACTS) }
             updateBlockingContactsUseCase(contacts = currentState.inDeviceContacts)
-            // TODO : 차단한 연락처 갯수 얻는 API 호출
-            reduce { copy(showDialog = false) }
+            val profile = getUserProfileUseCase()
+
+            reduce {
+                copy(showBlockContactsDialog = false, blockedUserValue = profile.blockedUserCount)
+            }
+            postSideEffect(MyPageSideEffect.CompleteBlockContacts)
         }
     }
 
-    fun checkAppVersion() {
-        launch {
-            val latestAppVersionCode = getLatestAppVersionUseCase()
-            val currentAppVersion = currentState.appVersionCode
+    private suspend fun checkAppVersion() {
+        val latestAppVersionCode = getLatestAppVersionUseCase()
+        val currentAppVersion = currentState.appVersionCode
 
-            if (latestAppVersionCode > currentAppVersion) {
-                reduce { copy(canUpdateAppVersion = true) }
-            }
+        if (latestAppVersionCode > currentAppVersion) {
+            reduce { copy(canUpdateAppVersion = true) }
         }
     }
 
@@ -120,6 +160,27 @@ class MyPageViewModel @Inject constructor(
             reduce { copy(inDeviceContacts = contacts) }
             showBlockContactDialog()
         }
+    }
+
+    private fun initMyPage() {
+        launch {
+            reduce { copy(myPageState = MyPageState.INIT) }
+            checkAppVersion()
+            val profile = getUserProfileUseCase()
+
+            reduce {
+                copy(
+                    imageUrl = profile.imageUrl,
+                    userName = profile.userName,
+                    userAge = profile.age,
+                    blockedUserValue = profile.blockedUserCount
+                )
+            }
+        }
+    }
+
+    fun showAccessPermissionGuideDialog() {
+        reduce { copy(showAccessPermissionGuideDialog = true) }
     }
 
 }

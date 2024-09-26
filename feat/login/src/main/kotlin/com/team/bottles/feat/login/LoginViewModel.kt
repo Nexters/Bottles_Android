@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.auth.KakaoClientResult
 import com.team.bottles.core.domain.auth.usecase.LoginWithKakaoUseCase
+import com.team.bottles.exception.BottlesException
+import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.login.mvi.LoginIntent
 import com.team.bottles.feat.login.mvi.LoginSideEffect
 import com.team.bottles.feat.login.mvi.LoginUiState
@@ -27,7 +29,10 @@ class LoginViewModel @Inject constructor(
     }
 
     override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
+        when (throwable) {
+            is BottlesException -> showErrorMessage(throwable.message ?: "")
+            is BottlesNetworkException -> showErrorMessage(throwable.message ?: "")
+        }
     }
 
     private fun kakaoLoin(kakaoClientResult: KakaoClientResult) {
@@ -48,6 +53,10 @@ class LoginViewModel @Inject constructor(
 
     private fun startKakaoClient() {
         postSideEffect(LoginSideEffect.StartKakaoClient)
+    }
+
+    private fun showErrorMessage(message: String) {
+        postSideEffect(LoginSideEffect.ShowErrorMessage(message = message))
     }
 
 }

@@ -33,7 +33,11 @@ internal fun ArrivedBottlesScreen(
 
     if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
         BottlesWebView(
-            url = BuildConfig.BOTTLES_ARRIVED_BOTTLES_URL + "?accessToken=${uiState.token.accessToken}&refreshToken=${uiState.token.refreshToken}",
+            url = BuildConfig.BOTTLES_ARRIVED_BOTTLES_URL +
+                    "?accessToken=${uiState.token.accessToken}" +
+                    "&refreshToken=${uiState.token.refreshToken}" +
+                    "&device=${BuildConfig.DEVICE}" +
+                    "&version=${BuildConfig.APP_VERSION}",
             webView = webView
         )
     }

@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -21,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -33,6 +36,7 @@ import com.team.bottles.core.designsystem.components.textfield.BottlesLinesMaxLe
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.core.ui.BottlesLoadingScreen
 import com.team.bottles.core.ui.CardProfile
 import com.team.bottles.core.ui.model.UserKeyPoint
@@ -41,7 +45,6 @@ import com.team.bottles.feat.profile.introduction.component.Title
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionUiState
-import java.io.File
 
 @Composable
 internal fun IntroductionScreen(
@@ -62,43 +65,53 @@ internal fun IntroductionScreen(
     }
 
     Box {
-        Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .pointerInput(Unit) {
-                    detectTapGestures(onTap = {
-                        focusManager.clearFocus()
-                    })
-                },
-            topBar = {
-                BottlesTopBar(
-                    modifier = Modifier.background(color = BottlesTheme.color.background.primary),
-                    leadingIcon = {
-                        Icon(
-                            modifier = Modifier
-                                .noRippleClickable(
-                                    onClick = { onIntent(IntroductionIntent.ClickBackButton) }
-                                ),
-                            painter = painterResource(id = R.drawable.ic_arrow_left_24),
-                            contentDescription = null,
-                            tint = BottlesTheme.color.icon.primary
-                        )
+        if (uiState.isError) {
+            BottlesErrorScreen(
+                onClickBackButton = { onIntent(IntroductionIntent.ClickBackButton) },
+                onClickRetryButton = { onIntent(IntroductionIntent.ClickRetryButton) },
+                isVisibleLeadingIcon = true
+            )
+        } else {
+            Scaffold(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .pointerInput(Unit) {
+                        detectTapGestures(onTap = {
+                            focusManager.clearFocus()
+                        })
                     }
-                )
-            },
-            bottomBar = {
-                BottlesBottomBar(
-                    text = uiState.step.buttonText,
-                    onClick = { onIntent(IntroductionIntent.ClickBottomButton) },
-                    enabled = uiState.isEnabledWithBottomButton
-                )
-            }
-        ) { innerPadding ->
-            Box(modifier = Modifier.padding(innerPadding)) {
+                    .systemBarsPadding()
+                    .imePadding(),
+                contentColor = Color.Transparent,
+                topBar = {
+                    BottlesTopBar(
+                        modifier = Modifier.background(color = BottlesTheme.color.background.primary),
+                        leadingIcon = {
+                            Icon(
+                                modifier = Modifier
+                                    .noRippleClickable(
+                                        onClick = { onIntent(IntroductionIntent.ClickBackButton) }
+                                    ),
+                                painter = painterResource(id = R.drawable.ic_arrow_left_24),
+                                contentDescription = null,
+                                tint = BottlesTheme.color.icon.primary
+                            )
+                        }
+                    )
+                },
+                bottomBar = {
+                    BottlesBottomBar(
+                        text = uiState.step.buttonText,
+                        onClick = { onIntent(IntroductionIntent.ClickBottomButton) },
+                        enabled = uiState.isEnabledWithBottomButton
+                    )
+                }
+            ) { innerPadding ->
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(color = BottlesTheme.color.background.primary)
+                        .padding(top = innerPadding.calculateTopPadding())
                         .padding(horizontal = BottlesTheme.spacing.medium)
                         .verticalScroll(state = scrollState),
                 ) {
@@ -149,7 +162,7 @@ internal fun IntroductionScreen(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
+                    Spacer(modifier = Modifier.height(height = innerPadding.calculateBottomPadding()))
                 }
             }
         }
@@ -167,6 +180,7 @@ private fun IntroductionScreenStep1Preview() {
         IntroductionScreen(
             uiState = IntroductionUiState(
                 isLoading = true,
+                //isError = true,
                 step = IntroductionStep.INPUT_INTRODUCTION,
                 keyPoints = UserKeyPoint.exampleUerKeyPoints(),
                 introduce = "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",

@@ -9,6 +9,10 @@ import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
 import SplashNavigator
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -20,6 +24,7 @@ import com.team.bottles.feat.mypage.navigation.myPageScreen
 import com.team.bottles.feat.onboarding.navigation.onboardingScreen
 import com.team.bottles.feat.pingpong.navigation.pingPongScreen
 import com.team.bottles.feat.profile.navigation.createProfileScreen
+import com.team.bottles.feat.profile.navigation.editProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
 import com.team.bottles.feat.report.navigation.reportScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
@@ -29,11 +34,14 @@ import com.team.bottles.feat.splash.splashScreen
 
 @Composable
 fun BottlesNavHost(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    innerPadding: PaddingValues,
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = SplashNavigator
+        startDestination = SplashNavigator,
+        enterTransition = { fadeIn(animationSpec = tween(0)) },
+        exitTransition = { fadeOut(animationSpec = tween(0)) },
     ) {
         with(navHostController) {
             splashScreen(
@@ -55,6 +63,7 @@ fun BottlesNavHost(
                 navigateToOnboarding = ::navigateToOnboarding
             )
             sandBeachScreen(
+                innerPadding = innerPadding,
                 navigateToIntroduction = ::navigateToIntroduction,
                 navigateToArrivedBottles = ::navigateToArrivedBottles,
                 navigateToBottleBox = ::navigateToBottleBox
@@ -63,14 +72,18 @@ fun BottlesNavHost(
                 navigateToSandBeach = ::navigateToSandBeach,
                 navigateToBottleBox = ::navigateToBottleBox
             )
-            bottleBoxScreen(navigateToPingPong = ::navigateToPingPong)
+            bottleBoxScreen(
+                innerPadding = innerPadding,
+                navigateToPingPong = ::navigateToPingPong
+            )
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
             pingPongScreen(
                 navigateToBottleBox = ::navigateToBottleBox,
                 navigateToReport = ::navigateToReport
             )
             myPageScreen(
-                navigateToEditProfile = {}, // TODO : 프로필 수정 웹뷰 완성시 연결
+                innerPadding = innerPadding,
+                navigateToEditProfile = ::navigateToEditProfile,
                 navigateToSettingNotification = ::navigateToSettingNotification,
                 navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,
             )
@@ -83,6 +96,7 @@ fun BottlesNavHost(
                 navigateToMyPage = { popBackStack() }
             )
             notificationSettingScreen(navigateToMyPage = { popBackStack() })
+            editProfileScreen(navigateToMyPage = ::navigateToMyPage)
         }
     }
 }
@@ -136,3 +150,6 @@ fun NavController.navigateToSettingAccountManagement() =
 
 fun NavController.navigateToSettingNotification() =
     navigate(SettingNavigator.Notification)
+
+fun NavController.navigateToEditProfile() =
+    navigate(ProfileNavigator.Edit)

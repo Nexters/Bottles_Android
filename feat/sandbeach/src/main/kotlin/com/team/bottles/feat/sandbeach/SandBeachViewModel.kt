@@ -10,6 +10,8 @@ import com.team.bottles.core.domain.profile.usecase.GetUserProfileStatusUseCase
 import com.team.bottles.core.domain.user.model.Notification
 import com.team.bottles.core.domain.user.model.NotificationType
 import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCase
+import com.team.bottles.exception.BottlesException
+import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.sandbeach.mvi.BottleStatus
 import com.team.bottles.feat.sandbeach.mvi.SandBeachIntent
 import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
@@ -28,25 +30,52 @@ class SandBeachViewModel @Inject constructor(
 ) : BaseViewModel<SandBeachUiState, SandBeachSideEffect, SandBeachIntent>(savedStateHandle) {
 
     init {
-        setSandBeachState()
-        launch {
-            val requiredAppVersion = getRequiredAppVersionUseCase()
-
-            if (requiredAppVersion > currentState.appVersionCode) {
-                reduce { copy(showDialog = true) }
-            }
-        }
+        initSandBeach()
     }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): SandBeachUiState =
         SandBeachUiState()
 
     override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
+        when (throwable) {
+            is BottlesException -> showErrorMessage(throwable.message?: "")
+            is BottlesNetworkException -> {
+                showErrorMessage(throwable.message?: "")
+                showErrorScreen()
+            }
+            else -> showErrorScreen()
+        }
     }
 
-    private fun setSandBeachState() {
+    private fun retry() {
+        closeErrorScreen()
+        initSandBeach()
+    }
+
+    private fun showErrorMessage(message: String) {
+        postSideEffect(SandBeachSideEffect.ShowErrorMessage(message = message))
+    }
+
+    private fun showErrorScreen() {
+        reduce { copy(isError = true) }
+    }
+
+    private fun closeErrorScreen() {
+        reduce { copy(isError = false) }
+    }
+
+    private suspend fun checkRequiredUpdate() {
+        val requiredAppVersion = getRequiredAppVersionUseCase()
+
+        if (requiredAppVersion > currentState.appVersionCode) {
+            reduce { copy(showDialog = true) }
+        }
+    }
+
+    private fun initSandBeach() {
         launch {
+            checkRequiredUpdate()
+
             val userProfileStatus = getUserProfileStatusUseCase()
 
             when (userProfileStatus) {
@@ -97,6 +126,7 @@ class SandBeachViewModel @Inject constructor(
             is SandBeachIntent.ClickCreateIntroductionButton -> navigateToIntroduction()
             is SandBeachIntent.ClickSandBeach -> onClickSandBeach()
             is SandBeachIntent.ClickConfirmButton -> navigateToPlayStore()
+            is SandBeachIntent.ClickRetryButton -> retry()
         }
     }
 

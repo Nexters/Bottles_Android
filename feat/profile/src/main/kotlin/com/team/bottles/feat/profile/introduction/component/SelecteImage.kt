@@ -80,7 +80,7 @@ internal fun SelectImageCard(
                 imageModel = { imageFile },
                 previewPlaceholder = painterResource(id = R.drawable.sample_image),
                 imageOptions = ImageOptions(
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.Crop
                 )
             )
             BottlesIconButton(

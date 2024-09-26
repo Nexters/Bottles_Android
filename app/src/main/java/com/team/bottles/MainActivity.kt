@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         createNotificationChannel()
         initializeFcm()
+        enableEdgeToEdge()
 
         setContent {
             BottlesTheme {

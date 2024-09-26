@@ -20,8 +20,12 @@ sealed interface MyPageIntent : UiIntent {
 
     data object ClickPolicy : MyPageIntent
 
-    data object ClickConfirmButton : MyPageIntent
+    data object ClickConfirmBlockContacts : MyPageIntent
 
-    data object CloseDialog : MyPageIntent
+    data object CloseBlockContactsDialog : MyPageIntent
+
+    data object ClickConfirmContactAccessButton : MyPageIntent
+
+    data object ClickRetry : MyPageIntent
 
 }

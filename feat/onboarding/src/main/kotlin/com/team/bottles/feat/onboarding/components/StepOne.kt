@@ -19,11 +19,11 @@ internal fun StepOne() {
     Box(modifier = Modifier.padding(horizontal = 46.dp)) {
         Image(
             modifier = Modifier
-                .clip(shape = RoundedCornerShape(size = 30.dp))
+                .clip(shape = RoundedCornerShape(size = 40.dp))
                 .border(
                     width = 10.dp,
                     color = Color(0xFF232328),
-                    shape = RoundedCornerShape(size = 30.dp)
+                    shape = RoundedCornerShape(size = 40.dp)
                 ),
             painter = painterResource(id = R.drawable.onboarding_mockup),
             contentDescription = null,

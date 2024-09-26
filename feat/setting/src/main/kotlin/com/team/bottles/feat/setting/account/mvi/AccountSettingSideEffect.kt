@@ -8,4 +8,6 @@ sealed interface AccountSettingSideEffect : UiSideEffect {
 
     data object NavigateToLoginEndpoint : AccountSettingSideEffect
 
+    data class ShowErrorMessage(val message: String) : AccountSettingSideEffect
+
 }

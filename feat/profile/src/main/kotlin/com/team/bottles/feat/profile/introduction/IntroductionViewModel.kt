@@ -8,6 +8,8 @@ import com.team.bottles.core.domain.profile.usecase.CreateIntroductionUseCase
 import com.team.bottles.core.domain.profile.usecase.GetUserProfileUseCase
 import com.team.bottles.core.domain.profile.usecase.UploadProfileImageUseCase
 import com.team.bottles.core.ui.model.UserKeyPoint
+import com.team.bottles.exception.BottlesException
+import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionSideEffect
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
@@ -24,17 +26,7 @@ class IntroductionViewModel @Inject constructor(
 ) : BaseViewModel<IntroductionUiState, IntroductionSideEffect, IntroductionIntent>(savedStateHandle) {
 
     init {
-        launch {
-            getUserProfileUseCase().profileSelect.run {
-                reduce {
-                    copy(keyPoints = UserKeyPoint.introduction(
-                        keyWords = listOf(job, mbti, region.city, height.toString(), smoking, alcohol),
-                        personality = keyword,
-                        hobbies = interest.run { etc + sports + entertainment + culture })
-                    )
-                }
-            }
-        }
+        initIntroduction()
     }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): IntroductionUiState =
@@ -48,11 +40,46 @@ class IntroductionViewModel @Inject constructor(
             is IntroductionIntent.OnFocusedTextField -> changeTextFieldState()
             is IntroductionIntent.ClickPhoto -> reduce { copy(imageFile = intent.file) }
             is IntroductionIntent.ClickDeleteButton -> reduce { copy(imageFile = null) }
+            is IntroductionIntent.ClickRetryButton -> retry()
+            is IntroductionIntent.ClickErrorScreenBackButton -> closeErrorScreen()
         }
     }
 
     override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
+        when (throwable) {
+            is BottlesException -> showErrorMessage(throwable.message?: "")
+            is BottlesNetworkException -> {
+                showErrorMessage(throwable.message?: "")
+                showErrorScreen()
+            }
+            else -> showErrorScreen()
+        }
+    }
+
+    private fun retry() {
+        closeErrorScreen()
+
+        when(currentState.state) {
+            IntroductionUiState.IntroductionState.INIT -> initIntroduction()
+            IntroductionUiState.IntroductionState.INPUT_INTRODUCTION -> createIntroduction()
+            IntroductionUiState.IntroductionState.UPLOAD_IMAGE -> uploadProfileImage()
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        postSideEffect(IntroductionSideEffect.ShowErrorMessage(message = message))
+    }
+
+    private fun showErrorScreen() {
+        reduce { copy(isError = true) }
+    }
+
+    private fun closeErrorScreen() {
+        if (currentState.isLoading) {
+            reduce { copy(isLoading = false, isError = false) }
+        } else {
+            reduce { copy(isError = false) }
+        }
     }
 
     private fun onClickBackButton() {
@@ -69,8 +96,25 @@ class IntroductionViewModel @Inject constructor(
         }
     }
 
+    private fun initIntroduction() {
+        launch {
+            reduce { copy(isLoading = true, state = IntroductionUiState.IntroductionState.INIT) }
+            getUserProfileUseCase().profileSelect.run {
+                reduce {
+                    copy(keyPoints = UserKeyPoint.introduction(
+                        keyWords = listOf(job, mbti, region.city, height.toString(), smoking, alcohol),
+                        personality = keyword,
+                        hobbies = interest.run { etc + sports + entertainment + culture }),
+                        isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
     private fun createIntroduction() {
         launch {
+            reduce { copy(state = IntroductionUiState.IntroductionState.INPUT_INTRODUCTION) }
             createIntroductionUseCase(
                 questionsAndAnswers = listOf(
                     QuestionAndAnswer(
@@ -84,7 +128,7 @@ class IntroductionViewModel @Inject constructor(
 
     private fun uploadProfileImage() {
         launch {
-            reduce { copy(isLoading = true) }
+            reduce { copy(isLoading = true, state = IntroductionUiState.IntroductionState.UPLOAD_IMAGE) }
             currentState.imageFile?.let { imageFile ->
                 uploadProfileImageUseCase(imageFile = imageFile)
             }

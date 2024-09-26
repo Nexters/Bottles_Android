@@ -55,7 +55,7 @@ internal fun BottomButtons(
                 tag = "이용약관 URL",
                 annotation = "https://spiral-ogre-a4d.notion.site/240724-e3676639ea864147bb293cfcda40d99f"
             )
-            append("보톡이용약관")
+            append("보틀이용약관")
         }
 
         append("에 동의한 것으로 간주합니다.")

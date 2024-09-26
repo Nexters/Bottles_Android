@@ -12,4 +12,6 @@ sealed interface SplashSideEffect : UiSideEffect {
 
     data object NavigateToPlayStore : SplashSideEffect
 
+    data class ShowErrorMessage(val message: String) : SplashSideEffect
+
 }

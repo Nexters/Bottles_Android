@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import com.team.bottles.feat.mypage.mvi.MyPageSideEffect
 @Composable
 internal fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
+    innerPadding: PaddingValues,
     navigateToEditProfile: () -> Unit,
     navigateToSettingNotification: () -> Unit,
     navigateToSettingAccountManagement: () -> Unit,
@@ -33,25 +35,16 @@ internal fun MyPageRoute(
             if (isGranted) {
                 viewModel.fetchContacts()
             } else {
-                Toast.makeText(context,"연락처 권한을 동의 해야합니다.", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", context.packageName, null)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-
-                context.startActivity(intent)
+                viewModel.showAccessPermissionGuideDialog()
             }
         }
     )
 
     LaunchedEffect(Unit) {
-        viewModel.checkAppVersion()
-    }
-
-    LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
+                is MyPageSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+                is MyPageSideEffect.CompleteBlockContacts -> Toast.makeText(context, "차단이 완료됐어요", Toast.LENGTH_SHORT).show()
                 is MyPageSideEffect.NavigateToEditProfile -> navigateToEditProfile()
                 is MyPageSideEffect.NavigateToSettingNotification -> navigateToSettingNotification()
                 is MyPageSideEffect.NavigateToSettingAccountManagement -> navigateToSettingAccountManagement()
@@ -90,11 +83,20 @@ internal fun MyPageRoute(
                         context.startActivity(webIntent)
                     }
                 }
+                is MyPageSideEffect.NavigateToSystemSetting -> {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", context.packageName, null)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+
+                    context.startActivity(intent)
+                }
             }
         }
     }
 
     MyPageScreen(
+        innerPadding = innerPadding,
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )
