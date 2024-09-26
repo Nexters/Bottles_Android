@@ -1,24 +1,20 @@
 package com.team.bottles
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.bars.BottlesBottomNavBar
 import com.team.bottles.core.designsystem.components.bars.BottomNavItem
+import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.navigation.BottlesNavHost
 import com.team.bottles.navigation.navigateToBottleBox
 import com.team.bottles.navigation.navigateToMyPage
@@ -39,8 +35,11 @@ fun BottlesApp() {
             }
         },
         currentRoute = currentRoute
-    ) {
-        BottlesNavHost(navHostController = navHostController)
+    ) { innerPadding ->
+        BottlesNavHost(
+            navHostController = navHostController,
+            innerPadding = innerPadding
+        )
     }
 }
 
@@ -48,47 +47,30 @@ fun BottlesApp() {
 internal fun BottlesScaffold(
     onClickNavItem: (BottomNavItem) -> Unit,
     currentRoute: String?,
-    content: @Composable () -> Unit
+    content: @Composable (PaddingValues) -> Unit
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        AnimatedVisibility(
-            visible = currentRoute == BottomNavItem.SAND_BEACH.route,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            Image(
-                modifier = Modifier.fillMaxSize(),
-                painter = painterResource(id = R.drawable.bg_sand_beach),
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds
-            )
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .navigationBarsPadding(),
+        containerColor = Color.Transparent,
+        contentColor = Color.Transparent,
+        bottomBar = {
+            if (BottomNavItem.entries.any { it.route == currentRoute }) {
+                BottlesBottomNavBar(
+                    onClickItem = onClickNavItem,
+                    currentSelectedItem = BottomNavItem.entries.find { it.route == currentRoute }
+                        ?: BottomNavItem.SAND_BEACH
+                )
+            }
         }
-
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = Color.Transparent,
-            contentColor = Color.Transparent,
-            bottomBar = {
-                AnimatedVisibility(
-                    visible = BottomNavItem.entries.any { it.route == currentRoute },
-                ) {
-                    BottlesBottomNavBar(
-                        onClickItem = onClickNavItem,
-                        currentSelectedItem = BottomNavItem.entries.find { it.route == currentRoute }
-                            ?: BottomNavItem.SAND_BEACH
-                    )
-                }
-            }
-        ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                content.invoke()
-            }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
+        ) {
+            content.invoke(innerPadding)
         }
     }
 }

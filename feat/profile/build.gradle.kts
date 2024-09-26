@@ -22,6 +22,18 @@ android {
                 properties.getProperty(url)
             )
         }
+
+        buildConfigField(
+            "String",
+            "DEVICE",
+            properties.getProperty("DEVICE")
+        )
+
+        buildConfigField(
+            "String",
+            "APP_VERSION",
+            "\"${libs.versions.appVersion.get()}\""
+        )
     }
 }
 

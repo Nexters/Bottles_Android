@@ -1,6 +1,7 @@
 package com.team.bottles.feat.bottle.bottlebox
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,6 +13,7 @@ import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxSideEffect
 @Composable
 internal fun BottleBoxRoute(
     viewModel: BottleBoxViewModel = hiltViewModel(),
+    innerPadding: PaddingValues,
     navigateToPingPong: (Long) -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
@@ -27,6 +29,7 @@ internal fun BottleBoxRoute(
     }
 
     BottleBoxScreen(
+        innerPadding = innerPadding,
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )

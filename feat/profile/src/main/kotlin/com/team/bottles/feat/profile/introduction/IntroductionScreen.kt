@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -21,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -76,7 +79,10 @@ internal fun IntroductionScreen(
                         detectTapGestures(onTap = {
                             focusManager.clearFocus()
                         })
-                    },
+                    }
+                    .systemBarsPadding()
+                    .imePadding(),
+                contentColor = Color.Transparent,
                 topBar = {
                     BottlesTopBar(
                         modifier = Modifier.background(color = BottlesTheme.color.background.primary),
@@ -101,63 +107,62 @@ internal fun IntroductionScreen(
                     )
                 }
             ) { innerPadding ->
-                Box(modifier = Modifier.padding(innerPadding)) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(color = BottlesTheme.color.background.primary)
-                            .padding(horizontal = BottlesTheme.spacing.medium)
-                            .verticalScroll(state = scrollState),
-                    ) {
-                        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = BottlesTheme.color.background.primary)
+                        .padding(top = innerPadding.calculateTopPadding())
+                        .padding(horizontal = BottlesTheme.spacing.medium)
+                        .verticalScroll(state = scrollState),
+                ) {
+                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
 
-                        Title(
-                            currentPage = uiState.step.page,
-                            maxPage = IntroductionStep.entries.size,
-                            title = uiState.step.title,
-                            subTitle = uiState.step.subTitle
-                        )
+                    Title(
+                        currentPage = uiState.step.page,
+                        maxPage = IntroductionStep.entries.size,
+                        title = uiState.step.title,
+                        subTitle = uiState.step.subTitle
+                    )
 
-                        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
+                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
 
-                        when (uiState.step) {
-                            IntroductionStep.INPUT_INTRODUCTION -> {
-                                BottlesLinesMaxLengthTextField(
-                                    value = uiState.introduce,
-                                    onValueChange = { text ->
-                                        onIntent(IntroductionIntent.ChangeIntroduction(text = text))
-                                    },
-                                    hint = stringResource(id = R.string.introduction_hint),
-                                    maxLength = uiState.maxLength,
-                                    state = uiState.introductionTextFiledState,
-                                    interactionSource = interactionSource
-                                )
+                    when (uiState.step) {
+                        IntroductionStep.INPUT_INTRODUCTION -> {
+                            BottlesLinesMaxLengthTextField(
+                                value = uiState.introduce,
+                                onValueChange = { text ->
+                                    onIntent(IntroductionIntent.ChangeIntroduction(text = text))
+                                },
+                                hint = stringResource(id = R.string.introduction_hint),
+                                maxLength = uiState.maxLength,
+                                state = uiState.introductionTextFiledState,
+                                interactionSource = interactionSource
+                            )
 
-                                if (uiState.introductionTextFiledState is BottlesTextFieldState.Error) {
-                                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
+                            if (uiState.introductionTextFiledState is BottlesTextFieldState.Error) {
+                                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
 
-                                    Text(
-                                        text = "최소 ${uiState.minLength}글자 이상 작성해주세요",
-                                        style = BottlesTheme.typography.caption,
-                                        color = BottlesTheme.color.text.errorPrimary
-                                    )
-                                }
-
-                                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
-
-                                CardProfile(keyPoints = uiState.keyPoints)
-                            }
-
-                            IntroductionStep.SELECT_USER_IMAGE -> {
-                                SelectImageCard(
-                                    imageFile = uiState.imageFile,
-                                    onIntent = onIntent
+                                Text(
+                                    text = "최소 ${uiState.minLength}글자 이상 작성해주세요",
+                                    style = BottlesTheme.typography.caption,
+                                    color = BottlesTheme.color.text.errorPrimary
                                 )
                             }
+
+                            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
+
+                            CardProfile(keyPoints = uiState.keyPoints)
                         }
 
-                        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
+                        IntroductionStep.SELECT_USER_IMAGE -> {
+                            SelectImageCard(
+                                imageFile = uiState.imageFile,
+                                onIntent = onIntent
+                            )
+                        }
                     }
+
+                    Spacer(modifier = Modifier.height(height = innerPadding.calculateBottomPadding()))
                 }
             }
         }

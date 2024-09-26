@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import com.team.bottles.feat.mypage.mvi.MyPageSideEffect
 @Composable
 internal fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
+    innerPadding: PaddingValues,
     navigateToEditProfile: () -> Unit,
     navigateToSettingNotification: () -> Unit,
     navigateToSettingAccountManagement: () -> Unit,
@@ -94,6 +96,7 @@ internal fun MyPageRoute(
     }
 
     MyPageScreen(
+        innerPadding = innerPadding,
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )

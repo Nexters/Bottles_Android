@@ -9,6 +9,10 @@ import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
 import SplashNavigator
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -30,11 +34,14 @@ import com.team.bottles.feat.splash.splashScreen
 
 @Composable
 fun BottlesNavHost(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    innerPadding: PaddingValues,
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = SplashNavigator
+        startDestination = SplashNavigator,
+        enterTransition = { fadeIn(animationSpec = tween(0)) },
+        exitTransition = { fadeOut(animationSpec = tween(0)) },
     ) {
         with(navHostController) {
             splashScreen(
@@ -56,6 +63,7 @@ fun BottlesNavHost(
                 navigateToOnboarding = ::navigateToOnboarding
             )
             sandBeachScreen(
+                innerPadding = innerPadding,
                 navigateToIntroduction = ::navigateToIntroduction,
                 navigateToArrivedBottles = ::navigateToArrivedBottles,
                 navigateToBottleBox = ::navigateToBottleBox
@@ -64,13 +72,17 @@ fun BottlesNavHost(
                 navigateToSandBeach = ::navigateToSandBeach,
                 navigateToBottleBox = ::navigateToBottleBox
             )
-            bottleBoxScreen(navigateToPingPong = ::navigateToPingPong)
+            bottleBoxScreen(
+                innerPadding = innerPadding,
+                navigateToPingPong = ::navigateToPingPong
+            )
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
             pingPongScreen(
                 navigateToBottleBox = ::navigateToBottleBox,
                 navigateToReport = ::navigateToReport
             )
             myPageScreen(
+                innerPadding = innerPadding,
                 navigateToEditProfile = ::navigateToEditProfile,
                 navigateToSettingNotification = ::navigateToSettingNotification,
                 navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,

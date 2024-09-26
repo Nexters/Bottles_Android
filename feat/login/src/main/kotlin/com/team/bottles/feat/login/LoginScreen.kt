@@ -2,9 +2,9 @@ package com.team.bottles.feat.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -22,23 +22,23 @@ fun LoginScreen(
     uiState: LoginUiState,
     onIntent: (LoginIntent) -> Unit,
 ) {
-    Box {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.bg_login),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds
-        )
+    Image(
+        modifier = Modifier.fillMaxSize(),
+        painter = painterResource(id = R.drawable.bg_login),
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds
+    )
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Symbol()
-            BottomButtons(
-                onClickKakaoLogin = { onIntent(LoginIntent.ClickKakaoLoginButton) },
-            )
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .systemBarsPadding(),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Symbol()
+        BottomButtons(
+            onClickKakaoLogin = { onIntent(LoginIntent.ClickKakaoLoginButton) },
+        )
     }
 }
 
