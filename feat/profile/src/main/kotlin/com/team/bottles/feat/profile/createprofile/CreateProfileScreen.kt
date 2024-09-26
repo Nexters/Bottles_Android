@@ -33,7 +33,11 @@ internal fun CreateProfileScreen(
 
     if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
         BottlesWebView(
-            url = BuildConfig.BOTTLES_CREATE_PROFILE_URL + "?accessToken=${uiState.token.accessToken}&refreshToken=${uiState.token.refreshToken}",
+            url = BuildConfig.BOTTLES_CREATE_PROFILE_URL +
+                    "?accessToken=${uiState.token.accessToken}" +
+                    "&refreshToken=${uiState.token.refreshToken}" +
+                    "&device=${BuildConfig.DEVICE}" +
+                    "&version=${BuildConfig.APP_VERSION}",
             webView = webView,
         )
     }

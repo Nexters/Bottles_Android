@@ -11,24 +11,27 @@ plugins {
 android {
     namespace = "com.team.bottles.feat.bottle"
 
-    buildTypes {
-        val debugUrl = "BOTTLES_ARRIVED_BOTTLES_URL"
+    defaultConfig {
+        val url = "BOTTLES_ARRIVED_BOTTLES_URL"
         val properties = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
 
-        getByName("release") {
-            buildConfigField(
-                "String",
-                debugUrl, // TODO : 릴리즈 용 URL 생성 가능성 있음
-                properties.getProperty(debugUrl) // // TODO : 릴리즈 용 URL 생성 가능성 있음
-            )
-        }
-        getByName("debug") {
-            buildConfigField(
-                "String",
-                debugUrl,
-                properties.getProperty(debugUrl)
-            )
-        }
+        buildConfigField(
+            "String",
+            url,
+            properties.getProperty(url)
+        )
+
+        buildConfigField(
+            "String",
+            "DEVICE",
+            properties.getProperty("DEVICE")
+        )
+
+        buildConfigField(
+            "String",
+            "APP_VERSION",
+            "\"${libs.versions.appVersion.get()}\""
+        )
     }
 }
 
