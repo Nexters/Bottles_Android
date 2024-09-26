@@ -3,6 +3,8 @@ package com.team.bottles.core.common
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
@@ -18,6 +20,8 @@ import kotlin.coroutines.EmptyCoroutineContext
 abstract class BaseViewModel<S : UiState, SE : UiSideEffect, I : UiIntent>(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
+
+    private val crashlytics by lazy { Firebase.crashlytics }
 
     private val initialState: S by lazy { createInitialState(savedStateHandle) }
 
@@ -35,6 +39,7 @@ abstract class BaseViewModel<S : UiState, SE : UiSideEffect, I : UiIntent>(
         get() = _state.value
 
     protected val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        crashlytics.recordException(throwable)
         handleClientException(throwable)
     }
 
