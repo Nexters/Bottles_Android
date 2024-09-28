@@ -9,6 +9,8 @@ import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
 import SplashNavigator
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -40,8 +42,8 @@ fun BottlesNavHost(
     NavHost(
         navController = navHostController,
         startDestination = SplashNavigator,
-        enterTransition = { fadeIn(animationSpec = tween(0)) },
-        exitTransition = { fadeOut(animationSpec = tween(0)) },
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
     ) {
         with(navHostController) {
             splashScreen(
