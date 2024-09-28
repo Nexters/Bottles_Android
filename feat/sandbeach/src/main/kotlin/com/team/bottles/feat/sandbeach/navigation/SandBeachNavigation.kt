@@ -1,6 +1,8 @@
 package com.team.bottles.feat.sandbeach.navigation
 
 import MainNavigator
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -12,7 +14,17 @@ fun NavGraphBuilder.sandBeachScreen(
     navigateToArrivedBottles: () -> Unit,
     navigateToBottleBox: () -> Unit,
 ) {
-    composable<MainNavigator.SandBeach> {
+    composable<MainNavigator.SandBeach>(
+        enterTransition = {
+            when (initialState.destination.route) {
+                "ArrivedBottlesNavigator" -> slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(300)
+                )
+                else -> null
+            }
+        }
+    ) {
         SandBeachRoute(
             innerPadding = innerPadding,
             navigateToIntroduction = navigateToIntroduction,

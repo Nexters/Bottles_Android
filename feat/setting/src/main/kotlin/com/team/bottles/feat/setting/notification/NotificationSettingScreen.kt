@@ -1,5 +1,6 @@
 package com.team.bottles.feat.setting.notification
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +38,7 @@ internal fun NotificationSettingScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
                 .systemBarsPadding()
         ) {
             BottlesTopBar(

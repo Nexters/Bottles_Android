@@ -33,7 +33,7 @@ androidx-compose-bom = "2024.06.00"
 # jetpack
 androidx-room = "2.6.1"
 androidx-datastore = "1.1.1"
-androidx-navigation-compose = "2.8.0-beta06"
+androidx-navigation-compose = "2.8.1"
 
 # dagger hilt
 dagger-hilt = "2.51.1"
