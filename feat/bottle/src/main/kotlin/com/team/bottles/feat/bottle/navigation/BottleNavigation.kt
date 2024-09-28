@@ -39,7 +39,17 @@ fun NavGraphBuilder.bottleBoxScreen(
     innerPadding: PaddingValues,
     navigateToPingPong: (Long) -> Unit
 ) {
-    composable<MainNavigator.BottlesBox> {
+    composable<MainNavigator.BottlesBox>(
+        enterTransition = {
+            when (initialState.destination.route) {
+                "PingPongNavigator" -> slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(300)
+                )
+                else -> null
+            }
+        }
+    ) {
         BottleBoxRoute(
             innerPadding = innerPadding,
             navigateToPingPong = navigateToPingPong
