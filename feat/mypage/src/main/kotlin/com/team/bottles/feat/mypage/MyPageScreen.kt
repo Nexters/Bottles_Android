@@ -37,7 +37,7 @@ internal fun MyPageScreen(
             onConfirm = { onIntent(MyPageIntent.ClickConfirmContactAccessButton) },
             confirmButtonText = "설정하러 가기",
             title = "연락처 접근 권한 안내",
-            content = "설정 > 권한에서\n연락처 접근을 허락해주세요."
+            content = "설정 > 애플리케이션 > '보틀' > 권한에서 연락처를 허용해주세요."
         )
     }
 
