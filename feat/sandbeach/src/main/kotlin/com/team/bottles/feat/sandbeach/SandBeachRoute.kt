@@ -9,7 +9,6 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,7 +20,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.team.bottles.feat.sandbeach.mvi.SandBeachSideEffect
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 internal fun SandBeachRoute(
     viewModel: SandBeachViewModel = hiltViewModel(),
