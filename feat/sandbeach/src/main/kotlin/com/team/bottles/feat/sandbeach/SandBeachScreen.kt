@@ -108,12 +108,13 @@ internal fun SandBeachScreen(
                         .sizeIn(
                             maxWidth = 430.dp,
                             maxHeight = 430.dp,
-                            minHeight = 280.dp,
-                            minWidth = 280.dp
+                            minHeight = 260.dp,
+                            minWidth = 260.dp
                         )
                         .debounceNoRippleClickable(
                             debounceTime = 200L,
-                            onClick = { onIntent(SandBeachIntent.ClickSandBeach) }
+                            onClick = { onIntent(SandBeachIntent.ClickSandBeach) },
+                            enabled = BottleStatus.REQUIRE_INTRODUCTION != uiState.bottleStatus
                         ),
                     painter = painterResource(
                         id = if (uiState.bottleStatus == BottleStatus.NONE_BOTTLE) R.drawable.illustration_island_bottle_false
