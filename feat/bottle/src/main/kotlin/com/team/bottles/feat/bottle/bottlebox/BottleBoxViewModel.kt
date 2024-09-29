@@ -81,6 +81,7 @@ class BottleBoxViewModel @Inject constructor(
                                 mbti = pingPongBottle.mbti,
                                 personality = pingPongBottle.keyword,
                                 isRead = pingPongBottle.isRead,
+                                lastActivatedAt = pingPongBottle.lastActivatedAt
                             )
                         },
                         completeBottles = doneBottles.map { pingPongBottle ->
@@ -92,6 +93,7 @@ class BottleBoxViewModel @Inject constructor(
                                 mbti = pingPongBottle.mbti,
                                 personality = pingPongBottle.keyword,
                                 isRead = pingPongBottle.isRead,
+                                lastActivatedAt = pingPongBottle.lastActivatedAt
                             )
                         }
                     )
