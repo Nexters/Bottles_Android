@@ -58,7 +58,7 @@ internal fun LetterCard(
             )
 
             Text(
-                text = letter.question,
+                text = "Q. ${letter.question}",
                 style = BottlesTheme.typography.subTitle2,
                 color = BottlesTheme.color.text.secondary
             )
