@@ -133,26 +133,22 @@ private fun Done(
         )
     ) {
         repeat(2) { count ->
+            val shape = RoundedCornerShape(
+                topStart = if (count == 0) 0.dp else BottlesTheme.spacing.medium,
+                topEnd = BottlesTheme.spacing.medium,
+                bottomStart = BottlesTheme.spacing.medium,
+                bottomEnd = if (count == 1) 0.dp else BottlesTheme.spacing.medium
+            )
+
             CoilImage(
                 modifier = Modifier
                     .weight(1f)
                     .aspectRatio(1f)
                     .background(
                         color = BottlesTheme.color.icon.secondary,
-                        shape = RoundedCornerShape(
-                            topStart = if (count == 0) BottlesTheme.spacing.medium else 0.dp,
-                            topEnd = BottlesTheme.spacing.medium,
-                            bottomStart = BottlesTheme.spacing.medium,
-                            bottomEnd = if (count == 1) BottlesTheme.spacing.medium else 0.dp
-                        )
+                        shape = shape
                     )
-                    .clip(
-                        shape = RoundedCornerShape(
-                            topEnd = BottlesTheme.spacing.medium,
-                            bottomStart = BottlesTheme.spacing.medium,
-                            bottomEnd = BottlesTheme.spacing.medium
-                        )
-                    ),
+                    .clip(shape = shape),
                 previewPlaceholder = painterResource(id = R.drawable.sample_image),
                 imageModel = { if (count == 0) otherImageUrl else myImageUrl },
                 imageOptions = ImageOptions(
@@ -164,19 +160,9 @@ private fun Done(
                             .aspectRatio(1f)
                             .background(
                                 color = BottlesTheme.color.icon.secondary,
-                                shape = RoundedCornerShape(
-                                    topStart = BottlesTheme.spacing.medium,
-                                    topEnd = BottlesTheme.spacing.medium,
-                                    bottomStart = BottlesTheme.spacing.medium,
-                                )
+                                shape = shape
                             )
-                            .clip(
-                                shape = RoundedCornerShape(
-                                    topEnd = BottlesTheme.spacing.medium,
-                                    bottomStart = BottlesTheme.spacing.medium,
-                                    bottomEnd = BottlesTheme.spacing.medium
-                                )
-                            )
+                            .clip(shape = shape)
                     )
                 }
             )
@@ -184,7 +170,7 @@ private fun Done(
     }
 }
 
-@Preview(showBackground = true, heightDp = 1650)
+@Preview(showBackground = true, heightDp = 1750)
 @Composable
 private fun PhotoCardPreview() {
     BottlesTheme {
