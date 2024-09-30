@@ -1,5 +1,6 @@
 package com.team.bottles.feat.mypage
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -64,6 +65,7 @@ internal fun MyPageScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
                 .padding(bottom = innerPadding.calculateBottomPadding())
                 .systemBarsPadding()
                 .verticalScroll(state = scrollState)

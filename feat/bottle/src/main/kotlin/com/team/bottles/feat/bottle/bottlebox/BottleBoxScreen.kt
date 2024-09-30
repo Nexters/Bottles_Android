@@ -1,5 +1,6 @@
 package com.team.bottles.feat.bottle.bottlebox
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,6 +41,7 @@ internal fun BottleBoxScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
                 .padding(bottom = innerPadding.calculateBottomPadding())
                 .systemBarsPadding()
         ) {
