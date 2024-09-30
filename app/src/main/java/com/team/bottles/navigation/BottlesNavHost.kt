@@ -80,7 +80,7 @@ fun BottlesNavHost(
             )
             introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
             pingPongScreen(
-                navigateToBottleBox = ::navigateToBottleBox,
+                navigateToBottleBox = { popBackStack() },
                 navigateToReport = ::navigateToReport
             )
             myPageScreen(
