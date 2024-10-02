@@ -20,10 +20,6 @@ class BottleBoxViewModel @Inject constructor(
     savedStateHandle
 ) {
 
-    init {
-        initBottleBox()
-    }
-
     override fun createInitialState(savedStateHandle: SavedStateHandle): BottleBoxUiState =
         BottleBoxUiState()
 
@@ -67,7 +63,7 @@ class BottleBoxViewModel @Inject constructor(
         initBottleBox()
     }
 
-    private fun initBottleBox() {
+    fun initBottleBox() {
         launch {
             getPingPongListUseCase().run {
                 reduce {

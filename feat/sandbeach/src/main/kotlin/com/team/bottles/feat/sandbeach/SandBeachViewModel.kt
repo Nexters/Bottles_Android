@@ -29,10 +29,6 @@ class SandBeachViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<SandBeachUiState, SandBeachSideEffect, SandBeachIntent>(savedStateHandle) {
 
-    init {
-        initSandBeach()
-    }
-
     override fun createInitialState(savedStateHandle: SavedStateHandle): SandBeachUiState =
         SandBeachUiState()
 
@@ -72,7 +68,7 @@ class SandBeachViewModel @Inject constructor(
         }
     }
 
-    private fun initSandBeach() {
+    fun initSandBeach() {
         launch {
             checkRequiredUpdate()
 
