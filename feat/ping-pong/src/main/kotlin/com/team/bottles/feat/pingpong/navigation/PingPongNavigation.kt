@@ -19,10 +19,17 @@ fun NavGraphBuilder.pingPongScreen(
             )
         },
         enterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(300)
-            )
+            val routeName = initialState.destination.route?.substringBefore("/")
+
+            when (routeName) {
+                "ReportNavigator" -> null
+                else -> {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(300)
+                    )
+                }
+            }
         }
     ) {
         PingPongRoute(

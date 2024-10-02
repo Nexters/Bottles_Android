@@ -17,10 +17,13 @@ fun NavGraphBuilder.sandBeachScreen(
     composable<MainNavigator.SandBeach>(
         enterTransition = {
             when (initialState.destination.route) {
-                "ArrivedBottlesNavigator" -> slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(300)
-                )
+                "ArrivedBottlesNavigator",
+                "ProfileNavigator.Introduction" -> {
+                    slideIntoContainer(
+                        towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                        animationSpec = tween(300)
+                    )
+                }
                 else -> null
             }
         }

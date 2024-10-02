@@ -1,5 +1,6 @@
 package com.team.bottles.feat.bottle.bottlebox
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,8 +19,9 @@ import com.team.bottles.core.designsystem.components.buttons.BottlesOutLinedButt
 import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
 import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonType
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.ui.BottleContents
+import com.team.bottles.feat.bottle.bottlebox.components.BottleBoxContents
 import com.team.bottles.core.ui.BottlesErrorScreen
+import com.team.bottles.core.ui.model.Bottle
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxIntent
 import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxUiState
 import kotlinx.collections.immutable.toImmutableList
@@ -39,6 +41,7 @@ internal fun BottleBoxScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
                 .padding(bottom = innerPadding.calculateBottomPadding())
                 .systemBarsPadding()
         ) {
@@ -66,7 +69,7 @@ internal fun BottleBoxScreen(
 
             when (uiState.topTab) {
                 BottleBoxUiState.BottleBoxTab.TALKING -> {
-                    BottleContents(
+                    BottleBoxContents(
                         bottles = uiState.talkingBottles.toImmutableList(),
                         emptyText = stringResource(id = R.string.empty_bottle_box),
                         emptyImage = R.drawable.illustration_basket,
@@ -77,7 +80,7 @@ internal fun BottleBoxScreen(
                 }
 
                 BottleBoxUiState.BottleBoxTab.COMPLETE -> {
-                    BottleContents(
+                    BottleBoxContents(
                         bottles = uiState.completeBottles.toImmutableList(),
                         emptyText = stringResource(id = R.string.empty_bottle_box),
                         emptyImage = R.drawable.illustration_basket,
@@ -91,13 +94,16 @@ internal fun BottleBoxScreen(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun BottleBoxScreenPreview() {
     BottlesTheme {
         BottleBoxScreen(
             innerPadding = PaddingValues(),
-            uiState = BottleBoxUiState(),
+            uiState = BottleBoxUiState(
+                topTab = BottleBoxUiState.BottleBoxTab.TALKING,
+                talkingBottles = Bottle.exampleBottleBox().toImmutableList()
+            ),
             onIntent = {}
         )
     }

@@ -125,6 +125,7 @@ internal fun PingPongScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
                 .padding(innerPadding)
                 .nestedScroll(connection = pullRefreshState.nestedScrollConnection)
         ) {

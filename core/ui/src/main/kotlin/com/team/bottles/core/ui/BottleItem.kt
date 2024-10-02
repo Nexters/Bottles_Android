@@ -27,18 +27,134 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skydoves.cloudy.cloudy
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
+import com.team.bottles.core.designsystem.components.etc.chips.BottlesEtcText
 import com.team.bottles.core.designsystem.components.etc.chips.EtcText
 import com.team.bottles.core.designsystem.foundation.wantedSansStd
 import com.team.bottles.core.designsystem.modifier.debounceNoRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.model.Bottle
 
+@Composable
+fun BottleItem(
+    modifier: Modifier = Modifier,
+    bottle: Bottle,
+    onClickItem: () -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .background(
+                color = BottlesTheme.color.container.primary,
+                shape = RoundedCornerShape(20.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = BottlesTheme.color.border.primary,
+                shape = RoundedCornerShape(20.dp)
+            )
+            .padding(BottlesTheme.padding.medium)
+            .debounceNoRippleClickable(onClick = onClickItem),
+        verticalArrangement = Arrangement.spacedBy(
+            space = BottlesTheme.spacing.small
+        )
+    ) {
+        BottlesEtcText(
+            leftText = null, // TODO : 상태값 추가시 주석 해제
+            rightText = bottle.lastActivatedAt
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(
+                    space = BottlesTheme.spacing.extraSmall
+                )
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = bottle.name,
+                        style = BottlesTheme.typography.title3,
+                        color = BottlesTheme.color.text.secondary
+                    )
+
+                    if (!bottle.isRead) {
+                        val circleColor = BottlesTheme.color.icon.update
+
+                        Spacer(modifier = Modifier.width(width = BottlesTheme.spacing.doubleExtraSmall))
+                        Canvas(modifier = Modifier.size(4.dp)) {
+                            drawCircle(color = circleColor)
+                        }
+                    }
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "${bottle.age}세",
+                        style = BottlesTheme.typography.caption,
+                        color = BottlesTheme.color.text.secondary
+                    )
+
+                    Text(
+                        text = "|",
+                        style = BottlesTheme.typography.caption,
+                        color = BottlesTheme.color.border.secondary
+                    )
+
+                    Text(
+                        text = bottle.mbti,
+                        style = BottlesTheme.typography.caption,
+                        color = BottlesTheme.color.text.secondary
+                    )
+                }
+            }
+
+            CoilImage(
+                modifier = Modifier
+                    .size(size = 48.dp)
+                    .clip(shape = CircleShape)
+                    .cloudy(
+                        radius = 5,
+                        graphicsLayer = rememberGraphicsLayer()
+                    ),
+                imageModel = { bottle.imageUrl },
+                previewPlaceholder = painterResource(id = R.drawable.sample_image),
+                loading = { _ ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = BottlesTheme.color.icon.secondary)
+                            .clip(shape = CircleShape),
+                    )
+                },
+                failure = { _ ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = BottlesTheme.color.icon.secondary)
+                            .clip(shape = CircleShape),
+                    )
+                },
+                imageOptions = ImageOptions(
+                    contentScale = ContentScale.Crop
+                )
+            )
+        }
+    }
+}
+
+@Deprecated("2차 MVP로 인한 디자인 변경. 2024-09-30")
 @Composable
 fun BottleItem(
     modifier: Modifier = Modifier,
@@ -61,8 +177,8 @@ fun BottleItem(
             .debounceNoRippleClickable(onClick = onClickItem),
         verticalArrangement = Arrangement.spacedBy(space = BottlesTheme.spacing.small)
     ) {
-        if (bottle.remainingTime != null) {
-            EtcText(text = bottle.remainingTime)
+        if (bottle.lastActivatedAt != null) {
+            EtcText(text = bottle.lastActivatedAt)
         }
 
         Row(
@@ -169,5 +285,25 @@ fun BottleItem(
                 )
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun BottleItemPreview() {
+    BottlesTheme {
+        BottleItem(
+            bottle = Bottle(
+                id = 0L,
+                imageUrl = "",
+                name = "냥냥이",
+                age = 15,
+                mbti = "ESTJ",
+                personality = listOf("상냥한", "대담한", "낭만적인"),
+                isRead = false,
+                lastActivatedAt = "00분 전",
+            ),
+            onClickItem = { /*TODO*/ }
+        )
     }
 }

@@ -14,15 +14,15 @@ val wantedSansStd =
             FontStyle.Normal
         ),
         Font(
+            R.font.wanted_sans_std_semi_bold,
+            FontWeight.SemiBold,
+            FontStyle.Normal
+        ),
+        Font(
             R.font.wanted_sans_std_medium,
             FontWeight.Medium,
             FontStyle.Normal
         ),
-        Font(
-            R.font.wanted_sans_std_semi_bold,
-            FontWeight.SemiBold,
-            FontStyle.Normal
-        )
     )
 
 val roboto =
@@ -30,15 +30,6 @@ val roboto =
         Font(
             R.font.roboto_medium,
             FontWeight.Medium,
-            FontStyle.Normal
-        )
-    )
-
-val laundryGothic =
-    FontFamily(
-        Font(
-            R.font.laundry_gothic_bold,
-            FontWeight.Bold,
             FontStyle.Normal
         )
     )

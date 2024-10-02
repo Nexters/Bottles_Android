@@ -11,13 +11,11 @@ import SettingNavigator
 import SplashNavigator
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import com.team.bottles.feat.bottle.navigation.arrivedBottlesScreen
 import com.team.bottles.feat.bottle.navigation.bottleBoxScreen
@@ -68,19 +66,24 @@ fun BottlesNavHost(
                 innerPadding = innerPadding,
                 navigateToIntroduction = ::navigateToIntroduction,
                 navigateToArrivedBottles = ::navigateToArrivedBottles,
-                navigateToBottleBox = ::navigateToBottleBox
+                navigateToBottleBox = { navigateToTopLevelDestination(route = MainNavigator.BottlesBox) }
             )
             arrivedBottlesScreen(
-                navigateToSandBeach = ::navigateToSandBeach,
-                navigateToBottleBox = ::navigateToBottleBox
+                navigateToSandBeach = { popBackStack() },
+                navigateToBottleBox = {
+                    navigateToBottleBox {
+                        popUpTo(graph.id) { inclusive = true }
+                        restoreState = true
+                    }
+                }
             )
             bottleBoxScreen(
                 innerPadding = innerPadding,
                 navigateToPingPong = ::navigateToPingPong
             )
-            introductionScreen(navigateToSandBeach = ::navigateToSandBeach)
+            introductionScreen(navigateToSandBeach = { popBackStack() })
             pingPongScreen(
-                navigateToBottleBox = ::navigateToBottleBox,
+                navigateToBottleBox = { popBackStack() },
                 navigateToReport = ::navigateToReport
             )
             myPageScreen(
@@ -91,17 +94,31 @@ fun BottlesNavHost(
             )
             reportScreen(
                 navigateToPingPong = { popBackStack() },
-                navigateToBottleBox = ::navigateToBottleBox
+                navigateToBottleBox = {
+                    navigateToBottleBox {
+                        popUpTo(graph.id) { inclusive = true }
+                        restoreState = true
+                    }
+                }
             )
             accountSettingScreen(
                 navigateToLoginEndpoint = ::navigateToLoginEndpoint,
                 navigateToMyPage = { popBackStack() }
             )
             notificationSettingScreen(navigateToMyPage = { popBackStack() })
-            editProfileScreen(navigateToMyPage = ::navigateToMyPage)
+            editProfileScreen(navigateToMyPage = { popBackStack() })
         }
     }
 }
+
+fun NavController.navigateToTopLevelDestination(route: MainNavigator) =
+    navigate(route) {
+        popUpTo(graph.id) {
+            saveState = true
+        }
+        restoreState = true
+        launchSingleTop = true
+    }
 
 fun NavController.navigateToOnboarding() =
     navigate(OnboardingNavigator) {
@@ -125,10 +142,13 @@ fun NavController.navigateToArrivedBottles() =
 fun NavController.navigateToPingPong(bottleId: Long) =
     navigate(PingPongNavigator(bottleId = bottleId))
 
-fun NavController.navigateToBottleBox() =
-    navigate(MainNavigator.BottlesBox) {
-        popUpTo(graph.id)
+fun NavController.navigateToBottleBox(navOptions: NavOptionsBuilder.() -> Unit = {}) {
+    navigate(
+        route = MainNavigator.BottlesBox,
+    ) {
+        navOptions()
     }
+}
 
 fun NavController.navigateToLoginEndpoint() =
     navigate(LoginNavigator.Endpoint) {

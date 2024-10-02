@@ -1,6 +1,5 @@
-package com.team.bottles.core.ui
+package com.team.bottles.feat.bottle.bottlebox.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,33 +7,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottleItem
 import com.team.bottles.core.ui.model.Bottle
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-
-@Composable
-fun BottleContents(
-    bottles: ImmutableList<Bottle>,
-    emptyText: String,
-    @DrawableRes emptyImage: Int,
-    onClickItem: (Bottle) -> Unit
-) {
-    if (bottles.isEmpty()) {
-        EmptyBottles(
-            text = emptyText,
-            image = emptyImage
-        )
-    } else {
-        BottleList(
-            bottles = bottles,
-            onClickItem = onClickItem
-        )
-    }
-}
 
 @Composable
 fun BottleList(
@@ -42,8 +20,6 @@ fun BottleList(
     bottles: ImmutableList<Bottle>,
     onClickItem: (Bottle) -> Unit
 ) {
-    val graphicsLayer = rememberGraphicsLayer()
-
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(
@@ -63,7 +39,6 @@ fun BottleList(
             BottleItem(
                 bottle = bottle,
                 onClickItem = { onClickItem(bottle) },
-                graphicsLayer = graphicsLayer
             )
         }
     }

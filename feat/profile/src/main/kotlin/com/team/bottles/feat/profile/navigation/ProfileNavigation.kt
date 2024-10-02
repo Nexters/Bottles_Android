@@ -24,7 +24,20 @@ fun NavGraphBuilder.createProfileScreen(
 fun NavGraphBuilder.introductionScreen(
     navigateToSandBeach: () -> Unit
 ) {
-    composable<ProfileNavigator.Introduction> {
+    composable<ProfileNavigator.Introduction>(
+        exitTransition = {
+            slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(300)
+            )
+        },
+        enterTransition = {
+            slideIntoContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(300)
+            )
+        }
+    ) {
         IntroductionRoute(navigateToSandBeach = navigateToSandBeach)
     }
 }

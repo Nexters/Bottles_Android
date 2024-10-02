@@ -14,4 +14,5 @@ data class PingPongBottle(
     val mbti: String,
     val keyword: List<String>,
     val userImageUrl: String,
+    val lastActivatedAt: String
 )

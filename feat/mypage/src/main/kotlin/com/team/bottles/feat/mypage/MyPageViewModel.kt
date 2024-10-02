@@ -26,12 +26,9 @@ class MyPageViewModel @Inject constructor(
     savedStateHandle
 ) {
 
-    init {
-        initMyPage()
+    override fun createInitialState(savedStateHandle: SavedStateHandle): MyPageUiState {
+        return MyPageUiState()
     }
-
-    override fun createInitialState(savedStateHandle: SavedStateHandle): MyPageUiState =
-        MyPageUiState()
 
     override suspend fun handleIntent(intent: MyPageIntent) {
         when (intent) {
@@ -162,7 +159,7 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    private fun initMyPage() {
+    fun initMyPage() {
         launch {
             reduce { copy(myPageState = MyPageState.INIT) }
             checkAppVersion()

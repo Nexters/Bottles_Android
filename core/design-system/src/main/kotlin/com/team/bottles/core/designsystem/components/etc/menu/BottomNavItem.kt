@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,17 +26,13 @@ fun BottlesBottomNavItem(
     @StringRes label: Int,
     isSelected: Boolean,
 ) {
-    val textStyle = when (isSelected) {
-        true -> BottlesTheme.typography.subTitle2
-        false -> BottlesTheme.typography.body
-    }
     val textColor = when (isSelected) {
         true -> BottlesTheme.color.text.selectedSecondary
-        false -> BottlesTheme.color.text.enabledQuaternary
+        false -> BottlesTheme.color.text.enabledTertiary
     }
     val iconColor = when (isSelected) {
-        true -> Color.Black
-        false -> BottlesTheme.color.text.enabledQuaternary
+        true -> BottlesTheme.color.text.selectedSecondary
+        false -> BottlesTheme.color.text.enabledTertiary
     }
 
     Column(
@@ -59,7 +54,7 @@ fun BottlesBottomNavItem(
         )
         Text(
             text = stringResource(id = label),
-            style = textStyle,
+            style = BottlesTheme.typography.caption,
             color = textColor
         )
     }

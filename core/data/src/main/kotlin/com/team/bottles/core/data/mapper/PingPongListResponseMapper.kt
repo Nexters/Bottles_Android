@@ -20,5 +20,6 @@ fun PingPongBottleDto.toPingPongBottle(): PingPongBottle =
         age = this.age,
         mbti = this.mbti?: "",
         keyword = this.keyword?: emptyList(),
-        userImageUrl = this.userImageUrl?: ""
+        userImageUrl = this.userImageUrl?: "",
+        lastActivatedAt = this.lastActivatedAt
     )
