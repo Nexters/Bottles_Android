@@ -16,4 +16,6 @@ sealed interface NotificationIntent : UiIntent {
 
     data object ClickRetryButton : NotificationIntent
 
+    data object ClickGoSystemSetting : NotificationIntent
+
 }

@@ -55,4 +55,7 @@ class UserRepositoryImpl @Inject constructor(
         userDataSource.updateActivateMatching(request = ActivateMatchingRequest(activate = isActivate))
     }
 
+    override suspend fun getNotificationPermissionStatus(): Boolean =
+        deviceDataSource.getIsAllowedNotificationPermission()
+
 }

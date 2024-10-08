@@ -34,7 +34,6 @@ internal fun MyPageScreen(
 
     if (uiState.showAccessPermissionGuideDialog) {
         BottlesAlertConfirmDialog(
-            onClose = { /* 닫을 수 없는 다이얼 로그 */ },
             onConfirm = { onIntent(MyPageIntent.ClickConfirmContactAccessButton) },
             confirmButtonText = "설정하러 가기",
             title = "연락처 접근 권한 안내",

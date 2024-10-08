@@ -1,9 +1,14 @@
 package com.team.bottles.local.datasource
 
+import android.Manifest
+import android.app.NotificationManager
 import android.content.ContentResolver
 import android.content.Context
+import android.content.pm.PackageManager
 import android.database.Cursor
+import android.os.Build
 import android.provider.ContactsContract
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -32,6 +37,15 @@ class DeviceDataSourceImpl @Inject constructor(
         }
 
         return contacts.toList()
+    }
+
+    override fun getIsAllowedNotificationPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        } else {
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.areNotificationsEnabled()
+        }
     }
 
 }

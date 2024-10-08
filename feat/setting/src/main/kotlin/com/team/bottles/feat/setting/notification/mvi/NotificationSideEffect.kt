@@ -8,4 +8,6 @@ sealed interface NotificationSideEffect : UiSideEffect {
 
     data class ShowErrorMessage(val message: String) : NotificationSideEffect
 
+    data object RequireNotificationPermission : NotificationSideEffect
+
 }
