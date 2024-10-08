@@ -30,7 +30,7 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 @Composable
 fun BottlesAlertConfirmDialog(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit,
+    onClose: () -> Unit = { },
     onConfirm: () -> Unit,
     confirmButtonText: String,
     title: String,

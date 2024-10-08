@@ -42,7 +42,6 @@ internal fun SandBeachScreen(
 ) {
     if (uiState.showDialog) {
         BottlesAlertConfirmDialog(
-            onClose = { /* 닫기 없음 */ },
             onConfirm = { onIntent(SandBeachIntent.ClickConfirmButton) },
             confirmButtonText = "업데이트 하기",
             title = "업데이트 안내",
