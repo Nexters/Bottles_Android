@@ -4,12 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import com.team.bottles.core.common.BaseViewModel
 import com.team.bottles.core.domain.user.model.Notification
 import com.team.bottles.core.domain.user.model.NotificationType
+import com.team.bottles.core.domain.user.usecase.GetNotificationPermissionStatusUseCase
 import com.team.bottles.core.domain.user.usecase.GetSettingNotificationsUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCase
 import com.team.bottles.exception.BottlesException
 import com.team.bottles.exception.BottlesNetworkException
-import com.team.bottles.feat.setting.account.mvi.AccountSettingSideEffect
-import com.team.bottles.feat.setting.account.mvi.AccountSettingUiState
 import com.team.bottles.feat.setting.notification.mvi.NotificationIntent
 import com.team.bottles.feat.setting.notification.mvi.NotificationSideEffect
 import com.team.bottles.feat.setting.notification.mvi.NotificationUiState
@@ -20,6 +19,7 @@ import javax.inject.Inject
 class NotificationSettingViewModel @Inject constructor(
     private val getSettingNotificationsUseCase: GetSettingNotificationsUseCase,
     private val updateSettingNotificationUseCase: UpdateSettingNotificationUseCase,
+    private val getNotificationPermissionStatusUseCase: GetNotificationPermissionStatusUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<NotificationUiState, NotificationSideEffect, NotificationIntent>(savedStateHandle) {
 
@@ -32,12 +32,41 @@ class NotificationSettingViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: NotificationIntent) {
         when (intent) {
-            is NotificationIntent.ClickBackButton -> navigateToMyPage()
-            is NotificationIntent.ClickConversationToggleButton -> changeConversationNotification()
-            is NotificationIntent.ClickFloatingBottleToggleButton -> changeFloatingBottleNotification()
-            is NotificationIntent.ClickMarketingResponseToggleButton -> changeMarketingResponseNotification()
-            is NotificationIntent.ClickGoodFeelingArrivedToggleButton -> changeGoodFeelingArrivedNotification()
+            is NotificationIntent.ClickConversationToggleButton -> {
+                changeNotification(
+                    notificationState = NotificationUiState.NotificationState.CONVERSATION,
+                    notificationType = NotificationType.PING_PONG,
+                    currentState = currentState.isConversation,
+                    updateState = { reduce { copy(isConversation = !isConversation) } }
+                )
+            }
+            is NotificationIntent.ClickFloatingBottleToggleButton -> {
+                changeNotification(
+                    notificationState = NotificationUiState.NotificationState.FLOATING_BOTTLE,
+                    notificationType = NotificationType.DAILY_RANDOM,
+                    currentState = currentState.isFloatingBottle,
+                    updateState = { reduce { copy(isFloatingBottle = !isFloatingBottle) } }
+                )
+            }
+            is NotificationIntent.ClickMarketingResponseToggleButton -> {
+                changeNotification(
+                    notificationState = NotificationUiState.NotificationState.MARKETING_RESPONSE,
+                    notificationType = NotificationType.MARKETING,
+                    currentState = currentState.isMarketingResponse,
+                    updateState = { reduce { copy(isMarketingResponse = !isMarketingResponse) } }
+                )
+            }
+            is NotificationIntent.ClickGoodFeelingArrivedToggleButton -> {
+                changeNotification(
+                    notificationState = NotificationUiState.NotificationState.GOOD_FEELING_ARRIVED,
+                    notificationType = NotificationType.RECEIVE_LIKE,
+                    currentState = currentState.isGoodFeelingArrived,
+                    updateState = { reduce { copy(isGoodFeelingArrived = !isGoodFeelingArrived) } }
+                )
+            }
             is NotificationIntent.ClickRetryButton -> retry()
+            is NotificationIntent.ClickBackButton -> navigateToMyPage()
+            is NotificationIntent.ClickGoSystemSetting -> navigateToSystemSetting()
         }
     }
 
@@ -74,6 +103,11 @@ class NotificationSettingViewModel @Inject constructor(
         postSideEffect(NotificationSideEffect.NavigateToMyPage)
     }
 
+    private fun navigateToSystemSetting() {
+        reduce { copy(isShowDialog = false) }
+        postSideEffect(NotificationSideEffect.RequireNotificationPermission)
+    }
+
     private fun initNotificationSetting() {
         launch {
             reduce { copy(notificationState = NotificationUiState.NotificationState.INIT) }
@@ -95,55 +129,27 @@ class NotificationSettingViewModel @Inject constructor(
         }
     }
 
-    private fun changeFloatingBottleNotification() {
+    private fun changeNotification(
+        notificationState: NotificationUiState.NotificationState,
+        notificationType: NotificationType,
+        currentState: Boolean,
+        updateState: () -> Unit
+    ) {
         launch {
-            reduce { copy(notificationState = NotificationUiState.NotificationState.FLOATING_BOTTLE) }
-            updateSettingNotificationUseCase(
-                notification = Notification(
-                    notificationType = NotificationType.DAILY_RANDOM,
-                    enabled = !currentState.isFloatingBottle
-                )
-            )
-            reduce { copy(isFloatingBottle = !isFloatingBottle) }
-        }
-    }
+            val isPermissionAllowed = getNotificationPermissionStatusUseCase()
 
-    private fun changeGoodFeelingArrivedNotification() {
-        launch {
-            reduce { copy(notificationState = NotificationUiState.NotificationState.GOOD_FEELING_ARRIVED) }
-            updateSettingNotificationUseCase(
-                notification = Notification(
-                    notificationType = NotificationType.RECEIVE_LIKE,
-                    enabled = !currentState.isGoodFeelingArrived
+            if (isPermissionAllowed) {
+                reduce { copy(notificationState = notificationState) }
+                updateSettingNotificationUseCase(
+                    notification = Notification(
+                        notificationType = notificationType,
+                        enabled = !currentState
+                    )
                 )
-            )
-            reduce { copy(isGoodFeelingArrived = !isGoodFeelingArrived) }
-        }
-    }
-
-    private fun changeConversationNotification() {
-        launch {
-            reduce { copy(notificationState = NotificationUiState.NotificationState.CONVERSATION) }
-            updateSettingNotificationUseCase(
-                notification = Notification(
-                    notificationType = NotificationType.PING_PONG,
-                    enabled = !currentState.isConversation
-                )
-            )
-            reduce { copy(isConversation = !isConversation) }
-        }
-    }
-
-    private fun changeMarketingResponseNotification() {
-        launch {
-            reduce { copy(notificationState = NotificationUiState.NotificationState.MARKETING_RESPONSE) }
-            updateSettingNotificationUseCase(
-                notification = Notification(
-                    notificationType = NotificationType.MARKETING,
-                    enabled = !currentState.isMarketingResponse
-                )
-            )
-            reduce { copy(isMarketingResponse = !isMarketingResponse) }
+                updateState.invoke()
+            } else {
+                reduce { copy(isShowDialog = true) }
+            }
         }
     }
 
