@@ -26,6 +26,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
 @Composable
 fun BottlesWebView(
+    modifier: Modifier = Modifier,
     url: String,
     webView: WebView,
 ) {
@@ -64,7 +65,7 @@ fun BottlesWebView(
 
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .systemBarsPadding()
                 .imePadding(),
