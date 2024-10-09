@@ -77,6 +77,7 @@ dependencies {
     implementation(projects.feat.splash)
     implementation(projects.feat.report)
     implementation(projects.feat.setting)
+    implementation(projects.feat.like)
 
     // Compose
     implementation(libs.androidx.compose.activity)

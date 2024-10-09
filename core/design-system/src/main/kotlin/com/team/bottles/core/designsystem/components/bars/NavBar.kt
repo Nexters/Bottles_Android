@@ -23,6 +23,7 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 const val SAND_BEACH_ROUTE = "MainNavigator.SandBeach"
 const val BOTTLES_BOX_ROUTE = "MainNavigator.BottlesBox"
 const val MY_PAGE_ROUTE = "MainNavigator.MyPage"
+const val LIKE_ROUTE = "MainNavigator.Like"
 
 enum class BottomNavItem(
     val route: String,
@@ -34,14 +35,19 @@ enum class BottomNavItem(
         icon = R.drawable.ic_beach_32,
         label = R.string.sand_beach
     ),
+    LIKE(
+        route = LIKE_ROUTE,
+        icon = R.drawable.ic_heart_32,
+        label = R.string.heart
+    ),
     BOTTLE_BOX(
         route = BOTTLES_BOX_ROUTE,
-        icon = R.drawable.ic_bottle_32, // TODO : 보틀 박스 아이콘으로 변경
+        icon = R.drawable.ic_bottle_32,
         label = R.string.bottle_box
     ),
     MY_PAGE(
         route = MY_PAGE_ROUTE,
-        icon = R.drawable.ic_user_32, // TODO : 마이 페이지 아이콘으로 변경
+        icon = R.drawable.ic_user_32,
         label = R.string.my_page
     ),
     ;

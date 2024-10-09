@@ -19,6 +19,7 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import com.team.bottles.feat.bottle.navigation.arrivedBottlesScreen
 import com.team.bottles.feat.bottle.navigation.bottleBoxScreen
+import com.team.bottles.feat.like.navigation.likeScreen
 import com.team.bottles.feat.login.navigation.loginScreen
 import com.team.bottles.feat.mypage.navigation.myPageScreen
 import com.team.bottles.feat.onboarding.navigation.onboardingScreen
@@ -107,6 +108,10 @@ fun BottlesNavHost(
             )
             notificationSettingScreen(navigateToMyPage = { popBackStack() })
             editProfileScreen(navigateToMyPage = { popBackStack() })
+            likeScreen(
+                innerPadding = innerPadding,
+                navigateToLikeDetail = { /*TODO : 디테일 화면으로 이동*/ }
+            )
         }
     }
 }

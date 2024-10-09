@@ -32,6 +32,7 @@ fun BottlesApp() {
         onClickNavItem = { bottomNavItem ->
             when (bottomNavItem) {
                 BottomNavItem.BOTTLE_BOX -> navHostController.navigateToTopLevelDestination(MainNavigator.BottlesBox)
+                BottomNavItem.LIKE -> navHostController.navigateToTopLevelDestination(MainNavigator.Like)
                 BottomNavItem.SAND_BEACH -> navHostController.navigateToTopLevelDestination(MainNavigator.SandBeach)
                 BottomNavItem.MY_PAGE -> navHostController.navigateToTopLevelDestination(MainNavigator.MyPage)
             }
