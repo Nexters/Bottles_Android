@@ -1,17 +1,18 @@
 package com.team.bottles.feat.profile.createprofile
 
-import android.annotation.SuppressLint
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.team.bottles.core.ui.BottlesWebView
-import com.team.bottles.feat.profile.BuildConfig
 import com.team.bottles.feat.profile.createprofile.mvi.CreateProfileIntent
 import com.team.bottles.feat.profile.createprofile.mvi.CreateProfileUiState
 
-@SuppressLint("SetJavaScriptEnabled")
 @Composable
 internal fun CreateProfileScreen(
     uiState: CreateProfileUiState,
@@ -33,11 +34,11 @@ internal fun CreateProfileScreen(
 
     if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
         BottlesWebView(
-            url = BuildConfig.BOTTLES_CREATE_PROFILE_URL +
-                    "?accessToken=${uiState.token.accessToken}" +
-                    "&refreshToken=${uiState.token.refreshToken}" +
-                    "&device=${BuildConfig.DEVICE}" +
-                    "&version=${BuildConfig.APP_VERSION}",
+            modifier = Modifier
+                .fillMaxSize()
+                .systemBarsPadding()
+                .imePadding(),
+            url = uiState.url,
             webView = webView,
         )
     }

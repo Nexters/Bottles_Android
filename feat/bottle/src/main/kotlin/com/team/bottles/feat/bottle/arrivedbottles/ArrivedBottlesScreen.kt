@@ -2,11 +2,14 @@ package com.team.bottles.feat.bottle.arrivedbottles
 
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.team.bottles.core.ui.BottlesWebView
-import com.team.bottles.feat.bottle.BuildConfig
 import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesIntent
 import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesUiState
 
@@ -33,11 +36,11 @@ internal fun ArrivedBottlesScreen(
 
     if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
         BottlesWebView(
-            url = BuildConfig.BOTTLES_ARRIVED_BOTTLES_URL +
-                    "?accessToken=${uiState.token.accessToken}" +
-                    "&refreshToken=${uiState.token.refreshToken}" +
-                    "&device=${BuildConfig.DEVICE}" +
-                    "&version=${BuildConfig.APP_VERSION}",
+            modifier = Modifier
+                .fillMaxSize()
+                .systemBarsPadding()
+                .imePadding(),
+            url = uiState.url,
             webView = webView
         )
     }
