@@ -28,7 +28,7 @@ fun BottlesApp() {
     BottlesScaffold(
         onClickNavItem = { bottomNavItem ->
             when (bottomNavItem) {
-                BottomNavItem.BOTTLE_BOX -> navHostController.navigateToTopLevelDestination(MainNavigator.BottlesBox)
+                BottomNavItem.PING_PONG -> navHostController.navigateToTopLevelDestination(MainNavigator.PingPong)
                 BottomNavItem.LIKE -> navHostController.navigateToTopLevelDestination(MainNavigator.Like)
                 BottomNavItem.SAND_BEACH -> navHostController.navigateToTopLevelDestination(MainNavigator.SandBeach)
                 BottomNavItem.MY_PAGE -> navHostController.navigateToTopLevelDestination(MainNavigator.MyPage)

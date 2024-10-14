@@ -8,8 +8,8 @@ import androidx.navigation.compose.composable
 import com.team.bottles.feat.report.ReportRoute
 
 fun NavGraphBuilder.reportScreen(
+    navigateToPingPongDetail: () -> Unit,
     navigateToPingPong: () -> Unit,
-    navigateToBottleBox: () -> Unit,
 ) {
     composable<ReportNavigator>(
         exitTransition = {
@@ -26,8 +26,8 @@ fun NavGraphBuilder.reportScreen(
         }
     ) {
         ReportRoute(
-            navigateToPingPong = navigateToPingPong,
-            navigateToBottleBox = navigateToBottleBox
+            navigateToPingPongDetail = navigateToPingPongDetail,
+            navigateToPingPong = navigateToPingPong
         )
     }
 }

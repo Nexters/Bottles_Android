@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.components
+package com.team.bottles.feat.pingpong.detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,7 @@ import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.ui.BottlesRowTab
-import com.team.bottles.feat.pingpong.mvi.PingPongTab
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongTab
 
 @Composable
 internal fun PingPongTopBar(

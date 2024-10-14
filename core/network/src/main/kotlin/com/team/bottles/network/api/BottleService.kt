@@ -13,7 +13,7 @@ import retrofit2.http.Path
 
 interface BottleService {
 
-    @GET("/api/v1/bottles/ping-pong")
+    @GET("/api/v2/bottles/ping-pong")
     suspend fun getPingPongList() : PingPongListResponse
 
     @GET("/api/v1/bottles/ping-pong/{bottleId}")

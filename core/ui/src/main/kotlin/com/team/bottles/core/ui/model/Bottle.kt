@@ -9,9 +9,10 @@ data class Bottle(
     val personality: List<String> = emptyList(),
     val isRead: Boolean = true,
     val lastActivatedAt: String = "",
+    val lastStatus: String = ""
 ) {
     companion object {
-        fun exampleBottleBox(): List<Bottle> =
+        fun exampleBottleList(): List<Bottle> =
             (1L..6L).map {
                 Bottle(
                     id = it,
@@ -21,7 +22,8 @@ data class Bottle(
                     lastActivatedAt = "00분 전",
                     mbti = "INTP",
                     personality = listOf("적극적인", "열적정인", "예의바른"),
-                    isRead = false
+                    isRead = false,
+                    lastStatus = "연락처를 공유했어요"
                 )
             }
     }

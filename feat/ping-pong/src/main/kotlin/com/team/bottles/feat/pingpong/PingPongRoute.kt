@@ -1,70 +1,56 @@
 package com.team.bottles.feat.pingpong
 
-import android.app.Activity
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
-import android.view.WindowManager
+import android.widget.Toast
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
 
 @Composable
 internal fun PingPongRoute(
     viewModel: PingPongViewModel = hiltViewModel(),
-    navigateToBottleBox: () -> Unit,
-    navigateToReport: (userId: Long, userName: String, userImageUrl: String, userAge: Int) -> Unit
+    innerPadding: PaddingValues,
+    navigateToPingPongDetail: (Long) -> Unit,
+    navigateToSandBeach: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    DisposableEffect(Unit) {
-        val window = (context as? Activity)?.window
+    DisposableEffect(key1 = lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                viewModel.initPingPongList()
+            }
+        }
 
-        window?.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
+        lifecycleOwner.lifecycle.addObserver(observer)
 
         onDispose {
-            window?.clearFlags(WindowManager.LayoutParams.FLAG_SECURE,)
+            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is PingPongSideEffect.NavigateToBottleBox -> navigateToBottleBox()
-                is PingPongSideEffect.NavigateToReport -> {
-                    navigateToReport(sideEffect.userId, sideEffect.userName, sideEffect.userImageUrl, sideEffect.userAge)
-                }
-                is PingPongSideEffect.OpenKakaoTalkApp -> {
-                    val kakaoPackageName = "com.kakao.talk"
-                    val packageManager = context.packageManager
-                    val launchIntent = packageManager.getLaunchIntentForPackage(kakaoPackageName)
-
-                    if (launchIntent != null) {
-                        context.startActivity(launchIntent)
-                    } else {
-                        try {
-                            val playStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$kakaoPackageName"))
-                            context.startActivity(playStoreIntent)
-                        } catch (e: ActivityNotFoundException) {
-                            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$kakaoPackageName"))
-                            context.startActivity(webIntent)
-                        }
-                    }
-                }
+                is PingPongSideEffect.NavigateToPingPongDetail -> navigateToPingPongDetail(sideEffect.bottleId)
+                is PingPongSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+                is PingPongSideEffect.NavigateToSandBeach -> navigateToSandBeach()
             }
         }
     }
 
     PingPongScreen(
+        innerPadding = innerPadding,
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )

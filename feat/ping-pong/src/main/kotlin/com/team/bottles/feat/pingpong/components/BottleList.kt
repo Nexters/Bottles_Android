@@ -1,4 +1,4 @@
-package com.team.bottles.feat.bottle.bottlebox.components
+package com.team.bottles.feat.pingpong.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +24,7 @@ fun BottleList(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(
             top = BottlesTheme.spacing.extraLarge,
-            bottom = BottlesTheme.spacing.large,
+            bottom = BottlesTheme.spacing.extraLarge,
             start = BottlesTheme.spacing.medium,
             end = BottlesTheme.spacing.medium
         ),
@@ -49,7 +49,7 @@ fun BottleList(
 private fun BottleListPreview() {
     BottlesTheme {
         BottleList(
-            bottles = Bottle.exampleBottleBox().toImmutableList(),
+            bottles = Bottle.exampleBottleList().toImmutableList(),
             onClickItem = {}
         )
     }

@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.components
+package com.team.bottles.feat.pingpong.detail.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.ui.PartnerBubble
 import com.team.bottles.core.ui.UserBubble
-import com.team.bottles.feat.pingpong.mvi.ShareSelectButtonState
+import com.team.bottles.feat.pingpong.detail.mvi.ShareSelectButtonState
 
 @Composable
 internal fun KakaoShareCard(

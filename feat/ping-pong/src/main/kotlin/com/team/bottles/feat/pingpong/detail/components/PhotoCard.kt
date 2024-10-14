@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.components
+package com.team.bottles.feat.pingpong.detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,7 +30,7 @@ import com.team.bottles.core.domain.bottle.model.PingPongPhotoStatus
 import com.team.bottles.core.domain.bottle.model.PingPongPhotos
 import com.team.bottles.core.ui.PartnerBubble
 import com.team.bottles.core.ui.UserBubble
-import com.team.bottles.feat.pingpong.mvi.ShareSelectButtonState
+import com.team.bottles.feat.pingpong.detail.mvi.ShareSelectButtonState
 
 @Composable
 internal fun PhotoCard(

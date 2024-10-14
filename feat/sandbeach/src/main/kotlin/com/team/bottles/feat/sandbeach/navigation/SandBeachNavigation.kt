@@ -12,7 +12,7 @@ fun NavGraphBuilder.sandBeachScreen(
     innerPadding: PaddingValues,
     navigateToIntroduction: () -> Unit,
     navigateToArrivedBottles: () -> Unit,
-    navigateToBottleBox: () -> Unit,
+    navigateToPingPong: () -> Unit,
 ) {
     composable<MainNavigator.SandBeach>(
         enterTransition = {
@@ -32,7 +32,7 @@ fun NavGraphBuilder.sandBeachScreen(
             innerPadding = innerPadding,
             navigateToIntroduction = navigateToIntroduction,
             navigateToArrivedBottles = navigateToArrivedBottles,
-            navigateToBottleBox = navigateToBottleBox
+            navigateToPingPong = navigateToPingPong
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.components
+package com.team.bottles.feat.pingpong.detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

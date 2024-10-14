@@ -21,7 +21,7 @@ import com.team.bottles.core.designsystem.components.etc.menu.BottlesBottomNavIt
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 const val SAND_BEACH_ROUTE = "MainNavigator.SandBeach"
-const val BOTTLES_BOX_ROUTE = "MainNavigator.BottlesBox"
+const val PING_PONG_ROUTE = "MainNavigator.PingPong"
 const val MY_PAGE_ROUTE = "MainNavigator.MyPage"
 const val LIKE_ROUTE = "MainNavigator.Like"
 
@@ -40,10 +40,10 @@ enum class BottomNavItem(
         icon = R.drawable.ic_heart_32,
         label = R.string.heart
     ),
-    BOTTLE_BOX(
-        route = BOTTLES_BOX_ROUTE,
-        icon = R.drawable.ic_bottle_32,
-        label = R.string.bottle_box
+    PING_PONG(
+        route = PING_PONG_ROUTE,
+        icon = R.drawable.ic_talk_32,
+        label = R.string.ping_pong
     ),
     MY_PAGE(
         route = MY_PAGE_ROUTE,
@@ -106,7 +106,7 @@ private fun BottlesBottomNavBarPreview() {
             bottomBar = {
                 BottlesBottomNavBar(
                     onClickItem = { },
-                    currentSelectedItem = BottomNavItem.BOTTLE_BOX
+                    currentSelectedItem = BottomNavItem.PING_PONG
                 )
             }
         ) { innerPadding ->

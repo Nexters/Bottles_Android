@@ -4,15 +4,10 @@ import com.team.bottles.core.common.UiSideEffect
 
 sealed interface PingPongSideEffect : UiSideEffect {
 
-    data object NavigateToBottleBox : PingPongSideEffect
+    data class NavigateToPingPongDetail(val bottleId: Long) : PingPongSideEffect
 
-    data object OpenKakaoTalkApp : PingPongSideEffect
+    data class ShowErrorMessage(val message: String) : PingPongSideEffect
 
-    data class NavigateToReport(
-        val userId: Long,
-        val userName: String,
-        val userImageUrl: String,
-        val userAge: Int
-    ) : PingPongSideEffect
+    data object NavigateToSandBeach : PingPongSideEffect
 
 }

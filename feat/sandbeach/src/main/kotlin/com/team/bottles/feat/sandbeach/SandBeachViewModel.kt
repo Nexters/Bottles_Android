@@ -88,13 +88,13 @@ class SandBeachViewModel @Inject constructor(
                         }
                         return@launch
                     } else {
-                        val activeBottles = getPingPongListUseCase().activeBottles
+                        val pingPongBottles = getPingPongListUseCase()
 
-                        if (activeBottles.isNotEmpty()) {
+                        if (pingPongBottles.isNotEmpty()) {
                             reduce {
                                 copy(
-                                    bottleStatus = BottleStatus.IN_BOTTLE_BOX,
-                                    bottleBoxValue = activeBottles.size
+                                    bottleStatus = BottleStatus.IN_PING_PONG,
+                                    pingPongValue = pingPongBottles.size
                                 )
                             }
                             return@launch
@@ -126,7 +126,7 @@ class SandBeachViewModel @Inject constructor(
         when (currentState.bottleStatus) {
             BottleStatus.REQUIRE_INTRODUCTION -> {}
             BottleStatus.NONE_BOTTLE -> navigateToArrivedBottle()
-            BottleStatus.IN_BOTTLE_BOX -> navigateToBottleBox()
+            BottleStatus.IN_PING_PONG -> navigateToPingPong()
             BottleStatus.IN_ARRIVED_BOTTLE -> navigateToArrivedBottle()
         }
     }
@@ -135,8 +135,8 @@ class SandBeachViewModel @Inject constructor(
         postSideEffect(SandBeachSideEffect.NavigateToIntroduction)
     }
 
-    private fun navigateToBottleBox() {
-        postSideEffect(SandBeachSideEffect.NavigateToBottleBox)
+    private fun navigateToPingPong() {
+        postSideEffect(SandBeachSideEffect.NavigateToPingPong)
     }
 
     private fun navigateToArrivedBottle() {

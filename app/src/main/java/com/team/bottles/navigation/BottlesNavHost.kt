@@ -5,7 +5,7 @@ import LikeDetailNavigator
 import LoginNavigator
 import MainNavigator
 import OnboardingNavigator
-import PingPongNavigator
+import PingPongDetailNavigator
 import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
@@ -24,12 +24,12 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import com.team.bottles.core.designsystem.theme.LocalLikeTabWebViewComposition
 import com.team.bottles.feat.bottle.navigation.arrivedBottlesScreen
-import com.team.bottles.feat.bottle.navigation.bottleBoxScreen
 import com.team.bottles.feat.like.navigation.likeDetailScreen
 import com.team.bottles.feat.like.navigation.likeScreen
 import com.team.bottles.feat.login.navigation.loginScreen
 import com.team.bottles.feat.mypage.navigation.myPageScreen
 import com.team.bottles.feat.onboarding.navigation.onboardingScreen
+import com.team.bottles.feat.pingpong.navigation.pingPongDetailScreen
 import com.team.bottles.feat.pingpong.navigation.pingPongScreen
 import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.editProfileScreen
@@ -80,24 +80,25 @@ fun BottlesNavHost(
                     innerPadding = innerPadding,
                     navigateToIntroduction = ::navigateToIntroduction,
                     navigateToArrivedBottles = ::navigateToArrivedBottles,
-                    navigateToBottleBox = { navigateToTopLevelDestination(route = MainNavigator.BottlesBox) }
+                    navigateToPingPong = { navigateToTopLevelDestination(route = MainNavigator.PingPong) }
                 )
                 arrivedBottlesScreen(
                     navigateToSandBeach = { popBackStack() },
-                    navigateToBottleBox = {
-                        navigateToBottleBox {
+                    navigateToPingPong = {
+                        navigateToPingPong {
                             popUpTo(graph.id) { inclusive = true }
                             restoreState = true
                         }
                     }
                 )
-                bottleBoxScreen(
+                pingPongScreen(
                     innerPadding = innerPadding,
-                    navigateToPingPong = ::navigateToPingPong
+                    navigateToPingPongDetail = ::navigateToPingPongDetail,
+                    navigateToSandBeach = { navigateToTopLevelDestination(MainNavigator.SandBeach) }
                 )
                 introductionScreen(navigateToSandBeach = { popBackStack() })
-                pingPongScreen(
-                    navigateToBottleBox = { popBackStack() },
+                pingPongDetailScreen(
+                    navigateToPingPong = { popBackStack() },
                     navigateToReport = ::navigateToReport
                 )
                 myPageScreen(
@@ -107,9 +108,9 @@ fun BottlesNavHost(
                     navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,
                 )
                 reportScreen(
-                    navigateToPingPong = { popBackStack() },
-                    navigateToBottleBox = {
-                        navigateToBottleBox {
+                    navigateToPingPongDetail = { popBackStack() },
+                    navigateToPingPong = {
+                        navigateToPingPong {
                             popUpTo(graph.id) { inclusive = true }
                             restoreState = true
                         }
@@ -127,7 +128,7 @@ fun BottlesNavHost(
                 )
                 likeDetailScreen(
                     navigateToQna = {
-                        navigateToBottleBox {
+                        navigateToPingPong {
                             popUpTo(graph.id) { inclusive = true }
                         }
                     },
@@ -166,12 +167,12 @@ fun NavController.navigateToIntroduction() =
 fun NavController.navigateToArrivedBottles() =
     navigate(ArrivedBottlesNavigator)
 
-fun NavController.navigateToPingPong(bottleId: Long) =
-    navigate(PingPongNavigator(bottleId = bottleId))
+fun NavController.navigateToPingPongDetail(bottleId: Long) =
+    navigate(PingPongDetailNavigator(bottleId = bottleId))
 
-fun NavController.navigateToBottleBox(navOptions: NavOptionsBuilder.() -> Unit = {}) {
+fun NavController.navigateToPingPong(navOptions: NavOptionsBuilder.() -> Unit = {}) {
     navigate(
-        route = MainNavigator.BottlesBox,
+        route = MainNavigator.PingPong,
     ) {
         navOptions()
     }
