@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.components
+package com.team.bottles.feat.pingpong.detail.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,7 +11,7 @@ import com.team.bottles.core.designsystem.components.buttons.BottlesSolidButton
 import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
 import com.team.bottles.core.designsystem.components.buttons.SolidButtonType
 import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.feat.pingpong.mvi.ShareSelectButtonState
+import com.team.bottles.feat.pingpong.detail.mvi.ShareSelectButtonState
 
 @Composable
 internal fun SelectYesOrNo(

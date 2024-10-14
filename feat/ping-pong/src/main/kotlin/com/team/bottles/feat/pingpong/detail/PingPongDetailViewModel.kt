@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong
+package com.team.bottles.feat.pingpong.detail
 
 import PingPongDetailNavigator
 import androidx.lifecycle.SavedStateHandle
@@ -11,18 +11,18 @@ import com.team.bottles.core.domain.bottle.usecase.SelectPingPongShareKakaoIdUse
 import com.team.bottles.core.domain.bottle.usecase.SelectPingPongSharePhotoUseCase
 import com.team.bottles.core.domain.bottle.usecase.SendPingPongLetterUseCase
 import com.team.bottles.core.domain.bottle.usecase.StopPingPongUseCase
-import com.team.bottles.feat.pingpong.mvi.PingPongCard
-import com.team.bottles.feat.pingpong.mvi.PingPongIntent
-import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
-import com.team.bottles.feat.pingpong.mvi.PingPongTab
-import com.team.bottles.feat.pingpong.mvi.PingPongUiState
-import com.team.bottles.feat.pingpong.mvi.ShareSelectButtonState
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongCard
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailIntent
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailSideEffect
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongTab
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailUiState
+import com.team.bottles.feat.pingpong.detail.mvi.ShareSelectButtonState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
-class PingPongViewModel @Inject constructor(
+class PingPongDetailViewModel @Inject constructor(
     private val getPingPongDetailUseCase: GetPingPongDetailUseCase,
     private val sendPingPongLetterUseCase: SendPingPongLetterUseCase,
     private val selectPingPongSharePhotoUseCase: SelectPingPongSharePhotoUseCase,
@@ -30,42 +30,42 @@ class PingPongViewModel @Inject constructor(
     private val stopPingPongUseCase: StopPingPongUseCase,
     private val readPingPongDetailUseCase: ReadPingPongDetailUseCase,
     savedStateHandle: SavedStateHandle
-) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
+) : BaseViewModel<PingPongDetailUiState, PingPongDetailSideEffect, PingPongDetailIntent>(savedStateHandle) {
 
     init {
         launch { readPingPongDetailUseCase(bottleId = currentState.bottleId) }
         getPingPongDetail()
     }
 
-    override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState {
+    override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongDetailUiState {
         val bottleId = savedStateHandle.toRoute<PingPongDetailNavigator>().bottleId.toInt()
-        return PingPongUiState(bottleId = bottleId)
+        return PingPongDetailUiState(bottleId = bottleId)
     }
 
-    override suspend fun handleIntent(intent: PingPongIntent) {
+    override suspend fun handleIntent(intent: PingPongDetailIntent) {
         when (intent) {
-            is PingPongIntent.ClickBackButton -> navigateToBottleBox()
-            is PingPongIntent.ClickReportButton -> navigateToReport()
-            is PingPongIntent.ClickTabButton -> changeTab(tab = intent.tab)
-            is PingPongIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
-            is PingPongIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
-            is PingPongIntent.ClickConfirmAlert -> stopPingPong()
-            is PingPongIntent.ClickOtherOpenBottleButton -> navigateToBottleBox()
-            is PingPongIntent.ClickGoToKakaoTalkButton -> openKakaoTalkApp()
-            is PingPongIntent.ClickSendLetter -> sendLetter(order = intent.order, answer = intent.text)
-            is PingPongIntent.OnFocusedTextField -> changeTextFieldState(order = intent.order, isFocused = intent.isFocused)
-            is PingPongIntent.OnLetterTextChange -> changeLetterText(order = intent.order, text = intent.text)
-            is PingPongIntent.ClickLetterCard -> expandHandleLetterCard(order = intent.order)
-            is PingPongIntent.ClickPhotoCard -> expandHandlePhotoCard()
-            is PingPongIntent.ClickKakaoShareCard -> expandHandleKakaoShareCard()
-            is PingPongIntent.ClickLikeSharePhotoButton -> selectLikeSharePhotoButton()
-            is PingPongIntent.ClickHateSharePhotoButton -> selectHateSharePhotoButton()
-            is PingPongIntent.ClickShareProfilePhoto -> shareProfilePhoto(willShare = intent.willShare)
-            is PingPongIntent.ClickShareKakaoId -> shareKakaoId(willMatch = intent.willMatch)
-            is PingPongIntent.ClickHateShareKakaoIdButton -> selectHateShareKakaoIdButton()
-            is PingPongIntent.ClickLikeShareKakaoIdButton -> selectLikeShareKakaoIdButton()
-            is PingPongIntent.ChangeRefreshState -> reduce { copy(isRefreshing = true) }
-            is PingPongIntent.RefreshPingPong -> getPingPongDetail()
+            is PingPongDetailIntent.ClickBackButton -> navigateToBottleBox()
+            is PingPongDetailIntent.ClickReportButton -> navigateToReport()
+            is PingPongDetailIntent.ClickTabButton -> changeTab(tab = intent.tab)
+            is PingPongDetailIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
+            is PingPongDetailIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
+            is PingPongDetailIntent.ClickConfirmAlert -> stopPingPong()
+            is PingPongDetailIntent.ClickOtherOpenBottleButton -> navigateToBottleBox()
+            is PingPongDetailIntent.ClickGoToKakaoTalkButton -> openKakaoTalkApp()
+            is PingPongDetailIntent.ClickSendLetter -> sendLetter(order = intent.order, answer = intent.text)
+            is PingPongDetailIntent.OnFocusedTextField -> changeTextFieldState(order = intent.order, isFocused = intent.isFocused)
+            is PingPongDetailIntent.OnLetterTextChange -> changeLetterText(order = intent.order, text = intent.text)
+            is PingPongDetailIntent.ClickLetterCard -> expandHandleLetterCard(order = intent.order)
+            is PingPongDetailIntent.ClickPhotoCard -> expandHandlePhotoCard()
+            is PingPongDetailIntent.ClickKakaoShareCard -> expandHandleKakaoShareCard()
+            is PingPongDetailIntent.ClickLikeSharePhotoButton -> selectLikeSharePhotoButton()
+            is PingPongDetailIntent.ClickHateSharePhotoButton -> selectHateSharePhotoButton()
+            is PingPongDetailIntent.ClickShareProfilePhoto -> shareProfilePhoto(willShare = intent.willShare)
+            is PingPongDetailIntent.ClickShareKakaoId -> shareKakaoId(willMatch = intent.willMatch)
+            is PingPongDetailIntent.ClickHateShareKakaoIdButton -> selectHateShareKakaoIdButton()
+            is PingPongDetailIntent.ClickLikeShareKakaoIdButton -> selectLikeShareKakaoIdButton()
+            is PingPongDetailIntent.ChangeRefreshState -> reduce { copy(isRefreshing = true) }
+            is PingPongDetailIntent.RefreshPingPongDetail -> getPingPongDetail()
         }
     }
 
@@ -101,7 +101,8 @@ class PingPongViewModel @Inject constructor(
     }
 
     private fun navigateToReport() {
-        postSideEffect(PingPongSideEffect.NavigateToReport(
+        postSideEffect(
+            PingPongDetailSideEffect.NavigateToReport(
             userId = currentState.partnerProfile.userId,
             userName = currentState.partnerProfile.userName,
             userAge = currentState.partnerProfile.age,
@@ -110,11 +111,11 @@ class PingPongViewModel @Inject constructor(
     }
 
     private fun openKakaoTalkApp() {
-        postSideEffect(PingPongSideEffect.OpenKakaoTalkApp)
+        postSideEffect(PingPongDetailSideEffect.OpenKakaoTalkApp)
     }
 
     private fun navigateToBottleBox() {
-        postSideEffect(PingPongSideEffect.NavigateToBottleBox)
+        postSideEffect(PingPongDetailSideEffect.NavigateToBottleBox)
     }
 
     private fun changeTab(tab: PingPongTab) {
@@ -125,7 +126,7 @@ class PingPongViewModel @Inject constructor(
         launch {
             stopPingPongUseCase(bottleId = currentState.bottleId)
             reduce { copy(showDialog = false) }
-            postSideEffect(PingPongSideEffect.NavigateToBottleBox)
+            postSideEffect(PingPongDetailSideEffect.NavigateToBottleBox)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.components
+package com.team.bottles.feat.pingpong.detail.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.bottle.model.PingPongLetter
-import com.team.bottles.feat.pingpong.mvi.PingPongCard
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongCard
 
 internal fun LazyListScope.pingPongContents(
     pingPongCards: List<PingPongCard>,

@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong
+package com.team.bottles.feat.pingpong.detail
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -35,21 +35,21 @@ import com.team.bottles.core.domain.bottle.model.PingPongMatchStatus
 import com.team.bottles.core.domain.profile.model.UserProfile
 import com.team.bottles.core.ui.BottlesAlertDialogLeftDismissRightConfirm
 import com.team.bottles.core.ui.model.AlertType
-import com.team.bottles.feat.pingpong.components.PingPongBottomBar
-import com.team.bottles.feat.pingpong.components.PingPongTopBar
-import com.team.bottles.feat.pingpong.components.introductionContents
-import com.team.bottles.feat.pingpong.components.matchingContents
-import com.team.bottles.feat.pingpong.components.pingPongContents
-import com.team.bottles.feat.pingpong.mvi.PingPongCard
-import com.team.bottles.feat.pingpong.mvi.PingPongIntent
-import com.team.bottles.feat.pingpong.mvi.PingPongTab
-import com.team.bottles.feat.pingpong.mvi.PingPongUiState
+import com.team.bottles.feat.pingpong.detail.components.PingPongBottomBar
+import com.team.bottles.feat.pingpong.detail.components.PingPongTopBar
+import com.team.bottles.feat.pingpong.detail.components.introductionContents
+import com.team.bottles.feat.pingpong.detail.components.matchingContents
+import com.team.bottles.feat.pingpong.detail.components.pingPongContents
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongCard
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailIntent
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongTab
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun PingPongScreen(
-    uiState: PingPongUiState,
-    onIntent: (PingPongIntent) -> Unit
+internal fun PingPongDetailScreen(
+    uiState: PingPongDetailUiState,
+    onIntent: (PingPongDetailIntent) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
     val introductionTabScrollState = rememberLazyListState()
@@ -60,27 +60,27 @@ internal fun PingPongScreen(
     )
 
     BackHandler {
-        onIntent(PingPongIntent.ClickBackButton)
+        onIntent(PingPongDetailIntent.ClickBackButton)
     }
 
     LaunchedEffect(uiState.isRefreshing) {
         if (uiState.isRefreshing) {
             pullRefreshState.startRefresh()
-            onIntent(PingPongIntent.RefreshPingPong)
+            onIntent(PingPongDetailIntent.RefreshPingPongDetail)
         } else {
             pullRefreshState.endRefresh()
         }
     }
 
     if (pullRefreshState.isRefreshing && !uiState.isRefreshing) {
-        onIntent(PingPongIntent.ChangeRefreshState)
+        onIntent(PingPongDetailIntent.ChangeRefreshState)
     }
 
     if (uiState.showDialog) {
         BottlesAlertDialogLeftDismissRightConfirm(
-            onClose = { onIntent(PingPongIntent.ClickCloseAlert) },
-            onConfirm = { onIntent(PingPongIntent.ClickConfirmAlert) },
-            onDismiss = { onIntent(PingPongIntent.ClickCloseAlert) },
+            onClose = { onIntent(PingPongDetailIntent.ClickCloseAlert) },
+            onConfirm = { onIntent(PingPongDetailIntent.ClickConfirmAlert) },
+            onDismiss = { onIntent(PingPongDetailIntent.ClickCloseAlert) },
             confirmButtonText = AlertType.STOP_PING_PONG.confirmText,
             dismissButtonText = AlertType.STOP_PING_PONG.dismissText,
             title = AlertType.STOP_PING_PONG.title,
@@ -100,9 +100,9 @@ internal fun PingPongScreen(
         containerColor = Color.Transparent,
         topBar = {
             PingPongTopBar(
-                onClickLeadingIcon = { onIntent(PingPongIntent.ClickBackButton) },
-                onClickTrailingIcon = { onIntent(PingPongIntent.ClickReportButton) },
-                onClickTab = { tab -> onIntent(PingPongIntent.ClickTabButton(tab = tab)) },
+                onClickLeadingIcon = { onIntent(PingPongDetailIntent.ClickBackButton) },
+                onClickTrailingIcon = { onIntent(PingPongDetailIntent.ClickReportButton) },
+                onClickTab = { tab -> onIntent(PingPongDetailIntent.ClickTabButton(tab = tab)) },
                 partnerName = uiState.partnerProfile.userName,
                 pingPongMatchStatus = uiState.pingPongMatchStatus,
                 currentTab = uiState.currentTab
@@ -113,8 +113,8 @@ internal fun PingPongScreen(
                 PingPongBottomBar(
                     onClickButton = {
                         when (uiState.isMatched) {
-                            true -> onIntent(PingPongIntent.ClickGoToKakaoTalkButton)
-                            false -> onIntent(PingPongIntent.ClickOtherOpenBottleButton)
+                            true -> onIntent(PingPongDetailIntent.ClickGoToKakaoTalkButton)
+                            false -> onIntent(PingPongDetailIntent.ClickOtherOpenBottleButton)
                         }
                     },
                     isMatched = uiState.isMatched,
@@ -160,38 +160,38 @@ internal fun PingPongScreen(
                             pingPongCards = uiState.pingPongCards,
                             pingPongMatchStatus = uiState.pingPongMatchStatus,
                             onClickSendLetter = { order, text ->
-                                onIntent(PingPongIntent.ClickSendLetter(order = order, text = text))
+                                onIntent(PingPongDetailIntent.ClickSendLetter(order = order, text = text))
                             },
                             onValueChange = { order, text ->
                                 onIntent(
-                                    PingPongIntent.OnLetterTextChange(
+                                    PingPongDetailIntent.OnLetterTextChange(
                                         order = order,
                                         text = text
                                     )
                                 )
                             },
                             onClickLetterCard = { order ->
-                                onIntent(PingPongIntent.ClickLetterCard(order = order))
+                                onIntent(PingPongDetailIntent.ClickLetterCard(order = order))
                             },
                             onFocusedTextField = { order, isFocused ->
                                 onIntent(
-                                    PingPongIntent.OnFocusedTextField(
+                                    PingPongDetailIntent.OnFocusedTextField(
                                         order = order,
                                         isFocused = isFocused
                                     )
                                 )
                             },
-                            onClickLikeSharePhoto = { onIntent(PingPongIntent.ClickLikeSharePhotoButton) },
-                            onClickHateSharePhoto = { onIntent(PingPongIntent.ClickHateSharePhotoButton) },
-                            onClickPhotoCard = { onIntent(PingPongIntent.ClickPhotoCard) },
+                            onClickLikeSharePhoto = { onIntent(PingPongDetailIntent.ClickLikeSharePhotoButton) },
+                            onClickHateSharePhoto = { onIntent(PingPongDetailIntent.ClickHateSharePhotoButton) },
+                            onClickPhotoCard = { onIntent(PingPongDetailIntent.ClickPhotoCard) },
                             onClickShareProfilePhoto = { willShare ->
-                                onIntent(PingPongIntent.ClickShareProfilePhoto(willShare = willShare))
+                                onIntent(PingPongDetailIntent.ClickShareProfilePhoto(willShare = willShare))
                             },
-                            onClickLikeShareKakaoId = { onIntent(PingPongIntent.ClickLikeShareKakaoIdButton) },
-                            onClickHateShareKakaoId = { onIntent(PingPongIntent.ClickHateShareKakaoIdButton) },
-                            onClickKakaoShareCard = { onIntent(PingPongIntent.ClickKakaoShareCard) },
+                            onClickLikeShareKakaoId = { onIntent(PingPongDetailIntent.ClickLikeShareKakaoIdButton) },
+                            onClickHateShareKakaoId = { onIntent(PingPongDetailIntent.ClickHateShareKakaoIdButton) },
+                            onClickKakaoShareCard = { onIntent(PingPongDetailIntent.ClickKakaoShareCard) },
                             onClickShareKakaoId = { willMatch ->
-                                onIntent(PingPongIntent.ClickShareKakaoId(willMatch = willMatch))
+                                onIntent(PingPongDetailIntent.ClickShareKakaoId(willMatch = willMatch))
                             },
                         )
                     }
@@ -212,7 +212,7 @@ internal fun PingPongScreen(
                         Text(
                             modifier = Modifier
                                 .debounceNoRippleClickable(
-                                    onClick = { onIntent(PingPongIntent.ClickConversationFinishButton) },
+                                    onClick = { onIntent(PingPongDetailIntent.ClickConversationFinishButton) },
                                     enabled = !uiState.isStoppedPingPong
                                 ),
                             text = stringResource(id = R.string.conversation_finish),
@@ -236,8 +236,8 @@ internal fun PingPongScreen(
 @Composable
 private fun PingPongScreenPreview() {
     BottlesTheme {
-        PingPongScreen(
-            uiState = PingPongUiState(
+        PingPongDetailScreen(
+            uiState = PingPongDetailUiState(
                 showDialog = true,
                 currentTab = PingPongTab.INTRODUCTION,
                 pingPongMatchStatus = PingPongMatchStatus.NONE,

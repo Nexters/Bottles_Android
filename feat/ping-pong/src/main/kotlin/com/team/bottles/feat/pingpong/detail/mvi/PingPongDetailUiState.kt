@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.mvi
+package com.team.bottles.feat.pingpong.detail.mvi
 
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
@@ -12,7 +12,7 @@ import com.team.bottles.core.ui.TabItem
 import com.team.bottles.core.ui.model.UserKeyPoint
 
 @Stable
-data class PingPongUiState(
+data class PingPongDetailUiState(
     val isRefreshing: Boolean = false,
     val bottleId: Int = 0,
     val showDialog: Boolean = false,

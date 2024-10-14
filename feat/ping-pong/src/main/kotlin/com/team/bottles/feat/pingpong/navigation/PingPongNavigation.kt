@@ -5,7 +5,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.team.bottles.feat.pingpong.PingPongRoute
+import com.team.bottles.feat.pingpong.detail.PingPongDetailRoute
 
 fun NavGraphBuilder.pingPongDetailScreen(
     navigateToBottleBox: () -> Unit,
@@ -32,7 +32,7 @@ fun NavGraphBuilder.pingPongDetailScreen(
             }
         }
     ) {
-        PingPongRoute(
+        PingPongDetailRoute(
             navigateToBottleBox = navigateToBottleBox,
             navigateToReport = navigateToReport
         )

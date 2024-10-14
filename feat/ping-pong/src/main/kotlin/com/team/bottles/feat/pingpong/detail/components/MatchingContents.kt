@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong.components
+package com.team.bottles.feat.pingpong.detail.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.CardKakaoId
-import com.team.bottles.feat.pingpong.mvi.MatchingResult
+import com.team.bottles.feat.pingpong.detail.mvi.MatchingResult
 
 internal fun LazyListScope.matchingContents(
     matchingResult: MatchingResult,

@@ -1,4 +1,4 @@
-package com.team.bottles.feat.pingpong
+package com.team.bottles.feat.pingpong.detail
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -12,11 +12,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailSideEffect
 
 @Composable
-internal fun PingPongRoute(
-    viewModel: PingPongViewModel = hiltViewModel(),
+internal fun PingPongDetailRoute(
+    viewModel: PingPongDetailViewModel = hiltViewModel(),
     navigateToBottleBox: () -> Unit,
     navigateToReport: (userId: Long, userName: String, userImageUrl: String, userAge: Int) -> Unit
 ) {
@@ -39,11 +39,11 @@ internal fun PingPongRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is PingPongSideEffect.NavigateToBottleBox -> navigateToBottleBox()
-                is PingPongSideEffect.NavigateToReport -> {
+                is PingPongDetailSideEffect.NavigateToBottleBox -> navigateToBottleBox()
+                is PingPongDetailSideEffect.NavigateToReport -> {
                     navigateToReport(sideEffect.userId, sideEffect.userName, sideEffect.userImageUrl, sideEffect.userAge)
                 }
-                is PingPongSideEffect.OpenKakaoTalkApp -> {
+                is PingPongDetailSideEffect.OpenKakaoTalkApp -> {
                     val kakaoPackageName = "com.kakao.talk"
                     val packageManager = context.packageManager
                     val launchIntent = packageManager.getLaunchIntentForPackage(kakaoPackageName)
@@ -64,7 +64,7 @@ internal fun PingPongRoute(
         }
     }
 
-    PingPongScreen(
+    PingPongDetailScreen(
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )
