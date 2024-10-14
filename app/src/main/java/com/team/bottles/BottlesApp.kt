@@ -17,9 +17,6 @@ import com.team.bottles.core.designsystem.components.bars.BottlesBottomNavBar
 import com.team.bottles.core.designsystem.components.bars.BottomNavItem
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.navigation.BottlesNavHost
-import com.team.bottles.navigation.navigateToBottleBox
-import com.team.bottles.navigation.navigateToMyPage
-import com.team.bottles.navigation.navigateToSandBeach
 import com.team.bottles.navigation.navigateToTopLevelDestination
 
 @Composable
