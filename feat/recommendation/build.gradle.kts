@@ -9,10 +9,10 @@ plugins {
 }
 
 android {
-    namespace = "com.team.bottles.feat.bottle"
+    namespace = "com.team.bottles.feat.recommendation"
 
     defaultConfig {
-        val url = "BOTTLES_ARRIVED_BOTTLES_URL"
+        val url = "BOTTLES_RECOMMENDATIONS_URL"
         val properties = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
 
         buildConfigField(
@@ -37,4 +37,5 @@ android {
 
 dependencies {
 
+    implementation(project(":feat:profile"))
 }

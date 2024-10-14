@@ -1,30 +1,30 @@
-package com.team.bottles.feat.bottle.arrivedbottles
+package com.team.bottles.feat.recommendation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesSideEffect
+import com.team.bottles.feat.recommendation.mvi.RecommendationSideEffect
 
 @Composable
-internal fun ArrivedBottlesRoute(
-    viewModel: ArrivedBottlesViewModel = hiltViewModel(),
+internal fun RecommendationRoute(
+    viewModel: RecommendationViewModel = hiltViewModel(),
     navigateToSandBeach: () -> Unit,
-    navigateToPingPong: () -> Unit
+    navigateToRecommendationDetail: (href: String) -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is ArrivedBottlesSideEffect.NavigateToSandBeach -> navigateToSandBeach()
-                is ArrivedBottlesSideEffect.NavigateToPingPong -> navigateToPingPong()
+                is RecommendationSideEffect.NavigateToSandBeach -> navigateToSandBeach()
+                is RecommendationSideEffect.NavigateToRecommendationDetail -> navigateToRecommendationDetail(sideEffect.href)
             }
         }
     }
 
-    ArrivedBottlesScreen(
+    RecommendationScreen(
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )
