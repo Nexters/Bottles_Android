@@ -5,7 +5,7 @@ import LikeDetailNavigator
 import LoginNavigator
 import MainNavigator
 import OnboardingNavigator
-import PingPongNavigator
+import PingPongDetailNavigator
 import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
@@ -30,7 +30,7 @@ import com.team.bottles.feat.like.navigation.likeScreen
 import com.team.bottles.feat.login.navigation.loginScreen
 import com.team.bottles.feat.mypage.navigation.myPageScreen
 import com.team.bottles.feat.onboarding.navigation.onboardingScreen
-import com.team.bottles.feat.pingpong.navigation.pingPongScreen
+import com.team.bottles.feat.pingpong.navigation.pingPongDetailScreen
 import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.editProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
@@ -96,7 +96,7 @@ fun BottlesNavHost(
                     navigateToPingPong = ::navigateToPingPong
                 )
                 introductionScreen(navigateToSandBeach = { popBackStack() })
-                pingPongScreen(
+                pingPongDetailScreen(
                     navigateToBottleBox = { popBackStack() },
                     navigateToReport = ::navigateToReport
                 )
@@ -167,7 +167,7 @@ fun NavController.navigateToArrivedBottles() =
     navigate(ArrivedBottlesNavigator)
 
 fun NavController.navigateToPingPong(bottleId: Long) =
-    navigate(PingPongNavigator(bottleId = bottleId))
+    navigate(PingPongDetailNavigator(bottleId = bottleId))
 
 fun NavController.navigateToBottleBox(navOptions: NavOptionsBuilder.() -> Unit = {}) {
     navigate(
