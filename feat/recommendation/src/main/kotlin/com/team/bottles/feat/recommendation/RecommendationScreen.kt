@@ -1,7 +1,6 @@
 package com.team.bottles.feat.recommendation
 
 import android.webkit.WebView
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
