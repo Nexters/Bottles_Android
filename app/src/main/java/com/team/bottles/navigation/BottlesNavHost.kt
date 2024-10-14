@@ -1,12 +1,12 @@
 package com.team.bottles.navigation
 
-import ArrivedBottlesNavigator
 import LikeDetailNavigator
 import LoginNavigator
 import MainNavigator
 import OnboardingNavigator
 import PingPongDetailNavigator
 import ProfileNavigator
+import RecommendationNavigator
 import ReportNavigator
 import SettingNavigator
 import SplashNavigator
@@ -23,7 +23,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import com.team.bottles.core.designsystem.theme.LocalLikeTabWebViewComposition
-import com.team.bottles.feat.bottle.navigation.arrivedBottlesScreen
 import com.team.bottles.feat.like.navigation.likeDetailScreen
 import com.team.bottles.feat.like.navigation.likeScreen
 import com.team.bottles.feat.login.navigation.loginScreen
@@ -34,6 +33,7 @@ import com.team.bottles.feat.pingpong.navigation.pingPongScreen
 import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.editProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
+import com.team.bottles.feat.recommendation.navigation.recommendationScreen
 import com.team.bottles.feat.report.navigation.reportScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
 import com.team.bottles.feat.setting.navigation.accountSettingScreen
@@ -82,14 +82,9 @@ fun BottlesNavHost(
                     navigateToArrivedBottles = ::navigateToArrivedBottles,
                     navigateToPingPong = { navigateToTopLevelDestination(route = MainNavigator.PingPong) }
                 )
-                arrivedBottlesScreen(
+                recommendationScreen(
                     navigateToSandBeach = { popBackStack() },
-                    navigateToPingPong = {
-                        navigateToPingPong {
-                            popUpTo(graph.id) { inclusive = true }
-                            restoreState = true
-                        }
-                    }
+                    navigateToRecommendationDetail = { }
                 )
                 pingPongScreen(
                     innerPadding = innerPadding,
@@ -165,7 +160,7 @@ fun NavController.navigateToIntroduction() =
     navigate(ProfileNavigator.Introduction)
 
 fun NavController.navigateToArrivedBottles() =
-    navigate(ArrivedBottlesNavigator)
+    navigate(RecommendationNavigator)
 
 fun NavController.navigateToPingPongDetail(bottleId: Long) =
     navigate(PingPongDetailNavigator(bottleId = bottleId))

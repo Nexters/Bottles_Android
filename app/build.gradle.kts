@@ -67,7 +67,7 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.core.exception)
 
-    implementation(projects.feat.bottle)
+    implementation(projects.feat.recommendation)
     implementation(projects.feat.sandbeach)
     implementation(projects.feat.login)
     implementation(projects.feat.mypage)
