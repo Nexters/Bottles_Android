@@ -6,6 +6,7 @@ import MainNavigator
 import OnboardingNavigator
 import PingPongDetailNavigator
 import ProfileNavigator
+import RecommendationDetailNavigator
 import RecommendationNavigator
 import ReportNavigator
 import SettingNavigator
@@ -33,6 +34,7 @@ import com.team.bottles.feat.pingpong.navigation.pingPongScreen
 import com.team.bottles.feat.profile.navigation.createProfileScreen
 import com.team.bottles.feat.profile.navigation.editProfileScreen
 import com.team.bottles.feat.profile.navigation.introductionScreen
+import com.team.bottles.feat.recommendation.navigation.recommendationDetailScreen
 import com.team.bottles.feat.recommendation.navigation.recommendationScreen
 import com.team.bottles.feat.report.navigation.reportScreen
 import com.team.bottles.feat.sandbeach.navigation.sandBeachScreen
@@ -84,18 +86,19 @@ fun BottlesNavHost(
                 )
                 recommendationScreen(
                     navigateToSandBeach = { popBackStack() },
-                    navigateToRecommendationDetail = { }
+                    navigateToRecommendationDetail = ::navigateToRecommendationDetail
                 )
+                recommendationDetailScreen(navigateToRecommendation = { popBackStack() })
                 pingPongScreen(
                     innerPadding = innerPadding,
                     navigateToPingPongDetail = ::navigateToPingPongDetail,
                     navigateToSandBeach = { navigateToTopLevelDestination(MainNavigator.SandBeach) }
                 )
-                introductionScreen(navigateToSandBeach = { popBackStack() })
                 pingPongDetailScreen(
                     navigateToPingPong = { popBackStack() },
                     navigateToReport = ::navigateToReport
                 )
+                introductionScreen(navigateToSandBeach = { popBackStack() })
                 myPageScreen(
                     innerPadding = innerPadding,
                     navigateToEditProfile = ::navigateToEditProfile,
@@ -197,3 +200,6 @@ fun NavController.navigateToEditProfile() =
 
 fun NavController.navigateToLikeDetail(href: String) =
     navigate(LikeDetailNavigator(href = href))
+
+fun NavController.navigateToRecommendationDetail(href: String) =
+    navigate(RecommendationDetailNavigator(href = href))
