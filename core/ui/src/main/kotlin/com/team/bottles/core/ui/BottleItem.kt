@@ -65,7 +65,7 @@ fun BottleItem(
         )
     ) {
         BottlesEtcText(
-            leftText = null, // TODO : 상태값 추가시 주석 해제
+            leftText = bottle.lastStatus,
             rightText = bottle.lastActivatedAt
         )
 
@@ -302,6 +302,7 @@ private fun BottleItemPreview() {
                 personality = listOf("상냥한", "대담한", "낭만적인"),
                 isRead = false,
                 lastActivatedAt = "00분 전",
+                lastStatus = "연락처를 공유했어요"
             ),
             onClickItem = { /*TODO*/ }
         )
