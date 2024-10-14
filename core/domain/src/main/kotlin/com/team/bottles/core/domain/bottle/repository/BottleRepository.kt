@@ -1,12 +1,12 @@
 package com.team.bottles.core.domain.bottle.repository
 
 import com.team.bottles.core.domain.bottle.model.ArrivedBottle
+import com.team.bottles.core.domain.bottle.model.PingPongBottle
 import com.team.bottles.core.domain.bottle.model.PingPongDetail
-import com.team.bottles.core.domain.bottle.model.PingPongList
 
 interface BottleRepository {
 
-    suspend fun loadPingPongList(): PingPongList
+    suspend fun loadPingPongList(): List<PingPongBottle>
 
     suspend fun loadPingPongDetail(bottleId: Int): PingPongDetail
 
