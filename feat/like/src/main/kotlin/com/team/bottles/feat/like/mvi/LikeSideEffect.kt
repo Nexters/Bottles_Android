@@ -4,6 +4,6 @@ import com.team.bottles.core.common.UiSideEffect
 
 sealed interface LikeSideEffect : UiSideEffect {
 
-    data object NavigateToLikeDetail : LikeSideEffect
+    data class NavigateToLikeDetail(val href: String) : LikeSideEffect
 
 }

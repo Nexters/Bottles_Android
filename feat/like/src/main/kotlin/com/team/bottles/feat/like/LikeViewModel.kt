@@ -14,9 +14,7 @@ import javax.inject.Inject
 class LikeViewModel @Inject constructor(
     private val webViewConnectUseCase: WebViewConnectUseCase,
     savedStateHandle: SavedStateHandle
-) : BaseViewModel<LikeUiState, LikeSideEffect, LikeIntent>(
-    savedStateHandle
-) {
+) : BaseViewModel<LikeUiState, LikeSideEffect, LikeIntent>(savedStateHandle) {
 
     init {
         initialWebConnect()
@@ -27,14 +25,14 @@ class LikeViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: LikeIntent) {
         when (intent) {
-            is LikeIntent.ClickBottleItem -> navigateToLikeDetail()
+            is LikeIntent.ClickBottleItem -> navigateToLikeDetail(href = intent.href)
         }
     }
 
-    override fun handleClientException(throwable: Throwable) { } // TODO : 예외 처리
+    override fun handleClientException(throwable: Throwable) { }
 
-    private fun navigateToLikeDetail() {
-        postSideEffect(LikeSideEffect.NavigateToLikeDetail)
+    private fun navigateToLikeDetail(href: String) {
+        postSideEffect(LikeSideEffect.NavigateToLikeDetail(href = href))
     }
 
     private fun initialWebConnect() {

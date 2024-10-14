@@ -12,14 +12,14 @@ import com.team.bottles.feat.like.mvi.LikeSideEffect
 internal fun LikeRoute(
     viewModel: LikeViewModel = hiltViewModel(),
     innerPadding: PaddingValues,
-    navigateToLikeDetail: () -> Unit,
+    navigateToLikeDetail: (href: String) -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is LikeSideEffect.NavigateToLikeDetail -> navigateToLikeDetail()
+                is LikeSideEffect.NavigateToLikeDetail -> navigateToLikeDetail(sideEffect.href)
             }
         }
     }

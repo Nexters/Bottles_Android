@@ -4,6 +4,6 @@ import com.team.bottles.core.common.UiIntent
 
 sealed interface LikeIntent : UiIntent {
 
-    data object ClickBottleItem : LikeIntent
+    data class ClickBottleItem(val href: String) : LikeIntent
 
 }

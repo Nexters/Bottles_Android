@@ -1,5 +1,6 @@
 package com.team.bottles.core.designsystem.theme
 
+import android.webkit.WebView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -24,6 +25,8 @@ val LocalBottlesColor = compositionLocalOf<BottlesColors> {
 val LocalBottlesSpacing = compositionLocalOf<BottlesSpacing> {
     error("No spacing provided! Make sure to wrap all usages of Bottles components in BottlesTheme.")
 }
+
+val LocalLikeTabWebViewComposition = compositionLocalOf<WebView?> { null }
 
 @Composable
 fun BottlesTheme(

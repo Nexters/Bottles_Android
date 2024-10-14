@@ -1,6 +1,7 @@
 package com.team.bottles.navigation
 
 import ArrivedBottlesNavigator
+import LikeDetailNavigator
 import LoginNavigator
 import MainNavigator
 import OnboardingNavigator
@@ -9,16 +10,22 @@ import ProfileNavigator
 import ReportNavigator
 import SettingNavigator
 import SplashNavigator
+import android.webkit.WebView
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
+import com.team.bottles.core.designsystem.theme.LocalLikeTabWebViewComposition
 import com.team.bottles.feat.bottle.navigation.arrivedBottlesScreen
 import com.team.bottles.feat.bottle.navigation.bottleBoxScreen
+import com.team.bottles.feat.like.navigation.likeDetailScreen
 import com.team.bottles.feat.like.navigation.likeScreen
 import com.team.bottles.feat.login.navigation.loginScreen
 import com.team.bottles.feat.mypage.navigation.myPageScreen
@@ -38,80 +45,95 @@ fun BottlesNavHost(
     navHostController: NavHostController,
     innerPadding: PaddingValues,
 ) {
-    NavHost(
-        navController = navHostController,
-        startDestination = SplashNavigator,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
+    val context = LocalContext.current
+    val likeTabWebView = remember { WebView(context) }
+
+    CompositionLocalProvider(
+        LocalLikeTabWebViewComposition provides likeTabWebView
     ) {
-        with(navHostController) {
-            splashScreen(
-                navigateToSandBeach = ::navigateToSandBeach,
-                navigateToLoginEndpoint = ::navigateToLoginEndpoint,
-                navigateToOnboarding = ::navigateToOnboarding
-            )
-            loginScreen(
-                navigateToOnboarding = ::navigateToOnboarding,
-                navigateToSandBeach = ::navigateToSandBeach,
-                navigateToCreateProfile = ::navigateToCreateProfile
-            )
-            onboardingScreen(
-                navigateToCreateProfile = ::navigateToCreateProfile,
-                navigateToLoginEndpoint = ::navigateToLoginEndpoint
-            )
-            createProfileScreen(
-                navigateToSandBeach = ::navigateToSandBeach,
-                navigateToOnboarding = ::navigateToOnboarding
-            )
-            sandBeachScreen(
-                innerPadding = innerPadding,
-                navigateToIntroduction = ::navigateToIntroduction,
-                navigateToArrivedBottles = ::navigateToArrivedBottles,
-                navigateToBottleBox = { navigateToTopLevelDestination(route = MainNavigator.BottlesBox) }
-            )
-            arrivedBottlesScreen(
-                navigateToSandBeach = { popBackStack() },
-                navigateToBottleBox = {
-                    navigateToBottleBox {
-                        popUpTo(graph.id) { inclusive = true }
-                        restoreState = true
+        NavHost(
+            navController = navHostController,
+            startDestination = SplashNavigator,
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None },
+        ) {
+            with(navHostController) {
+                splashScreen(
+                    navigateToSandBeach = ::navigateToSandBeach,
+                    navigateToLoginEndpoint = ::navigateToLoginEndpoint,
+                    navigateToOnboarding = ::navigateToOnboarding
+                )
+                loginScreen(
+                    navigateToOnboarding = ::navigateToOnboarding,
+                    navigateToSandBeach = ::navigateToSandBeach,
+                    navigateToCreateProfile = ::navigateToCreateProfile
+                )
+                onboardingScreen(
+                    navigateToCreateProfile = ::navigateToCreateProfile,
+                    navigateToLoginEndpoint = ::navigateToLoginEndpoint
+                )
+                createProfileScreen(
+                    navigateToSandBeach = ::navigateToSandBeach,
+                    navigateToOnboarding = ::navigateToOnboarding
+                )
+                sandBeachScreen(
+                    innerPadding = innerPadding,
+                    navigateToIntroduction = ::navigateToIntroduction,
+                    navigateToArrivedBottles = ::navigateToArrivedBottles,
+                    navigateToBottleBox = { navigateToTopLevelDestination(route = MainNavigator.BottlesBox) }
+                )
+                arrivedBottlesScreen(
+                    navigateToSandBeach = { popBackStack() },
+                    navigateToBottleBox = {
+                        navigateToBottleBox {
+                            popUpTo(graph.id) { inclusive = true }
+                            restoreState = true
+                        }
                     }
-                }
-            )
-            bottleBoxScreen(
-                innerPadding = innerPadding,
-                navigateToPingPong = ::navigateToPingPong
-            )
-            introductionScreen(navigateToSandBeach = { popBackStack() })
-            pingPongScreen(
-                navigateToBottleBox = { popBackStack() },
-                navigateToReport = ::navigateToReport
-            )
-            myPageScreen(
-                innerPadding = innerPadding,
-                navigateToEditProfile = ::navigateToEditProfile,
-                navigateToSettingNotification = ::navigateToSettingNotification,
-                navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,
-            )
-            reportScreen(
-                navigateToPingPong = { popBackStack() },
-                navigateToBottleBox = {
-                    navigateToBottleBox {
-                        popUpTo(graph.id) { inclusive = true }
-                        restoreState = true
+                )
+                bottleBoxScreen(
+                    innerPadding = innerPadding,
+                    navigateToPingPong = ::navigateToPingPong
+                )
+                introductionScreen(navigateToSandBeach = { popBackStack() })
+                pingPongScreen(
+                    navigateToBottleBox = { popBackStack() },
+                    navigateToReport = ::navigateToReport
+                )
+                myPageScreen(
+                    innerPadding = innerPadding,
+                    navigateToEditProfile = ::navigateToEditProfile,
+                    navigateToSettingNotification = ::navigateToSettingNotification,
+                    navigateToSettingAccountManagement = ::navigateToSettingAccountManagement,
+                )
+                reportScreen(
+                    navigateToPingPong = { popBackStack() },
+                    navigateToBottleBox = {
+                        navigateToBottleBox {
+                            popUpTo(graph.id) { inclusive = true }
+                            restoreState = true
+                        }
                     }
-                }
-            )
-            accountSettingScreen(
-                navigateToLoginEndpoint = ::navigateToLoginEndpoint,
-                navigateToMyPage = { popBackStack() }
-            )
-            notificationSettingScreen(navigateToMyPage = { popBackStack() })
-            editProfileScreen(navigateToMyPage = { popBackStack() })
-            likeScreen(
-                innerPadding = innerPadding,
-                navigateToLikeDetail = { /*TODO : 디테일 화면으로 이동*/ }
-            )
+                )
+                accountSettingScreen(
+                    navigateToLoginEndpoint = ::navigateToLoginEndpoint,
+                    navigateToMyPage = { popBackStack() }
+                )
+                notificationSettingScreen(navigateToMyPage = { popBackStack() })
+                editProfileScreen(navigateToMyPage = { popBackStack() })
+                likeScreen(
+                    innerPadding = innerPadding,
+                    navigateToLikeDetail = ::navigateToLikeDetail
+                )
+                likeDetailScreen(
+                    navigateToQna = {
+                        navigateToBottleBox {
+                            popUpTo(graph.id) { inclusive = true }
+                        }
+                    },
+                    navigateToLikeDetail = { popBackStack() }
+                )
+            }
         }
     }
 }
@@ -157,12 +179,8 @@ fun NavController.navigateToBottleBox(navOptions: NavOptionsBuilder.() -> Unit =
 
 fun NavController.navigateToLoginEndpoint() =
     navigate(LoginNavigator.Endpoint) {
-        popUpTo(graph.id)
-    }
-
-fun NavController.navigateToMyPage() =
-    navigate(MainNavigator.MyPage) {
-        popUpTo(graph.id)
+        popUpTo(graph.id) { inclusive = true }
+        clearBackStack<MainNavigator.Like>()
     }
 
 fun NavController.navigateToReport(userId: Long, userName: String, userImageUrl: String, userAge: Int) =
@@ -180,3 +198,6 @@ fun NavController.navigateToSettingNotification() =
 
 fun NavController.navigateToEditProfile() =
     navigate(ProfileNavigator.Edit)
+
+fun NavController.navigateToLikeDetail(href: String) =
+    navigate(LikeDetailNavigator(href = href))
