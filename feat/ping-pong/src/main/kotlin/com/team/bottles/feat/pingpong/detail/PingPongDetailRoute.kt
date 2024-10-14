@@ -17,7 +17,7 @@ import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailSideEffect
 @Composable
 internal fun PingPongDetailRoute(
     viewModel: PingPongDetailViewModel = hiltViewModel(),
-    navigateToBottleBox: () -> Unit,
+    navigateToPingPong: () -> Unit,
     navigateToReport: (userId: Long, userName: String, userImageUrl: String, userAge: Int) -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
@@ -32,14 +32,14 @@ internal fun PingPongDetailRoute(
         )
 
         onDispose {
-            window?.clearFlags(WindowManager.LayoutParams.FLAG_SECURE,)
+            window?.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
         }
     }
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is PingPongDetailSideEffect.NavigateToBottleBox -> navigateToBottleBox()
+                is PingPongDetailSideEffect.NavigateToPingPong -> navigateToPingPong()
                 is PingPongDetailSideEffect.NavigateToReport -> {
                     navigateToReport(sideEffect.userId, sideEffect.userName, sideEffect.userImageUrl, sideEffect.userAge)
                 }

@@ -27,7 +27,7 @@ import com.team.bottles.core.ui.BottlesAlertConfirmDialog
 import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.sandbeach.component.BottleStatusMessage
 import com.team.bottles.feat.sandbeach.component.InArrivedBottle
-import com.team.bottles.feat.sandbeach.component.InBottleBox
+import com.team.bottles.feat.sandbeach.component.InPingPong
 import com.team.bottles.feat.sandbeach.component.NoneBottle
 import com.team.bottles.feat.sandbeach.component.RequireIntroduction
 import com.team.bottles.feat.sandbeach.mvi.BottleStatus
@@ -83,7 +83,7 @@ internal fun SandBeachScreen(
             BottleStatusMessage(
                 bottleStatus = uiState.bottleStatus,
                 newBottleValue = uiState.newBottleValue,
-                bottleBoxValue = uiState.bottleBoxValue
+                pingPongValue = uiState.pingPongValue
             )
 
             Column(
@@ -98,7 +98,7 @@ internal fun SandBeachScreen(
                     }
 
                     BottleStatus.IN_ARRIVED_BOTTLE -> InArrivedBottle(bottleValue = uiState.newBottleValue)
-                    BottleStatus.IN_BOTTLE_BOX -> InBottleBox()
+                    BottleStatus.IN_PING_PONG -> InPingPong()
                     BottleStatus.NONE_BOTTLE -> NoneBottle(afterArrivedTime = uiState.afterArrivedTime)
                 }
 

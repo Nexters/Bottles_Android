@@ -44,13 +44,13 @@ class PingPongDetailViewModel @Inject constructor(
 
     override suspend fun handleIntent(intent: PingPongDetailIntent) {
         when (intent) {
-            is PingPongDetailIntent.ClickBackButton -> navigateToBottleBox()
+            is PingPongDetailIntent.ClickBackButton -> navigateToPingPong()
             is PingPongDetailIntent.ClickReportButton -> navigateToReport()
             is PingPongDetailIntent.ClickTabButton -> changeTab(tab = intent.tab)
             is PingPongDetailIntent.ClickConversationFinishButton -> reduce { copy(showDialog = true) }
             is PingPongDetailIntent.ClickCloseAlert -> reduce { copy(showDialog = false) }
             is PingPongDetailIntent.ClickConfirmAlert -> stopPingPong()
-            is PingPongDetailIntent.ClickOtherOpenBottleButton -> navigateToBottleBox()
+            is PingPongDetailIntent.ClickOtherOpenBottleButton -> navigateToPingPong()
             is PingPongDetailIntent.ClickGoToKakaoTalkButton -> openKakaoTalkApp()
             is PingPongDetailIntent.ClickSendLetter -> sendLetter(order = intent.order, answer = intent.text)
             is PingPongDetailIntent.OnFocusedTextField -> changeTextFieldState(order = intent.order, isFocused = intent.isFocused)
@@ -114,8 +114,8 @@ class PingPongDetailViewModel @Inject constructor(
         postSideEffect(PingPongDetailSideEffect.OpenKakaoTalkApp)
     }
 
-    private fun navigateToBottleBox() {
-        postSideEffect(PingPongDetailSideEffect.NavigateToBottleBox)
+    private fun navigateToPingPong() {
+        postSideEffect(PingPongDetailSideEffect.NavigateToPingPong)
     }
 
     private fun changeTab(tab: PingPongTab) {
@@ -126,7 +126,7 @@ class PingPongDetailViewModel @Inject constructor(
         launch {
             stopPingPongUseCase(bottleId = currentState.bottleId)
             reduce { copy(showDialog = false) }
-            postSideEffect(PingPongDetailSideEffect.NavigateToBottleBox)
+            postSideEffect(PingPongDetailSideEffect.NavigateToPingPong)
         }
     }
 

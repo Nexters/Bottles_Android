@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import com.team.bottles.core.designsystem.components.popup.BottlesBalloonPopup
 
 @Composable
-internal fun InBottleBox() {
+internal fun InPingPong() {
     Spacer(modifier = Modifier.height(97.dp))
     BottlesBalloonPopup(text = "보틀을 클릭해 보세요")
 }

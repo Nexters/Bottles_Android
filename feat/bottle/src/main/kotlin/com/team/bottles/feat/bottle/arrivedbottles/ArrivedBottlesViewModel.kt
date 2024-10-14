@@ -28,7 +28,7 @@ class ArrivedBottlesViewModel @Inject constructor(
     override suspend fun handleIntent(intent: ArrivedBottlesIntent) {
         when (intent) {
             is ArrivedBottlesIntent.ClickWebCloseButton -> navigateToSandBeach()
-            is ArrivedBottlesIntent.ClickWebBottleAcceptButton -> navigateToBottleBox()
+            is ArrivedBottlesIntent.ClickWebBottleAcceptButton -> navigateToPingPong()
         }
     }
 
@@ -40,8 +40,8 @@ class ArrivedBottlesViewModel @Inject constructor(
         postSideEffect(ArrivedBottlesSideEffect.NavigateToSandBeach)
     }
 
-    private fun navigateToBottleBox() {
-        postSideEffect(ArrivedBottlesSideEffect.NavigateToBottleBox)
+    private fun navigateToPingPong() {
+        postSideEffect(ArrivedBottlesSideEffect.NavigateToPingPong)
     }
 
     private fun initialWebConnect() {

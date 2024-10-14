@@ -23,7 +23,7 @@ internal fun SandBeachRoute(
     innerPadding: PaddingValues,
     navigateToIntroduction: () -> Unit,
     navigateToArrivedBottles: () -> Unit,
-    navigateToBottleBox: () -> Unit,
+    navigateToPingPong: () -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -49,7 +49,7 @@ internal fun SandBeachRoute(
                 is SandBeachSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 is SandBeachSideEffect.NavigateToIntroduction -> navigateToIntroduction()
                 is SandBeachSideEffect.NavigateToArrivedBottle -> navigateToArrivedBottles()
-                is SandBeachSideEffect.NavigateToBottleBox -> navigateToBottleBox()
+                is SandBeachSideEffect.NavigateToPingPong -> navigateToPingPong()
                 is SandBeachSideEffect.NavigateToPlayStore -> {
                     try {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.team.bottles&hl=ko"))

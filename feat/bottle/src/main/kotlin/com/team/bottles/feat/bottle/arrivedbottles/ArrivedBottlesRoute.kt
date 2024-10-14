@@ -11,7 +11,7 @@ import com.team.bottles.feat.bottle.arrivedbottles.mvi.ArrivedBottlesSideEffect
 internal fun ArrivedBottlesRoute(
     viewModel: ArrivedBottlesViewModel = hiltViewModel(),
     navigateToSandBeach: () -> Unit,
-    navigateToBottleBox: () -> Unit
+    navigateToPingPong: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -19,7 +19,7 @@ internal fun ArrivedBottlesRoute(
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is ArrivedBottlesSideEffect.NavigateToSandBeach -> navigateToSandBeach()
-                is ArrivedBottlesSideEffect.NavigateToBottleBox -> navigateToBottleBox()
+                is ArrivedBottlesSideEffect.NavigateToPingPong -> navigateToPingPong()
             }
         }
     }

@@ -4,7 +4,7 @@ import com.team.bottles.core.common.UiSideEffect
 
 sealed interface PingPongDetailSideEffect : UiSideEffect {
 
-    data object NavigateToBottleBox : PingPongDetailSideEffect
+    data object NavigateToPingPong : PingPongDetailSideEffect
 
     data object OpenKakaoTalkApp : PingPongDetailSideEffect
 

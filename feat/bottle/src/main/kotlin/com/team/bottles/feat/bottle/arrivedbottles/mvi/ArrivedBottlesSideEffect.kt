@@ -6,6 +6,6 @@ sealed interface ArrivedBottlesSideEffect : UiSideEffect {
 
     data object NavigateToSandBeach : ArrivedBottlesSideEffect
 
-    data object NavigateToBottleBox : ArrivedBottlesSideEffect
+    data object NavigateToPingPong : ArrivedBottlesSideEffect
 
 }
