@@ -1,4 +1,4 @@
-package com.team.bottles.feat.bottle.bottlebox
+package com.team.bottles.feat.pingpong
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,13 +12,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.team.bottles.feat.bottle.bottlebox.mvi.BottleBoxSideEffect
+import com.team.bottles.feat.pingpong.mvi.PingPongSideEffect
 
 @Composable
-internal fun BottleBoxRoute(
-    viewModel: BottleBoxViewModel = hiltViewModel(),
+internal fun PingPongRoute(
+    viewModel: PingPongViewModel = hiltViewModel(),
     innerPadding: PaddingValues,
-    navigateToPingPong: (Long) -> Unit
+    navigateToPingPongDetail: (Long) -> Unit,
+    navigateToSandBeach: () -> Unit
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -27,7 +28,7 @@ internal fun BottleBoxRoute(
     DisposableEffect(key1 = lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
-                viewModel.initBottleBox()
+                viewModel.initPingPongList()
             }
         }
 
@@ -41,13 +42,14 @@ internal fun BottleBoxRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is BottleBoxSideEffect.NavigateToPingPong -> navigateToPingPong(sideEffect.bottleId)
-                is BottleBoxSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+                is PingPongSideEffect.NavigateToPingPongDetail -> navigateToPingPongDetail(sideEffect.bottleId)
+                is PingPongSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+                is PingPongSideEffect.NavigateToSandBeach -> navigateToSandBeach()
             }
         }
     }
 
-    BottleBoxScreen(
+    PingPongScreen(
         innerPadding = innerPadding,
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
