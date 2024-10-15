@@ -6,9 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.team.bottles.core.designsystem.components.buttons.BottlesOutLinedButton
-import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonState
-import com.team.bottles.core.designsystem.components.buttons.OutlinedButtonType
+import com.team.bottles.core.designsystem.components.etc.menu.BottlesTabItem
+import com.team.bottles.core.designsystem.components.etc.menu.BottlesTabItemState
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 
 interface TabItem {
@@ -17,25 +16,24 @@ interface TabItem {
 
 @Composable
 fun <T> BottlesRowTab(
+    modifier: Modifier = Modifier,
     tabs: List<T>,
-    stateProvider: (T) -> OutlinedButtonState,
+    stateProvider: (T) -> BottlesTabItemState,
     onIntent: (T) -> Unit,
 ) where T : TabItem {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(BottlesTheme.padding.medium),
+            .padding(horizontal = BottlesTheme.spacing.medium),
         horizontalArrangement = Arrangement.spacedBy(
-            space = BottlesTheme.spacing.extraSmall
+            space = BottlesTheme.spacing.doubleExtraSmall
         )
     ) {
         tabs.forEach { tab ->
-            BottlesOutLinedButton(
+            BottlesTabItem(
                 text = tab.tabName,
-                buttonType = OutlinedButtonType.SM,
-                onClick = { onIntent(tab) },
-                contentHorizontalPadding = BottlesTheme.spacing.small,
-                state = stateProvider(tab)
+                state = stateProvider(tab),
+                onClickTab = { onIntent(tab) }
             )
         }
     }
