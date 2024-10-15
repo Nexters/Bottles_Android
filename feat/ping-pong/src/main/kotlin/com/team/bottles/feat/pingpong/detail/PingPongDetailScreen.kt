@@ -1,6 +1,5 @@
 package com.team.bottles.feat.pingpong.detail
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -42,8 +41,8 @@ import com.team.bottles.feat.pingpong.detail.components.matchingContents
 import com.team.bottles.feat.pingpong.detail.components.pingPongContents
 import com.team.bottles.feat.pingpong.detail.mvi.PingPongCard
 import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailIntent
-import com.team.bottles.feat.pingpong.detail.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailUiState
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongTab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,10 +57,6 @@ internal fun PingPongDetailScreen(
     val pullRefreshState = rememberPullToRefreshState(
         enabled = { uiState.currentTab == PingPongTab.PING_PONG }
     )
-
-    BackHandler {
-        onIntent(PingPongDetailIntent.ClickBackButton)
-    }
 
     LaunchedEffect(uiState.isRefreshing) {
         if (uiState.isRefreshing) {
@@ -238,7 +233,7 @@ private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongDetailScreen(
             uiState = PingPongDetailUiState(
-                showDialog = true,
+                //showDialog = true,
                 currentTab = PingPongTab.INTRODUCTION,
                 pingPongMatchStatus = PingPongMatchStatus.NONE,
                 partnerProfile = UserProfile.sampleUserProfile(),
