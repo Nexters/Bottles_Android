@@ -8,7 +8,7 @@ data class SandBeachUiState(
     val isError: Boolean = false,
     val bottleStatus: BottleStatus = BottleStatus.NONE_BOTTLE,
     val newBottleValue: Int = 0,
-    val bottleBoxValue: Int = 0,
+    val pingPongValue: Int = 0,
     val afterArrivedTime: Int = 0,
     val appVersionCode: Int = BuildConfig.VERSION_CODE
 ): UiState
@@ -16,7 +16,7 @@ data class SandBeachUiState(
 enum class BottleStatus {
     REQUIRE_INTRODUCTION,
     IN_ARRIVED_BOTTLE,
-    IN_BOTTLE_BOX,
+    IN_PING_PONG,
     NONE_BOTTLE,
     ;
 }

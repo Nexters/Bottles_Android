@@ -19,4 +19,6 @@ interface UserRepository {
 
     suspend fun updateActivateMatching(isActivate: Boolean)
 
+    suspend fun getNotificationPermissionStatus(): Boolean
+
 }

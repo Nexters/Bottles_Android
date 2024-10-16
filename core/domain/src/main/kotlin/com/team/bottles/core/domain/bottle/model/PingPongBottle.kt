@@ -1,10 +1,5 @@
 package com.team.bottles.core.domain.bottle.model
 
-data class PingPongList(
-    val activeBottles: List<PingPongBottle>,
-    val doneBottles: List<PingPongBottle>
-)
-
 data class PingPongBottle(
     val id: Long,
     val userId: Long,
@@ -14,4 +9,6 @@ data class PingPongBottle(
     val mbti: String,
     val keyword: List<String>,
     val userImageUrl: String,
+    val lastActivatedAt: String,
+    val lastStatus: String
 )

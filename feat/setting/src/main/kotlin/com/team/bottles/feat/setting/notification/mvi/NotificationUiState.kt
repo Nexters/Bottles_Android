@@ -8,7 +8,9 @@ data class NotificationUiState(
     val isConversation: Boolean = false,
     val isMarketingResponse: Boolean = false,
     val isError: Boolean = false,
-    val notificationState: NotificationState = NotificationState.INIT
+    val notificationState: NotificationState = NotificationState.INIT,
+    val isAllowedNotificationPerMission: Boolean = false,
+    val isShowDialog: Boolean = false,
 ) : UiState {
 
     enum class NotificationState {

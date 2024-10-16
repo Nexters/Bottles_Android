@@ -2,11 +2,14 @@ package com.team.bottles.feat.profile.edit
 
 import android.annotation.SuppressLint
 import android.webkit.WebView
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.team.bottles.core.ui.BottlesWebView
-import com.team.bottles.feat.profile.BuildConfig
 import com.team.bottles.feat.profile.edit.mvi.EditProfileIntent
 import com.team.bottles.feat.profile.edit.mvi.EditProfileUiState
 
@@ -32,11 +35,11 @@ internal fun EditProfileScreen(
 
     if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
         BottlesWebView(
-            url = BuildConfig.BOTTLES_PROFILE_EDIT_URL +
-                    "?accessToken=${uiState.token.accessToken}" +
-                    "&refreshToken=${uiState.token.refreshToken}" +
-                    "&device=${BuildConfig.DEVICE}" +
-                    "&version=${BuildConfig.APP_VERSION}",
+            modifier = Modifier
+                .fillMaxSize()
+                .systemBarsPadding()
+                .imePadding(),
+            url = uiState.url,
             webView = webView,
         )
     }

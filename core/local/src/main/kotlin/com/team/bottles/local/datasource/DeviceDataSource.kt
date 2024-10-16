@@ -4,4 +4,6 @@ interface DeviceDataSource {
 
     suspend fun getContacts(): List<String>
 
+    fun getIsAllowedNotificationPermission(): Boolean
+
 }

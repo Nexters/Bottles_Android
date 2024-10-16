@@ -1,5 +1,6 @@
 package com.team.bottles.feat.mypage
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -33,11 +34,10 @@ internal fun MyPageScreen(
 
     if (uiState.showAccessPermissionGuideDialog) {
         BottlesAlertConfirmDialog(
-            onClose = { /* 닫을 수 없는 다이얼 로그 */ },
             onConfirm = { onIntent(MyPageIntent.ClickConfirmContactAccessButton) },
             confirmButtonText = "설정하러 가기",
             title = "연락처 접근 권한 안내",
-            content = "설정 > 권한에서\n연락처 접근을 허락해주세요."
+            content = "설정 > 애플리케이션 > '보틀' > 권한에서 연락처를 허용해주세요."
         )
     }
 
@@ -64,6 +64,7 @@ internal fun MyPageScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
                 .padding(bottom = innerPadding.calculateBottomPadding())
                 .systemBarsPadding()
                 .verticalScroll(state = scrollState)

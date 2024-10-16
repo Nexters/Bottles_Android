@@ -1,5 +1,6 @@
 package com.team.bottles.feat.report
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -95,7 +96,11 @@ internal fun ReportScreen(
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
+        Box(
+            modifier = Modifier
+                .background(color = BottlesTheme.color.background.primary)
+                .padding(top = innerPadding.calculateTopPadding())
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()

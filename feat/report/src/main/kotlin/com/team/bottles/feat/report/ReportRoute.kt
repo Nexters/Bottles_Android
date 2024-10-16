@@ -12,8 +12,8 @@ import com.team.bottles.feat.report.mvi.ReportSideEffect
 @Composable
 internal fun ReportRoute(
     viewModel: ReportViewModel = hiltViewModel(),
+    navigateToPingPongDetail: () -> Unit,
     navigateToPingPong: () -> Unit,
-    navigateToBottleBox: () -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -23,9 +23,9 @@ internal fun ReportRoute(
             when (sideEffect) {
                 is ReportSideEffect.ShowToastMessage -> {
                     Toast.makeText(context, "신고가 완료됐어요", Toast.LENGTH_SHORT).show()
-                    navigateToBottleBox()
+                    navigateToPingPong()
                 }
-                is ReportSideEffect.NavigateToPingPong -> navigateToPingPong()
+                is ReportSideEffect.NavigateToPingPong -> navigateToPingPongDetail()
             }
         }
     }

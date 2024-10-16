@@ -1,5 +1,6 @@
 package com.team.bottles.feat.setting.notification
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
+import com.team.bottles.core.ui.BottlesAlertConfirmDialog
 import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.setting.components.NotificationSetting
 import com.team.bottles.feat.setting.notification.mvi.NotificationIntent
@@ -26,6 +28,15 @@ internal fun NotificationSettingScreen(
     uiState: NotificationUiState,
     onIntent: (NotificationIntent) -> Unit,
 ) {
+    if (uiState.isShowDialog) {
+        BottlesAlertConfirmDialog(
+            onConfirm = { onIntent(NotificationIntent.ClickGoSystemSetting) },
+            confirmButtonText = "설정하러 가기",
+            title = "알림 권한 안내",
+            content = "설정 > 애플리케이션 > '보틀' > 권한에서 알림을 허용해주세요."
+        )
+    }
+
     if (uiState.isError) {
         BottlesErrorScreen(
             modifier = Modifier.systemBarsPadding(),
@@ -37,6 +48,7 @@ internal fun NotificationSettingScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(color = BottlesTheme.color.background.primary)
                 .systemBarsPadding()
         ) {
             BottlesTopBar(

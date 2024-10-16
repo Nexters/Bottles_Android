@@ -6,7 +6,10 @@ sealed class MainNavigator {
     data object SandBeach : MainNavigator()
 
     @Serializable
-    data object BottlesBox : MainNavigator()
+    data object Like : MainNavigator()
+
+    @Serializable
+    data object PingPong : MainNavigator()
 
     @Serializable
     data object MyPage : MainNavigator()

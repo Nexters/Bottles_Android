@@ -1,5 +1,6 @@
 package com.team.bottles
 
+import MainNavigator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,9 +17,7 @@ import com.team.bottles.core.designsystem.components.bars.BottlesBottomNavBar
 import com.team.bottles.core.designsystem.components.bars.BottomNavItem
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.navigation.BottlesNavHost
-import com.team.bottles.navigation.navigateToBottleBox
-import com.team.bottles.navigation.navigateToMyPage
-import com.team.bottles.navigation.navigateToSandBeach
+import com.team.bottles.navigation.navigateToTopLevelDestination
 
 @Composable
 fun BottlesApp() {
@@ -29,9 +28,10 @@ fun BottlesApp() {
     BottlesScaffold(
         onClickNavItem = { bottomNavItem ->
             when (bottomNavItem) {
-                BottomNavItem.BOTTLE_BOX -> navHostController.navigateToBottleBox()
-                BottomNavItem.SAND_BEACH -> navHostController.navigateToSandBeach()
-                BottomNavItem.MY_PAGE -> navHostController.navigateToMyPage()
+                BottomNavItem.PING_PONG -> navHostController.navigateToTopLevelDestination(MainNavigator.PingPong)
+                BottomNavItem.LIKE -> navHostController.navigateToTopLevelDestination(MainNavigator.Like)
+                BottomNavItem.SAND_BEACH -> navHostController.navigateToTopLevelDestination(MainNavigator.SandBeach)
+                BottomNavItem.MY_PAGE -> navHostController.navigateToTopLevelDestination(MainNavigator.MyPage)
             }
         },
         currentRoute = currentRoute

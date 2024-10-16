@@ -27,7 +27,7 @@ import com.team.bottles.core.ui.BottlesAlertConfirmDialog
 import com.team.bottles.core.ui.BottlesErrorScreen
 import com.team.bottles.feat.sandbeach.component.BottleStatusMessage
 import com.team.bottles.feat.sandbeach.component.InArrivedBottle
-import com.team.bottles.feat.sandbeach.component.InBottleBox
+import com.team.bottles.feat.sandbeach.component.InPingPong
 import com.team.bottles.feat.sandbeach.component.NoneBottle
 import com.team.bottles.feat.sandbeach.component.RequireIntroduction
 import com.team.bottles.feat.sandbeach.mvi.BottleStatus
@@ -42,7 +42,6 @@ internal fun SandBeachScreen(
 ) {
     if (uiState.showDialog) {
         BottlesAlertConfirmDialog(
-            onClose = { /* 닫기 없음 */ },
             onConfirm = { onIntent(SandBeachIntent.ClickConfirmButton) },
             confirmButtonText = "업데이트 하기",
             title = "업데이트 안내",
@@ -84,7 +83,7 @@ internal fun SandBeachScreen(
             BottleStatusMessage(
                 bottleStatus = uiState.bottleStatus,
                 newBottleValue = uiState.newBottleValue,
-                bottleBoxValue = uiState.bottleBoxValue
+                pingPongValue = uiState.pingPongValue
             )
 
             Column(
@@ -99,7 +98,7 @@ internal fun SandBeachScreen(
                     }
 
                     BottleStatus.IN_ARRIVED_BOTTLE -> InArrivedBottle(bottleValue = uiState.newBottleValue)
-                    BottleStatus.IN_BOTTLE_BOX -> InBottleBox()
+                    BottleStatus.IN_PING_PONG -> InPingPong()
                     BottleStatus.NONE_BOTTLE -> NoneBottle(afterArrivedTime = uiState.afterArrivedTime)
                 }
 
@@ -108,12 +107,13 @@ internal fun SandBeachScreen(
                         .sizeIn(
                             maxWidth = 430.dp,
                             maxHeight = 430.dp,
-                            minHeight = 280.dp,
-                            minWidth = 280.dp
+                            minHeight = 260.dp,
+                            minWidth = 260.dp
                         )
                         .debounceNoRippleClickable(
                             debounceTime = 200L,
-                            onClick = { onIntent(SandBeachIntent.ClickSandBeach) }
+                            onClick = { onIntent(SandBeachIntent.ClickSandBeach) },
+                            enabled = BottleStatus.REQUIRE_INTRODUCTION != uiState.bottleStatus
                         ),
                     painter = painterResource(
                         id = if (uiState.bottleStatus == BottleStatus.NONE_BOTTLE) R.drawable.illustration_island_bottle_false

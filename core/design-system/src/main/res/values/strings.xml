@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Bottle</string>
     <string name="sand_beach">모래사장</string>
-    <string name="bottle_box">보틀 보관함</string>
+    <string name="ping_pong">문답</string>
     <string name="my_page">마이페이지</string>
+    <string name="heart">호감</string>
     
     <!-- Ui -->
     <string name="finished_conversation_card_quit">%s님이 대화를 중단했어요</string>
@@ -20,10 +21,10 @@
     <!-- Introduction Screen -->
     <string name="introduction_hint">호기심 많고 새로운 경험을 즐깁니다. 주말엔 책을 읽거나 맛집을 찾아다니며 여유를 즐기고, 친구들과 소소한 모임으로 에너지를 충전해요.</string>
 
-    <!-- BottleBox Screen -->
-    <string name="empty_bottle_box">아직 보관중인\n보틀이 없어요!</string>
-
     <!-- PingPong Screen -->
+    <string name="empty_ping_pong">아직 보관중인\n보틀이 없어요!</string>
+
+    <!-- PingPongDetail Screen -->
     <string name="conversation_finish">대화 종료하기</string>
     <string name="user_name_send_letter">%s님이 보내는 편지</string>
 

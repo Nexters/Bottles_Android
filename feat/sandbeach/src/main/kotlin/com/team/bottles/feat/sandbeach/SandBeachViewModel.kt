@@ -7,9 +7,6 @@ import com.team.bottles.core.domain.bottle.usecase.GetBottleListUseCase
 import com.team.bottles.core.domain.bottle.usecase.GetPingPongListUseCase
 import com.team.bottles.core.domain.profile.model.UserProfileStatus
 import com.team.bottles.core.domain.profile.usecase.GetUserProfileStatusUseCase
-import com.team.bottles.core.domain.user.model.Notification
-import com.team.bottles.core.domain.user.model.NotificationType
-import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCase
 import com.team.bottles.exception.BottlesException
 import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.sandbeach.mvi.BottleStatus
@@ -25,13 +22,8 @@ class SandBeachViewModel @Inject constructor(
     private val getBottleListUseCase: GetBottleListUseCase,
     private val getPingPongListUseCase: GetPingPongListUseCase,
     private val getRequiredAppVersionUseCase: GetRequiredAppVersionUseCase,
-    private val updateSettingNotificationUseCase: UpdateSettingNotificationUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<SandBeachUiState, SandBeachSideEffect, SandBeachIntent>(savedStateHandle) {
-
-    init {
-        initSandBeach()
-    }
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): SandBeachUiState =
         SandBeachUiState()
@@ -72,7 +64,7 @@ class SandBeachViewModel @Inject constructor(
         }
     }
 
-    private fun initSandBeach() {
+    fun initSandBeach() {
         launch {
             checkRequiredUpdate()
 
@@ -96,13 +88,13 @@ class SandBeachViewModel @Inject constructor(
                         }
                         return@launch
                     } else {
-                        val activeBottles = getPingPongListUseCase().activeBottles
+                        val pingPongBottles = getPingPongListUseCase()
 
-                        if (activeBottles.isNotEmpty()) {
+                        if (pingPongBottles.isNotEmpty()) {
                             reduce {
                                 copy(
-                                    bottleStatus = BottleStatus.IN_BOTTLE_BOX,
-                                    bottleBoxValue = activeBottles.size
+                                    bottleStatus = BottleStatus.IN_PING_PONG,
+                                    pingPongValue = pingPongBottles.size
                                 )
                             }
                             return@launch
@@ -134,7 +126,7 @@ class SandBeachViewModel @Inject constructor(
         when (currentState.bottleStatus) {
             BottleStatus.REQUIRE_INTRODUCTION -> {}
             BottleStatus.NONE_BOTTLE -> navigateToArrivedBottle()
-            BottleStatus.IN_BOTTLE_BOX -> navigateToBottleBox()
+            BottleStatus.IN_PING_PONG -> navigateToPingPong()
             BottleStatus.IN_ARRIVED_BOTTLE -> navigateToArrivedBottle()
         }
     }
@@ -143,8 +135,8 @@ class SandBeachViewModel @Inject constructor(
         postSideEffect(SandBeachSideEffect.NavigateToIntroduction)
     }
 
-    private fun navigateToBottleBox() {
-        postSideEffect(SandBeachSideEffect.NavigateToBottleBox)
+    private fun navigateToPingPong() {
+        postSideEffect(SandBeachSideEffect.NavigateToPingPong)
     }
 
     private fun navigateToArrivedBottle() {
@@ -153,19 +145,6 @@ class SandBeachViewModel @Inject constructor(
 
     private fun navigateToPlayStore() {
         postSideEffect(SandBeachSideEffect.NavigateToPlayStore)
-    }
-
-    fun confirmPermission() {
-        launch {
-            NotificationType.entries.forEach { type ->
-                updateSettingNotificationUseCase(
-                    notification = Notification(
-                        notificationType = type,
-                        enabled = true
-                    )
-                )
-            }
-        }
     }
 
 }

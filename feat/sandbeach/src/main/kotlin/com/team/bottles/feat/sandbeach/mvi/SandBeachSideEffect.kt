@@ -8,7 +8,7 @@ sealed interface SandBeachSideEffect : UiSideEffect {
 
     data object NavigateToArrivedBottle : SandBeachSideEffect
 
-    data object NavigateToBottleBox : SandBeachSideEffect
+    data object NavigateToPingPong : SandBeachSideEffect
 
     data object NavigateToPlayStore : SandBeachSideEffect
 

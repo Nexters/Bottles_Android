@@ -92,6 +92,8 @@ internal fun BottomButtons(
             color = BottlesTheme.color.text.secondary
         )
 
+        Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
+
         Text(
             modifier = Modifier
                 .noRippleClickable(
@@ -113,7 +115,7 @@ internal fun BottomButtons(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun BottomButtonsPreview() {
     BottlesTheme {

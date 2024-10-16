@@ -8,20 +8,22 @@ data class Bottle(
     val mbti: String = "",
     val personality: List<String> = emptyList(),
     val isRead: Boolean = true,
-    val remainingTime: String? = null,
+    val lastActivatedAt: String = "",
+    val lastStatus: String = ""
 ) {
     companion object {
-        fun exampleBottleBox(): List<Bottle> =
+        fun exampleBottleList(): List<Bottle> =
             (1L..6L).map {
                 Bottle(
                     id = it,
                     imageUrl = "https://avatars.githubusercontent.com/u/54674781?v=4",
                     name = "냥냥이",
                     age = 15,
-                    remainingTime = null,
+                    lastActivatedAt = "00분 전",
                     mbti = "INTP",
                     personality = listOf("적극적인", "열적정인", "예의바른"),
-                    isRead = false
+                    isRead = false,
+                    lastStatus = "연락처를 공유했어요"
                 )
             }
     }
