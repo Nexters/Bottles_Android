@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottlesErrorScreen
+import com.team.bottles.core.ui.BottlesLoadingScreen
 import com.team.bottles.feat.pingpong.components.EmptyBottles
 import com.team.bottles.core.ui.model.Bottle
 import com.team.bottles.feat.pingpong.components.BottleList
@@ -25,30 +26,36 @@ internal fun PingPongScreen(
     uiState: PingPongUiState,
     onIntent: (PingPongIntent) -> Unit
 ) {
-    if (uiState.isError) {
-        BottlesErrorScreen(
-            onClickBackButton = { },
-            onClickRetryButton = { onIntent(PingPongIntent.ClickRetryButton) }
-        )
-    } else {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = BottlesTheme.color.background.primary)
-                .padding(bottom = innerPadding.calculateBottomPadding())
-                .systemBarsPadding()
-        ) {
-            BottlesTopBar()
+    when(uiState) {
+        is PingPongUiState.Error -> {
+            BottlesErrorScreen(
+                onClickBackButton = { },
+                onClickRetryButton = { onIntent(PingPongIntent.ClickRetryButton) }
+            )
+        }
+        is PingPongUiState.Loading -> {
+            BottlesLoadingScreen()
+        }
+        is PingPongUiState.Success -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = BottlesTheme.color.background.primary)
+                    .padding(bottom = innerPadding.calculateBottomPadding())
+                    .systemBarsPadding()
+            ) {
+                BottlesTopBar()
 
-            if (uiState.bottles.isEmpty()) {
-                EmptyBottles(onClickGoToSandBeach = { onIntent(PingPongIntent.ClickGoToSandBeach) })
-            } else {
-                BottleList(
-                    bottles = uiState.bottles.toImmutableList(),
-                    onClickItem = { bottle ->
-                        onIntent(PingPongIntent.ClickBottleItem(bottle = bottle))
-                    }
-                )
+                if (uiState.bottles.isEmpty()) {
+                    EmptyBottles(onClickGoToSandBeach = { onIntent(PingPongIntent.ClickGoToSandBeach) })
+                } else {
+                    BottleList(
+                        bottles = uiState.bottles.toImmutableList(),
+                        onClickItem = { bottle ->
+                            onIntent(PingPongIntent.ClickBottleItem(bottle = bottle))
+                        }
+                    )
+                }
             }
         }
     }
@@ -60,7 +67,7 @@ private fun PingPongScreenPreview() {
     BottlesTheme {
         PingPongScreen(
             innerPadding = PaddingValues(),
-            uiState = PingPongUiState(
+            uiState = PingPongUiState.Success(
                 bottles = Bottle.exampleBottleList().toImmutableList()
             ),
             onIntent = {}

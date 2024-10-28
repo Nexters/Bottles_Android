@@ -19,15 +19,16 @@ class PingPongViewModel @Inject constructor(
 ) : BaseViewModel<PingPongUiState, PingPongSideEffect, PingPongIntent>(savedStateHandle) {
 
     override fun createInitialState(savedStateHandle: SavedStateHandle): PingPongUiState =
-        PingPongUiState()
+        PingPongUiState.Loading
 
     override fun handleClientException(throwable: Throwable) {
         when (throwable) {
-            is BottlesException -> showErrorMessage(throwable.message?: "")
+            is BottlesException -> showErrorMessage(throwable.message ?: "")
             is BottlesNetworkException -> {
-                showErrorMessage(throwable.message?: "")
+                showErrorMessage(throwable.message ?: "")
                 showErrorScreen()
             }
+
             else -> showErrorScreen()
         }
     }
@@ -45,10 +46,11 @@ class PingPongViewModel @Inject constructor(
     }
 
     private fun showErrorScreen() {
-        reduce { copy(isError = true) }
+        reduce { PingPongUiState.Error }
     }
 
     private fun retry() {
+        reduce { PingPongUiState.Loading }
         initPingPongList()
     }
 
@@ -76,7 +78,7 @@ class PingPongViewModel @Inject constructor(
                 )
             }
 
-            reduce { copy(bottles = pingPongBottles, isError = false) }
+            reduce { PingPongUiState.Success(bottles = pingPongBottles) }
         }
     }
 
