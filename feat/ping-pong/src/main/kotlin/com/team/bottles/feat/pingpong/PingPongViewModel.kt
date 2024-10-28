@@ -76,7 +76,7 @@ class PingPongViewModel @Inject constructor(
                 )
             }
 
-            reduce { copy(bottles = pingPongBottles) }
+            reduce { copy(bottles = pingPongBottles, isError = false) }
         }
     }
 
