@@ -26,6 +26,11 @@ internal fun EditProfileScreen(
                 EditProfileBridge { webAction ->
                     when (webAction) {
                         is EditProfileWebAction.OnWebViewClose -> onIntent(EditProfileIntent.ClickWebCloseButton)
+                        is EditProfileWebAction.OnToastOpen -> onIntent(
+                            EditProfileIntent.ShowToastMessage(
+                                message = webAction.message
+                            )
+                        )
                     }
                 },
                 EditProfileBridge.NAME
