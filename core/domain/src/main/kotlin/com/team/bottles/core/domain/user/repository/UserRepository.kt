@@ -21,4 +21,6 @@ interface UserRepository {
 
     suspend fun getNotificationPermissionStatus(): Boolean
 
+    suspend fun updateCurrentSystemNotificationState()
+
 }

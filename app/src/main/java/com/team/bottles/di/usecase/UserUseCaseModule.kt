@@ -12,6 +12,8 @@ import com.team.bottles.core.domain.user.usecase.UpdateActivateMatchingUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateActivateMatchingUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateBlockingContactsUseCaseImpl
+import com.team.bottles.core.domain.user.usecase.UpdateCurrentSystemNotificationStateUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateCurrentSystemNotificationStateUseCaseImpl
 import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCase
 import com.team.bottles.core.domain.user.usecase.UpdateSettingNotificationUseCaseImpl
 import dagger.Binds
@@ -58,5 +60,10 @@ abstract class UserUseCaseModule {
     abstract fun bindsGetNotificationPermissionStatusUseCase(
         useCaseImpl: GetNotificationPermissionStatusUseCaseImpl
     ): GetNotificationPermissionStatusUseCase
+
+    @Binds
+    abstract fun bindsUpdateCurrentSystemNotificationStateUseCase(
+        useCaseImpl: UpdateCurrentSystemNotificationStateUseCaseImpl
+    ): UpdateCurrentSystemNotificationStateUseCase
 
 }
