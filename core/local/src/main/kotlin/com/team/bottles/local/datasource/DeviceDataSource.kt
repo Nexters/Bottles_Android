@@ -6,4 +6,8 @@ interface DeviceDataSource {
 
     fun getIsAllowedNotificationPermission(): Boolean
 
+    suspend fun getDeviceId(): String
+
+    suspend fun getDeviceName(): String
+
 }

@@ -6,6 +6,7 @@ import com.team.bottles.core.domain.auth.usecase.GetRequiredAppVersionUseCase
 import com.team.bottles.core.domain.auth.usecase.WebViewConnectUseCase
 import com.team.bottles.core.domain.profile.model.UserProfileStatus
 import com.team.bottles.core.domain.profile.usecase.GetUserProfileStatusUseCase
+import com.team.bottles.core.domain.user.usecase.UpdateCurrentSystemNotificationStateUseCase
 import com.team.bottles.exception.BottlesException
 import com.team.bottles.exception.BottlesNetworkException
 import com.team.bottles.feat.splash.mvi.SplashIntent
@@ -20,6 +21,7 @@ class SplashViewModel @Inject constructor(
     private val getTokenStatus: WebViewConnectUseCase,
     private val getUserProfileStatusUseCase: GetUserProfileStatusUseCase,
     private val getRequiredAppVersionUseCase: GetRequiredAppVersionUseCase,
+    private val updateCurrentSystemNotificationStateUseCase: UpdateCurrentSystemNotificationStateUseCase,
     savedStateHandle: SavedStateHandle,
 ): BaseViewModel<SplashUiState, SplashSideEffect, SplashIntent>(savedStateHandle) {
 
@@ -63,6 +65,7 @@ class SplashViewModel @Inject constructor(
 
     private fun initSplash() {
         launch {
+            updateCurrentSystemNotificationStateUseCase()
             val requiredAppVersion = getRequiredAppVersionUseCase()
 
             if (requiredAppVersion > currentState.appVersionCode) {

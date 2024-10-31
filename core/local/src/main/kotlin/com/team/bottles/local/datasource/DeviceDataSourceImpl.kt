@@ -1,6 +1,7 @@
 package com.team.bottles.local.datasource
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.ContentResolver
 import android.content.Context
@@ -8,6 +9,7 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Build
 import android.provider.ContactsContract
+import android.provider.Settings
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -47,5 +49,12 @@ class DeviceDataSourceImpl @Inject constructor(
             notificationManager.areNotificationsEnabled()
         }
     }
+
+    @SuppressLint("HardwareIds")
+    override suspend fun getDeviceId(): String =
+        Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+
+    override suspend fun getDeviceName(): String =
+        Build.MODEL
 
 }
