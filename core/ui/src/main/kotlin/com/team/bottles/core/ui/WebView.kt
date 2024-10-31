@@ -1,13 +1,18 @@
 package com.team.bottles.core.ui
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebView.setWebContentsDebuggingEnabled
 import android.webkit.WebViewClient
-import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -25,11 +30,28 @@ fun BottlesWebView(
     webView: WebView,
 ) {
     var canGoBack by remember { mutableStateOf(false) }
+    var mFilePathCallback by remember { mutableStateOf<ValueCallback<Array<Uri>>?>(null) }
 
-    BackHandler(enabled = canGoBack) {
-        if (webView.canGoBack()) {
-            webView.goBack()
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            mFilePathCallback?.onReceiveValue(arrayOf(uri))
+        } else {
+            mFilePathCallback?.onReceiveValue(null)
         }
+        mFilePathCallback = null
+    }
+
+    val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickMultipleVisualMedia()
+    ) { uris ->
+        if (uris.isNotEmpty()) {
+            mFilePathCallback?.onReceiveValue(uris.toTypedArray())
+        } else {
+            mFilePathCallback?.onReceiveValue(null)
+        }
+        mFilePathCallback = null
     }
 
     DisposableEffect(webView) {
@@ -50,6 +72,35 @@ fun BottlesWebView(
             resumeTimers()
 
             loadUrl(url)
+
+            webChromeClient = object : WebChromeClient() {
+                override fun onShowFileChooser(
+                    webView: WebView?,
+                    filePathCallback: ValueCallback<Array<Uri>>?,
+                    fileChooserParams: FileChooserParams?
+                ): Boolean {
+                    mFilePathCallback = filePathCallback
+
+                    val isMultipleSelect =
+                        fileChooserParams?.mode == FileChooserParams.MODE_OPEN_MULTIPLE
+
+                    if (isMultipleSelect) {
+                        multiplePhotoPickerLauncher.launch(
+                            PickVisualMediaRequest(
+                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                            )
+                        )
+                    } else {
+                        photoPickerLauncher.launch(
+                            PickVisualMediaRequest(
+                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                            )
+                        )
+                    }
+
+                    return true
+                }
+            }
 
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
