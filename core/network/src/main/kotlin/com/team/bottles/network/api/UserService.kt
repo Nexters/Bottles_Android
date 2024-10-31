@@ -3,6 +3,7 @@ package com.team.bottles.network.api
 import com.team.bottles.network.dto.auth.request.BlockContactListRequest
 import com.team.bottles.network.dto.user.request.ActivateMatchingRequest
 import com.team.bottles.network.dto.user.request.AlimyOnOffRequest
+import com.team.bottles.network.dto.user.request.NativeSettingRegisterRequest
 import com.team.bottles.network.dto.user.request.ReportUserRequest
 import com.team.bottles.network.dto.user.response.AlimyResponse
 import retrofit2.http.Body
@@ -32,6 +33,11 @@ interface UserService {
     @POST("/api/v1/profile/activate/matching")
     suspend fun postActivateMatching(
         @Body request: ActivateMatchingRequest
+    )
+
+    @POST("/api/v1/user/native-setting")
+    suspend fun postCurrentSystemNotificationState(
+        @Body request: NativeSettingRegisterRequest
     )
 
 }
