@@ -6,4 +6,6 @@ sealed interface EditProfileIntent : UiIntent {
 
     data object ClickWebCloseButton : EditProfileIntent
 
+    data class ShowToastMessage(val message: String) : EditProfileIntent
+
 }

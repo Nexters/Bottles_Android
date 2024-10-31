@@ -6,4 +6,6 @@ sealed interface EditProfileSideEffect : UiSideEffect {
 
     data object NavigateToMyPage : EditProfileSideEffect
 
+    data class ShowToastMessage(val message: String) : EditProfileSideEffect
+
 }
