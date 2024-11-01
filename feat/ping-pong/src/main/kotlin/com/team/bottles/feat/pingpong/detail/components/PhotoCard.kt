@@ -131,14 +131,16 @@ private fun ColumnScope.Done(
     modifier: Modifier = Modifier,
     otherImageUrls: List<String>,
 ) {
-    val infinitePageCount = Int.MAX_VALUE
-    val pagerState = rememberPagerState(initialPage = infinitePageCount / 2) { infinitePageCount }
+    val infinitePageCount = Int.MAX_VALUE // 12312123
+    val startPage = (infinitePageCount / 2) - ((infinitePageCount / 2) % otherImageUrls.size)
+    val pagerState = rememberPagerState(initialPage = startPage) { infinitePageCount }
     val scope = rememberCoroutineScope()
 
     HorizontalPager(
         modifier = modifier,
         state = pagerState,
-        pageSpacing = 20.dp
+        pageSpacing = 20.dp,
+        userScrollEnabled = otherImageUrls.size > 1
     ) { page ->
         val actualPage = page % otherImageUrls.size
 
