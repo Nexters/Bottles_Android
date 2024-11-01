@@ -2,7 +2,9 @@ package com.team.bottles.core.domain.bottle.model
 
 data class PingPongPhotos(
     val myImageUrl: String = "",
+    @Deprecated("이미지 여러장 받는것으로 변경되면서 사용 하지 않는 데이터")
     val otherImageUrl: String = "",
+    val otherImageUrls: List<String> = emptyList(),
 )
 
 enum class PingPongPhotoStatus {

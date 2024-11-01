@@ -54,7 +54,8 @@ fun PingPongLetterDTO.toPingPongLetter(): PingPongLetter =
 fun PhotoDTO.toPingPongPhotos(): PingPongPhotos =
     PingPongPhotos(
         myImageUrl = this.myImageUrl?: "",
-        otherImageUrl = this.otherImageUrl?: ""
+        otherImageUrl = this.otherImageUrl?: "",
+        otherImageUrls = this.otherImageUrls
     )
 
 fun MatchResultDTO.toPingPongMatchResult(): PingPongMatchResult =
