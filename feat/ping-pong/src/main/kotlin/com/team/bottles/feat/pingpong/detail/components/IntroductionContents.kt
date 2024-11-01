@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.layer.GraphicsLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.R
@@ -27,6 +29,7 @@ internal fun LazyListScope.introductionContents(
     partnerProfile: UserProfile,
     partnerKeyPoints: List<UserKeyPoint>,
     partnerLetter: String,
+    graphicsLayer: GraphicsLayer
 ) {
     item(key = "Introduction Contents") {
         when (isStoppedPingPong) {
@@ -34,7 +37,8 @@ internal fun LazyListScope.introductionContents(
                 BottlesUserInfo(
                     imageUrl = partnerProfile.imageUrl,
                     userName = partnerProfile.userName,
-                    userAge = partnerProfile.age
+                    userAge = partnerProfile.age,
+                    graphicsLayer = graphicsLayer
                 )
 
                 Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
@@ -66,6 +70,7 @@ internal fun LazyListScope.introductionContents(
 @Composable
 private fun IntroductionContentsPreview() {
     BottlesTheme {
+        val graphicsLayer = rememberGraphicsLayer()
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = rememberLazyListState(),
@@ -80,6 +85,7 @@ private fun IntroductionContentsPreview() {
                 partnerProfile = UserProfile.sampleUserProfile(),
                 partnerKeyPoints = UserKeyPoint.exampleUerKeyPoints(),
                 partnerLetter = "편지내용입니다.",
+                graphicsLayer = graphicsLayer
             )
         }
     }

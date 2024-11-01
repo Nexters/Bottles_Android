@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.ui.BottleItem
@@ -18,8 +19,10 @@ import kotlinx.collections.immutable.toImmutableList
 fun BottleList(
     modifier: Modifier = Modifier,
     bottles: ImmutableList<Bottle>,
-    onClickItem: (Bottle) -> Unit
+    onClickItem: (Bottle) -> Unit,
 ) {
+    val graphicsLayer = rememberGraphicsLayer()
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(
@@ -38,8 +41,10 @@ fun BottleList(
         ) { bottle ->
             BottleItem(
                 bottle = bottle,
-                onClickItem = { onClickItem(bottle) },
-            )
+                graphicsLayer = graphicsLayer
+            ) {
+                onClickItem(bottle)
+            }
         }
     }
 }

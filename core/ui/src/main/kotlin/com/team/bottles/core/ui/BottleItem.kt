@@ -45,6 +45,7 @@ import com.team.bottles.core.ui.model.Bottle
 fun BottleItem(
     modifier: Modifier = Modifier,
     bottle: Bottle,
+    graphicsLayer: GraphicsLayer,
     onClickItem: () -> Unit,
 ) {
     Column(
@@ -126,7 +127,7 @@ fun BottleItem(
                     .clip(shape = CircleShape)
                     .cloudy(
                         radius = 5,
-                        graphicsLayer = rememberGraphicsLayer()
+                        graphicsLayer = graphicsLayer
                     ),
                 imageModel = { bottle.imageUrl },
                 previewPlaceholder = painterResource(id = R.drawable.sample_image),

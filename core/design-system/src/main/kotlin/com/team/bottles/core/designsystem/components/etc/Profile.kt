@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.layer.GraphicsLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -78,24 +80,23 @@ fun BottlesProfile(
     modifier: Modifier = Modifier,
     imageUrl: String,
     profileImageType: ProfileImageType,
-    isBlur: Boolean = true
+    isBlur: Boolean = true,
+    graphicsLayer: GraphicsLayer = rememberGraphicsLayer()
 ) {
     CoilImage(
         modifier = modifier
             .size(size = profileImageType.size)
             .clip(shape = CircleShape)
-            .then(
-                if (isBlur) {
-                    Modifier.cloudy(radius = 5)
-                } else {
-                    Modifier
-                }
+            .cloudy(
+                enabled = isBlur,
+                radius = 5,
+                graphicsLayer = graphicsLayer
             ),
         imageModel = { imageUrl },
-        previewPlaceholder = painterResource(id = R.drawable.sample_image),
         imageOptions = ImageOptions(
             contentScale = ContentScale.Crop
         ),
+        previewPlaceholder = painterResource(id = R.drawable.sample_image),
         loading = {
             Box(
                 modifier = Modifier
