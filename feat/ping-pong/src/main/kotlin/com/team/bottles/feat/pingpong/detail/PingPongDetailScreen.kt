@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -128,6 +129,8 @@ internal fun PingPongDetailScreen(
                     .padding(innerPadding)
                     .nestedScroll(connection = pullRefreshState.nestedScrollConnection)
             ) {
+                val graphicsLayer = rememberGraphicsLayer()
+
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = when (uiState.currentTab) {
@@ -151,6 +154,7 @@ internal fun PingPongDetailScreen(
                                 partnerLetter = uiState.partnerLetter,
                                 partnerKeyPoints = uiState.partnerKeyPoints,
                                 deleteAfterDay = uiState.deleteAfterDay,
+                                graphicsLayer = graphicsLayer
                             )
                         }
 
