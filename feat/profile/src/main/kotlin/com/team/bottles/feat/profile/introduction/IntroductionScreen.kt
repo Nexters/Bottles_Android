@@ -1,207 +1,152 @@
 package com.team.bottles.feat.profile.introduction
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import android.annotation.SuppressLint
+import android.net.Uri
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebView.setWebContentsDebuggingEnabled
+import android.webkit.WebViewClient
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.team.bottles.core.designsystem.R
-import com.team.bottles.core.designsystem.components.bars.BottlesBottomBar
-import com.team.bottles.core.designsystem.components.bars.BottlesTopBar
-import com.team.bottles.core.designsystem.components.textfield.BottlesLinesMaxLengthTextField
-import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
-import com.team.bottles.core.designsystem.modifier.noRippleClickable
-import com.team.bottles.core.designsystem.theme.BottlesTheme
-import com.team.bottles.core.ui.BottlesErrorScreen
-import com.team.bottles.core.ui.BottlesLoadingScreen
-import com.team.bottles.core.ui.CardProfile
-import com.team.bottles.core.ui.model.UserKeyPoint
-import com.team.bottles.feat.profile.introduction.component.SelectImageCard
-import com.team.bottles.feat.profile.introduction.component.Title
+import androidx.compose.ui.viewinterop.AndroidView
+import com.team.bottles.feat.profile.edit.EditProfileBridge
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionIntent
-import com.team.bottles.feat.profile.introduction.mvi.IntroductionStep
 import com.team.bottles.feat.profile.introduction.mvi.IntroductionUiState
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 internal fun IntroductionScreen(
     uiState: IntroductionUiState,
     onIntent: (IntroductionIntent) -> Unit
 ) {
-    val focusManager = LocalFocusManager.current
-    val interactionSource = remember { MutableInteractionSource() }
-    val isFocused by interactionSource.collectIsFocusedAsState()
-    val scrollState = rememberScrollState()
+    var canGoBack by remember { mutableStateOf(false) }
+    var mFilePathCallback by remember { mutableStateOf<ValueCallback<Array<Uri>>?>(null) }
 
-    BackHandler(enabled = !uiState.isLoading) {
-        onIntent(IntroductionIntent.ClickBackButton)
-    }
-
-    LaunchedEffect(isFocused) {
-        onIntent(IntroductionIntent.OnFocusedTextField)
-    }
-
-    Box {
-        if (uiState.isError) {
-            BottlesErrorScreen(
-                onClickBackButton = { onIntent(IntroductionIntent.ClickBackButton) },
-                onClickRetryButton = { onIntent(IntroductionIntent.ClickRetryButton) },
-                isVisibleLeadingIcon = true
-            )
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            mFilePathCallback?.onReceiveValue(arrayOf(uri))
         } else {
-            Scaffold(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .pointerInput(Unit) {
-                        detectTapGestures(onTap = {
-                            focusManager.clearFocus()
-                        })
+            mFilePathCallback?.onReceiveValue(null)
+        }
+        mFilePathCallback = null
+    }
+
+    val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickMultipleVisualMedia()
+    ) { uris ->
+        if (uris.isNotEmpty()) {
+            mFilePathCallback?.onReceiveValue(uris.toTypedArray())
+        } else {
+            mFilePathCallback?.onReceiveValue(null)
+        }
+        mFilePathCallback = null
+    }
+
+    if (uiState.token.accessToken.isNotEmpty() && uiState.token.refreshToken.isNotEmpty()) {
+        AndroidView(
+            modifier = Modifier
+                .fillMaxSize()
+                .systemBarsPadding()
+                .imePadding(),
+            factory = { context ->
+                WebView(context).apply {
+                    layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+
+                    settings.run {
+                        domStorageEnabled = true
+                        javaScriptEnabled = true
+                        defaultTextEncodingName = "UTF-8"
+                        cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+                        setSupportZoom(false)
+                        builtInZoomControls = false
                     }
-                    .systemBarsPadding()
-                    .imePadding(),
-                contentColor = Color.Transparent,
-                topBar = {
-                    BottlesTopBar(
-                        modifier = Modifier.background(color = BottlesTheme.color.background.primary),
-                        leadingIcon = {
-                            Icon(
-                                modifier = Modifier
-                                    .noRippleClickable(
-                                        onClick = { onIntent(IntroductionIntent.ClickBackButton) }
-                                    ),
-                                painter = painterResource(id = R.drawable.ic_arrow_left_24),
-                                contentDescription = null,
-                                tint = BottlesTheme.color.icon.primary
-                            )
-                        }
-                    )
-                },
-                bottomBar = {
-                    BottlesBottomBar(
-                        text = uiState.step.buttonText,
-                        onClick = { onIntent(IntroductionIntent.ClickBottomButton) },
-                        enabled = uiState.isEnabledWithBottomButton
-                    )
-                }
-            ) { innerPadding ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = BottlesTheme.color.background.primary)
-                        .padding(top = innerPadding.calculateTopPadding())
-                        .padding(horizontal = BottlesTheme.spacing.medium)
-                        .verticalScroll(state = scrollState),
-                ) {
-                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.extraLarge))
 
-                    Title(
-                        currentPage = uiState.step.page,
-                        maxPage = IntroductionStep.entries.size,
-                        title = uiState.step.title,
-                        subTitle = uiState.step.subTitle
-                    )
+                    setWebContentsDebuggingEnabled(true)
 
-                    Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraLarge))
+                    webChromeClient = object : WebChromeClient() {
+                        override fun onShowFileChooser(
+                            webView: WebView?,
+                            filePathCallback: ValueCallback<Array<Uri>>?,
+                            fileChooserParams: FileChooserParams?
+                        ): Boolean {
+                            mFilePathCallback = filePathCallback
 
-                    when (uiState.step) {
-                        IntroductionStep.INPUT_INTRODUCTION -> {
-                            BottlesLinesMaxLengthTextField(
-                                value = uiState.introduce,
-                                onValueChange = { text ->
-                                    onIntent(IntroductionIntent.ChangeIntroduction(text = text))
-                                },
-                                hint = stringResource(id = R.string.introduction_hint),
-                                maxLength = uiState.maxLength,
-                                state = uiState.introductionTextFiledState,
-                                interactionSource = interactionSource
-                            )
+                            val isMultipleSelect =
+                                fileChooserParams?.mode == FileChooserParams.MODE_OPEN_MULTIPLE
 
-                            if (uiState.introductionTextFiledState is BottlesTextFieldState.Error) {
-                                Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.doubleExtraSmall))
-
-                                Text(
-                                    text = "최소 ${uiState.minLength}글자 이상 작성해주세요",
-                                    style = BottlesTheme.typography.caption,
-                                    color = BottlesTheme.color.text.errorPrimary
+                            if (isMultipleSelect) {
+                                multiplePhotoPickerLauncher.launch(
+                                    PickVisualMediaRequest(
+                                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                                    )
+                                )
+                            } else {
+                                photoPickerLauncher.launch(
+                                    PickVisualMediaRequest(
+                                        ActivityResultContracts.PickVisualMedia.ImageOnly
+                                    )
                                 )
                             }
 
-                            Spacer(modifier = Modifier.height(height = BottlesTheme.spacing.small))
-
-                            CardProfile(keyPoints = uiState.keyPoints)
-                        }
-
-                        IntroductionStep.SELECT_USER_IMAGE -> {
-                            SelectImageCard(
-                                imageFile = uiState.imageFile,
-                                onIntent = onIntent
-                            )
+                            return true
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(height = innerPadding.calculateBottomPadding()))
+                    webViewClient = object : WebViewClient() {
+                        override fun onPageFinished(view: WebView?, url: String?) {
+                            super.onPageFinished(view, url)
+                            canGoBack = view?.canGoBack() == true
+                        }
+
+                        override fun doUpdateVisitedHistory(
+                            view: WebView?,
+                            url: String?,
+                            isReload: Boolean
+                        ) {
+                            super.doUpdateVisitedHistory(view, url, isReload)
+                            canGoBack = view?.canGoBack() == true
+                        }
+                    }
+
+                    addJavascriptInterface(
+                        IntroductionBridge { webAction ->
+                            when (webAction) {
+                                is IntroductionWebAction.OnIntroductionComplete -> onIntent(
+                                    IntroductionIntent.ClickWebCompleteButton
+                                )
+
+                                is IntroductionWebAction.OnWebViewClose -> onIntent(
+                                    IntroductionIntent.ClickWebCloseButton
+                                )
+
+                                is IntroductionWebAction.OnToastOpen -> onIntent(
+                                    IntroductionIntent.ShowToastMessage(message = webAction.message)
+                                )
+                            }
+                        },
+                        EditProfileBridge.NAME
+                    )
                 }
+            },
+            update = { webView ->
+                webView.loadUrl(uiState.url)
             }
-        }
-
-        if (uiState.isLoading) {
-            BottlesLoadingScreen()
-        }
-    }
-}
-
-@Preview(heightDp = 1100)
-@Composable
-private fun IntroductionScreenStep1Preview() {
-    BottlesTheme {
-        IntroductionScreen(
-            uiState = IntroductionUiState(
-                isLoading = true,
-                //isError = true,
-                step = IntroductionStep.INPUT_INTRODUCTION,
-                keyPoints = UserKeyPoint.exampleUerKeyPoints(),
-                introduce = "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
-                introductionTextFiledState = BottlesTextFieldState.Active
-            ),
-            onIntent = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun IntroductionScreenStep2Preview() {
-    BottlesTheme {
-        IntroductionScreen(
-            uiState = IntroductionUiState(
-                step = IntroductionStep.SELECT_USER_IMAGE,
-                keyPoints = UserKeyPoint.exampleUerKeyPoints(),
-                //imageFile = File.createTempFile("asd","xcf"),
-            ),
-            onIntent = {}
         )
     }
 }
