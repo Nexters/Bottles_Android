@@ -54,11 +54,22 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Bottles"
             android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="bottle"
+                    android:host="main" />
             </intent-filter>
         </activity>
 
