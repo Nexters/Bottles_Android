@@ -65,7 +65,6 @@ class SplashViewModel @Inject constructor(
 
     private fun initSplash() {
         launch {
-            updateCurrentSystemNotificationStateUseCase()
             val requiredAppVersion = getRequiredAppVersionUseCase()
 
             if (requiredAppVersion > currentState.appVersionCode) {
@@ -78,11 +77,14 @@ class SplashViewModel @Inject constructor(
                 if (tokens.accessToken.isEmpty()) {
                     postSideEffect(SplashSideEffect.NavigateToLoginEndpoint)
                 } else {
+                    updateCurrentSystemNotificationStateUseCase()
                     val profileStatus = getUserProfileStatusUseCase()
 
                     when (profileStatus) {
+                        UserProfileStatus.ONLY_PROFILE_CREATED,
+                        UserProfileStatus.PHOTO_DONE,
+                        UserProfileStatus.INTRODUCE_DONE -> postSideEffect(SplashSideEffect.NavigateToSandBeach)
                         UserProfileStatus.EMPTY -> postSideEffect(SplashSideEffect.NavigateToOnboarding)
-                        else -> postSideEffect(SplashSideEffect.NavigateToSandBeach)
                     }
                 }
             }
