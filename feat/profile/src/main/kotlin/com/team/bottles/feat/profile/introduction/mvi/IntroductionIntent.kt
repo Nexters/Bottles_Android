@@ -5,20 +5,10 @@ import java.io.File
 
 sealed interface IntroductionIntent : UiIntent {
 
-    data object ClickBackButton : IntroductionIntent
+    data object ClickWebCompleteButton : IntroductionIntent
 
-    data object ClickBottomButton : IntroductionIntent
+    data object ClickWebCloseButton : IntroductionIntent
 
-    data object OnFocusedTextField : IntroductionIntent
-
-    data class ChangeIntroduction(val text: String) : IntroductionIntent
-
-    data class ClickPhoto(val file: File) : IntroductionIntent
-
-    data object ClickDeleteButton : IntroductionIntent
-
-    data object ClickRetryButton : IntroductionIntent
-
-    data object ClickErrorScreenBackButton : IntroductionIntent
+    data class ShowToastMessage(val message: String) : IntroductionIntent
 
 }

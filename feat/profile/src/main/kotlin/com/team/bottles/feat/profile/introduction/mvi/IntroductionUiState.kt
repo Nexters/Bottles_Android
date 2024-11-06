@@ -3,53 +3,21 @@ package com.team.bottles.feat.profile.introduction.mvi
 import androidx.compose.runtime.Stable
 import com.team.bottles.core.common.UiState
 import com.team.bottles.core.designsystem.components.textfield.BottlesTextFieldState
+import com.team.bottles.core.domain.auth.model.Token
 import com.team.bottles.core.ui.model.UserKeyPoint
+import com.team.bottles.feat.profile.BuildConfig
 import java.io.File
 
 @Stable
 data class IntroductionUiState(
-    val isError: Boolean = false,
-    val isLoading: Boolean = false,
-    val state: IntroductionState = IntroductionState.INIT,
-    val step: IntroductionStep = IntroductionStep.INPUT_INTRODUCTION,
-    val maxLength: Int = 300,
-    val minLength: Int = 50,
-    val introduce: String = "",
-    val introductionTextFiledState: BottlesTextFieldState = BottlesTextFieldState.Enabled,
-    val keyPoints: List<UserKeyPoint> = emptyList(),
-    val imageFile: File? = null
+    val token: Token = Token()
 ) : UiState {
-    val isEnabledWithBottomButton: Boolean
-        get() = when(step) {
-            IntroductionStep.INPUT_INTRODUCTION -> introduce.length >= minLength
-            IntroductionStep.SELECT_USER_IMAGE -> imageFile != null
-        }
 
-    enum class IntroductionState {
-        INIT,
-        INPUT_INTRODUCTION,
-        UPLOAD_IMAGE,
-        ;
-    }
-}
+    val url: String
+        get() = BuildConfig.BOTTLES_INTRODUCTION_URL +
+                "?accessToken=${token.accessToken}" +
+                "&refreshToken=${token.refreshToken}" +
+                "&device=${BuildConfig.DEVICE}" +
+                "&version=${BuildConfig.APP_VERSION}"
 
-enum class IntroductionStep(
-    val page: Int,
-    val title: String,
-    val subTitle: String,
-    val buttonText: String,
-) {
-    INPUT_INTRODUCTION(
-        page = 1,
-        title = "보틀에 담을\n소개를 작성해 주세요",
-        subTitle = "수정이 어려우니 신중하게 작성해 주세요",
-        buttonText = "다음"
-    ),
-    SELECT_USER_IMAGE(
-        page = 2,
-        title = "보틀에 담을 나의\n사진을 골라주세요",
-        subTitle = "가치관 문답을 마친 후 동의 하에 공개돼요",
-        buttonText = "완료"
-    ),
-    ;
 }
