@@ -21,9 +21,9 @@ data class UserProfileSelectDTO(
     @SerialName("interest") val interest: InterestDto,
     @SerialName("job") val job: String,
     @SerialName("height") val height: Int,
-    @SerialName("smoking") val smoking: String,
-    @SerialName("alcohol") val alcohol: String,
-    @SerialName("religion") val religion: String,
+    @SerialName("smoking") val smoking: String?,
+    @SerialName("alcohol") val alcohol: String?,
+    @SerialName("religion") val religion: String?,
     @SerialName("region") val region: RegionDto,
 )
 
