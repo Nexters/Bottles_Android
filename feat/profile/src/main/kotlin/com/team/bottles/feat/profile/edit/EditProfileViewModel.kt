@@ -38,6 +38,7 @@ internal class EditProfileViewModel @Inject constructor(
     override suspend fun handleIntent(intent: EditProfileIntent) {
         when (intent) {
             is EditProfileIntent.ClickWebCloseButton -> navigateToMyPage()
+            is EditProfileIntent.ShowToastMessage -> showToastMessage(message = intent.message)
         }
     }
 
@@ -47,6 +48,10 @@ internal class EditProfileViewModel @Inject constructor(
 
     private fun navigateToMyPage() {
         postSideEffect(EditProfileSideEffect.NavigateToMyPage)
+    }
+
+    private fun showToastMessage(message: String) {
+        postSideEffect(EditProfileSideEffect.ShowToastMessage(message = message))
     }
 
 }

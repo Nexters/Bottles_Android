@@ -14,11 +14,10 @@ import com.team.bottles.core.domain.bottle.usecase.StopPingPongUseCase
 import com.team.bottles.feat.pingpong.detail.mvi.PingPongCard
 import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailIntent
 import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailSideEffect
-import com.team.bottles.feat.pingpong.detail.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.detail.mvi.PingPongDetailUiState
+import com.team.bottles.feat.pingpong.detail.mvi.PingPongTab
 import com.team.bottles.feat.pingpong.detail.mvi.ShareSelectButtonState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,9 +70,7 @@ class PingPongDetailViewModel @Inject constructor(
 
     private fun getPingPongDetail() {
         launch {
-            delay(300L)
             val result = getPingPongDetailUseCase(bottleId = currentState.bottleId)
-
             val pingPongCards = result.letters.map { letter ->
                 PingPongCard.Letter(letter = letter)
             } + listOf(
@@ -83,6 +80,7 @@ class PingPongDetailViewModel @Inject constructor(
 
             reduce {
                 copy(
+                    isLoading = false,
                     isRefreshing = false,
                     isStoppedPingPong = result.isStopped,
                     deleteAfterDay = result.deleteAfterDays.toInt(),
@@ -96,9 +94,7 @@ class PingPongDetailViewModel @Inject constructor(
         }
     }
 
-    override fun handleClientException(throwable: Throwable) {
-        TODO("Not yet implemented")
-    }
+    override fun handleClientException(throwable: Throwable) { }
 
     private fun navigateToReport() {
         postSideEffect(

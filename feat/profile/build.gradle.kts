@@ -12,7 +12,8 @@ android {
     namespace = "com.team.bottles.feat.profile"
 
     defaultConfig {
-        val urls = listOf("BOTTLES_CREATE_PROFILE_URL", "BOTTLES_PROFILE_EDIT_URL")
+        val urls = listOf("BOTTLES_CREATE_PROFILE_URL", "BOTTLES_PROFILE_EDIT_URL", "BOTTLES_INTRODUCTION_URL")
+
         val properties = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
 
         urls.forEach { url ->

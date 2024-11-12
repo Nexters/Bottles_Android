@@ -20,14 +20,9 @@ internal fun IntroductionRoute(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is IntroductionSideEffect.ShowErrorMessage -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
                 is IntroductionSideEffect.NavigateToSandBeach -> navigateToSandBeach()
-                is IntroductionSideEffect.CompleteIntroduction -> {
-                    Toast.makeText(context, sideEffect.toastMessage, Toast.LENGTH_SHORT).show()
-                    navigateToSandBeach()
-                }
-                is IntroductionSideEffect.RequireSelectPhoto ->
-                    Toast.makeText(context, sideEffect.toastMessage, Toast.LENGTH_SHORT).show()
+                is IntroductionSideEffect.ShowToastMessage ->
+                    Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -36,5 +31,4 @@ internal fun IntroductionRoute(
         uiState = uiState,
         onIntent = { intent -> viewModel.intent(intent) }
     )
-
 }

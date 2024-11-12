@@ -1,36 +1,40 @@
 package com.team.bottles.feat.pingpong.detail.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.team.bottles.core.designsystem.R
 import com.team.bottles.core.designsystem.components.buttons.BottlesLetterDropDownButton
+import com.team.bottles.core.designsystem.components.etc.chips.BottlesProgressChip
+import com.team.bottles.core.designsystem.modifier.noRippleClickable
 import com.team.bottles.core.designsystem.theme.BottlesTheme
 import com.team.bottles.core.domain.bottle.model.PingPongPhotoStatus
 import com.team.bottles.core.domain.bottle.model.PingPongPhotos
 import com.team.bottles.core.ui.PartnerBubble
 import com.team.bottles.core.ui.UserBubble
 import com.team.bottles.feat.pingpong.detail.mvi.ShareSelectButtonState
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun PhotoCard(
@@ -52,7 +56,11 @@ internal fun PhotoCard(
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(
-                space = BottlesTheme.spacing.extraLarge
+                space = if (pingPongPhotoStatus == PingPongPhotoStatus.BOTH_AGREE){
+                    BottlesTheme.spacing.large
+                } else {
+                    BottlesTheme.spacing.extraLarge
+                }
             )
         ) {
             HorizontalDivider(
@@ -79,10 +87,7 @@ internal fun PhotoCard(
                 }
 
                 PingPongPhotoStatus.BOTH_AGREE -> {
-                    Done(
-                        otherImageUrl = pingPongPhotos.otherImageUrl,
-                        myImageUrl = pingPongPhotos.myImageUrl
-                    )
+                    Done(otherImageUrls = pingPongPhotos.otherImageUrls)
                 }
 
                 PingPongPhotoStatus.MY_REJECT -> MyReject()
@@ -122,55 +127,90 @@ private fun MyReject() {
 }
 
 @Composable
-private fun Done(
-    otherImageUrl: String?,
-    myImageUrl: String?
+private fun ColumnScope.Done(
+    modifier: Modifier = Modifier,
+    otherImageUrls: List<String>,
 ) {
+    val infinitePageCount = Int.MAX_VALUE // 12312123
+    val startPage = (infinitePageCount / 2) - ((infinitePageCount / 2) % otherImageUrls.size)
+    val pagerState = rememberPagerState(initialPage = startPage) { infinitePageCount }
+    val scope = rememberCoroutineScope()
+
+    HorizontalPager(
+        modifier = modifier,
+        state = pagerState,
+        pageSpacing = 20.dp,
+        userScrollEnabled = otherImageUrls.size > 1
+    ) { page ->
+        val actualPage = page % otherImageUrls.size
+
+        CoilImage(
+            modifier = Modifier
+                .aspectRatio(1f)
+                .clip(
+                    shape = RoundedCornerShape(
+                        topEnd = BottlesTheme.spacing.medium,
+                        bottomEnd = BottlesTheme.spacing.medium,
+                        bottomStart = BottlesTheme.spacing.medium
+                    )
+                ),
+            imageModel = { otherImageUrls[actualPage] },
+            previewPlaceholder = painterResource(id = R.drawable.sample_image)
+        )
+    }
+
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.align(Alignment.CenterHorizontally),
         horizontalArrangement = Arrangement.spacedBy(
-            space = BottlesTheme.spacing.small
+            space = BottlesTheme.spacing.doubleExtraLarge
         )
     ) {
-        repeat(2) { count ->
-            val shape = RoundedCornerShape(
-                topStart = if (count == 0) 0.dp else BottlesTheme.spacing.medium,
-                topEnd = BottlesTheme.spacing.medium,
-                bottomStart = BottlesTheme.spacing.medium,
-                bottomEnd = if (count == 1) 0.dp else BottlesTheme.spacing.medium
-            )
-
-            CoilImage(
-                modifier = Modifier
-                    .weight(1f)
-                    .aspectRatio(1f)
-                    .background(
-                        color = BottlesTheme.color.icon.secondary,
-                        shape = shape
-                    )
-                    .clip(shape = shape),
-                previewPlaceholder = painterResource(id = R.drawable.sample_image),
-                imageModel = { if (count == 0) otherImageUrl else myImageUrl },
-                imageOptions = ImageOptions(
-                    contentScale = ContentScale.Crop
+        Icon(
+            modifier = Modifier
+                .noRippleClickable(
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    },
+                    enabled = otherImageUrls.size > 1
                 ),
-                loading = {
-                    Box(
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .background(
-                                color = BottlesTheme.color.icon.secondary,
-                                shape = shape
-                            )
-                            .clip(shape = shape)
-                    )
-                }
-            )
-        }
+            painter = painterResource (id = R.drawable.ic_arrow_left_24),
+            contentDescription = null,
+            tint = if (otherImageUrls.size > 1) {
+                BottlesTheme.color.icon.primary
+            } else {
+                BottlesTheme.color.icon.disabled
+            }
+        )
+
+        BottlesProgressChip(
+            currentPage = (pagerState.currentPage % otherImageUrls.size) + 1,
+            maxPage = otherImageUrls.size
+        )
+
+        Icon(
+            modifier = Modifier
+                .noRippleClickable(
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        }
+                    },
+                    enabled = otherImageUrls.size > 1
+                ),
+            painter = painterResource (id = R.drawable.ic_arrow_right_24),
+            contentDescription = null,
+            tint = if (otherImageUrls.size > 1) {
+                BottlesTheme.color.icon.primary
+            } else {
+                BottlesTheme.color.icon.disabled
+            }
+        )
     }
 }
 
-@Preview(showBackground = true, heightDp = 1750)
+@Preview(showBackground = true, heightDp = 2000)
 @Composable
 private fun PhotoCardPreview() {
     BottlesTheme {
@@ -187,7 +227,7 @@ private fun PhotoCardPreview() {
             PingPongPhotoStatus.entries.forEach { photoCardStatus ->
                 item {
                     PhotoCard(
-                        pingPongPhotos = PingPongPhotos(),
+                        pingPongPhotos = PingPongPhotos(otherImageUrls = listOf("", "", "")),
                         pingPongPhotoStatus = photoCardStatus,
                         onClickPhotoCard = { /*TODO*/ },
                         onClickLikeSharePhoto = {},

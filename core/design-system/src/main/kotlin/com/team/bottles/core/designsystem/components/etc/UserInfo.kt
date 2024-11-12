@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.layer.GraphicsLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,7 +76,8 @@ fun BottlesUserInfo(
     userName: String,
     userAge: Int,
     isBlur: Boolean = true,
-    profileImageType: ProfileImageType = ProfileImageType.LG
+    profileImageType: ProfileImageType = ProfileImageType.LG,
+    graphicsLayer: GraphicsLayer = rememberGraphicsLayer()
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -86,7 +89,8 @@ fun BottlesUserInfo(
         BottlesProfile(
             imageUrl = imageUrl,
             profileImageType = profileImageType,
-            isBlur = isBlur
+            isBlur = isBlur,
+            graphicsLayer = graphicsLayer
         )
 
         Row(
@@ -127,6 +131,7 @@ private fun UserInfoPreview() {
             imageUrl = "",
             userName = "냥냥이",
             userAge = 15,
+            graphicsLayer = rememberGraphicsLayer()
         )
     }
 }

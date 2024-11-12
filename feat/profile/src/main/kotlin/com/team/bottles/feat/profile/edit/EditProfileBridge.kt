@@ -1,6 +1,7 @@
 package com.team.bottles.feat.profile.edit
 
 import android.webkit.JavascriptInterface
+import com.team.bottles.core.common.base.BaseBridgeListener
 
 internal class EditProfileBridge(private val onAction: (EditProfileWebAction) -> Unit) :
     EditProfileBridgeListener {
@@ -11,8 +12,8 @@ internal class EditProfileBridge(private val onAction: (EditProfileWebAction) ->
     }
 
     @JavascriptInterface
-    override fun openWebView(url: String) {
-        // TODO : 웹 메서드 생성시 구현
+    override fun onToastOpen(message: String) {
+        onAction(EditProfileWebAction.OnToastOpen(message = message))
     }
 
     companion object {
@@ -25,12 +26,8 @@ sealed interface EditProfileWebAction {
 
     data object OnWebViewClose : EditProfileWebAction
 
-}
-
-interface EditProfileBridgeListener {
-
-    fun onWebViewClose()
-
-    fun openWebView(url: String)
+    data class OnToastOpen(val message: String) : EditProfileWebAction
 
 }
+
+interface EditProfileBridgeListener : BaseBridgeListener

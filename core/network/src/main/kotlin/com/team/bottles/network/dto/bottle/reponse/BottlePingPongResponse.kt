@@ -41,7 +41,11 @@ data class PingPongLetterDTO(
 data class PhotoDTO(
     @SerialName("photoStatus") val photoStatus: PhotoStatusDTO,
     @SerialName("myImageUrl") val myImageUrl: String?,
+
+    @Deprecated("이미지 여러장 받는것으로 변경되면서 사용 하지 않는 데이터")
     @SerialName("otherImageUrl") val otherImageUrl: String?,
+
+    @SerialName("otherImageUrls") val otherImageUrls: List<String>,
     @SerialName("shouldAnswer") val shouldAnswer: Boolean,
     @SerialName("myAnswer") val myAnswer: Boolean?,
     @SerialName("otherAnswer") val otherAnswer: Boolean?,

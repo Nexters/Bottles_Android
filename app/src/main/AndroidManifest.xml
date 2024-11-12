@@ -18,6 +18,16 @@
         android:hardwareAccelerated="true"
         tools:ignore="DiscouragedApi">
 
+        <service android:name="com.google.android.gms.metadata.ModuleDependencies"
+            android:enabled="false"
+            android:exported="false"
+            tools:ignore="MissingClass">
+            <intent-filter>
+                <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+            </intent-filter>
+            <meta-data android:name="photopicker_activity:0:required" android:value="" />
+        </service>
+
         <service
             android:name=".BottleFcmService"
             android:exported="false">
@@ -44,11 +54,22 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Bottles"
             android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="bottle"
+                    android:host="main" />
             </intent-filter>
         </activity>
 
