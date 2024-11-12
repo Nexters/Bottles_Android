@@ -35,9 +35,9 @@ fun UserProfileSelectDTO.toUserProfileSelect(): UserProfileSelect =
         interest = this.interest.toInterest(),
         job = this.job,
         height = this.height,
-        smoking = this.smoking,
-        alcohol = this.alcohol,
-        religion = this.religion,
+        smoking = this.smoking?: "",
+        alcohol = this.alcohol?: "",
+        religion = this.religion?: "",
         region = this.region.toRegion(),
     )
 
